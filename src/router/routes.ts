@@ -1,18 +1,28 @@
 import { RouteRecordRaw } from 'vue-router';
 
-const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
-  },
+import { requireAuth, requireAdmin } from '../modules/auth/router/routeGuards';
 
-  // Always leave this as last one,
-  // but you can also remove it
-  {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue'),
-  },
+import authRouter from '../modules/auth/router';
+
+const routes: RouteRecordRaw[] = [
+    {
+        ...authRouter
+    },
+    {
+        path: '/',
+        name: 'main',
+        meta: { requiresAuth: true },
+        beforeEnter: [requireAuth],
+        component: () => import('layouts/MainLayout.vue'),
+        children: [{ path: '', component: () => import('pages/IndexPage.vue') }]
+    },
+
+    // Always leave this as last one,
+    // but you can also remove it
+    {
+        path: '/:catchAll(.*)*',
+        component: () => import('pages/ErrorNotFound.vue')
+    }
 ];
 
 export default routes;
