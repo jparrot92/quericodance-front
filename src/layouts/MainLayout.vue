@@ -10,46 +10,24 @@ import EssentialLink, {
 
 const essentialLinks: EssentialLinkProps[] = [
     {
-        title: 'Docs',
-        caption: 'quasar.dev',
-        icon: 'school',
-        link: 'https://quasar.dev'
+        title: 'Calendario',
+        icon: 'calendar_month'
     },
     {
-        title: 'Github',
-        caption: 'github.com/quasarframework',
-        icon: 'code',
-        link: 'https://github.com/quasarframework'
+        title: 'Asistente administrativo',
+        icon: 'assignment_ind'
     },
     {
-        title: 'Discord Chat Channel',
-        caption: 'chat.quasar.dev',
-        icon: 'chat',
-        link: 'https://chat.quasar.dev'
+        title: 'Doctor',
+        icon: 'local_hospital'
     },
     {
-        title: 'Forum',
-        caption: 'forum.quasar.dev',
-        icon: 'record_voice_over',
-        link: 'https://forum.quasar.dev'
+        title: 'Paciente',
+        icon: 'personal_injury'
     },
     {
-        title: 'Twitter',
-        caption: '@quasarframework',
-        icon: 'rss_feed',
-        link: 'https://twitter.quasar.dev'
-    },
-    {
-        title: 'Facebook',
-        caption: '@QuasarFramework',
-        icon: 'public',
-        link: 'https://facebook.quasar.dev'
-    },
-    {
-        title: 'Quasar Awesome',
-        caption: 'Community Quasar projects',
-        icon: 'favorite',
-        link: 'https://awesome.quasar.dev'
+        title: 'Administrador',
+        icon: 'engineering'
     }
 ];
 
@@ -75,7 +53,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <q-layout view="lHh Lpr lFf">
+    <q-layout view="hHh Lpr lff">
         <q-header elevated>
             <q-toolbar>
                 <q-btn
@@ -108,8 +86,6 @@ const handleLogout = async () => {
 
         <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
             <q-list>
-                <q-item-label header> Essential Links </q-item-label>
-
                 <EssentialLink
                     v-for="link in essentialLinks"
                     :key="link.title"
