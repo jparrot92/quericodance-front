@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import useNotify from 'src/composables/useNotify';
 
@@ -8,6 +9,8 @@ import { Auth } from '../models/auth';
 
 const useAuth = () => {
     const router = useRouter();
+
+    const { t } = useI18n();
 
     const { notifyError, notifySuccess } = useNotify();
 
@@ -21,7 +24,7 @@ const useAuth = () => {
     const login = async () => {
         try {
             await authStore.login(user.value.email, user.value.password);
-            notifySuccess('Login successfully!');
+            notifySuccess(t('auth.notifications.loginSuccessfully'));
             router.push({ name: 'main' });
         } catch (error) {
             // Comprobar si el error es de tipo 'string' antes de manejarlo

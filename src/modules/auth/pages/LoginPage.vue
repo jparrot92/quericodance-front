@@ -10,28 +10,31 @@ const { user, login } = useAuth();
             <p class="col-12 text-h5 text-center">Login</p>
             <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
                 <q-input
-                    label="Email"
+                    :label="$t('auth.label.email')"
                     v-model="user.email"
                     lazy-rules
                     :rules="[
-                        (val) => (val && val.length > 0) || 'Email is required'
+                        (val) =>
+                            (val && val.length > 0) ||
+                            $t('auth.validations.emailRequired')
                     ]"
                     type="email"
                 />
 
                 <q-input
-                    label="Password"
+                    :label="$t('auth.label.password')"
                     v-model="user.password"
                     lazy-rules
                     :rules="[
                         (val) =>
-                            (val && val.length > 0) || 'Password is required'
+                            (val && val.length > 0) ||
+                            $t('auth.validations.passwordRequired')
                     ]"
                 />
 
                 <div class="full-width q-pt-md">
                     <q-btn
-                        label="Login"
+                        :label="$t('auth.label.login')"
                         color="primary"
                         class="full-width"
                         outline
@@ -41,15 +44,7 @@ const { user, login } = useAuth();
                 </div>
                 <div class="full-width q-gutter-y-sm">
                     <q-btn
-                        label="Register"
-                        color="primary"
-                        class="full-width"
-                        flat
-                        to="/register"
-                        size="sm"
-                    />
-                    <q-btn
-                        label="Forgot Password ?"
+                        :label="$t('auth.label.forgotPassword')"
                         color="primary"
                         class="full-width"
                         flat
