@@ -11,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
-export interface EssentialLinkProps {
+export interface ItemMenuProps {
     title: string;
     icon?: string;
 }
-withDefaults(defineProps<EssentialLinkProps>(), {
+withDefaults(defineProps<ItemMenuProps>(), {
     link: '#',
     icon: ''
 });
