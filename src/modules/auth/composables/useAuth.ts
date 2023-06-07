@@ -25,7 +25,7 @@ const useAuth = () => {
         try {
             await authStore.login(user.value.email, user.value.password);
             notifySuccess(t('auth.notifications.loginSuccessfully'));
-            router.push({ name: 'main' });
+            router.push({ name: 'appointments-page' });
         } catch (error) {
             // Comprobar si el error es de tipo 'string' antes de manejarlo
             if (typeof error === 'string') {
