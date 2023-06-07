@@ -3,28 +3,33 @@ import { ref } from 'vue';
 
 import AppToolbar from 'components/AppToolbar.vue';
 
-import MenuItemDrawer, { ItemMenuProps } from 'components/MenuItemDrawer.vue';
+import MenuItemDrawer, { ItemMenu } from 'components/MenuItemDrawer.vue';
 
-const itemsMenu: ItemMenuProps[] = [
+const itemsMenu: ItemMenu[] = [
     {
         title: 'Calendario',
-        icon: 'calendar_month'
+        icon: 'calendar_month',
+        link: 'appointments-page'
     },
     {
         title: 'Asistente administrativo',
-        icon: 'assignment_ind'
+        icon: 'assignment_ind',
+        link: 'secretary-page'
     },
     {
         title: 'Doctor',
-        icon: 'local_hospital'
+        icon: 'local_hospital',
+        link: 'doctors-page'
     },
     {
         title: 'Paciente',
-        icon: 'personal_injury'
+        icon: 'personal_injury',
+        link: 'patients-page'
     },
     {
         title: 'Administrador',
-        icon: 'engineering'
+        icon: 'engineering',
+        link: 'admin-page'
     }
 ];
 
@@ -37,9 +42,9 @@ const leftDrawerOpen = ref(false);
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
         <q-list>
             <MenuItemDrawer
-                v-for="link in itemsMenu"
-                :key="link.title"
-                v-bind="link"
+                v-for="item in itemsMenu"
+                :key="item.title"
+                :item="item"
             />
         </q-list>
     </q-drawer>
