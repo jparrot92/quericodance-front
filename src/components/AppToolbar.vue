@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 
 import useAuth from '../modules/auth/composables/useAuth';
 
-const leftDrawerOpen = ref(false);
 const $q = useQuasar();
 
 const { logout } = useAuth();
-
-function toggleLeftDrawer() {
-    leftDrawerOpen.value = !leftDrawerOpen.value;
-}
 
 const handleLogout = async () => {
     $q.dialog({
@@ -34,7 +28,7 @@ const handleLogout = async () => {
                 round
                 icon="menu"
                 aria-label="Menu"
-                @click="toggleLeftDrawer"
+                @click="$emit('toggleLeftDrawer')"
             />
 
             <q-toolbar-title> Medical Date </q-toolbar-title>

@@ -34,10 +34,14 @@ const itemsMenu: ItemMenu[] = [
 ];
 
 const leftDrawerOpen = ref(false);
+
+function toggleLeftDrawer() {
+    leftDrawerOpen.value = !leftDrawerOpen.value;
+}
 </script>
 
 <template>
-    <AppToolbar />
+    <AppToolbar @toggleLeftDrawer="toggleLeftDrawer()" />
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
         <q-list>
