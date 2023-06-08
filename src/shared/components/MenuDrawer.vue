@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import AppToolbar from 'components/AppToolbar.vue';
+import AppToolbar from 'src/shared/components/AppToolbar.vue';
 
-import MenuItemDrawer, { ItemMenu } from 'components/MenuItemDrawer.vue';
+import MenuItemDrawer, {
+    ItemMenu
+} from 'src/shared/components/MenuItemDrawer.vue';
 
 const itemsMenu: ItemMenu[] = [
     {

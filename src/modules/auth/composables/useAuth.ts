@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-import useNotify from 'src/composables/useNotify';
+import useNotify from 'src/shared/composables/useNotify';
 
 import { useAuthStore } from '../store/auth-store';
 import { Auth } from '../models/auth';

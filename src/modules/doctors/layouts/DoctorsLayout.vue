@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MenuDrawer from 'components/MenuDrawer.vue';
+import MenuDrawer from 'src/shared/components/MenuDrawer.vue';
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 
-import useAuth from '../modules/auth/composables/useAuth';
+import useAuth from 'src/modules/auth/composables/useAuth';
 
 const $q = useQuasar();
 
