@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 import useAuth from 'src/modules/auth/composables/useAuth';
 
 const $q = useQuasar();
+const { t } = useI18n();
 
 const { logout } = useAuth();
 
 const handleLogout = async () => {
     $q.dialog({
-        title: 'Logout',
-        message: 'Do you really want to leave ?',
+        title: t('shared.label.logout'),
+        message: t('shared.message.logout'),
         cancel: true,
         persistent: true
     }).onOk(async () => {
@@ -37,12 +39,16 @@ const handleLogout = async () => {
                 <q-list>
                     <q-item clickable v-close-popup @click="handleLogout">
                         <q-item-section>
-                            <q-item-label>Profile</q-item-label>
+                            <q-item-label>
+                                {{ $t('shared.label.profile') }}
+                            </q-item-label>
                         </q-item-section>
                     </q-item>
                     <q-item clickable v-close-popup @click="handleLogout">
                         <q-item-section>
-                            <q-item-label>Logout</q-item-label>
+                            <q-item-label>
+                                {{ $t('shared.label.logout') }}
+                            </q-item-label>
                         </q-item-section>
                     </q-item>
                 </q-list>

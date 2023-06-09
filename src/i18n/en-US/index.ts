@@ -1,20 +1,7 @@
-// This is just an example,
-// so you can safely delete all default props below
+import sharedI18n from 'src/shared/i18n/en-US';
+import authI18n from 'src/modules/admin/i18n/en-US';
 
 export default {
-    auth: {
-        label: {
-            email: 'Email',
-            password: 'Password',
-            login: 'Login',
-            forgotPassword: 'Forgot Password ?'
-        },
-        validations: {
-            emailRequired: 'Email is required',
-            passwordRequired: 'Password is required'
-        },
-        notifications: {
-            loginSuccessfully: 'Login successfully!'
-        }
-    }
+    ...sharedI18n,
+    ...authI18n
 };

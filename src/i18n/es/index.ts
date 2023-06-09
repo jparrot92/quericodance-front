@@ -1,0 +1,7 @@
+import sharedI18n from 'src/shared/i18n/es';
+import authI18n from 'src/modules/admin/i18n/es';
+
+export default {
+    ...sharedI18n,
+    ...authI18n
+};
