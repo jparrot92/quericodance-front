@@ -1,17 +1,13 @@
-import axios from 'axios';
+import { api } from 'boot/axios';
 import { Login } from 'src/modules/auth/models/auth';
 import { handleError } from './errorApi';
-
-const authApi = axios.create({
-    baseURL: 'http://localhost:3000/auth'
-});
 
 export const login = async (
     email: string,
     password: string
 ): Promise<Login> => {
     try {
-        const { data } = await authApi.post<Login>('/login', {
+        const { data } = await api.post<Login>('/auth/login', {
             email,
             password
         });
