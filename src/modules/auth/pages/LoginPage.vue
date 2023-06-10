@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import useAuth from '../composables/useAuth';
 
-const { user, login } = useAuth();
+const { userForm, onSubmit } = useAuth();
 </script>
 
 <template>
     <q-page padding>
-        <q-form class="row justify-center" @submit.prevent="login">
+        <q-form class="row justify-center" @submit.prevent="onSubmit">
             <p class="col-12 text-h5 text-center">Login</p>
             <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
                 <q-input
                     :label="$t('auth.label.email')"
-                    v-model="user.email"
+                    v-model="userForm.email"
                     lazy-rules
                     :rules="[
                         (val) =>
@@ -23,7 +23,7 @@ const { user, login } = useAuth();
 
                 <q-input
                     :label="$t('auth.label.password')"
-                    v-model="user.password"
+                    v-model="userForm.password"
                     lazy-rules
                     :rules="[
                         (val) =>

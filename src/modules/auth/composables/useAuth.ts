@@ -16,14 +16,14 @@ const useAuth = () => {
 
     const authStore = useAuthStore();
 
-    const user = ref<Auth>({
+    const userForm = ref<Auth>({
         email: '',
         password: ''
     });
 
-    const login = async () => {
+    const onSubmit = async () => {
         try {
-            await authStore.login(user.value.email, user.value.password);
+            await authStore.login(userForm.value);
             notifySuccess(t('auth.notifications.loginSuccessfully'));
             router.push({ name: 'appointments-page' });
         } catch (error) {
@@ -49,9 +49,9 @@ const useAuth = () => {
 
     return {
         // Properties
-        user,
+        userForm,
         // Methods
-        login,
+        onSubmit,
         logout
     };
 };

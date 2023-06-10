@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
-import axios, { AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 
-import authApi from 'src/api/authApi';
+import { login } from 'src/api/authApi';
+
+import { Auth } from '../models/auth';
 import { Login } from '../models/auth';
 
 export const useAuthStore = defineStore('auth', {
@@ -11,12 +13,11 @@ export const useAuthStore = defineStore('auth', {
         expiresIn: ''
     }),
     actions: {
-        async login(email: string, password: string) {
+        async login(user: Auth) {
+            const { email, password } = user;
+
             try {
-                const { data } = await authApi.post<Login>('/login', {
-                    email,
-                    password
-                });
+                const data = await login(email, password);
 
                 localStorage.setItem('token', data.token);
                 this.token = data.token;
@@ -27,16 +28,7 @@ export const useAuthStore = defineStore('auth', {
                 localStorage.setItem('expiresIn', data.expiresIn);
                 this.expiresIn = data.expiresIn;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    const axiosError = error as AxiosError;
-                    if (axiosError.response) {
-                        throw axiosError.response.data;
-                    } else {
-                        throw axiosError.message;
-                    }
-                } else {
-                    throw error;
-                }
+                throw error;
             }
         },
         checkAuthentication() {
