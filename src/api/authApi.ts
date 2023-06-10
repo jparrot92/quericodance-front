@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { Login } from 'src/modules/auth/models/auth';
 import { handleError } from './errorApi';
 
