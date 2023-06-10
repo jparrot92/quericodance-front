@@ -27,18 +27,7 @@ const useAuth = () => {
             notifySuccess(t('auth.notifications.loginSuccessfully'));
             router.push({ name: 'appointments-page' });
         } catch (error) {
-            // Comprobar si el error es de tipo 'string' antes de manejarlo
-            if (typeof error === 'string') {
-                notifyError(error);
-            } else if (
-                error &&
-                typeof error === 'object' &&
-                'message' in error
-            ) {
-                notifyError(String(error.message));
-            } else {
-                console.error('Unknown error: ' + error);
-            }
+            notifyError(error);
         }
     };
 

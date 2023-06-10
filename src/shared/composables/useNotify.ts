@@ -9,11 +9,20 @@ export default function useNotify() {
         });
     };
 
-    const notifyError = (message: string) => {
-        $q.notify({
-            type: 'negative',
-            message: message || 'Failed !'
-        });
+    const notifyError = (error: unknown) => {
+        if (typeof error === 'string') {
+            $q.notify({
+                type: 'negative',
+                message: error || 'Failed !'
+            });
+        } else if (error && typeof error === 'object' && 'message' in error) {
+            $q.notify({
+                type: 'negative',
+                message: String(error.message) || 'Failed !'
+            });
+        } else {
+            console.error('Unknown error: ' + error);
+        }
     };
 
     return {
