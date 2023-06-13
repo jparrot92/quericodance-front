@@ -12,7 +12,8 @@ export default {
             state: 'State',
             zipCode: 'Zip code',
             email: 'Email',
-            password: 'Password'
+            password: 'Password',
+            confirmation: 'Confirmation'
         },
         validations: {
             nifRequired: 'NIF is required',
@@ -29,7 +30,12 @@ export default {
             passwordRequired: 'Password is required'
         },
         notifications: {
-            loginSuccessfully: 'Login successfully!'
+            userCreateSuccessfully: 'User created successfully',
+            userUpdateSuccessfully: 'User modified successfully',
+            userDeleteSuccessfully: 'User deleted'
+        },
+        message: {
+            userDelete: 'Do you really want to delete this user?'
         }
     }
 };

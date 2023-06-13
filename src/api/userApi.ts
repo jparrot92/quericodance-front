@@ -15,15 +15,39 @@ export const listUsers = async (): Promise<User[]> => {
     }
 };
 
-export const createUser = async (
-    email: string,
-    password: string
-): Promise<User> => {
+export const getUser = async (id: string): Promise<User> => {
     try {
-        const { data } = await api.post<User>('/users', {
-            email,
-            password
-        });
+        const { data } = await api.get<User>(`/users/${id}`);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const createUser = async (user: User): Promise<User> => {
+    try {
+        const { data } = await api.post<User>('/users', user);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const updateUser = async (id: string, user: User): Promise<User> => {
+    try {
+        const { data } = await api.put<User>(`/users/${id}`, user);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const deleteUser = async (id: string): Promise<User> => {
+    try {
+        const { data } = await api.delete<User>(`/users/${id}`);
 
         return data;
     } catch (error) {

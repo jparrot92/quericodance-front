@@ -1,14 +1,26 @@
 import { RouteRecordRaw } from 'vue-router';
 
+const ROUTE_NAME = 'admin';
+
 const adminRoutes: RouteRecordRaw = {
-    path: '/admin',
-    name: 'admin',
+    path: `/${ROUTE_NAME}`,
+    redirect: `/${ROUTE_NAME}/admin-page`,
     component: () => import('src/modules/admin/layouts/AdminLayout.vue'),
     children: [
         {
-            path: '',
-            name: 'admin-page',
+            path: `/${ROUTE_NAME}/admin-page`,
+            name: `${ROUTE_NAME}-page`,
             component: () => import('src/modules/admin/pages/AdminPage.vue')
+        },
+        {
+            path: `/${ROUTE_NAME}/admin-user-form-page/:id?`,
+            name: `${ROUTE_NAME}-user-form-page`,
+            component: () => import('src/modules/admin/pages/UserFormPage.vue'),
+            props: (route) => {
+                return {
+                    id: route.params.id
+                };
+            }
         }
     ]
 };
