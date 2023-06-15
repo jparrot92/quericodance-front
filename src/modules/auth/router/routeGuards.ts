@@ -8,12 +8,12 @@ export const requireAuth = (
 ) => {
     const authStore = useAuthStore();
 
+    debugger;
+
     const isAuthenticated = authStore.checkAuthentication();
-    if (isAuthenticated) {
-        next();
-    } else {
-        next('/auth');
-    }
+
+    if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' });
+    else next();
 };
 
 export const requireAdmin = (

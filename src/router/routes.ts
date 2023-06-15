@@ -1,7 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
 
-import { requireAuth, requireAdmin } from '../modules/auth/router/routeGuards';
-
 import authRouter from '../modules/auth/router';
 import appointmentsRouter from '../modules/appointments/router';
 import doctorsRouter from '../modules/doctors/router';

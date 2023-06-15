@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import useUsers from '../../composables/useUsers';
-import useUser from '../../composables/useUser';
+import { useQuasar } from 'quasar';
 
-const { loading, users } = useUsers();
-const { removeUser } = useUser('');
+import useUsers from '../../composables/useUsers';
+
+const { loading, users, handleRemoveProduct } = useUsers();
+
+const $q = useQuasar();
 
 const columnsProduct: any[] = [
     {
@@ -135,7 +137,7 @@ const columnsProduct: any[] = [
                         color="negative"
                         dense
                         size="sm"
-                        @click="removeUser(props.row.id)"
+                        @click="handleRemoveProduct(props.row)"
                     >
                         <q-tooltip> Delete </q-tooltip>
                     </q-btn>
