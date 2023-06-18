@@ -9,8 +9,6 @@ import useNotify from 'src/shared/composables/useNotify';
 
 import { User } from '../models/user';
 
-import useUsers from '../composables/useUsers';
-
 const useUser = (id: string) => {
     const route = useRoute();
     const router = useRouter();
@@ -20,8 +18,6 @@ const useUser = (id: string) => {
     const $q = useQuasar();
 
     const { notifyError, notifySuccess } = useNotify();
-
-    const { loadUsers } = useUsers();
 
     const loading = ref<boolean>(false);
     const user = ref<User>({
@@ -95,7 +91,6 @@ const useUser = (id: string) => {
             try {
                 await deleteUser(id);
                 notifySuccess(t('admin.notifications.userDeleteSuccessfully'));
-                loadUsers();
             } catch (error) {
                 notifyError(error);
             }

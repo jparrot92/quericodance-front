@@ -8,8 +8,6 @@ export const requireAuth = (
 ) => {
     const authStore = useAuthStore();
 
-    debugger;
-
     const isAuthenticated = authStore.checkAuthentication();
 
     if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' });
