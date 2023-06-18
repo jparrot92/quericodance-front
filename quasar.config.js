@@ -11,7 +11,7 @@
 const { configure } = require('quasar/wrappers');
 const path = require('path');
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
     return {
         eslint: {
             // fix: true,
@@ -69,7 +69,11 @@ module.exports = configure(function (/* ctx */) {
 
             // publicPath: '/',
             // analyze: true,
-            // env: {},
+            env: {
+                API: ctx.dev
+                    ? 'http://localhost:3000'
+                    : 'https://medical-date-back.herokuapp.com',
+            },
             // rawDefine: {}
             // ignorePublicFolder: true,
             // minify: false,
