@@ -16,10 +16,19 @@ export default function useNotify() {
                 message: error || 'Failed !'
             });
         } else if (error && typeof error === 'object' && 'message' in error) {
-            $q.notify({
-                type: 'negative',
-                message: String(error.message) || 'Failed !'
-            });
+            if (Array.isArray(error.message)) {
+                error.message.forEach((errorMessage) => {
+                    $q.notify({
+                        type: 'negative',
+                        message: String(errorMessage) || 'Failed !'
+                    });
+                });
+            } else {
+                $q.notify({
+                    type: 'negative',
+                    message: String(error.message) || 'Failed !'
+                });
+            }
         } else {
             console.error('Unknown error: ' + error);
         }
