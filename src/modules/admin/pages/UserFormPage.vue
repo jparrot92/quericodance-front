@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import { defineAsyncComponent } from 'vue';
+
 import useUser from '../composables/useUser';
 
 const route = useRoute();
 
 const { id } = route.params as { id: string };
+
+const ImageUploaderPreview = defineAsyncComponent(
+    () => import('src/shared/components/ImageUploaderPreview.vue')
+);
 
 const { isUpdate, user, onSubmit } = useUser(id);
 </script>

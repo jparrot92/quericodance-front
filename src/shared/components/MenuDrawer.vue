@@ -2,13 +2,18 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import AppToolbar from 'src/shared/components/AppToolbar.vue';
+import { useRoute } from 'vue-router';
+
+import MainToolbar from 'src/shared/components/MainToolbar.vue';
+import DetailToolbar from 'src/shared/components/DetailToolbar.vue';
 
 import MenuItemDrawer, {
     ItemMenu
 } from 'src/shared/components/MenuItemDrawer.vue';
 
 const { t } = useI18n();
+
+const route = useRoute();
 
 const itemsMenu: ItemMenu[] = [
     {
@@ -46,15 +51,20 @@ function toggleLeftDrawer() {
 </script>
 
 <template>
-    <AppToolbar @toggleLeftDrawer="toggleLeftDrawer()" />
+    <template v-if="route.meta.toolbar === 'MainToolbar'">
+        <MainToolbar @toggleLeftDrawer="toggleLeftDrawer()" />
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-        <q-list>
-            <MenuItemDrawer
-                v-for="item in itemsMenu"
-                :key="item.title"
-                :item="item"
-            />
-        </q-list>
-    </q-drawer>
+        <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+            <q-list>
+                <MenuItemDrawer
+                    v-for="item in itemsMenu"
+                    :key="item.title"
+                    :item="item"
+                />
+            </q-list>
+        </q-drawer>
+    </template>
+    <template v-else-if="route.meta.toolbar === 'DetailToolbar'">
+        <DetailToolbar @toggleLeftDrawer="toggleLeftDrawer()" />
+    </template>
 </template>

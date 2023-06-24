@@ -10,12 +10,20 @@ const adminRoutes: RouteRecordRaw = {
         {
             path: `/${ROUTE_NAME}/admin-page`,
             name: `${ROUTE_NAME}-page`,
+            meta: {
+                toolbar: 'MainToolbar'
+            },
             component: () => import('src/modules/admin/pages/AdminPage.vue')
         },
         {
             path: `/${ROUTE_NAME}/admin-user-form-page/:id?`,
             name: `${ROUTE_NAME}-user-form-page`,
             component: () => import('src/modules/admin/pages/UserFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                titleCreate: 'admin.label.createUser',
+                titleEdit: 'admin.label.editUser'
+            },
             props: (route) => {
                 return {
                     id: route.params.id

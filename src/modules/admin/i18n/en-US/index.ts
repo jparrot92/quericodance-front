@@ -1,6 +1,8 @@
 export default {
     admin: {
         label: {
+            createUser: 'Create user',
+            editUser: 'Edit user',
             nif: 'NIF',
             name: 'Name',
             surname: 'Surname',
