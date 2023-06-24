@@ -1,13 +1,18 @@
 import { RouteRecordRaw } from 'vue-router';
 
+const ROUTE_NAME = 'patients';
+
 const patientsRoutes: RouteRecordRaw = {
-    path: '/patients',
-    name: 'patients',
+    path: `/${ROUTE_NAME}`,
+    redirect: `/${ROUTE_NAME}/patients-page`,
     component: () => import('src/modules/patients/layouts/PatientsLayout.vue'),
     children: [
         {
-            path: '',
-            name: 'patients-page',
+            path: `/${ROUTE_NAME}/patients-page`,
+            name: `${ROUTE_NAME}-page`,
+            meta: {
+                toolbar: 'MainToolbar'
+            },
             component: () =>
                 import('src/modules/patients/pages/PatientsPage.vue')
         }
