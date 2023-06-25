@@ -5,7 +5,8 @@ export default {
             editUser: 'Edit user',
             nif: 'NIF',
             name: 'Name',
-            surname: 'Surname',
+            surnames: 'Surnames',
+            dateOfBirth: 'Date of birth',
             phone: 'Phone',
             photo: 'Photo',
             streetAddress: 'Street address',
@@ -13,6 +14,7 @@ export default {
             city: 'City',
             state: 'State',
             zipCode: 'Zip code',
+            country: 'Country',
             email: 'Email',
             password: 'Password',
             confirmation: 'Confirmation'
@@ -20,7 +22,7 @@ export default {
         validations: {
             nifRequired: 'NIF is required',
             nameRequired: 'Name is required',
-            surnameRequired: 'Surname is required',
+            surnamesRequired: 'Last names are required',
             phoneRequired: 'Phone is required',
             photoRequired: 'Photo is required',
             streetAddressRequired: 'Street address is required',
@@ -28,6 +30,7 @@ export default {
             cityRequired: 'City is required',
             stateRequired: 'State is required',
             zipCodeRequired: 'Zip code is required',
+            countryRequired: 'Country is required',
             emailRequired: 'Email is required',
             passwordRequired: 'Password is required'
         },

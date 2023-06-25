@@ -1,14 +1,21 @@
 export interface User {
+    id: number;
     nif: string;
     name: string;
     surnames: string;
+    dateOfBirth: string;
     phone: string;
     photo: string;
-    streetAddress: string;
-    num: string;
+    email: string;
+    password?: string;
+    role: string;
+    address: Address;
+}
+
+export interface Address {
+    street: string;
     city: string;
     state: string;
-    zipCode: string;
-    email: string;
-    password: string;
+    postalCode: string;
+    country: string;
 }

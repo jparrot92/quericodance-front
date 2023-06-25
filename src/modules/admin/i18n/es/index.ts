@@ -5,7 +5,8 @@ export default {
             editUser: 'Editar usuario',
             nif: 'NIF',
             name: 'Nombre',
-            surname: 'Apellido',
+            surnames: 'Apellidos',
+            dateOfBirth: 'Fecha de nacimiento',
             phone: 'Teléfono',
             photo: 'Foto',
             streetAddress: 'Dirección',
@@ -13,6 +14,7 @@ export default {
             city: 'Ciudad',
             state: 'Estado',
             zipCode: 'Código postal',
+            country: 'País',
             email: 'Correo electrónico',
             password: 'Contraseña',
             confirmation: 'Confirmación'
@@ -20,7 +22,7 @@ export default {
         validations: {
             nifRequired: 'El NIF es requerido',
             nameRequired: 'El nombre es requerido',
-            surnameRequired: 'El apellido es requerido',
+            surnamesRequired: 'Los apellidos son requeridos',
             phoneRequired: 'El teléfono es requerido',
             photoRequired: 'La foto es requerida',
             streetAddressRequired: 'La dirección es requerida',
@@ -28,6 +30,7 @@ export default {
             cityRequired: 'La ciudad es requerida',
             stateRequired: 'El estado es requerido',
             zipCodeRequired: 'El código postal es requerido',
+            countryRequired: 'El país es requerido',
             emailRequired: 'El correo electrónico es requerido',
             passwordRequired: 'La contraseña es requerida'
         },

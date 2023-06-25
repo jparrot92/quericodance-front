@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { defineAsyncComponent } from 'vue';
 
@@ -12,7 +13,13 @@ const ImageUploaderPreview = defineAsyncComponent(
     () => import('src/shared/components/ImageUploaderPreview.vue')
 );
 
-const { isUpdate, user, onSubmit } = useUser(id);
+const { isUpdate, user, loadUser, onSubmit } = useUser(id);
+
+onMounted(() => {
+    if (isUpdate.value) {
+        loadUser();
+    }
+});
 </script>
 
 <template>
@@ -34,16 +41,6 @@ const { isUpdate, user, onSubmit } = useUser(id);
                 />
 
                 <q-input
-                    :label="$t('admin.label.nif')"
-                    v-model="user.nif"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('admin.validations.nifRequired')
-                    ]"
-                />
-
-                <q-input
                     :label="$t('admin.label.name')"
                     v-model="user.name"
                     :rules="[
@@ -54,14 +51,52 @@ const { isUpdate, user, onSubmit } = useUser(id);
                 />
 
                 <q-input
-                    :label="$t('admin.label.surname')"
+                    :label="$t('admin.label.surnames')"
                     v-model="user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.surnameRequired')
+                            $t('admin.validations.surnamesRequired')
                     ]"
                 />
+
+                <q-input
+                    :label="$t('admin.label.nif')"
+                    v-model="user.nif"
+                    :rules="[
+                        (val: string) =>
+                            (val && val.length > 0) ||
+                            $t('admin.validations.nifRequired')
+                    ]"
+                />
+
+                <q-input
+                    :label="$t('admin.label.dateOfBirth')"
+                    v-model="user.dateOfBirth"
+                    mask="date"
+                    :rules="['date']"
+                >
+                    <template v-slot:append>
+                        <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy
+                                cover
+                                transition-show="scale"
+                                transition-hide="scale"
+                            >
+                                <q-date v-model="user.dateOfBirth">
+                                    <div class="row items-center justify-end">
+                                        <q-btn
+                                            v-close-popup
+                                            label="Close"
+                                            color="primary"
+                                            flat
+                                        />
+                                    </div>
+                                </q-date>
+                            </q-popup-proxy>
+                        </q-icon>
+                    </template>
+                </q-input>
 
                 <q-input
                     :label="$t('admin.label.phone')"
@@ -75,7 +110,7 @@ const { isUpdate, user, onSubmit } = useUser(id);
 
                 <q-input
                     :label="$t('admin.label.streetAddress')"
-                    v-model="user.streetAddress"
+                    v-model="user.address.street"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -85,7 +120,7 @@ const { isUpdate, user, onSubmit } = useUser(id);
 
                 <q-input
                     :label="$t('admin.label.num')"
-                    v-model="user.num"
+                    v-model="user.address.city"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -95,7 +130,7 @@ const { isUpdate, user, onSubmit } = useUser(id);
 
                 <q-input
                     :label="$t('admin.label.state')"
-                    v-model="user.state"
+                    v-model="user.address.state"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -105,11 +140,21 @@ const { isUpdate, user, onSubmit } = useUser(id);
 
                 <q-input
                     :label="$t('admin.label.zipCode')"
-                    v-model="user.zipCode"
+                    v-model="user.address.postalCode"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
                             $t('admin.validations.zipCodeRequired')
+                    ]"
+                />
+
+                <q-input
+                    :label="$t('admin.label.country')"
+                    v-model="user.address.country"
+                    :rules="[
+                        (val: string) =>
+                            (val && val.length > 0) ||
+                            $t('admin.validations.countryRequired')
                     ]"
                 />
 

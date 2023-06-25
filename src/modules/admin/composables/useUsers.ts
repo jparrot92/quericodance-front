@@ -1,5 +1,6 @@
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 import useNotify from 'src/shared/composables/useNotify';
 
@@ -9,6 +10,8 @@ import { User } from '../models/user';
 
 const useUsers = () => {
     const $q = useQuasar();
+
+    const { t } = useI18n();
 
     const { notifySuccess, notifyError } = useNotify();
 
@@ -27,33 +30,29 @@ const useUsers = () => {
         }
     };
 
-    const handleRemoveProduct = async (category: { name: any; id: string }) => {
-        try {
-            $q.dialog({
-                title: 'Confirm',
-                message: `Do you really delete ${category.name} ?`,
-                cancel: true,
-                persistent: true
-            }).onOk(async () => {
-                await deleteUser(category.id);
-                notifySuccess('successfully deleted');
-                loadUsers();
-            });
-        } catch (error) {
-            notifyError(error);
-        }
+    const removeUser = async (id: string) => {
+        $q.dialog({
+            title: t('admin.label.confirmation'),
+            message: t('admin.message.userDelete'),
+            cancel: true,
+            persistent: true
+        }).onOk(async () => {
+            try {
+                await deleteUser(id);
+                notifySuccess(t('admin.notifications.userDeleteSuccessfully'));
+                await loadUsers();
+            } catch (error) {
+                notifyError(error);
+            }
+        });
     };
-
-    onMounted(() => {
-        loadUsers();
-    });
 
     return {
         // Properties
         loading,
         users,
         loadUsers,
-        handleRemoveProduct
+        removeUser
     };
 };
 

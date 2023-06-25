@@ -1,13 +1,12 @@
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { useQuasar } from 'quasar';
 
-import { getUser, createUser, updateUser, deleteUser } from 'src/api/userApi';
+import { getUser, createUser, updateUser } from 'src/api/userApi';
 
 import useNotify from 'src/shared/composables/useNotify';
 
-import { User } from '../models/user';
+import { User, Address } from '../models/user';
 
 const useUser = (id: string) => {
     const route = useRoute();
@@ -15,25 +14,29 @@ const useUser = (id: string) => {
 
     const { t } = useI18n();
 
-    const $q = useQuasar();
-
     const { notifyError, notifySuccess } = useNotify();
 
     const loading = ref<boolean>(false);
     const user = ref<User>({
+        id: 0,
         nif: '',
         name: '',
         surnames: '',
+        dateOfBirth: '',
         phone: '',
         photo: '',
-        streetAddress: '',
-        num: '',
-        city: '',
-        state: '',
-        zipCode: '',
         email: '',
-        password: ''
+        password: '',
+        role: '',
+        address: {
+            street: '',
+            city: '',
+            state: '',
+            postalCode: '',
+            country: ''
+        }
     });
+
     const isUpdate = computed(() => route.params.id);
 
     const onSubmit = async () => {
@@ -81,36 +84,14 @@ const useUser = (id: string) => {
         }
     };
 
-    const removeUser = async (id: string) => {
-        $q.dialog({
-            title: t('admin.label.confirmation'),
-            message: t('admin.message.userDelete'),
-            cancel: true,
-            persistent: true
-        }).onOk(async () => {
-            try {
-                await deleteUser(id);
-                notifySuccess(t('admin.notifications.userDeleteSuccessfully'));
-            } catch (error) {
-                notifyError(error);
-            }
-        });
-    };
-
-    onMounted(() => {
-        if (isUpdate.value) {
-            loadUser();
-        }
-    });
-
     return {
         // Properties
         loading,
         isUpdate,
         user,
         // Methods
-        onSubmit,
-        removeUser
+        loadUser,
+        onSubmit
     };
 };
 

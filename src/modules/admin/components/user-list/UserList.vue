@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 
 import useUsers from '../../composables/useUsers';
 
-const { loading, users, handleRemoveProduct } = useUsers();
+const { loading, users, loadUsers, removeUser } = useUsers();
 
 const $q = useQuasar();
+
+onMounted(() => {
+    loadUsers();
+});
 
 const columnsProduct: any[] = [
     {
@@ -137,7 +142,7 @@ const columnsProduct: any[] = [
                         color="negative"
                         dense
                         size="sm"
-                        @click="handleRemoveProduct(props.row)"
+                        @click="removeUser(props.row.id)"
                     >
                         <q-tooltip> Delete </q-tooltip>
                     </q-btn>
