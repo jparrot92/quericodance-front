@@ -1,25 +1,35 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { defineAsyncComponent } from 'vue';
 
-import useUser from '../composables/useUser';
+import useUsers from '../composables/useUsers';
 
 const route = useRoute();
-
-const { id } = route.params as { id: string };
 
 const ImageUploaderPreview = defineAsyncComponent(
     () => import('src/shared/components/ImageUploaderPreview.vue')
 );
 
-const { isUpdate, user, loadUser, onSubmit } = useUser(id);
+const { id } = route.params as { id: string };
+
+const isUpdate = computed(() => route.params.id);
+
+const { user, loadUser, saveUser, editUser } = useUsers();
 
 onMounted(() => {
     if (isUpdate.value) {
-        loadUser();
+        loadUser(id);
     }
 });
+
+const onSubmit = async () => {
+    if (isUpdate.value) {
+        editUser(id);
+    } else {
+        saveUser();
+    }
+};
 </script>
 
 <template>

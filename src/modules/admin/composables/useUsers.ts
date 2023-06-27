@@ -1,14 +1,23 @@
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 import useNotify from 'src/shared/composables/useNotify';
 
-import { listUsers, deleteUser } from 'src/api/userApi';
+import {
+    listUsers,
+    getUser,
+    createUser,
+    updateUser,
+    deleteUser
+} from 'src/api/userApi';
 
 import { User } from '../models/user';
 
 const useUsers = () => {
+    const router = useRouter();
+
     const $q = useQuasar();
 
     const { t } = useI18n();
@@ -17,12 +26,68 @@ const useUsers = () => {
 
     const loading = ref<boolean>(false);
     const users = ref<User[]>([]);
+    const user = ref<User>({
+        id: 0,
+        nif: '',
+        name: '',
+        surnames: '',
+        dateOfBirth: '',
+        phone: '',
+        photo: '',
+        email: '',
+        password: '',
+        role: '',
+        address: {
+            street: '',
+            city: '',
+            state: '',
+            postalCode: '',
+            country: ''
+        }
+    });
 
     const loadUsers = async () => {
         try {
             users.value = [];
             loading.value = true;
             users.value = await listUsers();
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    const loadUser = async (id: string) => {
+        try {
+            loading.value = true;
+            user.value = await getUser(id);
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    const saveUser = async () => {
+        try {
+            loading.value = true;
+            await createUser(user.value);
+            notifySuccess(t('admin.notifications.userUpdateSuccessfully'));
+            router.push({ name: 'admin-page' });
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    const editUser = async (id: string) => {
+        try {
+            loading.value = true;
+            user.value = await updateUser(id, user.value);
+            notifySuccess(t('admin.notifications.userUpdateSuccessfully'));
+            router.push({ name: 'admin-page' });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -51,7 +116,11 @@ const useUsers = () => {
         // Properties
         loading,
         users,
+        user,
         loadUsers,
+        loadUser,
+        saveUser,
+        editUser,
         removeUser
     };
 };
