@@ -24,6 +24,8 @@ const updateUserDateOfBirth = (value: string) => {
     user.value.dateOfBirth = value;
 };
 
+const roles = ['admin', 'secretary'];
+
 const onSubmit = async () => {
     if (isUpdate.value) {
         editUser(id);
@@ -170,6 +172,13 @@ const onSubmit = async () => {
                                       $t('admin.validations.passwordRequired')
                               ]
                     "
+                />
+
+                <q-select
+                    :label="$t('admin.label.role')"
+                    v-model="user.role"
+                    :options="roles"
+                    behavior="menu"
                 />
 
                 <q-btn

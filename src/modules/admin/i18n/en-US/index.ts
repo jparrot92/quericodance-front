@@ -20,7 +20,7 @@ export default {
             password: 'Password',
             changePassword: 'Change password',
             confirmation: 'Confirmation',
-            role: 'Roles',
+            role: 'Role',
             actions: 'Actions',
             save: 'Save',
             edit: 'Edit',
