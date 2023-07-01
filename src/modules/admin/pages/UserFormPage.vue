@@ -21,7 +21,8 @@ onMounted(() => {
 });
 
 const updateUserDateOfBirth = (value: string) => {
-    user.value.dateOfBirth = value;
+    const isoDate = new Date(value).toISOString();
+    user.value.dateOfBirth = isoDate;
 };
 
 const roles = ['admin', 'secretary'];
@@ -107,12 +108,12 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('admin.label.num')"
+                    :label="$t('admin.label.city')"
                     v-model="user.address.city"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.numRequired')
+                            $t('admin.validations.cityRequired')
                     ]"
                 />
 
