@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { defineAsyncComponent } from 'vue';
+
+import DateSelector from 'src/shared/components/DateSelector.vue';
 
 import useUsers from '../composables/useUsers';
 
 const route = useRoute();
-
-const ImageUploaderPreview = defineAsyncComponent(
-    () => import('src/shared/components/ImageUploaderPreview.vue')
-);
 
 const { id } = route.params as { id: string };
 
@@ -23,6 +20,10 @@ onMounted(() => {
     }
 });
 
+const updateUserDateOfBirth = (value: string) => {
+    user.value.dateOfBirth = value;
+};
+
 const onSubmit = async () => {
     if (isUpdate.value) {
         editUser(id);
@@ -35,9 +36,6 @@ const onSubmit = async () => {
 <template>
     <q-page padding>
         <div class="row justify-center">
-            <div class="col-12 text-center">
-                <p class="text-h6">Form User</p>
-            </div>
             <q-form
                 class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
                 @submit.prevent="onSubmit"
@@ -80,33 +78,11 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <q-input
+                <date-selector
+                    :value="user.dateOfBirth"
                     :label="$t('admin.label.dateOfBirth')"
-                    v-model="user.dateOfBirth"
-                    mask="date"
-                    :rules="['date']"
-                >
-                    <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy
-                                cover
-                                transition-show="scale"
-                                transition-hide="scale"
-                            >
-                                <q-date v-model="user.dateOfBirth">
-                                    <div class="row items-center justify-end">
-                                        <q-btn
-                                            v-close-popup
-                                            label="Close"
-                                            color="primary"
-                                            flat
-                                        />
-                                    </div>
-                                </q-date>
-                            </q-popup-proxy>
-                        </q-icon>
-                    </template>
-                </q-input>
+                    @update-date="updateUserDateOfBirth"
+                />
 
                 <q-input
                     :label="$t('admin.label.phone')"
@@ -179,30 +155,29 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('admin.label.password')"
+                    :label="
+                        isUpdate
+                            ? $t('admin.label.changePassword')
+                            : $t('admin.label.password')
+                    "
                     v-model="user.password"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('admin.validations.passwordRequired')
-                    ]"
+                    :rules="
+                        isUpdate
+                            ? []
+                            : [
+                                  (val) =>
+                                      (val && val.length > 0) ||
+                                      $t('admin.validations.passwordRequired')
+                              ]
+                    "
                 />
 
                 <q-btn
-                    :label="isUpdate ? 'Update' : 'Save'"
+                    :label="$t('admin.label.save')"
                     color="primary"
                     class="full-width"
                     rounded
                     type="submit"
-                />
-
-                <q-btn
-                    label="Cancel"
-                    color="primary"
-                    class="full-width"
-                    rounded
-                    flat
-                    :to="{ name: 'admin-page' }"
                 />
             </q-form>
         </div>

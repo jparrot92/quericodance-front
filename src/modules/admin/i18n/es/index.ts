@@ -3,6 +3,7 @@ export default {
         label: {
             createUser: 'Crear usuario',
             editUser: 'Editar usuario',
+            users: 'Usuarios',
             nif: 'NIF',
             name: 'Nombre',
             surnames: 'Apellidos',
@@ -17,7 +18,13 @@ export default {
             country: 'País',
             email: 'Correo electrónico',
             password: 'Contraseña',
-            confirmation: 'Confirmación'
+            changePassword: 'Cambiar contraseña',
+            confirmation: 'Confirmación',
+            role: 'Rol',
+            actions: 'Acciones',
+            save: 'Guardar',
+            edit: 'Editar',
+            delete: 'Borrar'
         },
         validations: {
             nifRequired: 'El NIF es requerido',

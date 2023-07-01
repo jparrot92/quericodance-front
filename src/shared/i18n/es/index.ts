@@ -3,11 +3,11 @@ export default {
         label: {
             profile: 'Perfil',
             logout: 'Cerrar sesión',
-            calendar: 'Calendar',
-            secretary: 'Administrative assistant',
+            calendar: 'Calendario',
+            secretary: 'Asistente administrativo',
             doctor: 'Doctor',
-            patient: 'Patient',
-            admin: 'Administrator'
+            patient: 'Paciente',
+            admin: 'Administrador'
         },
         message: {
             logout: '¿Quieres cerrar sesión?'

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 import useUsers from '../../composables/useUsers';
 
@@ -8,57 +9,67 @@ const { loading, users, loadUsers, removeUser } = useUsers();
 
 const $q = useQuasar();
 
+const { t } = useI18n();
+
 onMounted(() => {
     loadUsers();
 });
 
-const columnsProduct: any[] = [
+export interface ColumnTable {
+    name: string;
+    label: string;
+    field: string;
+    align?: 'left' | 'right' | 'center';
+    sortable?: boolean;
+}
+
+const columnsUser: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
-        label: 'Img',
+        label: t('admin.label.photo'),
         field: 'photo',
         sortable: false
     },
     {
         name: 'nif',
         align: 'left',
-        label: 'Name',
+        label: t('admin.label.nif'),
         field: 'nif',
         sortable: true
     },
     {
         name: 'name',
         align: 'left',
-        label: 'Name',
+        label: t('admin.label.name'),
         field: 'name',
         sortable: true
     },
     {
         name: 'surnames',
         align: 'left',
-        label: 'Amount',
+        label: t('admin.label.surnames'),
         field: 'surnames',
         sortable: true
     },
     {
         name: 'email',
         align: 'left',
-        label: 'Amount',
+        label: t('admin.label.email'),
         field: 'email',
         sortable: true
     },
     {
         name: 'role',
         align: 'left',
-        label: 'Amount',
+        label: t('admin.label.role'),
         field: 'role',
         sortable: true
     },
     {
         name: 'actions',
         align: 'right',
-        label: 'Actions',
+        label: t('admin.label.actions'),
         field: 'actions',
         sortable: false
     }
@@ -69,35 +80,17 @@ const columnsProduct: any[] = [
     <div class="row">
         <q-table
             :rows="users"
-            :columns="columnsProduct"
+            :columns="columnsUser"
             row-key="id"
             class="col-12"
             :loading="loading"
         >
             <template v-slot:top>
-                <span class="text-h6"> Product </span>
-                <q-btn
-                    label="My Store"
-                    dense
-                    size="sm"
-                    outline
-                    class="q-ml-sm"
-                    icon="mdi-store"
-                    color="primary"
-                />
-                <q-btn
-                    label="Copy Link"
-                    dense
-                    size="sm"
-                    outline
-                    class="q-ml-sm"
-                    icon="mdi-content-copy"
-                    color="primary"
-                />
+                <span class="text-h6"> {{ $t('admin.label.users') }} </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    label="Add New"
+                    :label="$t('admin.label.createUser')"
                     color="primary"
                     icon="mdi-plus"
                     dense
@@ -135,7 +128,7 @@ const columnsProduct: any[] = [
                             })
                         "
                     >
-                        <q-tooltip> Edit </q-tooltip>
+                        <q-tooltip> {{ $t('admin.label.edit') }} </q-tooltip>
                     </q-btn>
                     <q-btn
                         icon="mdi-delete-outline"
@@ -144,7 +137,7 @@ const columnsProduct: any[] = [
                         size="sm"
                         @click="removeUser(props.row.id)"
                     >
-                        <q-tooltip> Delete </q-tooltip>
+                        <q-tooltip> {{ $t('admin.label.delete') }} </q-tooltip>
                     </q-btn>
                 </q-td>
             </template>
