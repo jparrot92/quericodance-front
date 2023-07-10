@@ -2,6 +2,7 @@
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
+import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
 
 import useUsers from '../composables/useUsers';
@@ -43,12 +44,10 @@ const onSubmit = async () => {
                 class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
                 @submit.prevent="onSubmit"
             >
-                <q-input
-                    :label="$t('admin.label.photo')"
-                    stack-label
-                    v-model="user.photo"
-                    type="file"
-                    accept="image/*"
+                <ImageUploaderPreview
+                    v-if="isUpdate"
+                    :id="id"
+                    :photo="user.photo"
                 />
 
                 <q-input

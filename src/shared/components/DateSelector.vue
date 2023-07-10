@@ -16,7 +16,6 @@ const selectedDate = ref<string>('');
 
 watch(props, () => {
     selectedDate.value = props.value;
-    console.log(selectedDate.value);
 });
 
 const updateDate = () => {

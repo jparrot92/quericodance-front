@@ -45,6 +45,27 @@ export const updateUser = async (id: string, user: User): Promise<User> => {
     }
 };
 
+export const uploadPhoto = async (id: string, file: File): Promise<string> => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const { data } = await api.post<{ imageUrl: string }>(
+            `/users/${id}/profile-picture`,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+
+        return data.imageUrl;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
 export const deleteUser = async (id: string): Promise<User> => {
     try {
         const { data } = await api.delete<User>(`/users/${id}`);
