@@ -2,7 +2,7 @@
 import { ref, watch, defineProps, defineEmits } from 'vue';
 import { useQuasar } from 'quasar';
 
-import { uploadPhoto } from 'src/api/userApi';
+import { deletePhoto, uploadPhoto } from 'src/api/userApi';
 
 interface Props {
     id: string;
@@ -48,6 +48,12 @@ const choosePicture = () => {
         fileInput.value.click();
     }
 };
+
+const deletePicture = async () => {
+    await deletePhoto(id.value);
+    photo.value = '';
+    showDialog.value = false;
+};
 </script>
 
 <template>
@@ -87,7 +93,7 @@ const choosePicture = () => {
                     </q-item-section>
                 </q-item>
 
-                <q-item clickable v-ripple>
+                <q-item clickable v-ripple @click="deletePicture">
                     <q-item-section class="text-center text-bold text-negative">
                         Eliminar foto actual
                     </q-item-section>

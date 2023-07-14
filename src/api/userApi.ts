@@ -75,3 +75,13 @@ export const deleteUser = async (id: string): Promise<User> => {
         throw handleError(error);
     }
 };
+
+export const deletePhoto = async (id: string): Promise<User> => {
+    try {
+        const { data } = await api.delete<User>(`/users/${id}/profile-picture`);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
