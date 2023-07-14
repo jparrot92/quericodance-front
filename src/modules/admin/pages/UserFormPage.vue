@@ -22,8 +22,7 @@ onMounted(() => {
 });
 
 const updateUserDateOfBirth = (value: string) => {
-    const isoDate = new Date(value).toISOString();
-    user.value.dateOfBirth = isoDate;
+    user.value.dateOfBirth = value;
 };
 
 const roles = ['admin', 'secretary'];
@@ -81,7 +80,7 @@ const onSubmit = async () => {
                 />
 
                 <date-selector
-                    :value="user.dateOfBirth"
+                    :date="user.dateOfBirth"
                     :label="$t('admin.label.dateOfBirth')"
                     @update-date="updateUserDateOfBirth"
                 />

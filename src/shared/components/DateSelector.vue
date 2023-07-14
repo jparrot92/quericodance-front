@@ -2,7 +2,7 @@
 import { ref, watch, defineProps, defineEmits } from 'vue';
 
 interface Props {
-    value: string;
+    date: string;
     label: string;
 }
 interface Emits {
@@ -15,11 +15,29 @@ const emit = defineEmits<Emits>();
 const selectedDate = ref<string>('');
 
 watch(props, () => {
-    selectedDate.value = props.value;
+    selectedDate.value = props.date;
 });
 
-const updateDate = () => {
-    emit('updateDate', selectedDate.value);
+const updateDate = (value: any) => {
+    emit('updateDate', convertISODate(value));
+};
+
+const convertISODate = (date: string) => {
+    const isoDate = new Date(date);
+    const year = isoDate.getFullYear();
+    const month = isoDate.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que debemos sumar 1
+    const day = isoDate.getDate();
+    const hour = isoDate.getHours();
+    const minute = isoDate.getMinutes();
+    const second = isoDate.getSeconds();
+
+    const isoString = `${year}-${month.toString().padStart(2, '0')}-${day
+        .toString()
+        .padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute
+        .toString()
+        .padStart(2, '0')}:${second.toString().padStart(2, '0')}.000Z`;
+
+    return isoString;
 };
 
 const locale = {
@@ -52,7 +70,7 @@ const locale = {
                 >
                     <q-date
                         v-model="selectedDate"
-                        @input="updateDate"
+                        @update:model-value="updateDate"
                         :locale="locale"
                     >
                         <div class="row items-center justify-end">
