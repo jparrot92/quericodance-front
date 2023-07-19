@@ -12,7 +12,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const id = ref<string>(props.id);
-const photo = ref<string | null>('');
+const photo = ref<string | null>('src/assets/sinFoto.png');
 
 watch(
     () => props.photo,
@@ -51,31 +51,32 @@ const choosePicture = () => {
 
 const deletePicture = async () => {
     await deletePhoto(id.value);
-    photo.value = '';
+    photo.value = 'src/assets/sinFoto.png';
     showDialog.value = false;
 };
 </script>
 
 <template>
-    <q-avatar size="200px">
-        <q-img :src="photo" no-native-menu>
-            <q-btn
-                class="absolute all-pointer-events"
-                round
-                color="primary"
-                icon="shopping_cart"
-                style="top: 8px; left: 140px"
-                @click="showDialog = true"
-            >
-                <q-tooltip>Seleccionar foto de perfil</q-tooltip>
-            </q-btn>
-        </q-img>
+    <q-avatar size="150px">
+        <q-img :src="photo" :ratio="1" />
+        <q-icon
+            class="absolute all-pointer-events"
+            size="32px"
+            name="info"
+            color="primary"
+            style="top: 8px; left: 115px; cursor: pointer"
+            @click="showDialog = true"
+        >
+            <q-tooltip>Seleccionar foto del perfil</q-tooltip>
+        </q-icon>
     </q-avatar>
+
     <input
         type="file"
         ref="fileInput"
         accept="image/*"
         @change="handleImageChange"
+        style="display: none"
     />
 
     <q-dialog v-model="showDialog">
