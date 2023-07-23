@@ -104,7 +104,7 @@ const columnsUser: ColumnTable[] = [
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
                     <q-avatar v-if="props.row.photo">
-                        <img :src="props.row.photo" />
+                        <q-img :ratio="1" :src="props.row.photo" />
                     </q-avatar>
                     <q-avatar
                         v-else
