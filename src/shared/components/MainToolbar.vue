@@ -37,7 +37,15 @@ const handleLogout = async () => {
 
             <q-btn-dropdown flat color="white" icon="person">
                 <q-list>
-                    <q-item clickable v-close-popup @click="handleLogout">
+                    <q-item
+                        clickable
+                        v-close-popup
+                        @click="
+                            $router.push({
+                                name: 'profile-form-page'
+                            })
+                        "
+                    >
                         <q-item-section>
                             <q-item-label>
                                 {{ $t('shared.label.profile') }}

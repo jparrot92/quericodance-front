@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
 import authRouter from '../modules/auth/router';
+import profileRouter from '../modules/profile/router';
 import appointmentsRouter from '../modules/appointments/router';
 import doctorsRouter from '../modules/doctors/router';
 import patientsRouter from '../modules/patients/router';
@@ -10,6 +11,9 @@ import adminRouter from '../modules/admin/router';
 const routes: RouteRecordRaw[] = [
     {
         ...authRouter
+    },
+    {
+        ...profileRouter
     },
     {
         ...appointmentsRouter
