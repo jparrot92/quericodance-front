@@ -36,7 +36,7 @@ const onSubmit = async () => {
                 @submit.prevent="onSubmit"
             >
                 <div style="text-align: center">
-                    <ImageUploaderPreview :id="id" :photo="user.photo" />
+                    <ImageUploaderPreview :id="user.id" :photo="user.photo" />
                 </div>
 
                 <q-input

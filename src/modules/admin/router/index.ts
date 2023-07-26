@@ -21,7 +21,7 @@ const adminRoutes: RouteRecordRaw = {
             component: () => import('src/modules/admin/pages/UserFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                titleCreate: 'admin.label.createUser',
+                title: 'admin.label.createUser',
                 titleEdit: 'admin.label.editUser'
             },
             props: (route) => {

@@ -5,13 +5,13 @@ import { useQuasar } from 'quasar';
 import { deletePhoto, uploadPhoto } from 'src/api/userApi';
 
 interface Props {
-    id: string;
+    id: number;
     photo?: string;
 }
 
 const props = defineProps<Props>();
 
-const id = ref<string>(props.id);
+const id = ref<number>(props.id);
 const photo = ref<string | null>('src/assets/sinFoto.png');
 
 watch(

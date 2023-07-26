@@ -7,7 +7,7 @@ const route = useRoute();
 const { t } = useI18n();
 
 // Extraer la clave de route.meta.titleEdit
-let titleKey = route.meta.titleCreate;
+let titleKey = route.meta.title;
 if (route.params.id) {
     titleKey = route.meta.titleEdit;
 }
