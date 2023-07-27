@@ -5,7 +5,7 @@ const ROUTE_NAME = 'patients';
 const patientsRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
     redirect: `/${ROUTE_NAME}/patients-page`,
-    component: () => import('src/modules/patients/layouts/PatientsLayout.vue'),
+    component: () => import('src/modules/patient/layouts/PatientsLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}/patients-page`,
@@ -14,7 +14,7 @@ const patientsRoutes: RouteRecordRaw = {
                 toolbar: 'MainToolbar'
             },
             component: () =>
-                import('src/modules/patients/pages/PatientsPage.vue')
+                import('src/modules/patient/pages/PatientsPage.vue')
         }
     ]
 };

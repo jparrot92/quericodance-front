@@ -5,7 +5,7 @@ const ROUTE_NAME = 'doctors';
 const doctorsRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
     redirect: `/${ROUTE_NAME}/doctors-page`,
-    component: () => import('src/modules/doctors/layouts/DoctorsLayout.vue'),
+    component: () => import('src/modules/doctor/layouts/DoctorsLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}/doctors-page`,
@@ -13,7 +13,7 @@ const doctorsRoutes: RouteRecordRaw = {
             meta: {
                 toolbar: 'MainToolbar'
             },
-            component: () => import('src/modules/doctors/pages/DoctorsPage.vue')
+            component: () => import('src/modules/doctor/pages/DoctorsPage.vue')
         }
     ]
 };
