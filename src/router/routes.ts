@@ -5,7 +5,6 @@ import profileRouter from '../modules/profile/router';
 import appointmentsRouter from '../modules/appointments/router';
 import doctorRouter from '../modules/doctor/router';
 import patientRouter from '../modules/patient/router';
-import secretaryRouter from '../modules/secretary/router';
 import adminRouter from '../modules/admin/router';
 
 const routes: RouteRecordRaw[] = [
@@ -23,9 +22,6 @@ const routes: RouteRecordRaw[] = [
     },
     {
         ...patientRouter
-    },
-    {
-        ...secretaryRouter
     },
     {
         ...adminRouter

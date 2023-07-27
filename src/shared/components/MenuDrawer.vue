@@ -22,11 +22,6 @@ const itemsMenu: ItemMenu[] = [
         link: 'appointments-page'
     },
     {
-        title: t('shared.label.secretary'),
-        icon: 'assignment_ind',
-        link: 'secretary-page'
-    },
-    {
         title: t('shared.label.doctor'),
         icon: 'local_hospital',
         link: 'doctors-page'
