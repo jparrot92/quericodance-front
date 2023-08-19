@@ -5,8 +5,8 @@ export default {
             logout: 'Cerrar sesión',
             calendar: 'Calendario',
             secretary: 'Asistente administrativo',
-            doctor: 'Doctor',
-            patient: 'Paciente',
+            teacher: 'Teacher',
+            student: 'Paciente',
             admin: 'Administrador'
         },
         message: {

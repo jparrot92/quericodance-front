@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, defineProps, defineEmits } from 'vue';
-import { useQuasar } from 'quasar';
+import { ref, watch, defineProps } from 'vue';
 
 import { deletePhoto, uploadPhoto } from 'src/api/userApi';
 

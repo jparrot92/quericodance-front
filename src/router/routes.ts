@@ -3,8 +3,8 @@ import { RouteRecordRaw } from 'vue-router';
 import authRouter from '../modules/auth/router';
 import profileRouter from '../modules/profile/router';
 import appointmentsRouter from '../modules/appointments/router';
-import doctorRouter from '../modules/doctor/router';
-import patientRouter from '../modules/patient/router';
+import teacherRouter from '../modules/teacher/router';
+import studentRouter from '../modules/student/router';
 import adminRouter from '../modules/admin/router';
 
 const routes: RouteRecordRaw[] = [
@@ -18,10 +18,10 @@ const routes: RouteRecordRaw[] = [
         ...appointmentsRouter
     },
     {
-        ...doctorRouter
+        ...teacherRouter
     },
     {
-        ...patientRouter
+        ...studentRouter
     },
     {
         ...adminRouter

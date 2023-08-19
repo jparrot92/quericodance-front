@@ -22,14 +22,14 @@ const itemsMenu: ItemMenu[] = [
         link: 'appointments-page'
     },
     {
-        title: t('shared.label.doctor'),
+        title: t('shared.label.teacher'),
         icon: 'local_hospital',
-        link: 'doctors-page'
+        link: 'teachers-page'
     },
     {
-        title: t('shared.label.patient'),
+        title: t('shared.label.student'),
         icon: 'personal_injury',
-        link: 'patients-page'
+        link: 'students-page'
     },
     {
         title: t('shared.label.admin'),
