@@ -35,35 +35,28 @@ const columnsUser: ColumnTable[] = [
         name: 'nif',
         align: 'left',
         label: t('admin.label.nif'),
-        field: 'nif',
+        field: (row) => row.user.nif,
         sortable: true
     },
     {
         name: 'name',
         align: 'left',
         label: t('admin.label.name'),
-        field: 'name',
+        field: (row) => row.user.name,
         sortable: true
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('admin.label.surnames'),
-        field: 'surnames',
+        field: (row) => row.user.surnames,
         sortable: true
     },
     {
         name: 'email',
         align: 'left',
         label: t('admin.label.email'),
-        field: 'email',
-        sortable: true
-    },
-    {
-        name: 'role',
-        align: 'left',
-        label: t('admin.label.role'),
-        field: 'role',
+        field: (row) => row.user.email,
         sortable: true
     },
     {
@@ -98,7 +91,7 @@ const columnsUser: ColumnTable[] = [
                     dense
                     @click="
                         $router.push({
-                            name: 'admin-user-form-page'
+                            name: 'students-student-form-page'
                         })
                     "
                 />

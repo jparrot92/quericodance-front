@@ -14,6 +14,22 @@ const studentsRoutes: RouteRecordRaw = {
                 toolbar: 'MainToolbar'
             },
             component: () => import('src/modules/student/pages/StudentPage.vue')
+        },
+        {
+            path: `/${ROUTE_NAME}/student-form-page/:id?`,
+            name: `${ROUTE_NAME}-student-form-page`,
+            component: () =>
+                import('src/modules/student/pages/StudentFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'admin.label.createUser',
+                titleEdit: 'admin.label.editUser'
+            },
+            props: (route) => {
+                return {
+                    id: route.params.id
+                };
+            }
         }
     ]
 };
