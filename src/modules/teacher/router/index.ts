@@ -14,6 +14,22 @@ const teachersRoutes: RouteRecordRaw = {
                 toolbar: 'MainToolbar'
             },
             component: () => import('src/modules/teacher/pages/TeacherPage.vue')
+        },
+        {
+            path: `/${ROUTE_NAME}/teacher-form-page/:id?`,
+            name: `${ROUTE_NAME}-teacher-form-page`,
+            component: () =>
+                import('src/modules/teacher/pages/TeacherFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'teacher.label.createTeacher',
+                titleEdit: 'teacher.label.editTeacher'
+            },
+            props: (route) => {
+                return {
+                    id: route.params.id
+                };
+            }
         }
     ]
 };

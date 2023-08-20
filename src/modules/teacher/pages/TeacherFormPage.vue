@@ -173,16 +173,6 @@ const onSubmit = async () => {
                     "
                 />
 
-                <q-input
-                    :label="$t('admin.label.email')"
-                    v-model="teacher.user.email"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('admin.validations.emailRequired')
-                    ]"
-                />
-
                 <q-btn
                     :label="$t('admin.label.save')"
                     color="primary"
