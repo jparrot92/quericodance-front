@@ -22,8 +22,8 @@ const studentsRoutes: RouteRecordRaw = {
                 import('src/modules/student/pages/StudentFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'admin.label.createUser',
-                titleEdit: 'admin.label.editUser'
+                title: 'user.label.createUser',
+                titleEdit: 'user.label.editUser'
             },
             props: (route) => {
                 return {

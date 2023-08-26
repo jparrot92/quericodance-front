@@ -27,49 +27,49 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
-        label: t('admin.label.photo'),
+        label: t('user.label.photo'),
         field: 'photo',
         sortable: false
     },
     {
         name: 'nif',
         align: 'left',
-        label: t('admin.label.nif'),
+        label: t('user.label.nif'),
         field: 'nif',
         sortable: true
     },
     {
         name: 'name',
         align: 'left',
-        label: t('admin.label.name'),
+        label: t('user.label.name'),
         field: 'name',
         sortable: true
     },
     {
         name: 'surnames',
         align: 'left',
-        label: t('admin.label.surnames'),
+        label: t('user.label.surnames'),
         field: 'surnames',
         sortable: true
     },
     {
         name: 'email',
         align: 'left',
-        label: t('admin.label.email'),
+        label: t('user.label.email'),
         field: 'email',
         sortable: true
     },
     {
         name: 'role',
         align: 'left',
-        label: t('admin.label.role'),
+        label: t('user.label.role'),
         field: 'role',
         sortable: true
     },
     {
         name: 'actions',
         align: 'right',
-        label: t('admin.label.actions'),
+        label: t('user.label.actions'),
         field: 'actions',
         sortable: false
     }
@@ -86,17 +86,17 @@ const columnsUser: ColumnTable[] = [
             :loading="loading"
         >
             <template v-slot:top>
-                <span class="text-h6"> {{ $t('admin.label.users') }} </span>
+                <span class="text-h6"> {{ $t('user.label.users') }} </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    :label="$t('admin.label.createUser')"
+                    :label="$t('user.label.createUser')"
                     color="primary"
                     icon="mdi-plus"
                     dense
                     @click="
                         $router.push({
-                            name: 'admin-user-form-page'
+                            name: 'user-user-form-page'
                         })
                     "
                 />
@@ -123,12 +123,12 @@ const columnsUser: ColumnTable[] = [
                         size="sm"
                         @click="
                             $router.push({
-                                name: 'admin-user-form-page',
+                                name: 'user-user-form-page',
                                 params: { id: props.row.id }
                             })
                         "
                     >
-                        <q-tooltip> {{ $t('admin.label.edit') }} </q-tooltip>
+                        <q-tooltip> {{ $t('user.label.edit') }} </q-tooltip>
                     </q-btn>
                     <q-btn
                         icon="mdi-delete-outline"
@@ -137,7 +137,7 @@ const columnsUser: ColumnTable[] = [
                         size="sm"
                         @click="removeUser(props.row.id)"
                     >
-                        <q-tooltip> {{ $t('admin.label.delete') }} </q-tooltip>
+                        <q-tooltip> {{ $t('user.label.delete') }} </q-tooltip>
                     </q-btn>
                 </q-td>
             </template>

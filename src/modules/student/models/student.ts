@@ -1,4 +1,4 @@
-import { User } from 'src/modules/admin/models/user';
+import { User } from 'src/modules/user/models/user';
 
 export interface Student {
     user: User;

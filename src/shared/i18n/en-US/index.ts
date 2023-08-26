@@ -6,8 +6,8 @@ export default {
             calendar: 'Calendario',
             secretary: 'Asistente administrativo',
             teacher: 'Teacher',
-            student: 'Paciente',
-            admin: 'Administrador'
+            student: 'Student',
+            user: 'User'
         },
         message: {
             logout: 'Do you really want to leave ?'

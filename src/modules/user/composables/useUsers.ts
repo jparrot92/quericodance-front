@@ -73,8 +73,8 @@ const useUsers = () => {
         try {
             loading.value = true;
             await createUser(user.value);
-            notifySuccess(t('admin.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'admin-page' });
+            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
+            router.push({ name: 'user-page' });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -86,8 +86,8 @@ const useUsers = () => {
         try {
             loading.value = true;
             user.value = await updateUser(id, user.value);
-            notifySuccess(t('admin.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'admin-page' });
+            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
+            router.push({ name: 'user-page' });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -97,14 +97,14 @@ const useUsers = () => {
 
     const removeUser = async (id: string) => {
         $q.dialog({
-            title: t('admin.label.confirmation'),
-            message: t('admin.message.userDelete'),
+            title: t('user.label.confirmation'),
+            message: t('user.message.userDelete'),
             cancel: true,
             persistent: true
         }).onOk(async () => {
             try {
                 await deleteUser(id);
-                notifySuccess(t('admin.notifications.userDeleteSuccessfully'));
+                notifySuccess(t('user.notifications.userDeleteSuccessfully'));
                 await loadUsers();
             } catch (error) {
                 notifyError(error);

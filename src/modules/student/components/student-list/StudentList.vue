@@ -27,42 +27,42 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
-        label: t('admin.label.photo'),
+        label: t('user.label.photo'),
         field: 'photo',
         sortable: false
     },
     {
         name: 'nif',
         align: 'left',
-        label: t('admin.label.nif'),
+        label: t('user.label.nif'),
         field: (row) => row.user.nif,
         sortable: true
     },
     {
         name: 'name',
         align: 'left',
-        label: t('admin.label.name'),
+        label: t('user.label.name'),
         field: (row) => row.user.name,
         sortable: true
     },
     {
         name: 'surnames',
         align: 'left',
-        label: t('admin.label.surnames'),
+        label: t('user.label.surnames'),
         field: (row) => row.user.surnames,
         sortable: true
     },
     {
         name: 'email',
         align: 'left',
-        label: t('admin.label.email'),
+        label: t('user.label.email'),
         field: (row) => row.user.email,
         sortable: true
     },
     {
         name: 'actions',
         align: 'right',
-        label: t('admin.label.actions'),
+        label: t('user.label.actions'),
         field: 'actions',
         sortable: false
     }
@@ -118,12 +118,12 @@ const columnsUser: ColumnTable[] = [
                         size="sm"
                         @click="
                             $router.push({
-                                name: 'admin-user-form-page',
+                                name: 'user-user-form-page',
                                 params: { id: props.row.id }
                             })
                         "
                     >
-                        <q-tooltip> {{ $t('admin.label.edit') }} </q-tooltip>
+                        <q-tooltip> {{ $t('user.label.edit') }} </q-tooltip>
                     </q-btn>
                     <q-btn
                         icon="mdi-delete-outline"
@@ -132,7 +132,7 @@ const columnsUser: ColumnTable[] = [
                         size="sm"
                         @click="removeStudent(props.row.id)"
                     >
-                        <q-tooltip> {{ $t('admin.label.delete') }} </q-tooltip>
+                        <q-tooltip> {{ $t('user.label.delete') }} </q-tooltip>
                     </q-btn>
                 </q-td>
             </template>

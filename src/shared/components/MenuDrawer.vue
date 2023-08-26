@@ -32,9 +32,9 @@ const itemsMenu: ItemMenu[] = [
         link: 'students-page'
     },
     {
-        title: t('shared.label.admin'),
+        title: t('shared.label.user'),
         icon: 'engineering',
-        link: 'admin-page'
+        link: 'user-page'
     }
 ];
 

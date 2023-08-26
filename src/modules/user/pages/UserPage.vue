@@ -2,7 +2,7 @@
 import { defineAsyncComponent } from 'vue';
 
 const UserList = defineAsyncComponent(
-    () => import('src/modules/admin/components/user-list/UserList.vue')
+    () => import('src/modules/user/components/user-list/UserList.vue')
 );
 </script>
 
@@ -15,7 +15,7 @@ const UserList = defineAsyncComponent(
                 fab
                 icon="mdi-plus"
                 color="primary"
-                :to="{ name: 'admin-user-form-page' }"
+                :to="{ name: 'user-user-form-page' }"
             />
         </q-page-sticky>
     </q-page>

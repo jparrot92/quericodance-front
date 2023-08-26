@@ -46,122 +46,122 @@ const onSubmit = async () => {
                 <div style="text-align: center">
                     <ImageUploaderPreview
                         v-if="isUpdate"
-                        :id="id"
+                        :id="+id"
                         :photo="user.photo"
                     />
                 </div>
 
                 <q-input
-                    :label="$t('admin.label.name')"
+                    :label="$t('user.label.name')"
                     v-model="user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.nameRequired')
+                            $t('user.validations.nameRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.surnames')"
+                    :label="$t('user.label.surnames')"
                     v-model="user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.surnamesRequired')
+                            $t('user.validations.surnamesRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.nif')"
+                    :label="$t('user.label.nif')"
                     v-model="user.nif"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.nifRequired')
+                            $t('user.validations.nifRequired')
                     ]"
                 />
 
                 <date-selector
                     :date="user.dateOfBirth"
-                    :label="$t('admin.label.dateOfBirth')"
+                    :label="$t('user.label.dateOfBirth')"
                     @update-date="updateUserDateOfBirth"
                 />
 
                 <q-input
-                    :label="$t('admin.label.phone')"
+                    :label="$t('user.label.phone')"
                     v-model="user.phone"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.phoneRequired')
+                            $t('user.validations.phoneRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.streetAddress')"
+                    :label="$t('user.label.streetAddress')"
                     v-model="user.address.street"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.streetAddressRequired')
+                            $t('user.validations.streetAddressRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.city')"
+                    :label="$t('user.label.city')"
                     v-model="user.address.city"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.cityRequired')
+                            $t('user.validations.cityRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.state')"
+                    :label="$t('user.label.state')"
                     v-model="user.address.state"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.stateRequired')
+                            $t('user.validations.stateRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.zipCode')"
+                    :label="$t('user.label.zipCode')"
                     v-model="user.address.postalCode"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.zipCodeRequired')
+                            $t('user.validations.zipCodeRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.country')"
+                    :label="$t('user.label.country')"
                     v-model="user.address.country"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.countryRequired')
+                            $t('user.validations.countryRequired')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('admin.label.email')"
+                    :label="$t('user.label.email')"
                     v-model="user.email"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('admin.validations.emailRequired')
+                            $t('user.validations.emailRequired')
                     ]"
                 />
 
                 <q-input
                     :label="
                         isUpdate
-                            ? $t('admin.label.changePassword')
-                            : $t('admin.label.password')
+                            ? $t('user.label.changePassword')
+                            : $t('user.label.password')
                     "
                     v-model="user.password"
                     :rules="
@@ -170,20 +170,20 @@ const onSubmit = async () => {
                             : [
                                   (val) =>
                                       (val && val.length > 0) ||
-                                      $t('admin.validations.passwordRequired')
+                                      $t('user.validations.passwordRequired')
                               ]
                     "
                 />
 
                 <q-select
-                    :label="$t('admin.label.role')"
+                    :label="$t('user.label.role')"
                     v-model="user.role"
                     :options="roles"
                     behavior="menu"
                 />
 
                 <q-btn
-                    :label="$t('admin.label.save')"
+                    :label="$t('user.label.save')"
                     color="primary"
                     class="full-width"
                     rounded

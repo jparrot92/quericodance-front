@@ -1,5 +1,5 @@
 export default {
-    admin: {
+    user: {
         label: {
             createUser: 'Crear usuario',
             editUser: 'Editar usuario',

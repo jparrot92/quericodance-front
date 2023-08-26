@@ -5,9 +5,9 @@ export default {
             logout: 'Cerrar sesión',
             calendar: 'Calendario',
             secretary: 'Asistente administrativo',
-            teacher: 'Teacher',
-            student: 'Paciente',
-            admin: 'Administrador'
+            teacher: 'Professor',
+            student: 'Estudiante',
+            user: 'Usuario'
         },
         message: {
             logout: '¿Quieres cerrar sesión?'

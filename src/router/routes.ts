@@ -5,7 +5,7 @@ import profileRouter from '../modules/profile/router';
 import appointmentsRouter from '../modules/appointments/router';
 import teacherRouter from '../modules/teacher/router';
 import studentRouter from '../modules/student/router';
-import adminRouter from '../modules/admin/router';
+import userRouter from '../modules/user/router';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
         ...studentRouter
     },
     {
-        ...adminRouter
+        ...userRouter
     },
     //default route redirection
     { path: '/', redirect: { name: 'appointments-page' } },
