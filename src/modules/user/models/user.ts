@@ -9,13 +9,4 @@ export interface User {
     email: string;
     password?: string;
     role: string;
-    address: Address;
-}
-
-export interface Address {
-    street: string;
-    city: string;
-    state: string;
-    postalCode: string;
-    country: string;
 }

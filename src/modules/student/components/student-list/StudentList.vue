@@ -118,7 +118,7 @@ const columnsUser: ColumnTable[] = [
                         size="sm"
                         @click="
                             $router.push({
-                                name: 'user-user-form-page',
+                                name: 'students-student-form-page',
                                 params: { id: props.row.id }
                             })
                         "

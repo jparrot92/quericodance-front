@@ -96,56 +96,6 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('user.label.streetAddress')"
-                    v-model="teacher.user.address.street"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.streetAddressRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.city')"
-                    v-model="teacher.user.address.city"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.cityRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.state')"
-                    v-model="teacher.user.address.state"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.stateRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.zipCode')"
-                    v-model="teacher.user.address.postalCode"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.zipCodeRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.country')"
-                    v-model="teacher.user.address.country"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.countryRequired')
-                    ]"
-                />
-
-                <q-input
                     :label="$t('user.label.email')"
                     v-model="teacher.user.email"
                     :rules="[
