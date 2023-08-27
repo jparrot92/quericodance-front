@@ -4,6 +4,7 @@ import profileI18n from 'src/modules/profile/i18n/es';
 import adminI18n from 'src/modules/user/i18n/es';
 import teacherI18n from 'src/modules/teacher/i18n/es';
 import studentI18n from 'src/modules/student/i18n/es';
+import activityI18n from 'src/modules/activity/i18n/es';
 
 export default {
     ...sharedI18n,
@@ -11,5 +12,6 @@ export default {
     ...profileI18n,
     ...adminI18n,
     ...teacherI18n,
-    ...studentI18n
+    ...studentI18n,
+    ...activityI18n
 };

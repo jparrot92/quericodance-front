@@ -4,7 +4,7 @@ export default {
             profile: 'Profile',
             logout: 'Logout',
             calendar: 'Calendario',
-            secretary: 'Asistente administrativo',
+            activity: 'Courses',
             teacher: 'Teacher',
             student: 'Student',
             user: 'User'

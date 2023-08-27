@@ -22,6 +22,11 @@ const itemsMenu: ItemMenu[] = [
         link: 'appointments-page'
     },
     {
+        title: t('shared.label.activity'),
+        icon: 'local_hospital',
+        link: 'activities-page'
+    },
+    {
         title: t('shared.label.teacher'),
         icon: 'local_hospital',
         link: 'teachers-page'
