@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, defineProps } from 'vue';
 
-import { deletePhoto, uploadPhoto } from 'src/api/userApi';
+import { deletePhoto, uploadPhoto } from 'src/api/usersApi';
 
 interface Props {
     id: number;

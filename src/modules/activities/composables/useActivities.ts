@@ -11,7 +11,7 @@ import {
     createActivity,
     updateActivity,
     deleteActivity
-} from 'src/api/activityApi';
+} from 'src/api/activitiesApi';
 
 import { Activity } from '../models/activity';
 

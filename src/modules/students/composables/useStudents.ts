@@ -11,7 +11,7 @@ import {
     createStudent,
     updateStudent,
     deleteStudent
-} from 'src/api/studentApi';
+} from 'src/api/studentsApi';
 
 import { Student } from '../models/student';
 

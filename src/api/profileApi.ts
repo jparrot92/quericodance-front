@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { User } from 'src/modules/user/models/user';
+import { User } from 'src/modules/users/models/user';
 import { handleError } from './errorApi';
 
 api.defaults.headers.common['Authorization'] =

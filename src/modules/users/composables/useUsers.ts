@@ -11,7 +11,7 @@ import {
     createUser,
     updateUser,
     deleteUser
-} from 'src/api/userApi';
+} from 'src/api/usersApi';
 
 import { User } from '../models/user';
 

@@ -11,7 +11,7 @@ import {
     createTeacher,
     updateTeacher,
     deleteTeacher
-} from 'src/api/teacherApi';
+} from 'src/api/teachersApi';
 
 import { Teacher } from '../models/teacher';
 
