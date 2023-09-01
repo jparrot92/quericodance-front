@@ -4,13 +4,12 @@ const ROUTE_NAME = 'activities';
 
 const activitiesRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    redirect: `/${ROUTE_NAME}/activities-page`,
     component: () =>
         import('src/modules/activities/layouts/ActivityLayout.vue'),
     children: [
         {
-            path: `/${ROUTE_NAME}/activities-page`,
-            name: `${ROUTE_NAME}-page`,
+            path: `/${ROUTE_NAME}`,
+            name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar'
             },
@@ -18,14 +17,23 @@ const activitiesRoutes: RouteRecordRaw = {
                 import('src/modules/activities/pages/ActivityPage.vue')
         },
         {
-            path: `/${ROUTE_NAME}/activity-form-page/:id?`,
-            name: `${ROUTE_NAME}-activity-form-page`,
+            path: `/${ROUTE_NAME}/add`,
+            name: `${ROUTE_NAME}-add`,
             component: () =>
                 import('src/modules/activities/pages/ActivityFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'activity.label.createActivity',
-                titleEdit: 'activity.label.editActivity'
+                title: 'activity.label.createActivity'
+            }
+        },
+        {
+            path: `/${ROUTE_NAME}/:id`,
+            name: `${ROUTE_NAME}-edit`,
+            component: () =>
+                import('src/modules/activities/pages/ActivityFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'activity.label.editActivity'
             },
             props: (route) => {
                 return {

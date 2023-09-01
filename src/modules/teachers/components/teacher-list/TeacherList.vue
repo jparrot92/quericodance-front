@@ -91,7 +91,7 @@ const columnsUser: ColumnTable[] = [
                     dense
                     @click="
                         $router.push({
-                            name: 'teachers-teacher-form-page'
+                            name: 'teachers-add'
                         })
                     "
                 />
@@ -118,7 +118,7 @@ const columnsUser: ColumnTable[] = [
                         size="sm"
                         @click="
                             $router.push({
-                                name: 'teachers-teacher-form-page',
+                                name: 'teachers-edit',
                                 params: { id: props.row.id }
                             })
                         "

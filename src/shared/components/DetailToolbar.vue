@@ -8,9 +8,6 @@ const { t } = useI18n();
 
 // Extraer la clave de route.meta.titleEdit
 let titleKey = route.meta.title;
-if (route.params.id) {
-    titleKey = route.meta.titleEdit;
-}
 
 const translatedTitle = computed(() => {
     if (typeof titleKey === 'string') {
@@ -32,16 +29,9 @@ const translatedTitle = computed(() => {
                 aria-label="Menu"
                 @click="$router.back()"
             />
-            <template v-if="route.params.id">
-                <q-toolbar-title>
-                    {{ translatedTitle }}
-                </q-toolbar-title>
-            </template>
-            <template v-else>
-                <q-toolbar-title>
-                    {{ translatedTitle }}
-                </q-toolbar-title>
-            </template>
+            <q-toolbar-title>
+                {{ translatedTitle }}
+            </q-toolbar-title>
         </q-toolbar>
     </q-header>
 </template>

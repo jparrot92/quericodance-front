@@ -18,7 +18,7 @@ const ActivityList = defineAsyncComponent(
                 fab
                 icon="mdi-plus"
                 color="primary"
-                :to="{ name: 'activities-activity-form-page' }"
+                :to="{ name: 'activities-add' }"
             />
         </q-page-sticky>
     </q-page>

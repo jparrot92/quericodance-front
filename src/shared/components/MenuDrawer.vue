@@ -19,27 +19,27 @@ const itemsMenu: ItemMenu[] = [
     {
         title: t('shared.label.calendar'),
         icon: 'calendar_month',
-        link: 'appointments-page'
+        link: 'appointments-list'
     },
     {
         title: t('shared.label.activity'),
         icon: 'local_hospital',
-        link: 'activities-page'
+        link: 'activities-list'
     },
     {
         title: t('shared.label.teacher'),
         icon: 'local_hospital',
-        link: 'teachers-page'
+        link: 'teachers-list'
     },
     {
         title: t('shared.label.student'),
         icon: 'personal_injury',
-        link: 'students-page'
+        link: 'students-list'
     },
     {
         title: t('shared.label.user'),
         icon: 'engineering',
-        link: 'users-page'
+        link: 'users-list'
     }
 ];
 

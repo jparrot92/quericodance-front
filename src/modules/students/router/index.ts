@@ -4,12 +4,11 @@ const ROUTE_NAME = 'students';
 
 const studentsRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    redirect: `/${ROUTE_NAME}/students-page`,
     component: () => import('src/modules/students/layouts/StudentLayout.vue'),
     children: [
         {
-            path: `/${ROUTE_NAME}/students-page`,
-            name: `${ROUTE_NAME}-page`,
+            path: `/${ROUTE_NAME}`,
+            name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar'
             },
@@ -17,14 +16,23 @@ const studentsRoutes: RouteRecordRaw = {
                 import('src/modules/students/pages/StudentPage.vue')
         },
         {
-            path: `/${ROUTE_NAME}/student-form-page/:id?`,
-            name: `${ROUTE_NAME}-student-form-page`,
+            path: `/${ROUTE_NAME}/add`,
+            name: `${ROUTE_NAME}-add`,
             component: () =>
                 import('src/modules/students/pages/StudentFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'user.label.createUser',
-                titleEdit: 'user.label.editUser'
+                title: 'student.label.createStudent'
+            }
+        },
+        {
+            path: `/${ROUTE_NAME}/:id`,
+            name: `${ROUTE_NAME}-edit`,
+            component: () =>
+                import('src/modules/students/pages/StudentFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'student.label.editStudent'
             },
             props: (route) => {
                 return {

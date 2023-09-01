@@ -4,13 +4,12 @@ const ROUTE_NAME = 'appointments';
 
 const appointmentsRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    redirect: `/${ROUTE_NAME}/appointments-page`,
     component: () =>
         import('src/modules/appointments/layouts/AppointmentsLayout.vue'),
     children: [
         {
-            path: `/${ROUTE_NAME}/appointments-page`,
-            name: `${ROUTE_NAME}-page`,
+            path: `/${ROUTE_NAME}`,
+            name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar'
             },

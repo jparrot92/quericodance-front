@@ -4,25 +4,32 @@ const ROUTE_NAME = 'users';
 
 const usersRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    redirect: `/${ROUTE_NAME}/user-page`,
     component: () => import('src/modules/users/layouts/UserLayout.vue'),
     children: [
         {
-            path: `/${ROUTE_NAME}/user-page`,
-            name: `${ROUTE_NAME}-page`,
+            path: `/${ROUTE_NAME}`,
+            name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar'
             },
             component: () => import('src/modules/users/pages/UserPage.vue')
         },
         {
-            path: `/${ROUTE_NAME}/user-user-form-page/:id?`,
-            name: `${ROUTE_NAME}-user-form-page`,
+            path: `/${ROUTE_NAME}/add`,
+            name: `${ROUTE_NAME}-add`,
             component: () => import('src/modules/users/pages/UserFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'user.label.createUser',
-                titleEdit: 'user.label.editUser'
+                title: 'user.label.createUser'
+            }
+        },
+        {
+            path: `/${ROUTE_NAME}/:id`,
+            name: `${ROUTE_NAME}-edit`,
+            component: () => import('src/modules/users/pages/UserFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'user.label.editUser'
             },
             props: (route) => {
                 return {

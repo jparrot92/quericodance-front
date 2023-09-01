@@ -15,7 +15,7 @@ const TeacherList = defineAsyncComponent(
                 fab
                 icon="mdi-plus"
                 color="primary"
-                :to="{ name: 'teachers-teacher-form-page' }"
+                :to="{ name: 'teachers-add' }"
             />
         </q-page-sticky>
     </q-page>

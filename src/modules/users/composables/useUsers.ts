@@ -74,7 +74,7 @@ const useUsers = () => {
             loading.value = true;
             await createUser(user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users-page' });
+            router.push({ name: 'users' });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -87,7 +87,7 @@ const useUsers = () => {
             loading.value = true;
             user.value = await updateUser(id, user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users-page' });
+            router.push({ name: 'users' });
         } catch (error) {
             notifyError(error);
         } finally {
