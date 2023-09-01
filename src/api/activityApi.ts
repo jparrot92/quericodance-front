@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { Activity } from 'src/modules/activity/models/activity';
+import { Activity } from 'src/modules/activities/models/activity';
 import { handleError } from './errorApi';
 
 api.defaults.headers.common['Authorization'] =

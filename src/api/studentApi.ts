@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { Student } from 'src/modules/student/models/student';
+import { Student } from 'src/modules/students/models/student';
 import { handleError } from './errorApi';
 
 api.defaults.headers.common['Authorization'] =

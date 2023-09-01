@@ -39,7 +39,7 @@ const itemsMenu: ItemMenu[] = [
     {
         title: t('shared.label.user'),
         icon: 'engineering',
-        link: 'user-page'
+        link: 'users-page'
     }
 ];
 

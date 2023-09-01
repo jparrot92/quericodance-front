@@ -15,7 +15,7 @@ const UserList = defineAsyncComponent(
                 fab
                 icon="mdi-plus"
                 color="primary"
-                :to="{ name: 'user-user-form-page' }"
+                :to="{ name: 'users-user-form-page' }"
             />
         </q-page-sticky>
     </q-page>

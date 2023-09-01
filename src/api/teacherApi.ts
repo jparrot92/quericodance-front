@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { Teacher } from 'src/modules/teacher/models/teacher';
+import { Teacher } from 'src/modules/teachers/models/teacher';
 import { handleError } from './errorApi';
 
 api.defaults.headers.common['Authorization'] =

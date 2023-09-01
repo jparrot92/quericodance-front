@@ -56,7 +56,7 @@ const useUsers = () => {
             loading.value = true;
             user.value = await updateProfile(user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'user-page' });
+            router.push({ name: 'users-page' });
         } catch (error) {
             notifyError(error);
         } finally {

@@ -3,10 +3,10 @@ import { RouteRecordRaw } from 'vue-router';
 import authRouter from '../modules/auth/router';
 import profileRouter from '../modules/profile/router';
 import appointmentsRouter from '../modules/appointments/router';
-import teacherRouter from '../modules/teacher/router';
-import studentRouter from '../modules/student/router';
-import userRouter from '../modules/user/router';
-import activityRouter from '../modules/activity/router';
+import teachersRoutes from '../modules/teachers/router';
+import studentsRoutes from '../modules/students/router';
+import usersRoutes from '../modules/users/router';
+import activitiesRoutes from '../modules/activities/router';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -19,16 +19,16 @@ const routes: RouteRecordRaw[] = [
         ...appointmentsRouter
     },
     {
-        ...teacherRouter
+        ...teachersRoutes
     },
     {
-        ...studentRouter
+        ...studentsRoutes
     },
     {
-        ...userRouter
+        ...usersRoutes
     },
     {
-        ...activityRouter
+        ...activitiesRoutes
     },
     //default route redirection
     { path: '/', redirect: { name: 'appointments-page' } },
