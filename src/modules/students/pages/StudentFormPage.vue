@@ -52,7 +52,7 @@ const onSubmit = async () => {
                 </div>
 
                 <q-input
-                    :label="$t('user.label.name')"
+                    :label="$t('user.label.name') + '*'"
                     v-model="student.user.name"
                     :rules="[
                         (val: string) =>
@@ -62,7 +62,7 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('user.label.surnames')"
+                    :label="$t('user.label.surnames') + '*'"
                     v-model="student.user.surnames"
                     :rules="[
                         (val: string) =>
@@ -71,24 +71,14 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <q-input
-                    :label="$t('user.label.nif')"
-                    v-model="student.user.nif"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.nifRequired')
-                    ]"
-                />
-
                 <date-selector
                     :date="student.user.dateOfBirth"
-                    :label="$t('user.label.dateOfBirth')"
+                    :label="$t('user.label.dateOfBirth') + '*'"
                     @update-date="updateUserDateOfBirth"
                 />
 
                 <q-input
-                    :label="$t('user.label.phone')"
+                    :label="$t('user.label.phone') + '*'"
                     v-model="student.user.phone"
                     :rules="[
                         (val: string) =>
@@ -98,7 +88,12 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('user.label.email')"
+                    :label="$t('user.label.instagram')"
+                    v-model="student.user.instagram"
+                />
+
+                <q-input
+                    :label="$t('user.label.email') + '*'"
                     v-model="student.user.email"
                     :rules="[
                         (val: string) =>
@@ -113,7 +108,7 @@ const onSubmit = async () => {
                     :label="
                         isUpdate
                             ? $t('user.label.changePassword')
-                            : $t('user.label.password')
+                            : $t('user.label.password') + '*'
                     "
                     v-model="student.user.password"
                     :rules="

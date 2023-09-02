@@ -32,13 +32,6 @@ const columnsUser: ColumnTable[] = [
         sortable: false
     },
     {
-        name: 'nif',
-        align: 'left',
-        label: t('user.label.nif'),
-        field: (row) => row.user.nif,
-        sortable: true
-    },
-    {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),

@@ -52,7 +52,7 @@ const onSubmit = async () => {
                 </div>
 
                 <q-input
-                    :label="$t('user.label.name')"
+                    :label="$t('user.label.name') + '*'"
                     v-model="user.name"
                     :rules="[
                         (val: string) =>
@@ -62,7 +62,7 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('user.label.surnames')"
+                    :label="$t('user.label.surnames') + '*'"
                     v-model="user.surnames"
                     :rules="[
                         (val: string) =>
@@ -71,24 +71,14 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <q-input
-                    :label="$t('user.label.nif')"
-                    v-model="user.nif"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.nifRequired')
-                    ]"
-                />
-
                 <date-selector
                     :date="user.dateOfBirth"
-                    :label="$t('user.label.dateOfBirth')"
+                    :label="$t('user.label.dateOfBirth') + '*'"
                     @update-date="updateUserDateOfBirth"
                 />
 
                 <q-input
-                    :label="$t('user.label.phone')"
+                    :label="$t('user.label.phone') + '*'"
                     v-model="user.phone"
                     :rules="[
                         (val: string) =>
@@ -98,57 +88,12 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('user.label.streetAddress')"
-                    v-model="user.address.street"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.streetAddressRequired')
-                    ]"
+                    :label="$t('user.label.instagram')"
+                    v-model="user.instagram"
                 />
 
                 <q-input
-                    :label="$t('user.label.city')"
-                    v-model="user.address.city"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.cityRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.state')"
-                    v-model="user.address.state"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.stateRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.zipCode')"
-                    v-model="user.address.postalCode"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.zipCodeRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.country')"
-                    v-model="user.address.country"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.countryRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.email')"
+                    :label="$t('user.label.email') + '*'"
                     v-model="user.email"
                     :rules="[
                         (val: string) =>
@@ -161,7 +106,7 @@ const onSubmit = async () => {
                     :label="
                         isUpdate
                             ? $t('user.label.changePassword')
-                            : $t('user.label.password')
+                            : $t('user.label.password') + '*'
                     "
                     v-model="user.password"
                     :rules="
