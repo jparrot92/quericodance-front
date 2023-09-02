@@ -10,15 +10,15 @@ interface Emits {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-const isOpen = ref<boolean>(false);
+const isOpenDialog = ref<boolean>(false);
 
 watch(props, () => {
-    isOpen.value = props.isOpen;
+    isOpenDialog.value = props.isOpen;
 });
 </script>
 
 <template>
-    <q-dialog v-model="isOpen" @hide="emits('onClose')">
+    <q-dialog v-model="isOpenDialog" @hide="emits('onClose')">
         <q-card>
             <q-toolbar>
                 <q-toolbar-title> Framework </q-toolbar-title>
