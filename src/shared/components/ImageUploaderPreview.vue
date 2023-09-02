@@ -28,6 +28,7 @@ const showDialog = ref<boolean>(false);
 const handleImageChange = async (event: Event) => {
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0];
+
     if (file && file.type.startsWith('image/')) {
         /*const reader = new FileReader();
         reader.onload = () => {
