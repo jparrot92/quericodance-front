@@ -48,19 +48,19 @@ watch(lines, () => {
 onMounted(() => {
     addLine();
 });
+
+const onSubmit = async () => {
+    console.log();
+};
 </script>
 
 <template>
-    <q-expansion-item
-        class="shadow-1 overflow-hidden"
-        style="border-radius: 30px"
-        icon="explore"
-        label="Counter"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
-    >
-        <q-card>
-            <q-card-section>
+    <q-page padding>
+        <div class="row justify-center">
+            <q-form
+                class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
+                @submit.prevent="onSubmit"
+            >
                 <div v-for="(line, index) in lines" :key="index" class="row">
                     <div class="col-lg-6">
                         <div class="row">
@@ -100,7 +100,15 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-            </q-card-section>
-        </q-card>
-    </q-expansion-item>
+
+                <q-btn
+                    :label="$t('user.label.save')"
+                    color="primary"
+                    class="full-width"
+                    rounded
+                    type="submit"
+                />
+            </q-form>
+        </div>
+    </q-page>
 </template>

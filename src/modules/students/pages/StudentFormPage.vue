@@ -102,8 +102,6 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <activities-select></activities-select>
-
                 <q-input
                     :label="
                         isUpdate

@@ -3,7 +3,9 @@ export default {
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',
-            students: 'Estudiantes'
+            students: 'Estudiantes',
+            studentData: 'Datos estudiante',
+            courses: 'Cursos'
         }
     }
 };

@@ -29,7 +29,6 @@ const useStudents = () => {
     const student = ref<Student>({
         user: {
             id: 0,
-            nif: '',
             name: '',
             surnames: '',
             dateOfBirth: '',
@@ -37,14 +36,7 @@ const useStudents = () => {
             photo: '',
             email: '',
             password: '',
-            role: '',
-            address: {
-                street: '',
-                city: '',
-                state: '',
-                postalCode: '',
-                country: ''
-            }
+            role: ''
         },
         nss: ''
     });
