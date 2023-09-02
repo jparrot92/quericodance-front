@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { onMounted } from 'vue';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
 
 import useProfile from '../composables/useProfile';
-
-const route = useRoute();
-
-const { id } = route.params as { id: string };
 
 const { user, loadProfile, editProfile } = useProfile();
 
@@ -59,16 +54,6 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <q-input
-                    :label="$t('user.label.nif')"
-                    v-model="user.nif"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.nifRequired')
-                    ]"
-                />
-
                 <date-selector
                     :date="user.dateOfBirth"
                     :label="$t('user.label.dateOfBirth')"
@@ -82,56 +67,6 @@ const onSubmit = async () => {
                         (val: string) =>
                             (val && val.length > 0) ||
                             $t('user.validations.phoneRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.streetAddress')"
-                    v-model="user.address.street"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.streetAddressRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.city')"
-                    v-model="user.address.city"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.cityRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.state')"
-                    v-model="user.address.state"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.stateRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.zipCode')"
-                    v-model="user.address.postalCode"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.zipCodeRequired')
-                    ]"
-                />
-
-                <q-input
-                    :label="$t('user.label.country')"
-                    v-model="user.address.country"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.countryRequired')
                     ]"
                 />
 

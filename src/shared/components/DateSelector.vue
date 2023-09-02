@@ -18,7 +18,7 @@ watch(props, () => {
     selectedDate.value = props.date;
 });
 
-const updateDate = (value: any) => {
+const updateDate = (value: string) => {
     emit('updateDate', convertISODate(value));
 };
 

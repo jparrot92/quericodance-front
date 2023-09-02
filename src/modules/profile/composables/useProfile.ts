@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 import useNotify from 'src/shared/composables/useNotify';
@@ -12,8 +11,6 @@ import { User } from '../models/user';
 const useUsers = () => {
     const router = useRouter();
 
-    const $q = useQuasar();
-
     const { t } = useI18n();
 
     const { notifySuccess, notifyError } = useNotify();
@@ -22,22 +19,15 @@ const useUsers = () => {
     const users = ref<User[]>([]);
     const user = ref<User>({
         id: 0,
-        nif: '',
         name: '',
         surnames: '',
         dateOfBirth: '',
         phone: '',
         photo: '',
+        instagram: '',
         email: '',
         password: '',
-        role: '',
-        address: {
-            street: '',
-            city: '',
-            state: '',
-            postalCode: '',
-            country: ''
-        }
+        role: ''
     });
 
     const loadProfile = async () => {

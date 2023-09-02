@@ -8,7 +8,7 @@ import {
 
 import routes from './routes';
 
-import { requireAuth, requireAdmin } from '../modules/auth/router/routeGuards';
+import { requireAuth } from '../modules/auth/router/routeGuards';
 
 /*
  * If not building with SSR mode, you can

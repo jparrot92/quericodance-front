@@ -5,8 +5,6 @@ import { useRoute } from 'vue-router';
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
 
-import ActivitiesSelect from '../components/activities-select/ActivitiesSelect.vue';
-
 import useStudents from '../composables/useStudents';
 
 const route = useRoute();
