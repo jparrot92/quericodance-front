@@ -15,7 +15,7 @@ const StudentList = defineAsyncComponent(
                 fab
                 icon="mdi-plus"
                 color="primary"
-                :to="{ name: 'student-form-page' }"
+                :to="{ name: 'students-add' }"
             />
         </q-page-sticky>
     </q-page>
