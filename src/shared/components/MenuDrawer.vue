@@ -23,22 +23,22 @@ const itemsMenu: ItemMenu[] = [
     },
     {
         title: t('shared.label.activity'),
-        icon: 'local_hospital',
+        icon: 'diversity_3',
         link: 'activities-list'
     },
     {
         title: t('shared.label.teacher'),
-        icon: 'local_hospital',
+        icon: 'school',
         link: 'teachers-list'
     },
     {
         title: t('shared.label.student'),
-        icon: 'personal_injury',
+        icon: 'person',
         link: 'students-list'
     },
     {
         title: t('shared.label.user'),
-        icon: 'engineering',
+        icon: 'account_circle',
         link: 'users-list'
     }
 ];

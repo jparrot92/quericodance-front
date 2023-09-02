@@ -25,7 +25,7 @@ const useAuth = () => {
         try {
             await authStore.login(userForm.value);
             notifySuccess(t('auth.notifications.loginSuccessfully'));
-            router.push({ name: 'appointments-page' });
+            router.push({ name: 'appointments-list' });
         } catch (error) {
             notifyError(error);
         }
