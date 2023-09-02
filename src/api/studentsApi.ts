@@ -25,9 +25,9 @@ export const getStudent = async (id: string): Promise<Student> => {
     }
 };
 
-export const createStudent = async (user: Student): Promise<Student> => {
+export const createStudent = async (student: Student): Promise<Student> => {
     try {
-        const { data } = await api.post<Student>('/students', user);
+        const { data } = await api.post<Student>('/students', student);
 
         return data;
     } catch (error) {
@@ -37,10 +37,10 @@ export const createStudent = async (user: Student): Promise<Student> => {
 
 export const updateStudent = async (
     id: string,
-    user: Student
+    student: Student
 ): Promise<Student> => {
     try {
-        const { data } = await api.put<Student>(`/students/${id}`, user);
+        const { data } = await api.put<Student>(`/students/${id}`, student);
 
         return data;
     } catch (error) {

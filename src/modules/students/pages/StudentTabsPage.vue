@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import StudentFormPage from './StudentFormPage.vue';
 import StudentActivitiesFormPage from './StudentActivitiesFormPage.vue';
 
-const tab = ref('mails');
+const tab = ref('student-data');
 </script>
 
 <template>

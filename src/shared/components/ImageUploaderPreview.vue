@@ -11,13 +11,13 @@ interface Props {
 const props = defineProps<Props>();
 
 const id = ref<number>(props.id);
-const photo = ref<string | null>('src/assets/sinFoto.png');
+const userPhoto = ref<string>('src/assets/sinFoto.png');
 
 watch(
     () => props.photo,
     (newPhoto) => {
         if (newPhoto) {
-            photo.value = newPhoto;
+            userPhoto.value = newPhoto;
         }
     }
 );
@@ -38,7 +38,7 @@ const handleImageChange = async (event: Event) => {
         reader.readAsDataURL(file);*/
 
         let photoURL = await uploadPhoto(id.value, file);
-        photo.value = photoURL;
+        userPhoto.value = photoURL;
         showDialog.value = false;
     }
 };
@@ -51,14 +51,14 @@ const choosePicture = () => {
 
 const deletePicture = async () => {
     await deletePhoto(id.value);
-    photo.value = 'src/assets/sinFoto.png';
+    userPhoto.value = 'src/assets/sinFoto.png';
     showDialog.value = false;
 };
 </script>
 
 <template>
     <q-avatar size="150px">
-        <q-img :src="photo" :ratio="1" />
+        <q-img :src="userPhoto" :ratio="1" />
         <q-icon
             class="absolute all-pointer-events"
             size="32px"

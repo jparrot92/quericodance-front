@@ -27,6 +27,7 @@ const useStudents = () => {
     const loading = ref<boolean>(false);
     const students = ref<Student[]>([]);
     const student = ref<Student>({
+        id: 0,
         user: {
             id: 0,
             name: '',
@@ -34,11 +35,11 @@ const useStudents = () => {
             dateOfBirth: '',
             phone: '',
             photo: '',
+            instagram: '',
             email: '',
             password: '',
             role: ''
-        },
-        nss: ''
+        }
     });
 
     const loadStudents = async () => {
@@ -67,9 +68,13 @@ const useStudents = () => {
     const saveStudent = async () => {
         try {
             loading.value = true;
-            await createStudent(student.value);
-            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users' });
+            const studentData = await createStudent(student.value);
+            notifySuccess(t('user.notifications.userCreateSuccessfully'));
+
+            router.push({
+                name: 'students-edit',
+                params: { id: studentData.id }
+            });
         } catch (error) {
             notifyError(error);
         } finally {
