@@ -72,7 +72,7 @@ module.exports = configure(function (ctx) {
             env: {
                 API: ctx.dev
                     ? 'http://localhost:3000'
-                    : 'https://medical-date-back.herokuapp.com',
+                    : 'https://quericodance-pre.onrender.com',
             },
             // rawDefine: {}
             // ignorePublicFolder: true,
