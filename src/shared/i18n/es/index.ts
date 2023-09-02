@@ -4,10 +4,10 @@ export default {
             profile: 'Perfil',
             logout: 'Cerrar sesión',
             calendar: 'Calendario',
-            activity: 'Cursos',
-            teacher: 'Professor',
-            student: 'Estudiante',
-            user: 'Usuario'
+            activities: 'Cursos',
+            teachers: 'Professores',
+            students: 'Estudiantes',
+            users: 'Usuarios'
         },
         message: {
             logout: '¿Quieres cerrar sesión?'
