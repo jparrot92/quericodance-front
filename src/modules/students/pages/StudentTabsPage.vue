@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 import StudentFormPage from './StudentFormPage.vue';
-import StudentActivitiesFormPage from './StudentActivitiesFormPage.vue';
+import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
 
 const tab = ref('student-data');
 </script>
@@ -33,7 +33,7 @@ const tab = ref('student-data');
             </q-tab-panel>
 
             <q-tab-panel name="courses">
-                <student-activities-form-page />
+                <activities-student-form-page />
             </q-tab-panel>
         </q-tab-panels>
     </q-card>

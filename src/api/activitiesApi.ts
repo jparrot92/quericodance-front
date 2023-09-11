@@ -1,6 +1,7 @@
 import { api } from 'boot/axios';
 import { Activity } from 'src/modules/activities/models/activity';
 import { handleError } from './errorApi';
+import { ActivityStudent } from 'src/modules/students/models/activityStudent';
 
 api.defaults.headers.common['Authorization'] =
     'Bearer ' + localStorage.getItem('token');
@@ -51,6 +52,21 @@ export const updateActivity = async (
 export const deleteActivity = async (id: string): Promise<Activity> => {
     try {
         const { data } = await api.delete<Activity>(`/activities/${id}`);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const createActivityStudent = async (
+    activity: ActivityStudent
+): Promise<ActivityStudent> => {
+    try {
+        const { data } = await api.post<ActivityStudent>(
+            '/activity-student',
+            activity
+        );
 
         return data;
     } catch (error) {

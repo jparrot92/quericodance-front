@@ -10,10 +10,12 @@ import {
     getActivity,
     createActivity,
     updateActivity,
-    deleteActivity
+    deleteActivity,
+    createActivityStudent
 } from 'src/api/activitiesApi';
 
 import { Activity } from '../models/activity';
+import { ActivityStudent } from 'src/modules/students/models/activityStudent';
 
 const useActivities = () => {
     const router = useRouter();
@@ -27,7 +29,15 @@ const useActivities = () => {
     const loading = ref<boolean>(false);
     const activities = ref<Activity[]>([]);
     const activity = ref<Activity>({
-        name: ''
+        id: 0,
+        name: '',
+        level: 0,
+        day: '',
+        startHour: '',
+        endHour: '',
+        numberPlaces: 0,
+        price: 0,
+        description: ''
     });
 
     const loadActivities = async () => {
@@ -60,7 +70,7 @@ const useActivities = () => {
             notifySuccess(
                 t('activity.notifications.activityUpdateSuccessfully')
             );
-            router.push({ name: 'activities-page' });
+            router.push({ name: 'activities-list' });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -75,7 +85,7 @@ const useActivities = () => {
             notifySuccess(
                 t('activity.notifications.activityUpdateSuccessfully')
             );
-            router.push({ name: 'activities-page' });
+            router.push({ name: 'activities-list' });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -102,6 +112,16 @@ const useActivities = () => {
         });
     };
 
+    const saveActivityStudent = async (activityStudent: ActivityStudent) => {
+        try {
+            await createActivityStudent(activityStudent);
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
     return {
         // Properties
         loading,
@@ -111,7 +131,8 @@ const useActivities = () => {
         loadActivity,
         saveActivity,
         editActivity,
-        removeActivity
+        removeActivity,
+        saveActivityStudent
     };
 };
 

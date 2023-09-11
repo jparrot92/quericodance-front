@@ -46,6 +46,20 @@ const columnsUser: ColumnTable[] = [
         sortable: true
     },
     {
+        name: 'hour',
+        align: 'left',
+        label: t('activity.label.hour'),
+        field: 'hour',
+        sortable: true
+    },
+    {
+        name: 'hour',
+        align: 'left',
+        label: t('activity.label.hour'),
+        field: 'hour',
+        sortable: true
+    },
+    {
         name: 'actions',
         align: 'right',
         label: t('activity.label.actions'),

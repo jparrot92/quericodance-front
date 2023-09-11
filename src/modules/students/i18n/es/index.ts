@@ -5,7 +5,9 @@ export default {
             editStudent: 'Editar estudiante',
             students: 'Estudiantes',
             studentData: 'Datos estudiante',
-            courses: 'Cursos'
+            courses: 'Cursos',
+            course: 'Curso',
+            role: 'Rol'
         }
     }
 };
