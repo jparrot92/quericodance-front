@@ -1,8 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { onMounted, computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+import useStudents from '../composables/useStudents';
 
 import StudentFormPage from './StudentFormPage.vue';
 import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
+
+const route = useRoute();
+
+const { id } = route.params as { id: string };
+
+const isUpdate = computed(() => route.params.id);
+
+const { student, loadStudent } = useStudents();
+
+onMounted(() => {
+    if (isUpdate.value) {
+        loadStudent(id);
+    }
+});
 
 const tab = ref('student-data');
 </script>
@@ -29,11 +47,14 @@ const tab = ref('student-data');
 
         <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="student-data">
-                <student-form-page />
+                <student-form-page :student="student" />
             </q-tab-panel>
 
             <q-tab-panel name="courses">
-                <activities-student-form-page />
+                <activities-student-form-page
+                    :activitiesStudent="student.activitiesStudent"
+                    :id-student="student.id"
+                />
             </q-tab-panel>
         </q-tab-panels>
     </q-card>

@@ -15,7 +15,7 @@ import {
 } from 'src/api/activitiesApi';
 
 import { Activity } from '../models/activity';
-import { ActivityStudent } from 'src/modules/students/models/activityStudent';
+import { ActivityStudent } from '../models/activityStudent';
 
 const useActivities = () => {
     const router = useRouter();
@@ -37,7 +37,23 @@ const useActivities = () => {
         endHour: '',
         numberPlaces: 0,
         price: 0,
-        description: ''
+        fullName: ''
+    });
+    const activityStudent = ref<ActivityStudent>({
+        id: 0,
+        danceRole: '',
+        price: 0,
+        activity: {
+            id: 0,
+            name: '',
+            level: 0,
+            day: '',
+            startHour: '',
+            endHour: '',
+            numberPlaces: 0,
+            price: 0,
+            fullName: ''
+        }
     });
 
     const loadActivities = async () => {
@@ -112,9 +128,22 @@ const useActivities = () => {
         });
     };
 
-    const saveActivityStudent = async (activityStudent: ActivityStudent) => {
+    const saveActivityStudent = async (
+        studentId: number,
+        activityId: number,
+        danceRole: string,
+        price: number
+    ) => {
         try {
-            await createActivityStudent(activityStudent);
+            const newActivityStudent: ActivityStudent =
+                await createActivityStudent(
+                    studentId,
+                    activityId,
+                    danceRole,
+                    price
+                );
+
+            return newActivityStudent;
         } catch (error) {
             notifyError(error);
         } finally {
@@ -127,6 +156,7 @@ const useActivities = () => {
         loading,
         activities,
         activity,
+        activityStudent,
         loadActivities,
         loadActivity,
         saveActivity,

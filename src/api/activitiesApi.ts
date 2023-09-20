@@ -1,7 +1,7 @@
 import { api } from 'boot/axios';
 import { Activity } from 'src/modules/activities/models/activity';
 import { handleError } from './errorApi';
-import { ActivityStudent } from 'src/modules/students/models/activityStudent';
+import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
 api.defaults.headers.common['Authorization'] =
     'Bearer ' + localStorage.getItem('token');
@@ -60,12 +60,23 @@ export const deleteActivity = async (id: string): Promise<Activity> => {
 };
 
 export const createActivityStudent = async (
-    activity: ActivityStudent
+    studentId: number,
+    activityId: number,
+    danceRole: string,
+    price: number
 ): Promise<ActivityStudent> => {
+    debugger;
     try {
+        const requestData = {
+            studentId,
+            activityId,
+            danceRole,
+            price
+        };
+
         const { data } = await api.post<ActivityStudent>(
             '/activity-student',
-            activity
+            requestData
         );
 
         return data;

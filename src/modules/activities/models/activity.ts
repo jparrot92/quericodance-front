@@ -7,5 +7,5 @@ export interface Activity {
     endHour: string;
     numberPlaces: number;
     price: number;
-    description: string;
+    fullName: string;
 }

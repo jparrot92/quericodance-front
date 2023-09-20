@@ -1,33 +1,37 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { watch, onMounted, defineProps } from 'vue';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
 
 import useStudents from '../composables/useStudents';
+import { Student } from '../models/student';
 
-const route = useRoute();
+const { student, saveStudent, editStudent } = useStudents();
 
-const { id } = route.params as { id: string };
+interface Props {
+    student: Student;
+}
 
-const isUpdate = computed(() => route.params.id);
+const props = defineProps<Props>();
 
-const { student, loadStudent, saveStudent, editStudent } = useStudents();
+const selectedStudent = student;
+
+watch(props, () => {
+    selectedStudent.value = props.student;
+});
 
 onMounted(() => {
-    if (isUpdate.value) {
-        loadStudent(id);
-    }
+    selectedStudent.value = props.student;
 });
 
 const updateUserDateOfBirth = (value: string) => {
-    student.value.user.dateOfBirth = value;
+    selectedStudent.value.user.dateOfBirth = value;
 };
 
 const onSubmit = async () => {
-    if (isUpdate.value) {
-        editStudent(id);
+    if (selectedStudent.value.id) {
+        editStudent(selectedStudent.value.id);
     } else {
         saveStudent();
     }
@@ -43,15 +47,15 @@ const onSubmit = async () => {
             >
                 <div style="text-align: center">
                     <ImageUploaderPreview
-                        v-if="isUpdate"
-                        :id="+id"
-                        :photo="student.user.photo"
+                        v-if="selectedStudent.id"
+                        :id="selectedStudent.id"
+                        :photo="selectedStudent.user.photo"
                     />
                 </div>
 
                 <q-input
                     :label="$t('user.label.name') + '*'"
-                    v-model="student.user.name"
+                    v-model="selectedStudent.user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -61,7 +65,7 @@ const onSubmit = async () => {
 
                 <q-input
                     :label="$t('user.label.surnames') + '*'"
-                    v-model="student.user.surnames"
+                    v-model="selectedStudent.user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -70,14 +74,14 @@ const onSubmit = async () => {
                 />
 
                 <date-selector
-                    :date="student.user.dateOfBirth"
+                    :date="selectedStudent.user.dateOfBirth"
                     :label="$t('user.label.dateOfBirth') + '*'"
                     @update-date="updateUserDateOfBirth"
                 />
 
                 <q-input
                     :label="$t('user.label.phone') + '*'"
-                    v-model="student.user.phone"
+                    v-model="selectedStudent.user.phone"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -87,12 +91,12 @@ const onSubmit = async () => {
 
                 <q-input
                     :label="$t('user.label.instagram')"
-                    v-model="student.user.instagram"
+                    v-model="selectedStudent.user.instagram"
                 />
 
                 <q-input
                     :label="$t('user.label.email') + '*'"
-                    v-model="student.user.email"
+                    v-model="selectedStudent.user.email"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -102,13 +106,13 @@ const onSubmit = async () => {
 
                 <q-input
                     :label="
-                        isUpdate
+                        selectedStudent.id
                             ? $t('user.label.changePassword')
                             : $t('user.label.password') + '*'
                     "
-                    v-model="student.user.password"
+                    v-model="selectedStudent.user.password"
                     :rules="
-                        isUpdate
+                        selectedStudent.id
                             ? []
                             : [
                                   (val) =>

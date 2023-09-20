@@ -2,7 +2,7 @@
     "name": "paaldemy-front",
     "version": "0.0.1",
     "description": "A Quasar Project",
-    "productName": "Paaldemy App",
+    "productName": "Querico dance",
     "author": "Jaume Parrot Altisent <jaumeparrot2@gmail.com>",
     "private": true,
     "scripts": {

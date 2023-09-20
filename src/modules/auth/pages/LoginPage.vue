@@ -44,6 +44,14 @@ const { userForm, onSubmit } = useAuth();
                 </div>
                 <div class="full-width q-gutter-y-sm">
                     <q-btn
+                        label="Register"
+                        color="primary"
+                        class="full-width"
+                        flat
+                        to="/register"
+                        size="sm"
+                    />
+                    <q-btn
                         :label="$t('auth.label.forgotPassword')"
                         color="primary"
                         class="full-width"

@@ -45,12 +45,18 @@ const onSubmit = async () => {
                 />
 
                 <q-input
+                    type="number"
                     :label="$t('activity.label.level')"
                     v-model="activity.level"
                     :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('activity.validation.levelRequired')
+                        (val) =>
+                            (val !== null &&
+                                val !== undefined &&
+                                val.toString().trim() !== '') ||
+                            $t('activity.validation.levelRequired'),
+                        (val) =>
+                            /^[0-9]+$/.test(val) ||
+                            $t('activity.validation.levelNumeric')
                     ]"
                 />
 
@@ -125,9 +131,14 @@ const onSubmit = async () => {
                     :label="$t('activity.label.numberPlaces')"
                     v-model="activity.numberPlaces"
                     :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('activity.validation.numberPlacesRequired')
+                        (val) =>
+                            (val !== null &&
+                                val !== undefined &&
+                                val.toString().trim() !== '') ||
+                            $t('activity.validation.numberPlacesRequired'),
+                        (val) =>
+                            /^[0-9]+$/.test(val) ||
+                            $t('activity.validation.numberPlacesNumeric')
                     ]"
                 />
 
@@ -137,15 +148,17 @@ const onSubmit = async () => {
                     :label="$t('activity.label.price')"
                     v-model="activity.price"
                     :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
+                        (val) =>
+                            (val !== null &&
+                                val !== undefined &&
+                                val.toString().trim() !== '') ||
                             $t('activity.validation.priceRequired')
                     ]"
                 />
 
                 <q-input
                     :label="$t('activity.label.description')"
-                    v-model="activity.description"
+                    v-model="activity.fullName"
                 />
 
                 <q-btn

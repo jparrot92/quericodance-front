@@ -1,145 +1,122 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { watch, onMounted, defineProps, ref } from 'vue';
 
-import useActivities from 'src/modules/activities/composables/useActivities';
-import { Activity } from 'src/modules/activities/models/activity';
+import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
-import { ActivityStudent } from '../models/activityStudent';
+import AddActivityStudentDialog from '../components/AddActivityStudentDialog.vue';
 
-const route = useRoute();
-
-const { id } = route.params as { id: string };
-
-const { activities, loadActivities, saveActivityStudent } = useActivities();
-
-interface ActivityStudentItems {
-    activityCode: Activity | null;
-    role: Role | null;
+interface Props {
+    activitiesStudent?: ActivityStudent[];
+    idStudent: number;
 }
 
-const activityStudentItems = ref<ActivityStudentItems[]>([]);
+const props = defineProps<Props>();
 
-type Role = {
-    label: string;
-    value: string;
-};
+const studentActivitiesList = ref<ActivityStudent[]>([]);
+const idStudentDialog = ref<number>(0);
 
-const roles: Role[] = [
-    { label: 'Lider', value: 'leader' },
-    { label: 'Follower', value: 'follower' }
-];
+const showModalAddActivity = ref(false);
 
-onMounted(() => {
-    loadActivities();
-    addFirstActivityStudent();
+watch(
+    () => props.activitiesStudent,
+    (newActivitiesStudent) => {
+        studentActivitiesList.value = newActivitiesStudent || [];
+    }
+);
+
+watch(props, () => {
+    idStudentDialog.value = props.idStudent;
 });
 
-const addFirstActivityStudent = () => {
-    activityStudentItems.value.push({
-        activityCode: null,
-        role: null
-    });
-};
+onMounted(() => {
+    studentActivitiesList.value = props.activitiesStudent || [];
+    idStudentDialog.value = props.idStudent;
+});
 
-const addActivityStudent = (index: number) => {
-    const activityStudentItem = activityStudentItems.value[index];
-
-    const activityStudent = <ActivityStudent>{
-        studentId: +id,
-        activityId: activityStudentItem.activityCode?.id,
-        danceRole: activityStudentItem.role?.value
-    };
-
-    saveActivityStudent(activityStudent);
-
-    activityStudentItems.value.push({
-        activityCode: null,
-        role: null
-    });
-};
-
-const removeLine = (lineId: number) => {
-    if (activityStudentItems.value.length > 1) {
-        activityStudentItems.value.splice(lineId, 1);
-    }
+const addActivityStudent = (activityStudent: ActivityStudent) => {
+    studentActivitiesList.value.push(activityStudent);
 };
 </script>
 
 <template>
     <q-page padding>
         <div class="row justify-center">
-            <q-form class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
-                <div
-                    v-for="(activityStudentItem, index) in activityStudentItems"
-                    :key="index"
+            <div class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
+                <q-list
+                    v-if="studentActivitiesList.length > 0"
+                    bordered
+                    class="rounded-borders"
                 >
-                    <q-select
-                        v-model="activityStudentItem.activityCode"
-                        :label="$t('student.label.course')"
-                        :options="activities"
-                        :option-value="'id'"
-                        style="min-width: 250px; max-width: 300px"
+                    <template
+                        v-for="(item, index) in studentActivitiesList"
+                        :key="item.id"
                     >
-                        <template v-slot:selected-item="{ opt }">
-                            {{
-                                opt.name +
-                                ' ' +
-                                opt.level +
-                                ' - ' +
-                                opt.day +
-                                ' ' +
-                                opt.startHour
-                            }}
-                        </template>
-                        <template v-slot:option="{ itemProps, opt }">
-                            <q-item v-bind="itemProps">
-                                <q-item-section>
-                                    {{
-                                        opt.name +
-                                        ' ' +
-                                        opt.level +
-                                        ' - ' +
-                                        opt.day +
-                                        ' ' +
-                                        opt.startHour
-                                    }}
-                                </q-item-section>
-                            </q-item>
-                        </template>
-                    </q-select>
+                        <q-item>
+                            <q-item-section top>
+                                <q-item-label lines="1">
+                                    <span class="text-weight-medium">
+                                        {{ item.activity.fullName }}
+                                    </span>
+                                    <span class="text-grey-8">
+                                        - {{ item.activity.day }}
+                                        {{ item.activity.startHour }}
+                                    </span>
+                                </q-item-label>
+                                <q-item-label caption lines="1">
+                                    {{ item.danceRole }}
+                                </q-item-label>
+                                <q-item-label
+                                    lines="1"
+                                    class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase"
+                                >
+                                    <span class="cursor-pointer">
+                                        Ver grupo
+                                    </span>
+                                </q-item-label>
+                            </q-item-section>
 
-                    <q-select
-                        v-model="activityStudentItem.role"
-                        :label="$t('student.label.role')"
-                        :options="roles"
-                        style="min-width: 250px; max-width: 300px"
-                    />
+                            <q-item-section top class="col-2">
+                                <q-item-label>
+                                    {{ item.price }} €
+                                </q-item-label>
+                            </q-item-section>
 
-                    <div class="q-pa-md q-gutter-sm">
-                        <q-btn
-                            round
-                            color="primary"
-                            icon="delete"
-                            @click="removeLine(index)"
+                            <q-item-section top side>
+                                <div class="text-grey-8 q-gutter-xs">
+                                    <q-btn
+                                        size="12px"
+                                        flat
+                                        dense
+                                        round
+                                        icon="delete"
+                                    />
+                                </div>
+                            </q-item-section>
+                        </q-item>
+                        <q-separator
+                            spaced
+                            v-if="index < studentActivitiesList.length - 1"
                         />
-                        <q-btn
-                            round
-                            color="primary"
-                            icon="add"
-                            @click="addActivityStudent(index)"
-                        />
-                    </div>
-                </div>
-
+                    </template>
+                </q-list>
+                <q-banner v-else class="bg-primary text-white">
+                    {{ $t('student.message.addCourse') }}
+                </q-banner>
                 <q-btn
-                    :label="$t('user.label.save')"
+                    :label="$t('student.label.addActivity')"
                     color="primary"
                     class="full-width"
                     rounded
-                    type="submit"
+                    @click="showModalAddActivity = true"
                 />
-            </q-form>
+            </div>
         </div>
     </q-page>
+
+    <AddActivityStudentDialog
+        :is-open="showModalAddActivity"
+        :id-student="idStudentDialog"
+        @on-close="showModalAddActivity = false"
+        @add-activity-student="addActivityStudent"
+    />
 </template>

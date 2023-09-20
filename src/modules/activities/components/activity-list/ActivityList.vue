@@ -39,24 +39,24 @@ const columnsUser: ColumnTable[] = [
         sortable: true
     },
     {
-        name: 'hour',
+        name: 'level',
         align: 'left',
-        label: t('activity.label.hour'),
-        field: 'hour',
+        label: t('activity.label.level'),
+        field: 'level',
         sortable: true
     },
     {
-        name: 'hour',
+        name: 'startHour',
         align: 'left',
-        label: t('activity.label.hour'),
-        field: 'hour',
+        label: t('activity.label.startHour'),
+        field: 'startHour',
         sortable: true
     },
     {
-        name: 'hour',
+        name: 'endHour',
         align: 'left',
-        label: t('activity.label.hour'),
-        field: 'hour',
+        label: t('activity.label.endHour'),
+        field: 'endHour',
         sortable: true
     },
     {

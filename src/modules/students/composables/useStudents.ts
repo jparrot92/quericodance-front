@@ -82,7 +82,7 @@ const useStudents = () => {
         }
     };
 
-    const editStudent = async (id: string) => {
+    const editStudent = async (id: number) => {
         try {
             loading.value = true;
             student.value = await updateStudent(id, student.value);

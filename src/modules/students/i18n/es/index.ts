@@ -7,7 +7,15 @@ export default {
             studentData: 'Datos estudiante',
             courses: 'Cursos',
             course: 'Curso',
-            role: 'Rol'
+            role: 'Rol',
+            addActivity: 'Añadir curso',
+            add: 'Añadir',
+            cancel: 'Cancelar',
+            changePrice: 'Modificar precio'
+        },
+        message: {
+            addCourse:
+                'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante'
         }
     }
 };

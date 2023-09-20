@@ -36,7 +36,7 @@ export const createStudent = async (student: Student): Promise<Student> => {
 };
 
 export const updateStudent = async (
-    id: string,
+    id: number,
     student: Student
 ): Promise<Student> => {
     try {
