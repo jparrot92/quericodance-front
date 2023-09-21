@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, onMounted, defineProps, ref } from 'vue';
+import { watch, onMounted, defineProps } from 'vue';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
@@ -7,7 +7,7 @@ import DateSelector from 'src/shared/components/DateSelector.vue';
 import useStudents from '../composables/useStudents';
 import { Student } from '../models/student';
 
-const { student, saveStudent, editStudent } = useStudents();
+const { student: newStudent, saveStudent, editStudent } = useStudents();
 
 interface Props {
     student: Student;
@@ -15,7 +15,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const selectedStudent = ref(student);
+const selectedStudent = newStudent;
 
 watch(props, () => {
     selectedStudent.value = props.student;
