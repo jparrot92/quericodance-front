@@ -1,3 +1,5 @@
+import { ActivityStudent } from './activityStudent';
+
 export interface Activity {
     id: number;
     name: string;
@@ -8,4 +10,5 @@ export interface Activity {
     numberPlaces: number;
     price: number;
     fullName: string;
+    activitiesStudent?: ActivityStudent[];
 }

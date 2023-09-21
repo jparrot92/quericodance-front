@@ -10,11 +10,11 @@ const activitiesRoutes: RouteRecordRaw = {
         {
             path: `/${ROUTE_NAME}`,
             name: `${ROUTE_NAME}-list`,
+            component: () =>
+                import('src/modules/activities/pages/ActivityPage.vue'),
             meta: {
                 toolbar: 'MainToolbar'
-            },
-            component: () =>
-                import('src/modules/activities/pages/ActivityPage.vue')
+            }
         },
         {
             path: `/${ROUTE_NAME}/add`,
@@ -31,14 +31,29 @@ const activitiesRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-edit`,
             component: () =>
                 import('src/modules/activities/pages/ActivityFormPage.vue'),
-            meta: {
-                toolbar: 'DetailToolbar',
-                title: 'activity.label.editActivity'
-            },
             props: (route) => {
                 return {
                     id: route.params.id
                 };
+            },
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'activity.label.editActivity'
+            }
+        },
+        {
+            path: `/${ROUTE_NAME}/:id/students`,
+            name: `${ROUTE_NAME}-list-students`,
+
+            component: () =>
+                import('src/modules/activities/pages/ActivityStudentsPage.vue'),
+            props: (route) => {
+                return {
+                    id: route.params.id
+                };
+            },
+            meta: {
+                toolbar: 'MainToolbar'
             }
         }
     ]

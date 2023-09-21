@@ -4,6 +4,7 @@ export default {
             createActivity: 'Crear curso',
             editActivity: 'Editar curso',
             activities: 'Cursos',
+            activity: 'Curso',
             name: 'Nombre',
             level: 'Nivel',
             day: 'Día',
@@ -14,6 +15,7 @@ export default {
             description: 'Descripción',
             actions: 'Acciones',
             save: 'Guardar',
+            see: 'Ver curso',
             edit: 'Editar',
             delete: 'Borrar',
             confirmation: 'Confirmación'

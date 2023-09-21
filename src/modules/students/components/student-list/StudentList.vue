@@ -28,7 +28,7 @@ const columnsUser: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.label.photo'),
-        field: 'photo',
+        field: (row) => row.user.photo,
         sortable: false
     },
     {
@@ -91,8 +91,8 @@ const columnsUser: ColumnTable[] = [
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
-                    <q-avatar v-if="props.row.photo">
-                        <q-img :ratio="1" :src="props.row.photo" />
+                    <q-avatar v-if="props.row.user.photo">
+                        <q-img :ratio="1" :src="props.row.user.photo" />
                     </q-avatar>
                     <q-avatar
                         v-else

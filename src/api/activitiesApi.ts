@@ -16,6 +16,16 @@ export const listActivities = async (): Promise<Activity[]> => {
     }
 };
 
+export const listStudentsActivity = async (id: number): Promise<Activity> => {
+    try {
+        const { data } = await api.get<Activity>(`/activities/${id}/students`);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
 export const getActivity = async (id: string): Promise<Activity> => {
     try {
         const { data } = await api.get<Activity>(`/activities/${id}`);
@@ -65,7 +75,6 @@ export const createActivityStudent = async (
     danceRole: string,
     price: number
 ): Promise<ActivityStudent> => {
-    debugger;
     try {
         const requestData = {
             studentId,

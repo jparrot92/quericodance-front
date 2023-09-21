@@ -2,17 +2,20 @@
 import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 import useActivities from '../../composables/useActivities';
 
-const { loading, activities, loadActivities, removeActivity } = useActivities();
-
 const $q = useQuasar();
-
 const { t } = useI18n();
+const route = useRoute();
+
+const { loading, activity, loadStudentsActivity, removeActivity } =
+    useActivities();
+const { id } = route.params as { id: string };
 
 onMounted(() => {
-    loadActivities();
+    loadStudentsActivity(+id);
 });
 
 export interface ColumnTable {
@@ -25,38 +28,38 @@ export interface ColumnTable {
 
 const columnsUser: ColumnTable[] = [
     {
+        name: 'photo',
+        align: 'left',
+        label: t('user.label.photo'),
+        field: (row) => row.student.user.photo,
+        sortable: false
+    },
+    {
         name: 'name',
         align: 'left',
-        label: t('activity.label.name'),
-        field: 'name',
+        label: t('user.label.name'),
+        field: (row) => row.student.user.name,
         sortable: true
     },
     {
-        name: 'day',
+        name: 'surnames',
         align: 'left',
-        label: t('activity.label.day'),
-        field: 'day',
+        label: t('user.label.surnames'),
+        field: (row) => row.student.user.surnames,
         sortable: true
     },
     {
-        name: 'level',
+        name: 'phone',
         align: 'left',
-        label: t('activity.label.level'),
-        field: 'level',
+        label: t('user.label.phone'),
+        field: (row) => row.student.user.phone,
         sortable: true
     },
     {
-        name: 'startHour',
+        name: 'danceRole',
         align: 'left',
-        label: t('activity.label.startHour'),
-        field: 'startHour',
-        sortable: true
-    },
-    {
-        name: 'endHour',
-        align: 'left',
-        label: t('activity.label.endHour'),
-        field: 'endHour',
+        label: t('student.label.role'),
+        field: (row) => row.danceRole,
         sortable: true
     },
     {
@@ -72,7 +75,7 @@ const columnsUser: ColumnTable[] = [
 <template>
     <div class="row">
         <q-table
-            :rows="activities"
+            :rows="activity.activitiesStudent"
             :columns="columnsUser"
             row-key="id"
             class="col-12"
@@ -80,7 +83,9 @@ const columnsUser: ColumnTable[] = [
         >
             <template v-slot:top>
                 <span class="text-h6">
-                    {{ $t('activity.label.activities') }}
+                    {{ $t('activity.label.activity') }}
+                    {{ activity.fullName }} - {{ activity.day }}
+                    {{ activity.startHour }}
                 </span>
                 <q-space />
                 <q-btn
@@ -98,8 +103,8 @@ const columnsUser: ColumnTable[] = [
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
-                    <q-avatar v-if="props.row.photo">
-                        <q-img :ratio="1" :src="props.row.photo" />
+                    <q-avatar v-if="props.row.student.user.photo">
+                        <q-img :ratio="1" :src="props.row.student.user.photo" />
                     </q-avatar>
                     <q-avatar
                         v-else
