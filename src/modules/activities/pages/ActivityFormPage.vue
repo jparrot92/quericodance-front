@@ -129,7 +129,7 @@ const onSubmit = async () => {
                 <q-input
                     type="number"
                     :label="$t('activity.label.numberPlaces')"
-                    v-model="activity.numberPlaces"
+                    v-model.number="activity.numberPlaces"
                     :rules="[
                         (val) =>
                             (val !== null &&
@@ -146,7 +146,7 @@ const onSubmit = async () => {
                     type="number"
                     prefix="€"
                     :label="$t('activity.label.price')"
-                    v-model="activity.price"
+                    v-model.number="activity.price"
                     :rules="[
                         (val) =>
                             (val !== null &&
