@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, onMounted, defineProps } from 'vue';
+import { watch, onMounted, defineProps, ref } from 'vue';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
@@ -15,7 +15,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const selectedStudent = student;
+const selectedStudent = ref(student);
 
 watch(props, () => {
     selectedStudent.value = props.student;
