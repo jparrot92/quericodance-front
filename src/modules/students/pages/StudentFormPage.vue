@@ -10,7 +10,7 @@ import { Student } from '../models/student';
 const { student: newStudent, saveStudent, editStudent } = useStudents();
 
 interface Props {
-    student: Student;
+    student?: Student;
 }
 
 const props = defineProps<Props>();
@@ -18,11 +18,15 @@ const props = defineProps<Props>();
 const selectedStudent = newStudent;
 
 watch(props, () => {
-    selectedStudent.value = props.student;
+    if (props.student !== undefined) {
+        selectedStudent.value = props.student;
+    }
 });
 
 onMounted(() => {
-    selectedStudent.value = props.student;
+    if (props.student !== undefined) {
+        selectedStudent.value = props.student;
+    }
 });
 
 const updateUserDateOfBirth = (value: string) => {
