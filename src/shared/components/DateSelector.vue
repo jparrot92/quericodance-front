@@ -1,26 +1,18 @@
 <script setup lang="ts">
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref, watch, defineProps } from 'vue';
 
 interface Props {
     date: string;
     label: string;
 }
-interface Emits {
-    (e: 'updateDate', value: string): void;
-}
 
 const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
 
 const selectedDate = ref<string>('');
 
 watch(props, () => {
     selectedDate.value = props.date;
 });
-
-const updateDate = (value: string) => {
-    emit('updateDate', convertISODate(value));
-};
 
 const convertISODate = (date: string) => {
     const isoDate = new Date(date);
@@ -68,11 +60,7 @@ const locale = {
                     transition-show="scale"
                     transition-hide="scale"
                 >
-                    <q-date
-                        v-model="selectedDate"
-                        @update:model-value="updateDate"
-                        :locale="locale"
-                    >
+                    <q-date v-model="selectedDate" :locale="locale">
                         <div class="row items-center justify-end">
                             <q-btn
                                 v-close-popup

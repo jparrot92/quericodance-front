@@ -80,7 +80,10 @@ const onSubmit = async () => {
                 <date-selector
                     :date="selectedStudent.user.dateOfBirth"
                     :label="$t('user.label.dateOfBirth') + '*'"
-                    @update-date="updateUserDateOfBirth"
+                    @update:model-value="
+                        (newValue: string) =>
+                            (selectedStudent.user.dateOfBirth = newValue)
+                    "
                 />
 
                 <q-input
@@ -119,7 +122,7 @@ const onSubmit = async () => {
                         selectedStudent.id
                             ? []
                             : [
-                                  (val) =>
+                                  (val: string | any[]) =>
                                       (val && val.length > 0) ||
                                       $t('user.validations.passwordRequired')
                               ]
