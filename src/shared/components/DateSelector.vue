@@ -14,24 +14,6 @@ watch(props, () => {
     selectedDate.value = props.date;
 });
 
-const convertISODate = (date: string) => {
-    const isoDate = new Date(date);
-    const year = isoDate.getFullYear();
-    const month = isoDate.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que debemos sumar 1
-    const day = isoDate.getDate();
-    const hour = isoDate.getHours();
-    const minute = isoDate.getMinutes();
-    const second = isoDate.getSeconds();
-
-    const isoString = `${year}-${month.toString().padStart(2, '0')}-${day
-        .toString()
-        .padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute
-        .toString()
-        .padStart(2, '0')}:${second.toString().padStart(2, '0')}.000Z`;
-
-    return isoString;
-};
-
 const locale = {
     /* starting with Sunday */
     days: 'Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado'.split('_'),

@@ -29,10 +29,6 @@ onMounted(() => {
     }
 });
 
-const updateUserDateOfBirth = (value: string) => {
-    selectedStudent.value.user.dateOfBirth = value;
-};
-
 const onSubmit = async () => {
     if (selectedStudent.value.id) {
         editStudent(selectedStudent.value.id);

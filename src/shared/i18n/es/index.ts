@@ -7,7 +7,8 @@ export default {
             activities: 'Cursos',
             teachers: 'Professores',
             students: 'Estudiantes',
-            users: 'Usuarios'
+            users: 'Usuarios',
+            loading: 'Cargando...'
         },
         message: {
             logout: '¿Quieres cerrar sesión?'
