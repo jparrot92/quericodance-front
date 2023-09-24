@@ -2,6 +2,8 @@
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
+import DaysSelector from 'src/shared/components/DaysSelector.vue';
+
 import useActivities from '../composables/useActivities';
 
 const route = useRoute();
@@ -60,9 +62,12 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <q-input
-                    :label="$t('activity.label.day')"
-                    v-model="activity.day"
+                <days-selector
+                    :day="activity.day"
+                    @update:model-value="
+                        (newValue: any) =>
+                            (activity.day = newValue.value)
+                    "
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
