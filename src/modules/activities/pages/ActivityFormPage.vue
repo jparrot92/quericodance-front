@@ -75,61 +75,69 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <q-input
-                    :label="$t('activity.label.startHour')"
-                    v-model="activity.startHour"
-                    mask="time"
-                    :rules="['time']"
-                >
-                    <template v-slot:append>
-                        <q-icon name="access_time" class="cursor-pointer">
-                            <q-popup-proxy
-                                cover
-                                transition-show="scale"
-                                transition-hide="scale"
-                            >
-                                <q-time v-model="activity.startHour">
-                                    <div class="row items-center justify-end">
-                                        <q-btn
-                                            v-close-popup
-                                            label="Close"
-                                            color="primary"
-                                            flat
-                                        />
-                                    </div>
-                                </q-time>
-                            </q-popup-proxy>
-                        </q-icon>
-                    </template>
-                </q-input>
+                <div class="row">
+                    <q-input
+                        class="col-md-6 col-sm-6 col-xs-6 q-pr-md q-pr-sm"
+                        :label="$t('activity.label.startHour')"
+                        v-model="activity.startHour"
+                        mask="time"
+                        :rules="['time']"
+                    >
+                        <template v-slot:append>
+                            <q-icon name="access_time" class="cursor-pointer">
+                                <q-popup-proxy
+                                    cover
+                                    transition-show="scale"
+                                    transition-hide="scale"
+                                >
+                                    <q-time v-model="activity.startHour">
+                                        <div
+                                            class="row items-center justify-end"
+                                        >
+                                            <q-btn
+                                                v-close-popup
+                                                label="Close"
+                                                color="primary"
+                                                flat
+                                            />
+                                        </div>
+                                    </q-time>
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                    </q-input>
 
-                <q-input
-                    :label="$t('activity.label.endHour')"
-                    v-model="activity.endHour"
-                    mask="time"
-                    :rules="['time']"
-                >
-                    <template v-slot:append>
-                        <q-icon name="access_time" class="cursor-pointer">
-                            <q-popup-proxy
-                                cover
-                                transition-show="scale"
-                                transition-hide="scale"
-                            >
-                                <q-time v-model="activity.endHour">
-                                    <div class="row items-center justify-end">
-                                        <q-btn
-                                            v-close-popup
-                                            label="Close"
-                                            color="primary"
-                                            flat
-                                        />
-                                    </div>
-                                </q-time>
-                            </q-popup-proxy>
-                        </q-icon>
-                    </template>
-                </q-input>
+                    <q-input
+                        class="col-md-6 col-sm-6 col-xs-6 q-pl-md q-pl-sm"
+                        :label="$t('activity.label.endHour')"
+                        v-model="activity.endHour"
+                        mask="time"
+                        :rules="['time']"
+                    >
+                        <template v-slot:append>
+                            <q-icon name="access_time" class="cursor-pointer">
+                                <q-popup-proxy
+                                    cover
+                                    transition-show="scale"
+                                    transition-hide="scale"
+                                >
+                                    <q-time v-model="activity.endHour">
+                                        <div
+                                            class="row items-center justify-end"
+                                        >
+                                            <q-btn
+                                                v-close-popup
+                                                label="Close"
+                                                color="primary"
+                                                flat
+                                            />
+                                        </div>
+                                    </q-time>
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                    </q-input>
+                </div>
 
                 <q-input
                     type="number"
