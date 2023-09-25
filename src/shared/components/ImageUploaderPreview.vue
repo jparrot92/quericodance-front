@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, defineProps } from 'vue';
+import { ref, watch, defineProps, onMounted } from 'vue';
 
 import { deletePhoto, uploadPhoto } from 'src/api/usersApi';
 
@@ -21,6 +21,12 @@ watch(
         }
     }
 );
+
+onMounted(() => {
+    if (props.photo) {
+        userPhoto.value = props.photo;
+    }
+});
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const showDialog = ref<boolean>(false);
