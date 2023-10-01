@@ -21,10 +21,6 @@ onMounted(() => {
     }
 });
 
-const updateUserDateOfBirth = (value: string) => {
-    user.value.dateOfBirth = value;
-};
-
 const roles = ['admin', 'secretary'];
 
 const onSubmit = async () => {
@@ -74,7 +70,8 @@ const onSubmit = async () => {
                 <date-selector
                     :date="user.dateOfBirth"
                     :label="$t('user.label.dateOfBirth') + '*'"
-                    @update-date="updateUserDateOfBirth"
+                    @update-date="(newDate: string) =>
+                            (user.dateOfBirth = newDate)"
                 />
 
                 <q-input

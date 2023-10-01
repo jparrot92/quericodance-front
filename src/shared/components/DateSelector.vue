@@ -6,13 +6,40 @@ interface Props {
     label: string;
 }
 
+interface Emits {
+    (e: 'updateDate', value: string): void;
+}
+
 const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
 
 const selectedDate = ref<string>('');
 
 watch(props, () => {
     selectedDate.value = props.date;
 });
+
+const updateDate = (value: string) => {
+    emit('updateDate', convertISODate(value));
+};
+
+const convertISODate = (date: string) => {
+    const isoDate = new Date(date);
+    const year = isoDate.getFullYear();
+    const month = isoDate.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que debemos sumar 1
+    const day = isoDate.getDate();
+    const hour = isoDate.getHours();
+    const minute = isoDate.getMinutes();
+    const second = isoDate.getSeconds();
+
+    const isoString = `${year}-${month.toString().padStart(2, '0')}-${day
+        .toString()
+        .padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute
+        .toString()
+        .padStart(2, '0')}:${second.toString().padStart(2, '0')}.000Z`;
+
+    return isoString;
+};
 
 const locale = {
     /* starting with Sunday */
@@ -42,7 +69,11 @@ const locale = {
                     transition-show="scale"
                     transition-hide="scale"
                 >
-                    <q-date v-model="selectedDate" :locale="locale">
+                    <q-date
+                        v-model="selectedDate"
+                        @update:model-value="updateDate"
+                        :locale="locale"
+                    >
                         <div class="row items-center justify-end">
                             <q-btn
                                 v-close-popup
