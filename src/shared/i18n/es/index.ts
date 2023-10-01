@@ -16,7 +16,11 @@ export default {
             WE: 'Miércoles',
             TH: 'Jueves',
             FR: 'Viernes',
-            SA: 'Sábado'
+            SA: 'Sábado',
+            selectProfilePhoto: 'Seleccionar foto de perfil',
+            selectPhoto: 'Seleccionar foto',
+            deleteCurrentPhoto: 'Eliminar foto actual',
+            cancel: 'Cancelar'
         },
         message: {
             logout: '¿Quieres cerrar sesión?'

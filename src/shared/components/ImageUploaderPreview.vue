@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { deletePhoto, uploadPhoto } from 'src/api/usersApi';
+
+const { t } = useI18n();
 
 interface Props {
     id: number;
@@ -68,12 +71,12 @@ const deletePicture = async () => {
         <q-icon
             class="absolute all-pointer-events"
             size="32px"
-            name="info"
+            name="mdi-camera"
             color="primary"
             style="top: 8px; left: 115px; cursor: pointer"
             @click="showDialog = true"
         >
-            <q-tooltip>Seleccionar foto del perfil</q-tooltip>
+            <q-tooltip>{{ $t('shared.label.selectProfilePhoto') }}</q-tooltip>
         </q-icon>
     </q-avatar>
 
@@ -89,26 +92,26 @@ const deletePicture = async () => {
         <q-card style="width: 500px; max-width: 60vw">
             <q-card-section>
                 <div class="text-center text-h6">
-                    Seleccionar foto del perfil
+                    {{ $t('shared.label.selectProfilePhoto') }}
                 </div>
             </q-card-section>
 
             <q-list bordered separator>
                 <q-item clickable v-ripple @click="choosePicture">
-                    <q-item-section class="text-center text-bold text-primary">
-                        Seleccionar foto
+                    <q-item-section class="text-center text-bold text-pos">
+                        {{ $t('shared.label.selectPhoto') }}
                     </q-item-section>
                 </q-item>
 
                 <q-item clickable v-ripple @click="deletePicture">
                     <q-item-section class="text-center text-bold text-negative">
-                        Eliminar foto actual
+                        {{ $t('shared.label.deleteCurrentPhoto') }}
                     </q-item-section>
                 </q-item>
 
                 <q-item clickable v-ripple @click="showDialog = false">
                     <q-item-section class="text-center">
-                        Cancelar
+                        {{ $t('shared.label.cancel') }}
                     </q-item-section>
                 </q-item>
             </q-list>

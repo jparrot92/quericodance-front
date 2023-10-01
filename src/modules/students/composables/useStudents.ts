@@ -87,7 +87,6 @@ const useStudents = () => {
             loading.value = true;
             student.value = await updateStudent(id, student.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users' });
         } catch (error) {
             notifyError(error);
         } finally {
