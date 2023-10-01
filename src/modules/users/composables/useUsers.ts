@@ -28,22 +28,15 @@ const useUsers = () => {
     const users = ref<User[]>([]);
     const user = ref<User>({
         id: 0,
-        nif: '',
         name: '',
         surnames: '',
         dateOfBirth: '',
         phone: '',
         photo: '',
+        instagram: '',
         email: '',
         password: '',
-        role: '',
-        address: {
-            street: '',
-            city: '',
-            state: '',
-            postalCode: '',
-            country: ''
-        }
+        role: ''
     });
 
     const loadUsers = async () => {
@@ -74,7 +67,7 @@ const useUsers = () => {
             loading.value = true;
             await createUser(user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users' });
+            router.push({ name: 'users-list' });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -87,7 +80,7 @@ const useUsers = () => {
             loading.value = true;
             user.value = await updateUser(id, user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users' });
+            router.push({ name: 'users-list' });
         } catch (error) {
             notifyError(error);
         } finally {
