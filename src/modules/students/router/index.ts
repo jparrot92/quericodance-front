@@ -40,21 +40,6 @@ const studentsRoutes: RouteRecordRaw = {
                 };
             }
         }
-        /**{
-            path: `/${ROUTE_NAME}/:id`,
-            name: `${ROUTE_NAME}-edit`,
-            component: () =>
-                import('src/modules/students/pages/StudentFormPage.vue'),
-            meta: {
-                toolbar: 'DetailToolbar',
-                title: 'student.label.editStudent'
-            },
-            props: (route) => {
-                return {
-                    id: route.params.id
-                };
-            }
-        }*/
     ]
 };
 

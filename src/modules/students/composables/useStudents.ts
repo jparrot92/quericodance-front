@@ -58,6 +58,13 @@ const useStudents = () => {
         try {
             loading.value = true;
             student.value = await getStudent(id);
+
+            const currentRoute = router.currentRoute.value.name;
+            window.addEventListener('popstate', () => {
+                if (currentRoute === 'students-edit') {
+                    router.push({ name: 'students-list' });
+                }
+            });
         } catch (error) {
             notifyError(error);
         } finally {
