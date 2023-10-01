@@ -98,7 +98,7 @@ const deletePicture = async () => {
 
             <q-list bordered separator>
                 <q-item clickable v-ripple @click="choosePicture">
-                    <q-item-section class="text-center text-bold text-pos">
+                    <q-item-section class="text-center text-bold text-positive">
                         {{ $t('shared.label.selectPhoto') }}
                     </q-item-section>
                 </q-item>
