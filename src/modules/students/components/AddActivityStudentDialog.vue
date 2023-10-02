@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { watch, onMounted, defineProps, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 import useActivities from 'src/modules/activities/composables/useActivities';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
@@ -65,7 +68,7 @@ const addActivityStudent = async () => {
 
 <template>
     <q-dialog v-model="isOpenDialog" @hide="emits('onClose')">
-        <q-card>
+        <q-card style="width: 50vh">
             <q-card-section>
                 <div class="text-h6">{{ $t('student.label.addActivity') }}</div>
             </q-card-section>
@@ -85,7 +88,7 @@ const addActivityStudent = async () => {
                             ' ' +
                             opt.level +
                             ' - ' +
-                            opt.day +
+                            t('shared.label.' + opt.day) +
                             ' ' +
                             opt.startHour
                         }}
@@ -98,7 +101,7 @@ const addActivityStudent = async () => {
                                     ' ' +
                                     opt.level +
                                     ' - ' +
-                                    opt.day +
+                                    t('shared.label.' + opt.day) +
                                     ' ' +
                                     opt.startHour
                                 }}
@@ -114,26 +117,28 @@ const addActivityStudent = async () => {
                     emit-value
                 />
 
-                <q-input
-                    type="number"
-                    prefix="€"
-                    :label="$t('activity.label.price')"
-                    v-model="activityStudent.price"
-                    :disable="!changePrice"
-                    :rules="[
-                        (val) =>
-                            (val !== null &&
-                                val !== undefined &&
-                                val.toString().trim() !== '') ||
-                            $t('activity.validation.priceRequired')
-                    ]"
-                />
+                <div class="row">
+                    <q-input
+                        type="number"
+                        prefix="€"
+                        :label="$t('activity.label.price')"
+                        v-model="activityStudent.price"
+                        :disable="!changePrice"
+                        :rules="[
+                            (val) =>
+                                (val !== null &&
+                                    val !== undefined &&
+                                    val.toString().trim() !== '') ||
+                                $t('activity.validation.priceRequired')
+                        ]"
+                    />
 
-                <q-checkbox
-                    v-model="changePrice"
-                    :label="$t('student.label.changePrice')"
-                    color="primary"
-                />
+                    <q-checkbox
+                        v-model="changePrice"
+                        :label="$t('student.label.changePrice')"
+                        color="primary"
+                    />
+                </div>
             </q-card-section>
 
             <q-separator />

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { watch, onMounted, defineProps, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
@@ -58,7 +61,13 @@ const addActivityStudent = (activityStudent: ActivityStudent) => {
                                         {{ item.activity.fullName }}
                                     </span>
                                     <span class="text-grey-8">
-                                        - {{ item.activity.day }}
+                                        -
+                                        {{
+                                            t(
+                                                'shared.label.' +
+                                                    item.activity.day
+                                            )
+                                        }}
                                         {{ item.activity.startHour }}
                                     </span>
                                 </q-item-label>
