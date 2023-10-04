@@ -64,6 +64,10 @@ const addActivityStudent = async () => {
         emits('addActivityStudent', newActivityStudent);
     }
 };
+
+const calculatePrice = () => {
+    activityStudent.value.price = activityStudent.value.activity.price;
+};
 </script>
 
 <template>
@@ -81,16 +85,19 @@ const addActivityStudent = async () => {
                     :label="$t('student.label.course')"
                     :options="activities"
                     :option-value="'id'"
+                    @update:model-value="calculatePrice"
                 >
                     <template v-slot:selected-item="{ opt }">
                         {{
-                            opt.name +
-                            ' ' +
-                            opt.level +
-                            ' - ' +
-                            t('shared.label.' + opt.day) +
-                            ' ' +
-                            opt.startHour
+                            activityStudent.activity.id !== 0
+                                ? opt.name +
+                                  ' ' +
+                                  opt.level +
+                                  ' - ' +
+                                  t('shared.label.' + opt.day) +
+                                  ' ' +
+                                  opt.startHour
+                                : ''
                         }}
                     </template>
                     <template v-slot:option="{ itemProps, opt }">

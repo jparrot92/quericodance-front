@@ -28,7 +28,7 @@ const columnsUser: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.label.photo'),
-        field: (row) => row.user.photo,
+        field: (row: string) => row.user.photo,
         sortable: false
     },
     {

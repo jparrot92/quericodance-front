@@ -35,7 +35,7 @@ const columnsUser: ColumnTable[] = [
         name: 'day',
         align: 'left',
         label: t('activity.label.day'),
-        field: 'day',
+        field: (row) => t('shared.label.' + row.day),
         sortable: true
     },
     {
@@ -57,6 +57,34 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('activity.label.endHour'),
         field: 'endHour',
+        sortable: true
+    },
+    {
+        name: 'numberPlaces',
+        align: 'left',
+        label: t('activity.label.numberPlaces'),
+        field: 'numberPlaces',
+        sortable: true
+    },
+    {
+        name: 'numberStudents',
+        align: 'left',
+        label: t('activity.label.numberStudents'),
+        field: 'numberStudents',
+        sortable: true
+    },
+    {
+        name: 'numberLeaders',
+        align: 'left',
+        label: t('activity.label.numberLeaders'),
+        field: 'numberLeaders',
+        sortable: true
+    },
+    {
+        name: 'numberFollowers',
+        align: 'left',
+        label: t('activity.label.numberFollowers'),
+        field: 'numberFollowers',
         sortable: true
     },
     {
