@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';
-
 import { deletePhoto, uploadPhoto } from 'src/api/usersApi';
-
-const { t } = useI18n();
 
 interface Props {
     id: number;
@@ -14,7 +10,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const id = ref<number>(props.id);
-const userPhoto = ref<string>('src/assets/sinFoto.png');
+const userPhoto = ref<string>('/src/assets/quasar-logo-vertical.svg');
 
 watch(
     () => props.photo,
@@ -66,6 +62,11 @@ const deletePicture = async () => {
 </script>
 
 <template>
+    <img
+        alt="Quasar logo"
+        src="~assets/quasar-logo-vertical.svg"
+        style="width: 200px; height: 200px"
+    />
     <q-avatar size="150px">
         <q-img :src="userPhoto" :ratio="1" />
         <q-icon
