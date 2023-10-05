@@ -10,7 +10,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const id = ref<number>(props.id);
-const userPhoto = ref<string>('/src/assets/quasar-logo-vertical.svg');
+const userPhoto = ref<string>('');
 
 watch(
     () => props.photo,
@@ -56,19 +56,15 @@ const choosePicture = () => {
 
 const deletePicture = async () => {
     await deletePhoto(id.value);
-    userPhoto.value = './assets/sinFoto.png';
+    userPhoto.value = '';
     showDialog.value = false;
 };
 </script>
 
 <template>
-    <img
-        alt="Quasar logo"
-        src="~assets/quasar-logo-vertical.svg"
-        style="width: 200px; height: 200px"
-    />
     <q-avatar size="150px">
-        <q-img :src="userPhoto" :ratio="1" />
+        <q-img v-if="userPhoto === ''" src="~assets/sinFoto.png" :ratio="1" />
+        <q-img v-else :src="userPhoto" :ratio="1" />
         <q-icon
             class="absolute all-pointer-events"
             size="32px"
