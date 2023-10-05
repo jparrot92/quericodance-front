@@ -60,7 +60,7 @@ const choosePicture = () => {
 
 const deletePicture = async () => {
     await deletePhoto(id.value);
-    userPhoto.value = 'src/assets/sinFoto.png';
+    userPhoto.value = './assets/sinFoto.png';
     showDialog.value = false;
 };
 </script>
