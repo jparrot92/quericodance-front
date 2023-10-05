@@ -156,7 +156,6 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    type="number"
                     prefix="€"
                     :label="$t('activity.label.price')"
                     v-model.number="activity.price"
@@ -167,11 +166,6 @@ const onSubmit = async () => {
                                 val.toString().trim() !== '') ||
                             $t('activity.validation.priceRequired')
                     ]"
-                />
-
-                <q-input
-                    :label="$t('activity.label.description')"
-                    v-model="activity.fullName"
                 />
 
                 <q-btn
