@@ -21,7 +21,7 @@ export interface ColumnTable {
     field: string;
     align?: 'left' | 'right' | 'center';
     sortable?: boolean;
-    style?: string;
+    headerStyle?: string;
 }
 
 const columnsUser: ColumnTable[] = [
@@ -52,42 +52,47 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.startHour'),
         field: 'startHour',
         sortable: true,
-        style: 'max-width: 800px'
+        headerStyle: 'white-space: pre;'
     },
     {
         name: 'endHour',
         align: 'left',
         label: t('activity.label.endHour'),
         field: 'endHour',
-        sortable: true
+        sortable: true,
+        headerStyle: 'white-space: pre;'
     },
     {
         name: 'numberPlaces',
         align: 'left',
         label: t('activity.label.numberPlaces'),
         field: 'numberPlaces',
-        sortable: true
+        sortable: true,
+        headerStyle: 'white-space: pre;'
     },
     {
         name: 'numberStudents',
         align: 'left',
         label: t('activity.label.numberStudents'),
         field: 'numberStudents',
-        sortable: true
+        sortable: true,
+        headerStyle: 'white-space: pre;'
     },
     {
         name: 'numberLeaders',
         align: 'left',
         label: t('activity.label.numberLeaders'),
         field: 'numberLeaders',
-        sortable: true
+        sortable: true,
+        headerStyle: 'white-space: pre;'
     },
     {
         name: 'numberFollowers',
         align: 'left',
         label: t('activity.label.numberFollowers'),
         field: 'numberFollowers',
-        sortable: true
+        sortable: true,
+        headerStyle: 'white-space: pre;'
     },
     {
         name: 'costEffectiveness',
@@ -99,8 +104,8 @@ const columnsUser: ColumnTable[] = [
     },
     {
         name: 'actions',
-        align: 'right',
-        label: t('activity.label.actions'),
+        align: 'center',
+        label: '',
         field: 'actions',
         sortable: false
     }
@@ -135,45 +140,43 @@ const columnsUser: ColumnTable[] = [
                 />
             </template>
             <template v-slot:body-cell-actions="props">
-                <q-td :props="props" class="q-gutter-x-sm">
-                    <q-btn
-                        icon="mdi-eye-outline"
-                        color="positive"
-                        dense
-                        size="sm"
-                        @click="
-                            $router.push({
-                                name: 'activities-list-students',
-                                params: { id: props.row.id }
-                            })
-                        "
-                    >
-                        <q-tooltip> {{ $t('activity.label.see') }} </q-tooltip>
-                    </q-btn>
-                    <q-btn
-                        icon="mdi-pencil-outline"
-                        color="info"
-                        dense
-                        size="sm"
-                        @click="
-                            $router.push({
-                                name: 'activities-edit',
-                                params: { id: props.row.id }
-                            })
-                        "
-                    >
-                        <q-tooltip> {{ $t('activity.label.edit') }} </q-tooltip>
-                    </q-btn>
-                    <q-btn
-                        icon="mdi-delete-outline"
-                        color="negative"
-                        dense
-                        size="sm"
-                        @click="removeActivity(props.row.id)"
-                    >
-                        <q-tooltip>
-                            {{ $t('activity.label.delete') }}
-                        </q-tooltip>
+                <q-td :props="props">
+                    <q-btn size="12px" flat dense round icon="more_vert">
+                        <q-menu>
+                            <q-list style="width: 200px">
+                                <q-item clickable v-close-popup>
+                                    <q-item-section
+                                        @click="
+                                            $router.push({
+                                                name: 'activities-list-students',
+                                                params: { id: props.row.id }
+                                            })
+                                        "
+                                    >
+                                        {{ $t('activity.label.see') }}
+                                    </q-item-section>
+                                </q-item>
+                                <q-item clickable v-close-popup>
+                                    <q-item-section
+                                        @click="
+                                            $router.push({
+                                                name: 'activities-edit',
+                                                params: { id: props.row.id }
+                                            })
+                                        "
+                                    >
+                                        {{ $t('activity.label.edit') }}
+                                    </q-item-section>
+                                </q-item>
+                                <q-item clickable v-close-popup>
+                                    <q-item-section
+                                        @click="removeActivity(props.row.id)"
+                                    >
+                                        {{ $t('activity.label.delete') }}
+                                    </q-item-section>
+                                </q-item>
+                            </q-list>
+                        </q-menu>
                     </q-btn>
                 </q-td>
             </template>
