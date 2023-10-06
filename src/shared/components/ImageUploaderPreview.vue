@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted } from 'vue';
+
+import useNotify from 'src/shared/composables/useNotify';
 import { deletePhoto, uploadPhoto } from 'src/api/usersApi';
+
+const { notifySuccess, notifyError } = useNotify();
 
 interface Props {
     id: number;
@@ -42,9 +46,13 @@ const handleImageChange = async (event: Event) => {
         };
         reader.readAsDataURL(file);*/
 
-        let photoURL = await uploadPhoto(id.value, file);
-        userPhoto.value = photoURL;
-        showDialog.value = false;
+        try {
+            let photoURL = await uploadPhoto(id.value, file);
+            userPhoto.value = photoURL;
+            showDialog.value = false;
+        } catch (error) {
+            notifyError(error);
+        }
     }
 };
 

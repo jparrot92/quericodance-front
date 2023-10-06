@@ -47,8 +47,8 @@ const onSubmit = async () => {
             >
                 <div style="text-align: center">
                     <ImageUploaderPreview
-                        v-if="selectedStudent.id"
-                        :id="selectedStudent.id"
+                        v-if="selectedStudent.user.id"
+                        :id="selectedStudent.user.id"
                         :photo="selectedStudent.user.photo"
                     />
                 </div>
