@@ -58,7 +58,9 @@ const addActivityStudent = (activityStudent: ActivityStudent) => {
                             <q-item-section top>
                                 <q-item-label lines="1">
                                     <span class="text-weight-medium">
-                                        {{ item.activity.fullName }}
+                                        {{ $t('activity.label.activity') }}
+                                        {{ item.activity.name }}
+                                        {{ item.activity.level }}
                                     </span>
                                     <span class="text-grey-8">
                                         -

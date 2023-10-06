@@ -26,7 +26,7 @@ export interface ColumnTable {
     sortable?: boolean;
 }
 
-const columnsUser: ColumnTable[] = [
+const columnTable: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
@@ -76,15 +76,16 @@ const columnsUser: ColumnTable[] = [
     <div class="row">
         <q-table
             :rows="activity.activitiesStudent"
-            :columns="columnsUser"
+            :columns="columnTable"
             row-key="id"
             class="col-12"
             :loading="loading"
         >
             <template v-slot:top>
                 <span class="text-h6">
-                    {{ $t('activity.label.activity') }}
-                    {{ activity.fullName }} - {{ activity.day }}
+                    {{ $t('activity.label.activity') }} {{ activity.name }}
+                    {{ activity.level }} -
+                    {{ $t('shared.label.' + activity.day) }}
                     {{ activity.startHour }}
                 </span>
                 <q-space />
