@@ -93,3 +93,17 @@ export const createActivityStudent = async (
         throw handleError(error);
     }
 };
+
+export const deleteActivityStudent = async (
+    id: number
+): Promise<ActivityStudent> => {
+    try {
+        const { data } = await api.delete<ActivityStudent>(
+            `/activity-student/${id}`
+        );
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};

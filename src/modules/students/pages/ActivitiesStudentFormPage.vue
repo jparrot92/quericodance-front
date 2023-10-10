@@ -2,9 +2,13 @@
 import { watch, onMounted, defineProps, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import useActivities from 'src/modules/activities/composables/useActivities';
+
 import MenuList from 'src/shared/components/MenuList.vue';
 
 const { t } = useI18n();
+
+const { removeActivityStudent } = useActivities();
 
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
@@ -40,6 +44,26 @@ onMounted(() => {
 
 const addActivityStudent = (activityStudent: ActivityStudent) => {
     studentActivitiesList.value.push(activityStudent);
+};
+
+const deleteActivityStudent = async (id: number) => {
+    // Busca el índice del elemento con el ID proporcionado en studentActivitiesList
+    const index = studentActivitiesList.value.findIndex(
+        (activity) => activity.id === id
+    );
+
+    // Si se encontró el elemento con el ID, elimínalo del arreglo
+    if (index !== -1) {
+        try {
+            await removeActivityStudent(id);
+            // La eliminación de la lista se realiza después de la eliminación exitosa en removeActivityStudent
+            studentActivitiesList.value = studentActivitiesList.value.filter(
+                (activity) => activity.id !== id
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    }
 };
 </script>
 
@@ -106,7 +130,9 @@ const addActivityStudent = (activityStudent: ActivityStudent) => {
                                         <q-item clickable v-close-popup>
                                             <q-item-section
                                                 @click="
-                                                    removeActivity(props.row.id)
+                                                    deleteActivityStudent(
+                                                        item.id
+                                                    )
                                                 "
                                             >
                                                 {{

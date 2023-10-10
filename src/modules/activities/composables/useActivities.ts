@@ -12,7 +12,8 @@ import {
     createActivity,
     updateActivity,
     deleteActivity,
-    createActivityStudent
+    createActivityStudent,
+    deleteActivityStudent
 } from 'src/api/activitiesApi';
 
 import { Activity } from '../models/activity';
@@ -163,6 +164,28 @@ const useActivities = () => {
         }
     };
 
+    const removeActivityStudent = async (id: number) => {
+        return new Promise<void>((resolve, reject) => {
+            $q.dialog({
+                title: t('activity.label.confirmation'),
+                message: t('activity.message.activityDelete'),
+                cancel: true,
+                persistent: true
+            }).onOk(async () => {
+                try {
+                    await deleteActivityStudent(id);
+                    notifySuccess(
+                        t('activity.notifications.activityDeleteSuccessfully')
+                    );
+                    resolve(); // Resuelve la promesa después de que todo esté completo
+                } catch (error) {
+                    notifyError(error);
+                    reject(error); // Rechaza la promesa en caso de error
+                }
+            });
+        });
+    };
+
     return {
         // Properties
         loading,
@@ -175,7 +198,8 @@ const useActivities = () => {
         saveActivity,
         editActivity,
         removeActivity,
-        saveActivityStudent
+        saveActivityStudent,
+        removeActivityStudent
     };
 };
 
