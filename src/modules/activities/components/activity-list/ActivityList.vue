@@ -3,6 +3,8 @@ import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
+import MenuList from 'src/shared/components/MenuList.vue';
+
 import useActivities from '../../composables/useActivities';
 
 const { loading, activities, loadActivities, removeActivity } = useActivities();
@@ -139,45 +141,66 @@ const columnsUser: ColumnTable[] = [
                     "
                 />
             </template>
+            <template v-slot:body-cell-numberLeaders="props">
+                <q-td :props="props">
+                    <div>
+                        <q-badge color="blue" :label="props.value" />
+                    </div>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-numberFollowers="props">
+                <q-td :props="props">
+                    <div>
+                        <q-badge color="pink" :label="props.value" />
+                    </div>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-costEffectiveness="props">
+                <q-td :props="props">
+                    <div>
+                        <q-badge color="green" :label="props.value" />
+                    </div>
+                </q-td>
+            </template>
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
-                    <q-btn size="12px" flat dense round icon="more_vert">
-                        <q-menu>
-                            <q-list style="width: 200px">
-                                <q-item clickable v-close-popup>
-                                    <q-item-section
-                                        @click="
-                                            $router.push({
-                                                name: 'activities-list-students',
-                                                params: { id: props.row.id }
-                                            })
-                                        "
-                                    >
-                                        {{ $t('activity.label.see') }}
-                                    </q-item-section>
-                                </q-item>
-                                <q-item clickable v-close-popup>
-                                    <q-item-section
-                                        @click="
-                                            $router.push({
-                                                name: 'activities-edit',
-                                                params: { id: props.row.id }
-                                            })
-                                        "
-                                    >
-                                        {{ $t('activity.label.edit') }}
-                                    </q-item-section>
-                                </q-item>
-                                <q-item clickable v-close-popup>
-                                    <q-item-section
-                                        @click="removeActivity(props.row.id)"
-                                    >
-                                        {{ $t('activity.label.delete') }}
-                                    </q-item-section>
-                                </q-item>
-                            </q-list>
-                        </q-menu>
-                    </q-btn>
+                    <menu-list>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="
+                                    $router.push({
+                                        name: 'activities-list-students',
+                                        params: {
+                                            id: props.row.id
+                                        }
+                                    })
+                                "
+                            >
+                                {{ $t('activity.label.see') }}
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="
+                                    $router.push({
+                                        name: 'activities-edit',
+                                        params: {
+                                            id: props.row.id
+                                        }
+                                    })
+                                "
+                            >
+                                {{ $t('activity.label.edit') }}
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="removeActivity(props.row.id)"
+                            >
+                                {{ $t('activity.label.delete') }}
+                            </q-item-section>
+                        </q-item>
+                    </menu-list>
                 </q-td>
             </template>
         </q-table>

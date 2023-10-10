@@ -2,6 +2,8 @@
 import { watch, onMounted, defineProps, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import MenuList from 'src/shared/components/MenuList.vue';
+
 const { t } = useI18n();
 
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
@@ -76,14 +78,6 @@ const addActivityStudent = (activityStudent: ActivityStudent) => {
                                 <q-item-label caption lines="1">
                                     {{ item.danceRole }}
                                 </q-item-label>
-                                <q-item-label
-                                    lines="1"
-                                    class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase"
-                                >
-                                    <span class="cursor-pointer">
-                                        Ver grupo
-                                    </span>
-                                </q-item-label>
                             </q-item-section>
 
                             <q-item-section top class="col-2">
@@ -94,13 +88,33 @@ const addActivityStudent = (activityStudent: ActivityStudent) => {
 
                             <q-item-section top side>
                                 <div class="text-grey-8 q-gutter-xs">
-                                    <q-btn
-                                        size="12px"
-                                        flat
-                                        dense
-                                        round
-                                        icon="delete"
-                                    />
+                                    <menu-list>
+                                        <q-item clickable v-close-popup>
+                                            <q-item-section
+                                                @click="
+                                                    $router.push({
+                                                        name: 'activities-list-students',
+                                                        params: {
+                                                            id: item.activity.id
+                                                        }
+                                                    })
+                                                "
+                                            >
+                                                {{ $t('activity.label.see') }}
+                                            </q-item-section>
+                                        </q-item>
+                                        <q-item clickable v-close-popup>
+                                            <q-item-section
+                                                @click="
+                                                    removeActivity(props.row.id)
+                                                "
+                                            >
+                                                {{
+                                                    $t('activity.label.delete')
+                                                }}
+                                            </q-item-section>
+                                        </q-item>
+                                    </menu-list>
                                 </div>
                             </q-item-section>
                         </q-item>
