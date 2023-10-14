@@ -36,7 +36,7 @@ const useUsers = () => {
         instagram: '',
         email: '',
         password: '',
-        role: ''
+        roles: []
     });
 
     const loadUsers = async () => {

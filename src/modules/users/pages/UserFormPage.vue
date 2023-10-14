@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
@@ -21,7 +21,30 @@ onMounted(() => {
     }
 });
 
-const roles = ['admin', 'secretary'];
+const model = ref([]);
+
+const roles = [
+    {
+        label: 'Administrador',
+        value: 'admin'
+    },
+    {
+        label: 'Secretar@',
+        value: 'secretary'
+    },
+    {
+        label: 'Professor',
+        value: 'teacher'
+    },
+    {
+        label: 'Estudiente',
+        value: 'student'
+    },
+    {
+        label: 'Invitado',
+        value: 'guest'
+    }
+];
 
 const onSubmit = async () => {
     if (isUpdate.value) {
@@ -118,11 +141,36 @@ const onSubmit = async () => {
                 />
 
                 <q-select
-                    :label="$t('user.label.role')"
-                    v-model="user.role"
+                    v-model="user.roles"
                     :options="roles"
-                    behavior="menu"
-                />
+                    :label="$t('user.label.role')"
+                    multiple
+                    emit-value
+                    map-options
+                >
+                    <template
+                        v-slot:option="{
+                            itemProps,
+                            opt,
+                            selected,
+                            toggleOption
+                        }"
+                    >
+                        <q-item v-bind="itemProps">
+                            <q-item-section>
+                                <q-item-label>
+                                    {{ opt.label }}
+                                </q-item-label>
+                            </q-item-section>
+                            <q-item-section side>
+                                <q-toggle
+                                    :model-value="selected"
+                                    @update:model-value="toggleOption(opt)"
+                                />
+                            </q-item-section>
+                        </q-item>
+                    </template>
+                </q-select>
 
                 <q-btn
                     :label="$t('user.label.save')"
