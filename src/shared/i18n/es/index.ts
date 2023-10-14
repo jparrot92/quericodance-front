@@ -9,6 +9,8 @@ export default {
             students: 'Estudiantes',
             users: 'Usuarios',
             loading: 'Cargando...',
+            noData: 'Datos no disponibles',
+            recordsPerPage: 'Registros por página',
             day: 'Dia',
             SU: 'Domingo',
             MO: 'Lunes',

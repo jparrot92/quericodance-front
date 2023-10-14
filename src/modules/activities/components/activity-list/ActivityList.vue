@@ -20,8 +20,9 @@ onMounted(() => {
 export interface ColumnTable {
     name: string;
     label: string;
-    field: string;
+    field: string | ((row: any) => string);
     align?: 'left' | 'right' | 'center';
+    format?: any;
     sortable?: boolean;
     headerStyle?: string;
 }
@@ -101,7 +102,7 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('activity.label.costEffectiveness'),
         field: 'costEffectiveness',
-        format: (val, row) => `${val} €`,
+        format: (val: string) => `${val} €`,
         sortable: true
     },
     {
@@ -122,6 +123,8 @@ const columnsUser: ColumnTable[] = [
             row-key="id"
             class="col-12"
             :loading="loading"
+            :no-data-label="$t('shared.label.noData')"
+            :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
             <template v-slot:top>
                 <span class="text-h6">

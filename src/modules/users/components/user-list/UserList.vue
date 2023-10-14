@@ -77,6 +77,8 @@ const columnsUser: ColumnTable[] = [
             row-key="id"
             class="col-12"
             :loading="loading"
+            :no-data-label="$t('shared.label.noData')"
+            :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
             <template v-slot:top>
                 <span class="text-h6"> {{ $t('user.label.users') }} </span>

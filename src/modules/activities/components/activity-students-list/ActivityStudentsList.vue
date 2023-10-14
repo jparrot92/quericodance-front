@@ -4,6 +4,8 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
+import { Student } from 'src/modules/students/models/student';
+
 import useActivities from '../../composables/useActivities';
 
 const $q = useQuasar();
@@ -21,7 +23,7 @@ onMounted(() => {
 export interface ColumnTable {
     name: string;
     label: string;
-    field: string;
+    field: string | ((row: Student) => string);
     align?: 'left' | 'right' | 'center';
     sortable?: boolean;
 }
@@ -31,28 +33,28 @@ const columnTable: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.label.photo'),
-        field: (row) => row.student.user.photo,
+        field: (row: Student) => row.user.photo,
         sortable: false
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
-        field: (row) => row.student.user.name,
+        field: (row: Student) => row.user.name,
         sortable: true
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
-        field: (row) => row.student.user.surnames,
+        field: (row: Student) => row.user.surnames,
         sortable: true
     },
     {
         name: 'phone',
         align: 'left',
         label: t('user.label.phone'),
-        field: (row) => row.student.user.phone,
+        field: (row: Student) => row.user.phone,
         sortable: true
     },
     {
@@ -80,6 +82,8 @@ const columnTable: ColumnTable[] = [
             row-key="id"
             class="col-12"
             :loading="loading"
+            :no-data-label="$t('shared.label.noData')"
+            :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
             <template v-slot:top>
                 <span class="text-h6">
