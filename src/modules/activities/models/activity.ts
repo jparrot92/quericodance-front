@@ -11,4 +11,8 @@ export interface Activity {
     price: number;
     fullName: string;
     activitiesStudent?: ActivityStudent[];
+    numberStudents?: string;
+    numberLeaders?: string;
+    numberFollowers?: string;
+    costEffectiveness?: string;
 }

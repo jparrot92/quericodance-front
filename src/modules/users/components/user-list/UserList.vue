@@ -53,10 +53,10 @@ const columnsUser: ColumnTable[] = [
         sortable: true
     },
     {
-        name: 'role',
+        name: 'roles',
         align: 'left',
-        label: t('user.label.role'),
-        field: 'role',
+        label: t('user.label.permissions'),
+        field: 'roles',
         sortable: true
     },
     {

@@ -38,7 +38,7 @@ const useStudents = () => {
             instagram: '',
             email: '',
             password: '',
-            role: ''
+            roles: []
         }
     });
 

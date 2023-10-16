@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
@@ -21,28 +24,26 @@ onMounted(() => {
     }
 });
 
-const model = ref([]);
-
 const roles = [
     {
-        label: 'Administrador',
+        label: t('user.label.admin'),
         value: 'admin'
     },
     {
-        label: 'Secretar@',
+        label: t('user.label.manager'),
+        value: 'manager'
+    },
+    {
+        label: t('user.label.secretary'),
         value: 'secretary'
     },
     {
-        label: 'Professor',
+        label: t('user.label.teacher'),
         value: 'teacher'
     },
     {
-        label: 'Estudiente',
+        label: t('user.label.student'),
         value: 'student'
-    },
-    {
-        label: 'Invitado',
-        value: 'guest'
     }
 ];
 
@@ -143,7 +144,7 @@ const onSubmit = async () => {
                 <q-select
                     v-model="user.roles"
                     :options="roles"
-                    :label="$t('user.label.role')"
+                    :label="$t('user.label.permissions')"
                     multiple
                     emit-value
                     map-options

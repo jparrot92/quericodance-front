@@ -4,9 +4,8 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
-import { Student } from 'src/modules/students/models/student';
-
 import useActivities from '../../composables/useActivities';
+import { ActivityStudent } from '../../models/activityStudent';
 
 const $q = useQuasar();
 const { t } = useI18n();
@@ -23,7 +22,7 @@ onMounted(() => {
 export interface ColumnTable {
     name: string;
     label: string;
-    field: string | ((row: Student) => string);
+    field: string | ((row: ActivityStudent) => string | undefined);
     align?: 'left' | 'right' | 'center';
     sortable?: boolean;
 }
@@ -33,35 +32,42 @@ const columnTable: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.label.photo'),
-        field: (row: Student) => row.user.photo,
+        field: (row: ActivityStudent) => row.student?.user.photo,
         sortable: false
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
-        field: (row: Student) => row.user.name,
+        field: (row: ActivityStudent) => row.student?.user.name,
         sortable: true
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
-        field: (row: Student) => row.user.surnames,
+        field: (row: ActivityStudent) => row.student?.user.surnames,
         sortable: true
     },
     {
         name: 'phone',
         align: 'left',
         label: t('user.label.phone'),
-        field: (row: Student) => row.user.phone,
+        field: (row: ActivityStudent) => row.student?.user.phone,
         sortable: true
     },
     {
         name: 'danceRole',
         align: 'left',
         label: t('student.label.role'),
-        field: (row) => row.danceRole,
+        field: (row: ActivityStudent) => row.danceRole,
+        sortable: true
+    },
+    {
+        name: 'price',
+        align: 'left',
+        label: t('activity.label.price'),
+        field: (row: ActivityStudent) => row.price || undefined,
         sortable: true
     },
     {
@@ -105,6 +111,20 @@ const columnTable: ColumnTable[] = [
                         })
                     "
                 />
+                <div style="width: 100%" class="q-pa-md q-gutter-md">
+                    <q-chip color="blue" text-color="white">
+                        {{ $t('activity.label.numberLeaders') }} :
+                        {{ activity.numberLeaders }}
+                    </q-chip>
+                    <q-chip color="pink" text-color="white">
+                        {{ $t('activity.label.numberFollowers') }} :
+                        {{ activity.numberFollowers }}
+                    </q-chip>
+                    <q-chip color="green" text-color="white">
+                        {{ $t('activity.label.costEffectiveness') }} :
+                        {{ activity.costEffectiveness + ' €' }}
+                    </q-chip>
+                </div>
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">

@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { User } from 'src/modules/users/models/user';
+import { Student } from '../../models/student';
 
 import useStudents from '../../composables/useStudents';
 
@@ -20,7 +20,7 @@ onMounted(() => {
 export interface ColumnTable {
     name: string;
     label: string;
-    field: string | ((row: User) => string);
+    field: string | ((row: Student) => string);
     align?: 'left' | 'right' | 'center';
     sortable?: boolean;
 }
@@ -30,28 +30,28 @@ const columnsUser: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.label.photo'),
-        field: (row: User) => row.photo,
+        field: (row: Student) => row.user.photo,
         sortable: false
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
-        field: (row: User) => row.name,
+        field: (row: Student) => row.user.name,
         sortable: true
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
-        field: (row: User) => row.surnames,
+        field: (row: Student) => row.user.surnames,
         sortable: true
     },
     {
         name: 'email',
         align: 'left',
         label: t('user.label.email'),
-        field: (row: User) => row.email,
+        field: (row: Student) => row.user.email,
         sortable: true
     },
     {

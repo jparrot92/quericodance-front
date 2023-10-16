@@ -21,6 +21,7 @@ onMounted(() => {
 });
 
 const onSubmit = async () => {
+    debugger;
     if (isUpdate.value) {
         editActivity(id);
     } else {
@@ -49,7 +50,7 @@ const onSubmit = async () => {
                 <q-input
                     type="number"
                     :label="$t('activity.label.level')"
-                    v-model="activity.level"
+                    v-model.number="activity.level"
                     :rules="[
                         (val) =>
                             (val !== null &&

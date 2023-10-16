@@ -27,26 +27,19 @@ const useTeachers = () => {
     const loading = ref<boolean>(false);
     const teachers = ref<Teacher[]>([]);
     const teacher = ref<Teacher>({
+        id: 0,
         user: {
             id: 0,
-            nif: '',
             name: '',
             surnames: '',
             dateOfBirth: '',
             phone: '',
             photo: '',
+            instagram: '',
             email: '',
             password: '',
-            role: '',
-            address: {
-                street: '',
-                city: '',
-                state: '',
-                postalCode: '',
-                country: ''
-            }
-        },
-        speciality: ''
+            roles: []
+        }
     });
 
     const loadTeachers = async () => {

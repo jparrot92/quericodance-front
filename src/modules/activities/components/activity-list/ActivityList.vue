@@ -102,7 +102,7 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('activity.label.costEffectiveness'),
         field: 'costEffectiveness',
-        format: (val: string) => `${val} €`,
+        format: (val: number) => `${val} €`,
         sortable: true
     },
     {
