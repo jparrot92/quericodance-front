@@ -7,11 +7,13 @@ import { useRoute } from 'vue-router';
 import useActivities from '../../composables/useActivities';
 import { ActivityStudent } from '../../models/activityStudent';
 
+import MenuList from 'src/shared/components/MenuList.vue';
+
 const $q = useQuasar();
 const { t } = useI18n();
 const route = useRoute();
 
-const { loading, activity, loadStudentsActivity, removeActivity } =
+const { loading, activity, loadStudentsActivity, removeActivityStudent } =
     useActivities();
 const { id } = route.params as { id: string };
 
@@ -73,11 +75,20 @@ const columnTable: ColumnTable[] = [
     {
         name: 'actions',
         align: 'right',
-        label: t('activity.label.actions'),
+        label: '',
         field: 'actions',
         sortable: false
     }
 ];
+
+const deleteActivityStudent = async (idActivityStudent: number) => {
+    try {
+        await removeActivityStudent(idActivityStudent);
+        loadStudentsActivity(+id);
+    } catch (error) {
+        console.error(error);
+    }
+};
 </script>
 
 <template>
@@ -101,7 +112,7 @@ const columnTable: ColumnTable[] = [
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    :label="$t('activity.label.createActivity')"
+                    :label="$t('student.label.addStudent')"
                     color="primary"
                     icon="mdi-plus"
                     dense
@@ -140,46 +151,30 @@ const columnTable: ColumnTable[] = [
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">
-                <q-td :props="props" class="q-gutter-x-sm">
-                    <q-btn
-                        icon="mdi-eye-outline"
-                        color="positive"
-                        dense
-                        size="sm"
-                        @click="
-                            $router.push({
-                                name: 'activities-list-students',
-                                params: { id: props.row.id }
-                            })
-                        "
-                    >
-                        <q-tooltip> {{ $t('activity.label.see') }} </q-tooltip>
-                    </q-btn>
-                    <q-btn
-                        icon="mdi-pencil-outline"
-                        color="info"
-                        dense
-                        size="sm"
-                        @click="
-                            $router.push({
-                                name: 'activities-edit',
-                                params: { id: props.row.id }
-                            })
-                        "
-                    >
-                        <q-tooltip> {{ $t('activity.label.edit') }} </q-tooltip>
-                    </q-btn>
-                    <q-btn
-                        icon="mdi-delete-outline"
-                        color="negative"
-                        dense
-                        size="sm"
-                        @click="removeActivity(props.row.id)"
-                    >
-                        <q-tooltip>
-                            {{ $t('activity.label.delete') }}
-                        </q-tooltip>
-                    </q-btn>
+                <q-td :props="props">
+                    <menu-list>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="
+                                    $router.push({
+                                        name: 'students-edit',
+                                        params: {
+                                            id: props.row.student.id
+                                        }
+                                    })
+                                "
+                            >
+                                {{ $t('user.label.edit') }}
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="deleteActivityStudent(props.row.id)"
+                            >
+                                {{ $t('activity.label.delete') }}
+                            </q-item-section>
+                        </q-item>
+                    </menu-list>
                 </q-td>
             </template>
         </q-table>

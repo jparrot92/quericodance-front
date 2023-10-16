@@ -9,6 +9,7 @@ export default {
             course: 'Curso',
             role: 'Rol',
             addActivity: 'Añadir curso',
+            addStudent: 'Añadir estudiante',
             add: 'Añadir',
             cancel: 'Cancelar',
             changePrice: 'Modificar precio'
