@@ -110,6 +110,8 @@ const deleteActivityStudent = async (idActivityStudent: number) => {
                     {{ activity.startHour }}
                 </span>
                 <q-space />
+
+                <!-- Disponible mas adelante
                 <q-btn
                     v-if="$q.platform.is.desktop"
                     :label="$t('student.label.addStudent')"
@@ -122,6 +124,7 @@ const deleteActivityStudent = async (idActivityStudent: number) => {
                         })
                     "
                 />
+                -->
                 <div style="width: 100%" class="q-pa-md q-gutter-md">
                     <q-chip color="blue" text-color="white">
                         {{ $t('activity.label.numberLeaders') }} :
