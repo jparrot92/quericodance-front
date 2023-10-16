@@ -21,7 +21,6 @@ onMounted(() => {
 });
 
 const onSubmit = async () => {
-    debugger;
     if (isUpdate.value) {
         editActivity(id);
     } else {
