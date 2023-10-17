@@ -53,10 +53,10 @@ const columnsUser: ColumnTable[] = [
         sortable: true
     },
     {
-        name: 'email',
+        name: 'roles',
         align: 'left',
         label: t('user.label.permissions'),
-        field: 'email',
+        field: 'roles',
         sortable: true
     },
     {
@@ -107,6 +107,13 @@ const columnsUser: ColumnTable[] = [
                         text-color="white"
                         icon="mdi-image-off"
                     />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-roles="props">
+                <q-td :props="props">
+                    <div v-for="(role, index) in props.value" :key="index">
+                        <q-badge color="green" :label="role" />
+                    </div>
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">
