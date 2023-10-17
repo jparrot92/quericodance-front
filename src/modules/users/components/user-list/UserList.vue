@@ -25,6 +25,35 @@ export interface ColumnTable {
 
 const columnsUser: ColumnTable[] = [
     {
+        name: 'photo',
+        align: 'left',
+        label: t('user.label.photo'),
+        field: 'photo',
+        sortable: false
+    },
+    {
+        name: 'name',
+        align: 'left',
+        label: t('user.label.name'),
+        field: 'name',
+        sortable: true
+    },
+    {
+        name: 'surnames',
+        align: 'left',
+        label: t('user.label.surnames'),
+        field: 'surnames',
+        sortable: true
+    },
+    {
+        name: 'email',
+        align: 'left',
+        label: t('user.label.email'),
+        field: 'email',
+        sortable: true
+    },
+
+    {
         name: 'actions',
         align: 'right',
         label: t('user.label.actions'),
