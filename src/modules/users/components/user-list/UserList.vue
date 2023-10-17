@@ -52,7 +52,13 @@ const columnsUser: ColumnTable[] = [
         field: 'email',
         sortable: true
     },
-
+    {
+        name: 'roles',
+        align: 'left',
+        label: t('user.label.permissions'),
+        field: 'roles',
+        sortable: true
+    },
     {
         name: 'actions',
         align: 'right',
