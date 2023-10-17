@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue';
-
-const UserList = defineAsyncComponent(
-    () => import('src/modules/users/components/user-list/UserList.vue')
-);
+import UserList from '../components/user-list/UserList.vue';
 </script>
 
 <template>
     <q-page padding>
-        <UserList />
+        <user-list />
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-btn
                 v-if="$q.platform.is.mobile"
