@@ -7,7 +7,14 @@ import { Student } from '../../models/student';
 
 import useStudents from '../../composables/useStudents';
 
-const { loading, students, loadStudents, removeStudent } = useStudents();
+const {
+    loading,
+    students,
+    loadStudents,
+    removeStudent,
+    markPaymentPaid,
+    cancelPaymentPaid
+} = useStudents();
 
 const $q = useQuasar();
 
@@ -20,8 +27,9 @@ onMounted(() => {
 export interface ColumnTable {
     name: string;
     label: string;
-    field: string | ((row: Student) => string);
+    field: string | ((row: Student) => string | number | boolean);
     align?: 'left' | 'right' | 'center';
+    format?: any;
     sortable?: boolean;
 }
 
@@ -55,6 +63,28 @@ const columnsUser: ColumnTable[] = [
         sortable: true
     },
     {
+        name: 'active',
+        align: 'left',
+        label: t('student.label.active'),
+        field: (row: Student) => row.active,
+        sortable: true
+    },
+    {
+        name: 'monthlyPayment',
+        align: 'left',
+        label: t('student.label.monthlyPayment'),
+        field: (row: Student) => row.monthlyPayment,
+        format: (val: number) => `${val} €`,
+        sortable: true
+    },
+    {
+        name: 'monthlyPaymentPaid',
+        align: 'left',
+        label: t('student.label.monthlyPaymentPaid'),
+        field: (row: Student) => row.monthlyPaymentPaid,
+        sortable: true
+    },
+    {
         name: 'actions',
         align: 'right',
         label: t('user.label.actions'),
@@ -62,6 +92,22 @@ const columnsUser: ColumnTable[] = [
         sortable: false
     }
 ];
+
+const checkMonthlyPaymentPaid = async (
+    student: Student,
+    monthlyPaymentPaid: boolean
+) => {
+    try {
+        if (monthlyPaymentPaid) {
+            await markPaymentPaid(student.id);
+        } else {
+            await cancelPaymentPaid(student.id);
+        }
+    } catch (error) {
+        student.monthlyPaymentPaid = !monthlyPaymentPaid;
+        console.error(error);
+    }
+};
 </script>
 
 <template>
@@ -103,6 +149,33 @@ const columnsUser: ColumnTable[] = [
                         color="grey"
                         text-color="white"
                         icon="mdi-image-off"
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-monthlyPayment="props">
+                <q-td :props="props">
+                    <q-badge
+                        :color="props.row.monthlyPaymentPaid ? 'green' : 'red'"
+                        :label="props.value"
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-monthlyPaymentPaid="props">
+                <q-td :props="props">
+                    <q-toggle
+                        :label="
+                            props.row.monthlyPaymentPaid
+                                ? $t('student.label.paid')
+                                : $t('student.label.unpaid')
+                        "
+                        color="green"
+                        v-model="props.row.monthlyPaymentPaid"
+                        @click="
+                            checkMonthlyPaymentPaid(
+                                props.row,
+                                props.row.monthlyPaymentPaid
+                            )
+                        "
                     />
                 </q-td>
             </template>

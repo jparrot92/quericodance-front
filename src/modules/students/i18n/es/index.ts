@@ -8,6 +8,11 @@ export default {
             courses: 'Cursos',
             course: 'Curso',
             role: 'Rol',
+            active: 'Activo',
+            monthlyPayment: 'Mensualidad',
+            monthlyPaymentPaid: 'Mensualidad pagada',
+            paid: 'Pagado',
+            unpaid: 'No pagado',
             addActivity: 'Añadir curso',
             addStudent: 'Añadir estudiante',
             add: 'Añadir',
@@ -17,6 +22,10 @@ export default {
         message: {
             addCourse:
                 'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante'
+        },
+        notifications: {
+            paymentMade: 'Paga efectuado',
+            cancelPayment: 'Pago cancelado'
         }
     }
 };

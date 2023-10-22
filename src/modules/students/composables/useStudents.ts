@@ -10,7 +10,9 @@ import {
     getStudent,
     createStudent,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+    markPayment,
+    cancelPayment
 } from 'src/api/studentsApi';
 
 import { Student } from '../models/student';
@@ -39,7 +41,10 @@ const useStudents = () => {
             email: '',
             password: '',
             roles: []
-        }
+        },
+        active: false,
+        monthlyPayment: 0,
+        monthlyPaymentPaid: false
     });
 
     const loadStudents = async () => {
@@ -111,6 +116,32 @@ const useStudents = () => {
         });
     };
 
+    const markPaymentPaid = async (id: number) => {
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                await markPayment(id);
+                notifySuccess(t('student.notifications.paymentMade'));
+                resolve();
+            } catch (error) {
+                notifyError(error);
+                reject(error);
+            }
+        });
+    };
+
+    const cancelPaymentPaid = async (id: number) => {
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                await cancelPayment(id);
+                notifySuccess(t('student.notifications.cancelPayment'));
+                resolve();
+            } catch (error) {
+                notifyError(error);
+                reject(error);
+            }
+        });
+    };
+
     return {
         // Properties
         loading,
@@ -120,7 +151,9 @@ const useStudents = () => {
         loadStudent,
         saveStudent,
         editStudent,
-        removeStudent
+        removeStudent,
+        markPaymentPaid,
+        cancelPaymentPaid
     };
 };
 

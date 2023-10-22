@@ -57,3 +57,25 @@ export const deleteStudent = async (id: string): Promise<Student> => {
         throw handleError(error);
     }
 };
+
+export const markPayment = async (id: number): Promise<Student> => {
+    try {
+        const { data } = await api.put<Student>(`/students/${id}/make-payment`);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const cancelPayment = async (id: number): Promise<Student> => {
+    try {
+        const { data } = await api.put<Student>(
+            `/students/${id}/cancel-payment`
+        );
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
