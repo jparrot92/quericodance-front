@@ -42,8 +42,8 @@ onMounted(() => {
     idStudentDialog.value = props.idStudent;
 });
 
-const addActivityStudent = (activityStudent: ActivityStudent) => {
-    studentActivitiesList.value.push(activityStudent);
+const addActivityStudent = (activitiesStudent: ActivityStudent) => {
+    studentActivitiesList.value = activitiesStudent;
 };
 
 const deleteActivityStudent = async (id: number) => {
