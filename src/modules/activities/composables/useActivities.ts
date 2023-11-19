@@ -165,7 +165,7 @@ const useActivities = () => {
     };
 
     const removeActivityStudent = async (id: number) => {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<ActivityStudent[]>((resolve, reject) => {
             $q.dialog({
                 title: t('activity.label.confirmation'),
                 message: t('activity.message.activityDelete'),
@@ -173,11 +173,13 @@ const useActivities = () => {
                 persistent: true
             }).onOk(async () => {
                 try {
-                    await deleteActivityStudent(id);
+                    const studentActivitiesList = await deleteActivityStudent(
+                        id
+                    );
                     notifySuccess(
                         t('activity.notifications.activityDeleteSuccessfully')
                     );
-                    resolve(); // Resuelve la promesa después de que todo esté completo
+                    resolve(studentActivitiesList); // Resuelve la promesa después de que todo esté completo
                 } catch (error) {
                     notifyError(error);
                     reject(error); // Rechaza la promesa en caso de error

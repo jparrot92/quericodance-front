@@ -47,22 +47,12 @@ const addActivityStudent = (activitiesStudent: ActivityStudent) => {
 };
 
 const deleteActivityStudent = async (id: number) => {
-    // Busca el índice del elemento con el ID proporcionado en studentActivitiesList
-    const index = studentActivitiesList.value.findIndex(
-        (activity) => activity.id === id
-    );
-
-    // Si se encontró el elemento con el ID, elimínalo del arreglo
-    if (index !== -1) {
-        try {
-            await removeActivityStudent(id);
-            // La eliminación de la lista se realiza después de la eliminación exitosa en removeActivityStudent
-            studentActivitiesList.value = studentActivitiesList.value.filter(
-                (activity) => activity.id !== id
-            );
-        } catch (error) {
-            console.error(error);
-        }
+    try {
+        const activitiesStudent = await removeActivityStudent(id);
+        // La eliminación de la lista se realiza después de la eliminación exitosa en removeActivityStudent
+        studentActivitiesList.value = activitiesStudent;
+    } catch (error) {
+        console.error(error);
     }
 };
 </script>

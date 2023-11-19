@@ -96,9 +96,9 @@ export const createActivityStudent = async (
 
 export const deleteActivityStudent = async (
     id: number
-): Promise<ActivityStudent> => {
+): Promise<ActivityStudent[]> => {
     try {
-        const { data } = await api.delete<ActivityStudent>(
+        const { data } = await api.delete<ActivityStudent[]>(
             `/activity-student/${id}`
         );
 
