@@ -8,5 +8,6 @@ export interface User {
     instagram: string;
     email: string;
     password?: string;
+    active: boolean;
     roles: string[];
 }

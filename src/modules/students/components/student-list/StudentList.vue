@@ -66,7 +66,7 @@ const columnsUser: ColumnTable[] = [
         name: 'active',
         align: 'left',
         label: t('student.label.active'),
-        field: (row: Student) => row.active,
+        field: (row: Student) => row.user.active,
         sortable: true
     },
     {
