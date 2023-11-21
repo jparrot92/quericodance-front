@@ -42,7 +42,7 @@ onMounted(() => {
     idStudentDialog.value = props.idStudent;
 });
 
-const addActivityStudent = (activitiesStudent: ActivityStudent) => {
+const addActivityStudent = (activitiesStudent: ActivityStudent[]) => {
     studentActivitiesList.value = activitiesStudent;
 };
 

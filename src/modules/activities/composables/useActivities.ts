@@ -148,7 +148,7 @@ const useActivities = () => {
         price: number
     ) => {
         try {
-            const newActivityStudent: ActivityStudent =
+            const newListActivityStudent: ActivityStudent[] =
                 await createActivityStudent(
                     studentId,
                     activityId,
@@ -156,7 +156,7 @@ const useActivities = () => {
                     price
                 );
 
-            return newActivityStudent;
+            return newListActivityStudent;
         } catch (error) {
             notifyError(error);
         } finally {

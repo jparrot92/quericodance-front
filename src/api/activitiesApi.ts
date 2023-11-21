@@ -74,7 +74,7 @@ export const createActivityStudent = async (
     activityId: number,
     danceRole: string,
     price: number
-): Promise<ActivityStudent> => {
+): Promise<ActivityStudent[]> => {
     try {
         const requestData = {
             studentId,
@@ -83,7 +83,7 @@ export const createActivityStudent = async (
             price
         };
 
-        const { data } = await api.post<ActivityStudent>(
+        const { data } = await api.post<ActivityStudent[]>(
             '/activity-student',
             requestData
         );
