@@ -13,7 +13,7 @@ interface Props {
 }
 interface Emits {
     (e: 'onClose'): void;
-    (e: 'addActivityStudent', activityStudent: ActivityStudent): void;
+    (e: 'addActivityStudent', activityStudent: ActivityStudent[]): void;
 }
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
