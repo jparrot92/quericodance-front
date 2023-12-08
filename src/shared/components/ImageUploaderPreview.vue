@@ -11,23 +11,18 @@ interface Props {
     photo?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    photo: ''
+});
 
-const userPhoto = ref<string>('');
+const photo = ref<string>('');
 
-watch(
-    () => props.photo,
-    (newPhoto) => {
-        if (newPhoto) {
-            userPhoto.value = newPhoto;
-        }
-    }
-);
+watch(props, () => {
+    photo.value = props.photo || '';
+});
 
 onMounted(() => {
-    if (props.photo) {
-        userPhoto.value = props.photo;
-    }
+    photo.value = props.photo || '';
 });
 
 const fileInput = ref<HTMLInputElement | null>(null);
@@ -47,7 +42,7 @@ const handleImageChange = async (event: Event) => {
 
         try {
             let photoURL = await uploadPhoto(props.id, file);
-            userPhoto.value = photoURL;
+            photo.value = photoURL;
             showDialog.value = false;
         } catch (error) {
             notifyError(error);
@@ -63,15 +58,15 @@ const choosePicture = () => {
 
 const deletePicture = async () => {
     await deletePhoto(props.id);
-    userPhoto.value = '';
+    photo.value = '';
     showDialog.value = false;
 };
 </script>
 
 <template>
     <q-avatar size="150px">
-        <q-img v-if="userPhoto === ''" src="~assets/sinFoto.png" :ratio="1" />
-        <q-img v-else :src="userPhoto" :ratio="1" />
+        <q-img v-if="photo === ''" src="~assets/sinFoto.png" :ratio="1" />
+        <q-img v-else :src="photo" :ratio="1" />
         <q-icon
             class="absolute all-pointer-events"
             size="32px"
