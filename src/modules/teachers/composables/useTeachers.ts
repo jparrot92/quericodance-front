@@ -38,6 +38,7 @@ const useTeachers = () => {
             instagram: '',
             email: '',
             password: '',
+            active: false,
             roles: []
         }
     });
@@ -68,9 +69,12 @@ const useTeachers = () => {
     const saveTeacher = async () => {
         try {
             loading.value = true;
-            await createTeacher(teacher.value);
-            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users-page' });
+            const teacherData = await createTeacher(teacher.value);
+            notifySuccess(t('teacher.notifications.teacherCreateSuccessfully'));
+            router.replace({
+                name: 'teachers-edit',
+                params: { id: teacherData.id }
+            });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -82,8 +86,7 @@ const useTeachers = () => {
         try {
             loading.value = true;
             teacher.value = await updateTeacher(id, teacher.value);
-            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users-page' });
+            notifySuccess(t('teacher.notifications.teacherUpdateSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -93,14 +96,16 @@ const useTeachers = () => {
 
     const removeTeacher = async (id: string) => {
         $q.dialog({
-            title: t('user.label.confirmation'),
-            message: t('user.message.userDelete'),
+            title: t('teacher.label.confirmation'),
+            message: t('teacher.message.teacherDelete'),
             cancel: true,
             persistent: true
         }).onOk(async () => {
             try {
                 await deleteTeacher(id);
-                notifySuccess(t('user.notifications.userDeleteSuccessfully'));
+                notifySuccess(
+                    t('teacher.notifications.teacherDeleteSuccessfully')
+                );
                 await loadTeachers();
             } catch (error) {
                 notifyError(error);

@@ -4,7 +4,7 @@ import { ref, watch, defineProps, onMounted } from 'vue';
 import useNotify from 'src/shared/composables/useNotify';
 import { deletePhoto, uploadPhoto } from 'src/api/usersApi';
 
-const { notifySuccess, notifyError } = useNotify();
+const { notifyError } = useNotify();
 
 interface Props {
     id: number;
@@ -13,7 +13,6 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const id = ref<number>(props.id);
 const userPhoto = ref<string>('');
 
 watch(
@@ -47,7 +46,7 @@ const handleImageChange = async (event: Event) => {
         reader.readAsDataURL(file);*/
 
         try {
-            let photoURL = await uploadPhoto(id.value, file);
+            let photoURL = await uploadPhoto(props.id, file);
             userPhoto.value = photoURL;
             showDialog.value = false;
         } catch (error) {
@@ -63,13 +62,14 @@ const choosePicture = () => {
 };
 
 const deletePicture = async () => {
-    await deletePhoto(id.value);
+    await deletePhoto(props.id);
     userPhoto.value = '';
     showDialog.value = false;
 };
 </script>
 
 <template>
+    {{ props.id }}
     <q-avatar size="150px">
         <q-img v-if="userPhoto === ''" src="~assets/sinFoto.png" :ratio="1" />
         <q-img v-else :src="userPhoto" :ratio="1" />

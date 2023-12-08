@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import DaysSelector from 'src/shared/components/DaysSelector.vue';
 
+import useTeachers from 'src/modules/teachers/composables/useTeachers';
 import useActivities from '../composables/useActivities';
 
 const route = useRoute();
@@ -12,9 +13,11 @@ const { id } = route.params as { id: string };
 
 const isUpdate = computed(() => route.params.id);
 
+const { teachers, loadTeachers } = useTeachers();
 const { activity, loadActivity, saveActivity, editActivity } = useActivities();
 
 onMounted(() => {
+    loadTeachers();
     if (isUpdate.value) {
         loadActivity(id);
     }
@@ -26,6 +29,14 @@ const onSubmit = async () => {
     } else {
         saveActivity();
     }
+};
+
+const modelMultiple = ref(['Facebook']);
+
+const options = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'];
+
+const removeTeacherActivity = async () => {
+    console.log('Elinar del chip');
 };
 </script>
 
@@ -167,6 +178,45 @@ const onSubmit = async () => {
                             $t('activity.validation.priceRequired')
                     ]"
                 />
+
+                <q-badge color="secondary" class="q-mb-md">
+                    Model: {{ modelMultiple || '[]' }}
+                </q-badge>
+
+                <q-select
+                    v-model="modelMultiple"
+                    multiple
+                    :options="options"
+                    use-chips
+                    stack-label
+                    label="Multiple selection"
+                />
+
+                <q-badge color="secondary" class="q-mb-md">
+                    Model: {{ activity.teachers || '[]' }}
+                </q-badge>
+
+                <q-select
+                    v-model="activity.teachers"
+                    multiple
+                    :options="teachers"
+                    label="Multiple selection"
+                >
+                    <template v-slot:selected-item="{ opt }">
+                        <q-chip
+                            removable
+                            :label="opt.user.name"
+                            @remove="removeTeacherActivity"
+                        />
+                    </template>
+                    <template v-slot:option="{ itemProps, opt }">
+                        <q-item v-bind="itemProps">
+                            <q-item-section>
+                                {{ opt.user.name }}
+                            </q-item-section>
+                        </q-item>
+                    </template>
+                </q-select>
 
                 <q-btn
                     :label="$t('activity.label.save')"

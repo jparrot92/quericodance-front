@@ -29,7 +29,7 @@ export interface ColumnTable {
     label: string;
     field: string | ((row: Student) => string | number | boolean);
     align?: 'left' | 'right' | 'center';
-    format?: any;
+    format?: (val: number) => string;
     sortable?: boolean;
 }
 

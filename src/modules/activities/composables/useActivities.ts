@@ -39,7 +39,7 @@ const useActivities = () => {
         endHour: '',
         numberPlaces: 0,
         price: 0,
-        fullName: ''
+        teachers: []
     });
     const activityStudent = ref<ActivityStudent>({
         id: 0,
@@ -54,7 +54,7 @@ const useActivities = () => {
             endHour: '',
             numberPlaces: 0,
             price: 0,
-            fullName: ''
+            teachers: []
         }
     });
 
@@ -95,11 +95,14 @@ const useActivities = () => {
     const saveActivity = async () => {
         try {
             loading.value = true;
-            await createActivity(activity.value);
+            const activityData = await createActivity(activity.value);
             notifySuccess(
                 t('activity.notifications.activityUpdateSuccessfully')
             );
-            router.push({ name: 'activities-list' });
+            router.replace({
+                name: 'activities-edit',
+                params: { id: activityData.id }
+            });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -114,7 +117,6 @@ const useActivities = () => {
             notifySuccess(
                 t('activity.notifications.activityUpdateSuccessfully')
             );
-            router.push({ name: 'activities-list' });
         } catch (error) {
             notifyError(error);
         } finally {

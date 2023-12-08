@@ -1,3 +1,4 @@
+import { Teacher } from 'src/modules/teachers/models/teacher';
 import { ActivityStudent } from './activityStudent';
 
 export interface Activity {
@@ -9,7 +10,7 @@ export interface Activity {
     endHour: string;
     numberPlaces: number;
     price: number;
-    fullName: string;
+    teachers: Teacher[];
     activitiesStudent?: ActivityStudent[];
     numberStudents?: string;
     numberLeaders?: string;

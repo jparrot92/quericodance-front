@@ -36,6 +36,7 @@ const useUsers = () => {
         instagram: '',
         email: '',
         password: '',
+        active: false,
         roles: []
     });
 
@@ -65,9 +66,12 @@ const useUsers = () => {
     const saveUser = async () => {
         try {
             loading.value = true;
-            await createUser(user.value);
+            const userData = await createUser(user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users-list' });
+            router.replace({
+                name: 'users-edit',
+                params: { id: userData.id }
+            });
         } catch (error) {
             notifyError(error);
         } finally {
@@ -80,7 +84,6 @@ const useUsers = () => {
             loading.value = true;
             user.value = await updateUser(id, user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
-            router.push({ name: 'users-list' });
         } catch (error) {
             notifyError(error);
         } finally {

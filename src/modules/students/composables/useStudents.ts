@@ -40,9 +40,9 @@ const useStudents = () => {
             instagram: '',
             email: '',
             password: '',
+            active: false,
             roles: []
         },
-        active: false,
         monthlyPayment: 0,
         monthlyPaymentPaid: false
     });
@@ -75,8 +75,7 @@ const useStudents = () => {
             loading.value = true;
             const studentData = await createStudent(student.value);
             notifySuccess(t('user.notifications.userCreateSuccessfully'));
-
-            router.push({
+            router.replace({
                 name: 'students-edit',
                 params: { id: studentData.id }
             });

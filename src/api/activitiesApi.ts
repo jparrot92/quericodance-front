@@ -37,6 +37,7 @@ export const getActivity = async (id: string): Promise<Activity> => {
 };
 
 export const createActivity = async (activity: Activity): Promise<Activity> => {
+    console.log(activity);
     try {
         const { data } = await api.post<Activity>('/activities', activity);
 
