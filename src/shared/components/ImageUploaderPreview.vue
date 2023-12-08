@@ -69,7 +69,6 @@ const deletePicture = async () => {
 </script>
 
 <template>
-    {{ props.id }}
     <q-avatar size="150px">
         <q-img v-if="userPhoto === ''" src="~assets/sinFoto.png" :ratio="1" />
         <q-img v-else :src="userPhoto" :ratio="1" />

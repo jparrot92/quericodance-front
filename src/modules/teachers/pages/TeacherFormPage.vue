@@ -41,7 +41,6 @@ const onSubmit = async () => {
                 class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
                 @submit.prevent="onSubmit"
             >
-                {{ teacher.user.id }}
                 <div style="text-align: center">
                     <ImageUploaderPreview
                         v-if="isUpdate"
