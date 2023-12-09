@@ -15,14 +15,14 @@ const props = withDefaults(defineProps<Props>(), {
     photo: ''
 });
 
-const photo = ref<string>('');
+const photoURL = ref<string>('');
 
 watch(props, () => {
-    photo.value = props.photo || '';
+    photoURL.value = props.photo || '';
 });
 
 onMounted(() => {
-    photo.value = props.photo || '';
+    photoURL.value = props.photo || '';
 });
 
 const fileInput = ref<HTMLInputElement | null>(null);
@@ -41,8 +41,7 @@ const handleImageChange = async (event: Event) => {
         reader.readAsDataURL(file);*/
 
         try {
-            let photoURL = await uploadPhoto(props.id, file);
-            photo.value = photoURL;
+            photoURL.value = await uploadPhoto(props.id, file);
             showDialog.value = false;
         } catch (error) {
             notifyError(error);
@@ -58,15 +57,15 @@ const choosePicture = () => {
 
 const deletePicture = async () => {
     await deletePhoto(props.id);
-    photo.value = '';
+    photoURL.value = '';
     showDialog.value = false;
 };
 </script>
 
 <template>
     <q-avatar size="150px">
-        <q-img v-if="photo === ''" src="~assets/sinFoto.png" :ratio="1" />
-        <q-img v-else :src="photo" :ratio="1" />
+        <q-img v-if="photoURL === ''" src="~assets/sinFoto.png" :ratio="1" />
+        <q-img v-else :src="photoURL" :ratio="1" />
         <q-icon
             class="absolute all-pointer-events"
             size="32px"
