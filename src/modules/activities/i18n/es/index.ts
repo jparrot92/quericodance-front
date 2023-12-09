@@ -16,6 +16,7 @@ export default {
             numberFollowers: 'Número de\nfollowers',
             costEffectiveness: 'Rentabilidad',
             price: 'Preció',
+            teachers: 'Profesores',
             description: 'Descripción',
             actions: 'Acciones',
             save: 'Guardar',

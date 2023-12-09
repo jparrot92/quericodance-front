@@ -31,10 +31,6 @@ const onSubmit = async () => {
     }
 };
 
-const modelMultiple = ref(['Facebook']);
-
-const options = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'];
-
 const removeTeacherActivity = async () => {
     console.log('Elinar del chip');
 };
@@ -179,28 +175,14 @@ const removeTeacherActivity = async () => {
                     ]"
                 />
 
-                <q-badge color="secondary" class="q-mb-md">
-                    Model: {{ modelMultiple || '[]' }}
-                </q-badge>
-
                 <q-select
-                    v-model="modelMultiple"
-                    multiple
-                    :options="options"
-                    use-chips
-                    stack-label
-                    label="Multiple selection"
-                />
-
-                <q-badge color="secondary" class="q-mb-md">
-                    Model: {{ activity.teachers || '[]' }}
-                </q-badge>
-
-                <q-select
-                    v-model="activity.teachers"
+                    v-model="activity.teachersIds"
                     multiple
                     :options="teachers"
-                    label="Multiple selection"
+                    :label="$t('activity.label.teachers')"
+                    emit-value
+                    map-options
+                    :option-value="'id'"
                 >
                     <template v-slot:selected-item="{ opt }">
                         <q-chip

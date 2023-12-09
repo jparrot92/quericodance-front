@@ -39,7 +39,7 @@ const useActivities = () => {
         endHour: '',
         numberPlaces: 0,
         price: 0,
-        teachers: []
+        teachersIds: []
     });
     const activityStudent = ref<ActivityStudent>({
         id: 0,
@@ -54,7 +54,7 @@ const useActivities = () => {
             endHour: '',
             numberPlaces: 0,
             price: 0,
-            teachers: []
+            teachersIds: []
         }
     });
 
@@ -85,6 +85,11 @@ const useActivities = () => {
         try {
             loading.value = true;
             activity.value = await getActivity(id);
+
+            if (activity.value.teachers) {
+                activity.value.teachersIds =
+                    activity.value.teachers.map((teacher) => teacher.id) || [];
+            }
         } catch (error) {
             notifyError(error);
         } finally {
@@ -97,7 +102,7 @@ const useActivities = () => {
             loading.value = true;
             const activityData = await createActivity(activity.value);
             notifySuccess(
-                t('activity.notifications.activityUpdateSuccessfully')
+                t('activity.notifications.activityCreateSuccessfully')
             );
             router.replace({
                 name: 'activities-edit',

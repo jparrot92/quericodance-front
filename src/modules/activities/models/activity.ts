@@ -10,7 +10,8 @@ export interface Activity {
     endHour: string;
     numberPlaces: number;
     price: number;
-    teachers: Teacher[];
+    teachersIds: number[];
+    teachers?: Teacher[];
     activitiesStudent?: ActivityStudent[];
     numberStudents?: string;
     numberLeaders?: string;
