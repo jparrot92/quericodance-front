@@ -39,6 +39,7 @@ const useActivities = () => {
         endHour: '',
         numberPlaces: 0,
         price: 0,
+        color: '',
         teachersIds: []
     });
     const activityStudent = ref<ActivityStudent>({
@@ -54,6 +55,7 @@ const useActivities = () => {
             endHour: '',
             numberPlaces: 0,
             price: 0,
+            color: '',
             teachersIds: []
         }
     });

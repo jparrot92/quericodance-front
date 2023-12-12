@@ -10,6 +10,7 @@ export interface Activity {
     endHour: string;
     numberPlaces: number;
     price: number;
+    color: string;
     teachersIds: number[];
     teachers?: Teacher[];
     activitiesStudent?: ActivityStudent[];

@@ -16,6 +16,9 @@ export default {
             numberFollowers: 'Número de\nfollowers',
             costEffectiveness: 'Rentabilidad',
             price: 'Preció',
+            color: 'Color',
+            infoColor:
+                'Este color será el que aparece en el calendario para identificar la actividad',
             teachers: 'Profesores',
             description: 'Descripción',
             actions: 'Acciones',

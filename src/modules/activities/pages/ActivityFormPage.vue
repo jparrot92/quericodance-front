@@ -162,18 +162,38 @@ const removeTeacherActivity = async () => {
                     ]"
                 />
 
-                <q-input
-                    prefix="€"
-                    :label="$t('activity.label.price')"
-                    v-model.number="activity.price"
-                    :rules="[
-                        (val) =>
-                            (val !== null &&
-                                val !== undefined &&
-                                val.toString().trim() !== '') ||
-                            $t('activity.validation.priceRequired')
-                    ]"
-                />
+                <div class="row">
+                    <q-input
+                        :label="$t('activity.label.color')"
+                        v-model="activity.color"
+                        class="col-md-11 col-sm-11 col-xs-10"
+                    >
+                        <template v-slot:append>
+                            <q-icon name="colorize" class="cursor-pointer">
+                                <q-popup-proxy
+                                    cover
+                                    transition-show="scale"
+                                    transition-hide="scale"
+                                >
+                                    <q-color v-model="activity.color" />
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                    </q-input>
+
+                    <q-btn
+                        :style="{ 'background-color': activity.color }"
+                        class="col-md-1 col-sm-1 col-xs-2"
+                    >
+                        <q-tooltip
+                            anchor="center left"
+                            self="center right"
+                            :offset="[10, 10]"
+                        >
+                            {{ $t('activity.label.infoColor') }}
+                        </q-tooltip>
+                    </q-btn>
+                </div>
 
                 <q-select
                     v-model="activity.teachersIds"
