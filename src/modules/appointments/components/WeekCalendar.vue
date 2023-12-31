@@ -3,14 +3,16 @@
         <navigation-bar @today="onToday" @prev="onPrev" @next="onNext" />
 
         <div class="row justify-center">
-            <div style="display: flex; width: 100%; height: 400px">
+            <div
+                style="display: flex; width: 100%; height: calc(100vh - 200px)"
+            >
                 <q-calendar-day
                     ref="calendar"
                     v-model="selectedDate"
                     view="week"
                     locale="es"
                     :weekdays="[1, 2, 3, 4, 5, 6, 0]"
-                    :interval-minutes="15"
+                    :interval-minutes="60"
                     :interval-count="96"
                     :hour24-format="true"
                     :hoverable="true"
@@ -163,10 +165,20 @@ export default defineComponent({
                     id: 3,
                     title: 'BACHATA N3',
                     details: 'Time to pitch my idea to the company',
-                    date: getCurrentDay(10),
+                    date: getCurrentDay(29),
                     time: '10:00',
-                    duration: 120,
+                    duration: 60,
                     bgcolor: 'red',
+                    icon: 'fas fa-handshake'
+                },
+                {
+                    id: 2,
+                    title: 'SALASA N3',
+                    details: 'Time to pitch my idea to the company',
+                    date: getCurrentDay(31),
+                    time: '10:00',
+                    duration: 60,
+                    bgcolor: 'blue',
                     icon: 'fas fa-handshake'
                 }
             ],

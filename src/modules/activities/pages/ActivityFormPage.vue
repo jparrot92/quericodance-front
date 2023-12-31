@@ -147,18 +147,15 @@ const removeTeacherActivity = async () => {
                 </div>
 
                 <q-input
-                    type="number"
-                    :label="$t('activity.label.numberPlaces')"
-                    v-model.number="activity.numberPlaces"
+                    prefix="€"
+                    :label="$t('activity.label.price')"
+                    v-model.number="activity.price"
                     :rules="[
                         (val) =>
                             (val !== null &&
                                 val !== undefined &&
                                 val.toString().trim() !== '') ||
-                            $t('activity.validation.numberPlacesRequired'),
-                        (val) =>
-                            /^[0-9]+$/.test(val) ||
-                            $t('activity.validation.numberPlacesNumeric')
+                            $t('activity.validation.priceRequired')
                     ]"
                 />
 
