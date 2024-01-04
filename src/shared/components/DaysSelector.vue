@@ -18,13 +18,13 @@ type Day = {
 };
 
 const days: Day[] = [
-    { label: t('shared.label.SU'), value: 'SU' },
     { label: t('shared.label.MO'), value: 'MO' },
     { label: t('shared.label.TU'), value: 'TU' },
     { label: t('shared.label.WE'), value: 'WE' },
     { label: t('shared.label.TH'), value: 'TH' },
     { label: t('shared.label.FR'), value: 'FR' },
-    { label: t('shared.label.SA'), value: 'SA' }
+    { label: t('shared.label.SA'), value: 'SA' },
+    { label: t('shared.label.SU'), value: 'SU' }
 ];
 
 watch(props, () => {

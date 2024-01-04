@@ -4,7 +4,7 @@
 
         <div class="row justify-center">
             <div
-                style="display: flex; width: 100%; height: calc(100vh - 200px)"
+                style="display: flex; width: 100%; height: calc(100vh - 165px)"
             >
                 <q-calendar-day
                     ref="calendar"
@@ -75,7 +75,7 @@
                                     @click="scrollToEvent(event)"
                                 >
                                     <q-tooltip>{{
-                                        event.time + ' - ' + event.details
+                                        event.time + ' - ' + event.title
                                     }}</q-tooltip>
                                 </q-badge>
                             </template>
@@ -142,14 +142,6 @@ import NavigationBar from '../components/NavigationBar.vue';
 import AppointmentDialog from '../components/AppointmentDialog.vue';
 
 // The function below is used to set up our demo data
-const CURRENT_DAY = new Date();
-function getCurrentDay(day) {
-    const newDay = new Date(CURRENT_DAY);
-    newDay.setDate(day);
-    const tm = parseDate(newDay);
-    return tm.date;
-}
-
 export default defineComponent({
     name: 'WeekSlotDayBody',
     components: {
@@ -162,57 +154,87 @@ export default defineComponent({
             selectedDate: today(),
             events: [
                 {
-                    id: 3,
+                    id: 1,
                     title: 'BACHATA N3',
-                    details: 'Time to pitch my idea to the company',
-                    date: getCurrentDay(1),
                     time: '10:00',
                     duration: 60,
                     bgcolor: 'red',
-                    icon: 'fas fa-handshake'
+                    day: 'MO'
                 },
                 {
                     id: 2,
                     title: 'SALASA N3',
-                    details: 'Time to pitch my idea to the company',
-                    date: getCurrentDay(2),
-                    time: '10:00',
+                    time: '11:00',
                     duration: 60,
                     bgcolor: 'blue',
-                    icon: 'fas fa-handshake'
+                    day: 'MO'
+                },
+                {
+                    id: 3,
+                    title: 'SALASA N3',
+                    time: '13:00',
+                    duration: 60,
+                    bgcolor: 'orange',
+                    day: 'TU',
+                    days: 3
                 }
             ],
+            eventsMap: {},
             isOpen: false
         };
     },
-
-    computed: {
+    methods: {
         // convert the events into a map of lists keyed by date
-        eventsMap() {
-            const map = {};
-            // this.events.forEach(event => (map[ event.date ] = map[ event.date ] || []).push(event))
+        loadEventsMap(data) {
             this.events.forEach((event) => {
-                if (!map[event.date]) {
-                    map[event.date] = [];
+                const numDay = this.getNumberDay(event.day);
+
+                let eventDate = data.days[numDay].date;
+
+                if (!this.eventsMap[eventDate]) {
+                    this.eventsMap[eventDate] = [];
                 }
-                map[event.date].push(event);
-                if (event.days) {
-                    let timestamp = parseTimestamp(event.date);
-                    let days = event.days;
-                    do {
-                        timestamp = addToDate(timestamp, { day: 1 });
-                        if (!map[timestamp.date]) {
-                            map[timestamp.date] = [];
-                        }
-                        map[timestamp.date].push(event);
-                    } while (--days > 0);
+
+                // Verifica si el evento ya existe en la lista antes de hacer push
+                const existingEvent = this.eventsMap[eventDate].find(
+                    (existingEvent) => existingEvent.id === event.id
+                );
+
+                if (!existingEvent) {
+                    this.eventsMap[eventDate].push(event);
+
+                    if (event.days) {
+                        let timestamp = parseTimestamp(eventDate);
+                        let days = event.days;
+                        do {
+                            timestamp = addToDate(timestamp, { day: 1 });
+                            if (!this.eventsMap[timestamp.date]) {
+                                this.eventsMap[timestamp.date] = [];
+                            }
+                            this.eventsMap[timestamp.date].push(event);
+                        } while (--days > 0);
+                    }
                 }
             });
-            return map;
-        }
-    },
-
-    methods: {
+        },
+        getNumberDay(dayOfWeek) {
+            switch (dayOfWeek) {
+                case 'MO':
+                    return 0;
+                case 'TU':
+                    return 1;
+                case 'WE':
+                    return 2;
+                case 'TH':
+                    return 3;
+                case 'FR':
+                    return 4;
+                case 'SA':
+                    return 5;
+                case 'SU':
+                    return 6;
+            }
+        },
         badgeClasses(event, type) {
             const isHeader = type === 'header';
             return {
@@ -224,7 +246,6 @@ export default defineComponent({
                 'rounded-border': true
             };
         },
-
         badgeStyles(
             event,
             type,
@@ -239,7 +260,6 @@ export default defineComponent({
             s['align-items'] = 'flex-start';
             return s;
         },
-
         getEvents(dt) {
             // get all events for the specified date
             const events = this.eventsMap[dt] || [];
@@ -276,11 +296,9 @@ export default defineComponent({
 
             return events;
         },
-
         scrollToEvent(event) {
             this.$refs.calendar.scrollToTime(event.time, 350);
         },
-
         onToday() {
             this.$refs.calendar.moveToToday();
         },
@@ -294,7 +312,8 @@ export default defineComponent({
             console.log('onMoved', data);
         },
         onChange(data) {
-            console.log('onChange', data);
+            console.log('onChange');
+            this.loadEventsMap(data);
         },
         onClickDate(data) {
             console.log('onClickDate', data);
