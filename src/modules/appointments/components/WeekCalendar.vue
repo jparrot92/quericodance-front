@@ -43,7 +43,7 @@
                                 :key="event.id"
                             >
                                 <q-badge
-                                    v-if="!event.time"
+                                    v-if="!event.startHour"
                                     :class="badgeClasses(event, 'header')"
                                     :style="badgeStyles(event, 'header')"
                                     style="
@@ -55,7 +55,7 @@
                                     "
                                 >
                                     <span class="title q-calendar__ellipsis">
-                                        {{ event.title }}
+                                        {{ event.name }}
                                         <q-tooltip>{{
                                             event.details
                                         }}</q-tooltip>
@@ -75,7 +75,7 @@
                                     @click="scrollToEvent(event)"
                                 >
                                     <q-tooltip>{{
-                                        event.time + ' - ' + event.title
+                                        event.startHour + ' - ' + event.name
                                     }}</q-tooltip>
                                 </q-badge>
                             </template>
@@ -96,7 +96,7 @@
                             :key="event.id"
                         >
                             <div
-                                v-if="event.time !== undefined"
+                                v-if="event.startHour !== undefined"
                                 class="my-event"
                                 :class="badgeClasses(event, 'body')"
                                 :style="
@@ -109,7 +109,7 @@
                                 "
                             >
                                 <span class="title q-calendar__ellipsis">
-                                    {{ event.title }}
+                                    {{ event.name }}
                                     <q-tooltip>{{ event.details }}</q-tooltip>
                                 </span>
                             </div>
@@ -130,12 +130,13 @@ import {
     isBetweenDates,
     today,
     parsed,
-    parseDate,
     parseTime
 } from '@quasar/quasar-ui-qcalendar/src/QCalendarDay.js';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarDay.sass';
+
+import { listActivities } from 'src/api/activitiesApi';
 
 import { defineComponent } from 'vue';
 import NavigationBar from '../components/NavigationBar.vue';
@@ -152,38 +153,25 @@ export default defineComponent({
     data() {
         return {
             selectedDate: today(),
-            events: [
-                {
-                    id: 1,
-                    title: 'BACHATA N3',
-                    time: '10:00',
-                    duration: 60,
-                    bgcolor: 'red',
-                    day: 'MO'
-                },
-                {
-                    id: 2,
-                    title: 'SALASA N3',
-                    time: '11:00',
-                    duration: 60,
-                    bgcolor: 'blue',
-                    day: 'MO'
-                },
-                {
-                    id: 3,
-                    title: 'SALASA N3',
-                    time: '13:00',
-                    duration: 60,
-                    bgcolor: 'orange',
-                    day: 'TU',
-                    days: 3
-                }
-            ],
+            events: [],
             eventsMap: {},
             isOpen: false
         };
     },
+    mounted() {
+        this.loadEvents();
+    },
     methods: {
+        async loadEvents() {
+            this.events = await listActivities();
+
+            const currentDate = new Date(); // Puedes pasar la fecha actual como parámetro
+            const result = this.generateDateObject(currentDate);
+
+            console.log(JSON.stringify(result, null, 2));
+
+            this.loadEventsMap(result);
+        },
         // convert the events into a map of lists keyed by date
         loadEventsMap(data) {
             this.events.forEach((event) => {
@@ -235,10 +223,30 @@ export default defineComponent({
                     return 6;
             }
         },
+        calcularDuracionEnMinutos(horaInicio, horaFin) {
+            const [horaInicioHoras, horaInicioMinutos] = horaInicio
+                .split(':')
+                .map(Number);
+            const [horaFinHoras, horaFinMinutos] = horaFin
+                .split(':')
+                .map(Number);
+
+            const minutosInicio = horaInicioHoras * 60 + horaInicioMinutos;
+            const minutosFin = horaFinHoras * 60 + horaFinMinutos;
+
+            let duracionEnMinutos = minutosFin - minutosInicio;
+
+            if (duracionEnMinutos < 0) {
+                // Si la hora de fin es anterior a la hora de inicio, ajustamos para el día siguiente
+                duracionEnMinutos += 24 * 60;
+            }
+
+            return duracionEnMinutos;
+        },
         badgeClasses(event, type) {
             const isHeader = type === 'header';
             return {
-                [`text-white bg-${event.bgcolor}`]: true,
+                ['text-white']: true,
                 'full-width':
                     !isHeader && (!event.side || event.side === 'full'),
                 'left-side': !isHeader && event.side === 'left',
@@ -253,11 +261,18 @@ export default defineComponent({
             timeDurationHeight = undefined
         ) {
             const s = {};
+
             if (timeStartPos && timeDurationHeight) {
-                s.top = timeStartPos(event.time) + 'px';
-                s.height = timeDurationHeight(event.duration) + 'px';
+                const duracionEnMinutos = this.calcularDuracionEnMinutos(
+                    event.startHour,
+                    event.endHour
+                );
+
+                s.top = timeStartPos(event.startHour) + 'px';
+                s.height = timeDurationHeight(duracionEnMinutos) + 'px';
             }
             s['align-items'] = 'flex-start';
+            s['background-color'] = event.color;
             return s;
         },
         getEvents(dt) {
@@ -296,8 +311,67 @@ export default defineComponent({
 
             return events;
         },
+        generateDateObject(currentDate) {
+            const startOfWeek = new Date(currentDate);
+            startOfWeek.setDate(
+                currentDate.getDate() -
+                    currentDate.getDay() +
+                    (currentDate.getDay() === 0 ? -6 : 1)
+            );
+
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+            const dateObject = {
+                start: startOfWeek.toISOString().split('T')[0],
+                end: endOfWeek.toISOString().split('T')[0],
+                days: []
+            };
+
+            for (let i = 0; i < 7; i++) {
+                const currentDay = new Date(startOfWeek);
+                currentDay.setDate(startOfWeek.getDate() + i);
+
+                const dayObject = {
+                    date: currentDay.toISOString().split('T')[0],
+                    time: '00:00',
+                    year: currentDay.getFullYear(),
+                    month: currentDay.getMonth() + 1,
+                    day: currentDay.getDate(),
+                    hour: 0,
+                    minute: 0,
+                    weekday: currentDay.getDay(),
+                    doy: this.dayOfYear(currentDay),
+                    workweek: this.calculateWorkWeek(currentDay),
+                    hasDay: true,
+                    hasTime: true,
+                    past: currentDay < currentDate,
+                    current:
+                        currentDay.toISOString().split('T')[0] ===
+                        currentDate.toISOString().split('T')[0],
+                    future: currentDay > currentDate,
+                    disabled: false,
+                    currentWeekday: currentDay.getDay() === currentDate.getDay()
+                };
+
+                dateObject.days.push(dayObject);
+            }
+
+            return dateObject;
+        },
+        dayOfYear(date) {
+            const start = new Date(date.getFullYear(), 0, 0);
+            const diff = date - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
+        },
+        calculateWorkWeek(date) {
+            const startOfYear = new Date(date.getFullYear(), 0, 1);
+            const days = this.dayOfYear(date) + (startOfYear.getDay() || 7);
+            return Math.ceil(days / 7);
+        },
         scrollToEvent(event) {
-            this.$refs.calendar.scrollToTime(event.time, 350);
+            this.$refs.calendar.scrollToTime(event.startHour, 350);
         },
         onToday() {
             this.$refs.calendar.moveToToday();
@@ -354,27 +428,6 @@ export default defineComponent({
 
 .text-white
   color: white
-
-.bg-blue
-  background: blue
-
-.bg-green
-  background: green
-
-.bg-orange
-  background: orange
-
-.bg-red
-  background: red
-
-.bg-teal
-  background: teal
-
-.bg-grey
-  background: grey
-
-.bg-purple
-  background: purple
 
 .full-width
   left: 0
