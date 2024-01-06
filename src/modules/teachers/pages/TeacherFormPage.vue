@@ -9,25 +9,21 @@ import useTeachers from '../composables/useTeachers';
 
 const route = useRoute();
 
-const { id } = route.params as { id: string };
-
-const isUpdate = computed(() => route.params.id);
+const idTeacher = computed<string | undefined>(() =>
+    route.params.id?.toString()
+);
 
 const { teacher, loadTeacher, saveTeacher, editTeacher } = useTeachers();
 
 onMounted(() => {
-    if (isUpdate.value) {
-        loadTeacher(id);
+    if (idTeacher.value) {
+        loadTeacher(idTeacher.value);
     }
 });
 
-const updateUserDateOfBirth = (value: string) => {
-    teacher.value.user.dateOfBirth = value;
-};
-
 const onSubmit = async () => {
-    if (isUpdate.value) {
-        editTeacher(id);
+    if (idTeacher.value) {
+        editTeacher(idTeacher.value);
     } else {
         saveTeacher();
     }
@@ -43,7 +39,7 @@ const onSubmit = async () => {
             >
                 <div style="text-align: center">
                     <ImageUploaderPreview
-                        v-if="isUpdate"
+                        v-if="idTeacher"
                         :id="+teacher.user.id"
                         :photo="teacher.user.photo"
                     />
@@ -72,7 +68,10 @@ const onSubmit = async () => {
                 <date-selector
                     :date="teacher.user.dateOfBirth"
                     :label="$t('user.label.dateOfBirth') + '*'"
-                    @update-date="updateUserDateOfBirth"
+                    @update-date="
+                        (newValue: string) =>
+                            (teacher.user.dateOfBirth = newValue)
+                    "
                 />
 
                 <q-input
@@ -102,13 +101,13 @@ const onSubmit = async () => {
 
                 <q-input
                     :label="
-                        isUpdate
+                        idTeacher
                             ? $t('user.label.changePassword')
                             : $t('user.label.password') + '*'
                     "
                     v-model="teacher.user.password"
                     :rules="
-                        isUpdate
+                        idTeacher
                             ? []
                             : [
                                   (val) =>
