@@ -30,14 +30,14 @@ const useTeachers = () => {
         id: 0,
         user: {
             id: 0,
-            name: 'Karen',
-            surnames: 'Cruz',
-            dateOfBirth: '2024-01-25T00:00:00.000Z',
-            phone: '544534345',
+            name: '',
+            surnames: '',
+            dateOfBirth: '',
+            phone: '',
             photo: '',
             instagram: '',
-            email: 'karen@gamil.com',
-            password: '12345',
+            email: '',
+            password: '',
             active: false,
             roles: []
         }
