@@ -30,14 +30,14 @@ const useTeachers = () => {
         id: 0,
         user: {
             id: 0,
-            name: '',
-            surnames: '',
-            dateOfBirth: '',
-            phone: '',
+            name: 'Karen',
+            surnames: 'Cruz',
+            dateOfBirth: '2024-01-25T00:00:00.000Z',
+            phone: '544534345',
             photo: '',
             instagram: '',
-            email: '',
-            password: '',
+            email: 'karen@gamil.com',
+            password: '12345',
             active: false,
             roles: []
         }
@@ -69,11 +69,11 @@ const useTeachers = () => {
     const saveTeacher = async () => {
         try {
             loading.value = true;
-            const teacherData = await createTeacher(teacher.value);
+            teacher.value = await createTeacher(teacher.value);
             notifySuccess(t('teacher.notifications.teacherCreateSuccessfully'));
             router.replace({
                 name: 'teachers-edit',
-                params: { id: teacherData.id }
+                params: { id: teacher.value.id }
             });
         } catch (error) {
             notifyError(error);
