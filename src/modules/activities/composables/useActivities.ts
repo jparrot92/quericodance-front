@@ -102,13 +102,13 @@ const useActivities = () => {
     const saveActivity = async () => {
         try {
             loading.value = true;
-            const activityData = await createActivity(activity.value);
+            activity.value = await createActivity(activity.value);
             notifySuccess(
                 t('activity.notifications.activityCreateSuccessfully')
             );
             router.replace({
                 name: 'activities-edit',
-                params: { id: activityData.id }
+                params: { id: activity.value.id }
             });
         } catch (error) {
             notifyError(error);
