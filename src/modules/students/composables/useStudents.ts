@@ -73,11 +73,11 @@ const useStudents = () => {
     const saveStudent = async () => {
         try {
             loading.value = true;
-            const studentData = await createStudent(student.value);
+            student.value = await createStudent(student.value);
             notifySuccess(t('user.notifications.userCreateSuccessfully'));
             router.replace({
                 name: 'students-edit',
-                params: { id: studentData.id }
+                params: { id: student.value.id }
             });
         } catch (error) {
             notifyError(error);

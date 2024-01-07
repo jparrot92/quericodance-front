@@ -10,15 +10,15 @@ import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
 
 const route = useRoute();
 
-const { id } = route.params as { id: string };
-
-const isUpdate = computed(() => route.params.id);
+const idStudent = computed<string | undefined>(() =>
+    route.params.id?.toString()
+);
 
 const { student, loadStudent } = useStudents();
 
 onMounted(() => {
-    if (isUpdate.value) {
-        loadStudent(id);
+    if (idStudent.value) {
+        loadStudent(idStudent.value);
     }
 });
 
