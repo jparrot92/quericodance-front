@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
@@ -9,7 +8,6 @@ import { ActivityStudent } from '../../models/activityStudent';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
-const $q = useQuasar();
 const { t } = useI18n();
 const route = useRoute();
 
@@ -97,7 +95,7 @@ const deleteActivityStudent = async (idActivityStudent: number) => {
             :rows="activity.activitiesStudent"
             :columns="columnTable"
             row-key="id"
-            class="col-12"
+            class="col-12 my-sticky-last-column-table"
             :loading="loading"
             :no-data-label="$t('shared.label.noData')"
             :rows-per-page-label="$t('shared.label.recordsPerPage')"

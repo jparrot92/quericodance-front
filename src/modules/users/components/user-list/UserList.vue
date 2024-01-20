@@ -3,6 +3,8 @@ import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
+import MenuList from 'src/shared/components/MenuList.vue';
+
 import useUsers from '../../composables/useUsers';
 
 const { loading, users, loadUsers, removeUser } = useUsers();
@@ -62,7 +64,7 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'actions',
         align: 'right',
-        label: t('user.label.actions'),
+        label: '',
         field: 'actions',
         sortable: false
     }
@@ -75,7 +77,7 @@ const columnsUser: ColumnTable[] = [
             :rows="users"
             :columns="columnsUser"
             row-key="id"
-            class="col-12"
+            class="col-12 my-sticky-last-column-table"
             :loading="loading"
             :no-data-label="$t('shared.label.noData')"
             :rows-per-page-label="$t('shared.label.recordsPerPage')"
@@ -117,30 +119,26 @@ const columnsUser: ColumnTable[] = [
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">
-                <q-td :props="props" class="q-gutter-x-sm">
-                    <q-btn
-                        icon="mdi-pencil-outline"
-                        color="info"
-                        dense
-                        size="sm"
-                        @click="
-                            $router.push({
-                                name: 'users-edit',
-                                params: { id: props.row.id }
-                            })
-                        "
-                    >
-                        <q-tooltip> {{ $t('user.label.edit') }} </q-tooltip>
-                    </q-btn>
-                    <q-btn
-                        icon="mdi-delete-outline"
-                        color="negative"
-                        dense
-                        size="sm"
-                        @click="removeUser(props.row.id)"
-                    >
-                        <q-tooltip> {{ $t('user.label.delete') }} </q-tooltip>
-                    </q-btn>
+                <q-td :props="props">
+                    <menu-list>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="
+                                    $router.push({
+                                        name: 'users-edit',
+                                        params: { id: props.row.id }
+                                    })
+                                "
+                            >
+                                {{ $t('user.label.edit') }}
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                            <q-item-section @click="removeUser(props.row.id)">
+                                {{ $t('user.label.delete') }}
+                            </q-item-section>
+                        </q-item>
+                    </menu-list>
                 </q-td>
             </template>
         </q-table>
