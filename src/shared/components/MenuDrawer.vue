@@ -22,6 +22,11 @@ const itemsMenu: ItemMenu[] = [
         link: 'appointments-list'
     },
     {
+        title: t('shared.label.students'),
+        icon: 'person',
+        link: 'students-list'
+    },
+    {
         title: t('shared.label.activities'),
         icon: 'diversity_3',
         link: 'activities-list'
@@ -30,11 +35,6 @@ const itemsMenu: ItemMenu[] = [
         title: t('shared.label.teachers'),
         icon: 'school',
         link: 'teachers-list'
-    },
-    {
-        title: t('shared.label.students'),
-        icon: 'person',
-        link: 'students-list'
     },
     {
         title: t('shared.label.users'),

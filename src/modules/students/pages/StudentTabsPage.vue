@@ -29,12 +29,10 @@ const tab = ref('student-data');
     <q-card>
         <q-tabs
             v-model="tab"
-            dense
-            class="text-grey"
-            active-color="primary"
-            indicator-color="primary"
-            align="justify"
             narrow-indicator
+            indicator-color="primary"
+            class="bg-secondary text-white shadow-2"
+            align="justify"
         >
             <q-tab
                 name="student-data"
