@@ -45,7 +45,7 @@ const useStudents = () => {
             roles: []
         },
         monthlyPayment: 0,
-        monthlyPaymentPaid: false
+        monthlyPaymentPaid: false,
     });
 
     const loadStudents = async () => {
