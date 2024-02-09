@@ -79,3 +79,24 @@ export const cancelPayment = async (id: number): Promise<Student> => {
         throw handleError(error);
     }
 };
+
+export const uploadExcel = async (file: File): Promise<string> => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const { data } = await api.post<string>(
+            '/students/import-studients',
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};

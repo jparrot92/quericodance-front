@@ -69,7 +69,7 @@ const onSubmit = async () => {
 
                 <date-selector
                     :date="selectedStudent.user.dateOfBirth"
-                    :label="$t('user.label.dateOfBirth') + '*'"
+                    :label="$t('user.label.dateOfBirth')"
                     @update-date="
                         (newValue: string) =>
                             (selectedStudent.user.dateOfBirth = newValue)

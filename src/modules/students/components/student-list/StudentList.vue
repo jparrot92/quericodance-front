@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
@@ -15,12 +15,15 @@ const {
     loadStudents,
     removeStudent,
     markPaymentPaid,
-    cancelPaymentPaid
+    cancelPaymentPaid,
+    handleFileUpload,
 } = useStudents();
 
 const $q = useQuasar();
 
 const { t } = useI18n();
+
+const fileInput = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
     loadStudents();
@@ -87,6 +90,13 @@ const columnsUser: ColumnTable[] = [
         sortable: true
     },
     {
+        name: 'datePayment',
+        align: 'left',
+        label: t('student.label.datePayment'),
+        field: (row: Student) => row.datePayment,
+        sortable: true
+    },
+    {
         name: 'actions',
         align: 'right',
         label: '',
@@ -110,6 +120,13 @@ const checkMonthlyPaymentPaid = async (
         console.error(error);
     }
 };
+
+const chooseFile = () => {
+    if (fileInput.value) {
+        fileInput.value.click();
+    }
+};
+
 </script>
 
 <template>
@@ -128,6 +145,21 @@ const checkMonthlyPaymentPaid = async (
                     {{ $t('student.label.students') }}
                 </span>
                 <q-space />
+                <q-btn
+                    v-if="$q.platform.is.desktop"
+                    label="Importar excel"
+                    color="primary"
+                    icon="mdi-plus"
+                    dense
+                    @click="chooseFile"
+                />
+                <input
+                    type="file"
+                    ref="fileInput"
+                    accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    @change="handleFileUpload"
+                    style="display: none"
+                />
                 <q-btn
                     v-if="$q.platform.is.desktop"
                     :label="$t('student.label.createStudent')"

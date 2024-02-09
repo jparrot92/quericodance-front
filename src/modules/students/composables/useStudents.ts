@@ -12,7 +12,8 @@ import {
     updateStudent,
     deleteStudent,
     markPayment,
-    cancelPayment
+    cancelPayment,
+    uploadExcel,
 } from 'src/api/studentsApi';
 
 import { Student } from '../models/student';
@@ -141,6 +142,32 @@ const useStudents = () => {
         });
     };
 
+    const handleFileUpload = async (event: Event) => {
+        const file = (event.target as HTMLInputElement).files?.[0];
+
+        debugger
+
+        if (file && (
+            file.type === 'application/vnd.ms-excel' ||
+            file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+            file.name.endsWith('.xls') ||
+            file.name.endsWith('.xlsx')
+        )) {
+            try {
+                $q.loading.show({
+                    message: t('shared.label.loading')
+                });
+                await uploadExcel(file);
+                notifySuccess('Excel importado');
+                await loadStudents();
+            } catch (error) {
+                notifyError(error);
+            } finally {
+                $q.loading.hide();
+            }
+        }
+    };
+
     return {
         // Properties
         loading,
@@ -152,7 +179,8 @@ const useStudents = () => {
         editStudent,
         removeStudent,
         markPaymentPaid,
-        cancelPaymentPaid
+        cancelPaymentPaid,
+        handleFileUpload
     };
 };
 
