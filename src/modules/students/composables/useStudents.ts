@@ -145,8 +145,6 @@ const useStudents = () => {
     const handleFileUpload = async (event: Event) => {
         const file = (event.target as HTMLInputElement).files?.[0];
 
-        debugger
-
         if (file && (
             file.type === 'application/vnd.ms-excel' ||
             file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
