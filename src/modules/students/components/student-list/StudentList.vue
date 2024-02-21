@@ -182,14 +182,17 @@ const chooseFile = () => {
                         })
                     "
                 />
-                <q-input
-                    v-model="search"
-                    dense
-                    filled
-                    placeholder="Search..."
-                    class="q-ml-sm"
-                    @update:model-value="filterTable"
-                />
+
+                <div class="col-12">
+                    <q-input
+                        v-model="search"
+                        dense
+                        placeholder="Search..."
+                        @update:model-value="filterTable"
+                    />
+
+                </div>
+
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
