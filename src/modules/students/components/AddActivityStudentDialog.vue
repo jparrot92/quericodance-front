@@ -31,7 +31,7 @@ type Role = {
 
 const roles: Role[] = [
     { label: 'Lider', value: 'leader' },
-    { label: 'Follower', value: 'follower' }
+    { label: 'Follower', value: 'follower' },
 ];
 
 const changePrice = ref<boolean>(false);
@@ -136,7 +136,7 @@ const calculatePrice = () => {
                                 (val !== null &&
                                     val !== undefined &&
                                     val.toString().trim() !== '') ||
-                                $t('activity.validation.priceRequired')
+                                $t('activity.validation.priceRequired'),
                         ]"
                     />
 

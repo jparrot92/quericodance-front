@@ -27,7 +27,7 @@ const useUsers = () => {
         instagram: '',
         email: '',
         password: '',
-        role: ''
+        role: '',
     });
 
     const loadProfile = async () => {
@@ -60,7 +60,7 @@ const useUsers = () => {
         users,
         user,
         loadProfile,
-        editProfile
+        editProfile,
     };
 };
 

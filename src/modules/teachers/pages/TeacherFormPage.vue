@@ -112,7 +112,7 @@ const onSubmit = async () => {
                             : [
                                   (val) =>
                                       (val && val.length > 0) ||
-                                      $t('user.validations.passwordRequired')
+                                      $t('user.validations.passwordRequired'),
                               ]
                     "
                 />

@@ -51,7 +51,7 @@ const locale = {
     monthsShort: 'Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic'.split('_'),
     firstDayOfWeek: 1, // 0-6, 0 - Sunday, 1 Monday, ...
     format24h: true,
-    pluralDay: 'dias'
+    pluralDay: 'dias',
 };
 </script>
 

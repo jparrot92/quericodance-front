@@ -23,7 +23,7 @@ export default {
             actions: 'Acciones',
             save: 'Guardar',
             edit: 'Editar',
-            delete: 'Borrar'
+            delete: 'Borrar',
         },
         validations: {
             nameRequired: 'El nombre es requerido',
@@ -31,15 +31,15 @@ export default {
             phoneRequired: 'El teléfono es requerido',
             photoRequired: 'La foto es requerida',
             emailRequired: 'El correo electrónico es requerido',
-            passwordRequired: 'La contraseña es requerida'
+            passwordRequired: 'La contraseña es requerida',
         },
         notifications: {
             userCreateSuccessfully: 'Usuario creado con éxito',
             userUpdateSuccessfully: 'Usuario modificada con éxito',
-            userDeleteSuccessfully: 'Usuario eliminado'
+            userDeleteSuccessfully: 'Usuario eliminado',
         },
         message: {
-            userDelete: '¿Realmente desea eliminar este usuario?'
-        }
-    }
+            userDelete: '¿Realmente desea eliminar este usuario?',
+        },
+    },
 };

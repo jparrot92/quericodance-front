@@ -18,15 +18,15 @@ export default {
             add: 'Añadir',
             cancel: 'Cancelar',
             changePrice: 'Modificar precio',
-            datePayment: 'Fecha de pago'
+            datePayment: 'Fecha de pago',
         },
         message: {
             addCourse:
-                'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante'
+                'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante',
         },
         notifications: {
             paymentMade: 'Paga efectuado',
-            cancelPayment: 'Pago cancelado'
-        }
-    }
+            cancelPayment: 'Pago cancelado',
+        },
+    },
 };

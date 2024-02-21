@@ -1,10 +1,10 @@
 export default {
     profile: {
         label: {
-            profile: 'Perfil'
+            profile: 'Perfil',
         },
         validations: {},
         notifications: {},
-        message: {}
-    }
+        message: {},
+    },
 };

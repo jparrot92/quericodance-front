@@ -13,7 +13,7 @@ import {
     updateActivity,
     deleteActivity,
     createActivityStudent,
-    deleteActivityStudent
+    deleteActivityStudent,
 } from 'src/api/activitiesApi';
 
 import { Activity } from '../models/activity';
@@ -40,7 +40,7 @@ const useActivities = () => {
         numberPlaces: 0,
         price: 0,
         color: '',
-        teachersIds: []
+        teachersIds: [],
     });
     const activityStudent = ref<ActivityStudent>({
         id: 0,
@@ -56,8 +56,8 @@ const useActivities = () => {
             numberPlaces: 0,
             price: 0,
             color: '',
-            teachersIds: []
-        }
+            teachersIds: [],
+        },
     });
 
     const loadActivities = async () => {
@@ -108,7 +108,7 @@ const useActivities = () => {
             );
             router.replace({
                 name: 'activities-edit',
-                params: { id: activity.value.id }
+                params: { id: activity.value.id },
             });
         } catch (error) {
             notifyError(error);
@@ -136,7 +136,7 @@ const useActivities = () => {
             title: t('activity.label.confirmation'),
             message: t('activity.message.activityDelete'),
             cancel: true,
-            persistent: true
+            persistent: true,
         }).onOk(async () => {
             try {
                 await deleteActivity(id);
@@ -179,7 +179,7 @@ const useActivities = () => {
                 title: t('activity.label.confirmation'),
                 message: t('activity.message.activityDelete'),
                 cancel: true,
-                persistent: true
+                persistent: true,
             }).onOk(async () => {
                 try {
                     const studentActivitiesList = await deleteActivityStudent(
@@ -210,7 +210,7 @@ const useActivities = () => {
         editActivity,
         removeActivity,
         saveActivityStudent,
-        removeActivityStudent
+        removeActivityStudent,
     };
 };
 

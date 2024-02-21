@@ -10,25 +10,25 @@ import activitiesRoutes from '../modules/activities/router';
 
 const routes: RouteRecordRaw[] = [
     {
-        ...authRouter
+        ...authRouter,
     },
     {
-        ...profileRouter
+        ...profileRouter,
     },
     {
-        ...appointmentsRouter
+        ...appointmentsRouter,
     },
     {
-        ...teachersRoutes
+        ...teachersRoutes,
     },
     {
-        ...studentsRoutes
+        ...studentsRoutes,
     },
     {
-        ...usersRoutes
+        ...usersRoutes,
     },
     {
-        ...activitiesRoutes
+        ...activitiesRoutes,
     },
     //default route redirection
     { path: '/', redirect: { name: 'appointments-list' } },
@@ -45,8 +45,8 @@ const routes: RouteRecordRaw[] = [
     // but you can also remove it
     {
         path: '/:catchAll(.*)*',
-        component: () => import('pages/ErrorNotFound.vue')
-    }
+        component: () => import('pages/ErrorNotFound.vue'),
+    },
 ];
 
 export default routes;

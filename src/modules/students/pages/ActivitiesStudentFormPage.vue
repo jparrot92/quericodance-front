@@ -109,8 +109,9 @@ const deleteActivityStudent = async (id: number) => {
                                                     $router.push({
                                                         name: 'activities-list-students',
                                                         params: {
-                                                            id: item.activity.id
-                                                        }
+                                                            id: item.activity
+                                                                .id,
+                                                        },
                                                     })
                                                 "
                                             >

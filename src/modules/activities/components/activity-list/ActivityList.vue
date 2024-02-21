@@ -33,21 +33,21 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('activity.label.name'),
         field: 'name',
-        sortable: true
+        sortable: true,
     },
     {
         name: 'day',
         align: 'left',
         label: t('activity.label.day'),
         field: (row) => t('shared.label.' + row.day),
-        sortable: true
+        sortable: true,
     },
     {
         name: 'level',
         align: 'left',
         label: t('activity.label.level'),
         field: 'level',
-        sortable: true
+        sortable: true,
     },
     {
         name: 'startHour',
@@ -55,7 +55,7 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.startHour'),
         field: 'startHour',
         sortable: true,
-        headerStyle: 'white-space: pre;'
+        headerStyle: 'white-space: pre;',
     },
     {
         name: 'endHour',
@@ -63,7 +63,7 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.endHour'),
         field: 'endHour',
         sortable: true,
-        headerStyle: 'white-space: pre;'
+        headerStyle: 'white-space: pre;',
     },
     {
         name: 'numberPlaces',
@@ -71,7 +71,7 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.numberPlaces'),
         field: 'numberPlaces',
         sortable: true,
-        headerStyle: 'white-space: pre;'
+        headerStyle: 'white-space: pre;',
     },
     {
         name: 'numberStudents',
@@ -79,7 +79,7 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.numberStudents'),
         field: 'numberStudents',
         sortable: true,
-        headerStyle: 'white-space: pre;'
+        headerStyle: 'white-space: pre;',
     },
     {
         name: 'numberLeaders',
@@ -87,7 +87,7 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.numberLeaders'),
         field: 'numberLeaders',
         sortable: true,
-        headerStyle: 'white-space: pre;'
+        headerStyle: 'white-space: pre;',
     },
     {
         name: 'numberFollowers',
@@ -95,7 +95,7 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.numberFollowers'),
         field: 'numberFollowers',
         sortable: true,
-        headerStyle: 'white-space: pre;'
+        headerStyle: 'white-space: pre;',
     },
     {
         name: 'costEffectiveness',
@@ -103,15 +103,15 @@ const columnsUser: ColumnTable[] = [
         label: t('activity.label.costEffectiveness'),
         field: 'costEffectiveness',
         format: (val: number) => `${val} €`,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'actions',
         align: 'center',
         label: '',
         field: 'actions',
-        sortable: false
-    }
+        sortable: false,
+    },
 ];
 </script>
 
@@ -139,7 +139,7 @@ const columnsUser: ColumnTable[] = [
                     dense
                     @click="
                         $router.push({
-                            name: 'activities-add'
+                            name: 'activities-add',
                         })
                     "
                 />
@@ -174,8 +174,8 @@ const columnsUser: ColumnTable[] = [
                                     $router.push({
                                         name: 'activities-list-students',
                                         params: {
-                                            id: props.row.id
-                                        }
+                                            id: props.row.id,
+                                        },
                                     })
                                 "
                             >
@@ -188,8 +188,8 @@ const columnsUser: ColumnTable[] = [
                                     $router.push({
                                         name: 'activities-edit',
                                         params: {
-                                            id: props.row.id
-                                        }
+                                            id: props.row.id,
+                                        },
                                     })
                                 "
                             >

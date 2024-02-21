@@ -27,24 +27,24 @@ onMounted(() => {
 const roles = [
     {
         label: t('user.label.admin'),
-        value: 'admin'
+        value: 'admin',
     },
     {
         label: t('user.label.manager'),
-        value: 'manager'
+        value: 'manager',
     },
     {
         label: t('user.label.secretary'),
-        value: 'secretary'
+        value: 'secretary',
     },
     {
         label: t('user.label.teacher'),
-        value: 'teacher'
+        value: 'teacher',
     },
     {
         label: t('user.label.student'),
-        value: 'student'
-    }
+        value: 'student',
+    },
 ];
 
 const onSubmit = async () => {
@@ -136,7 +136,7 @@ const onSubmit = async () => {
                             : [
                                   (val) =>
                                       (val && val.length > 0) ||
-                                      $t('user.validations.passwordRequired')
+                                      $t('user.validations.passwordRequired'),
                               ]
                     "
                 />
@@ -154,7 +154,7 @@ const onSubmit = async () => {
                             itemProps,
                             opt,
                             selected,
-                            toggleOption
+                            toggleOption,
                         }"
                     >
                         <q-item v-bind="itemProps">

@@ -4,14 +4,14 @@ export default {
             email: 'Correo electrónico',
             password: 'Contraseña',
             login: 'Login',
-            forgotPassword: '¿Contraseña olvidada?'
+            forgotPassword: '¿Contraseña olvidada?',
         },
         validations: {
             emailRequired: 'Correo electrónico obligatorio',
-            passwordRequired: 'Contraseña obligatoria'
+            passwordRequired: 'Contraseña obligatoria',
         },
         notifications: {
-            loginSuccessfully: '¡Inició sesión con éxito!'
-        }
-    }
+            loginSuccessfully: '¡Inició sesión con éxito!',
+        },
+    },
 };

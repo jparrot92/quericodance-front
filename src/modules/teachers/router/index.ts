@@ -10,10 +10,10 @@ const teachersRoutes: RouteRecordRaw = {
             path: `/${ROUTE_NAME}`,
             name: `${ROUTE_NAME}-list`,
             meta: {
-                toolbar: 'MainToolbar'
+                toolbar: 'MainToolbar',
             },
             component: () =>
-                import('src/modules/teachers/pages/TeacherPage.vue')
+                import('src/modules/teachers/pages/TeacherPage.vue'),
         },
         {
             path: `/${ROUTE_NAME}/add`,
@@ -22,8 +22,8 @@ const teachersRoutes: RouteRecordRaw = {
                 import('src/modules/teachers/pages/TeacherFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'teacher.label.createTeacher'
-            }
+                title: 'teacher.label.createTeacher',
+            },
         },
         {
             path: `/${ROUTE_NAME}/:id`,
@@ -32,15 +32,15 @@ const teachersRoutes: RouteRecordRaw = {
                 import('src/modules/teachers/pages/TeacherFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'teacher.label.editTeacher'
+                title: 'teacher.label.editTeacher',
             },
             props: (route) => {
                 return {
-                    id: route.params.id
+                    id: route.params.id,
                 };
-            }
-        }
-    ]
+            },
+        },
+    ],
 };
 
 export default teachersRoutes;

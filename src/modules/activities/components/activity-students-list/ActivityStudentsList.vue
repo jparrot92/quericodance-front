@@ -33,50 +33,50 @@ const columnTable: ColumnTable[] = [
         align: 'left',
         label: t('user.label.photo'),
         field: (row: ActivityStudent) => row.student?.user.photo,
-        sortable: false
+        sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
         field: (row: ActivityStudent) => row.student?.user.name,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
         field: (row: ActivityStudent) => row.student?.user.surnames,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'phone',
         align: 'left',
         label: t('user.label.phone'),
         field: (row: ActivityStudent) => row.student?.user.phone,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'danceRole',
         align: 'left',
         label: t('student.label.role'),
         field: (row: ActivityStudent) => row.danceRole,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'price',
         align: 'left',
         label: t('activity.label.price'),
         field: (row: ActivityStudent) => row.price || undefined,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'actions',
         align: 'right',
         label: '',
         field: 'actions',
-        sortable: false
-    }
+        sortable: false,
+    },
 ];
 
 const deleteActivityStudent = async (idActivityStudent: number) => {
@@ -160,8 +160,8 @@ const deleteActivityStudent = async (idActivityStudent: number) => {
                                     $router.push({
                                         name: 'students-edit',
                                         params: {
-                                            id: props.row.student.id
-                                        }
+                                            id: props.row.student.id,
+                                        },
                                     })
                                 "
                             >

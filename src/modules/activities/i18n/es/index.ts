@@ -26,7 +26,7 @@ export default {
             see: 'Ver curso',
             edit: 'Editar',
             delete: 'Borrar',
-            confirmation: 'Confirmación'
+            confirmation: 'Confirmación',
         },
         validation: {
             nameRequired: 'El nombre es requerido',
@@ -35,15 +35,15 @@ export default {
             startHourRequired: 'La hora de inicio es requerida',
             endHourRequired: 'La hora de fin es requerida',
             numberPlacesRequired: 'El número de plazas es requerido',
-            priceRequired: 'El preció es requerido'
+            priceRequired: 'El preció es requerido',
         },
         notifications: {
             activityCreateSuccessfully: 'Curso creado con éxito',
             activityUpdateSuccessfully: 'Curso modificada con éxito',
-            activityDeleteSuccessfully: 'Curso eliminado'
+            activityDeleteSuccessfully: 'Curso eliminado',
         },
         message: {
-            activityDelete: '¿Realmente desea eliminar este curso?'
-        }
-    }
+            activityDelete: '¿Realmente desea eliminar este curso?',
+        },
+    },
 };

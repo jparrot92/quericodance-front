@@ -90,8 +90,8 @@ export const uploadExcel = async (file: File): Promise<string> => {
             formData,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                    'Content-Type': 'multipart/form-data',
+                },
             }
         );
 

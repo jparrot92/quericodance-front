@@ -16,7 +16,7 @@ const { userForm, onSubmit } = useAuth();
                     :rules="[
                         (val) =>
                             (val && val.length > 0) ||
-                            $t('auth.validations.emailRequired')
+                            $t('auth.validations.emailRequired'),
                     ]"
                     type="email"
                 />
@@ -28,7 +28,7 @@ const { userForm, onSubmit } = useAuth();
                     :rules="[
                         (val) =>
                             (val && val.length > 0) ||
-                            $t('auth.validations.passwordRequired')
+                            $t('auth.validations.passwordRequired'),
                     ]"
                 />
 

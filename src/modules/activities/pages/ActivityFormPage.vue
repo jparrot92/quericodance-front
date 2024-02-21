@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import DaysSelector from 'src/shared/components/DaysSelector.vue';
@@ -65,7 +65,7 @@ const removeTeacherActivity = async () => {
                             $t('activity.validation.levelRequired'),
                         (val) =>
                             /^[0-9]+$/.test(val) ||
-                            $t('activity.validation.levelNumeric')
+                            $t('activity.validation.levelNumeric'),
                     ]"
                 />
 
@@ -155,7 +155,7 @@ const removeTeacherActivity = async () => {
                             (val !== null &&
                                 val !== undefined &&
                                 val.toString().trim() !== '') ||
-                            $t('activity.validation.priceRequired')
+                            $t('activity.validation.priceRequired'),
                     ]"
                 />
 

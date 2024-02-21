@@ -12,7 +12,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    photo: ''
+    photo: '',
 });
 
 const photoURL = ref<string>('');

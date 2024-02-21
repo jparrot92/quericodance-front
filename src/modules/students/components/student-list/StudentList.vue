@@ -24,18 +24,28 @@ const $q = useQuasar();
 const { t } = useI18n();
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const search = ref<string>('')
+const search = ref<string>('');
 const filteredStudents = ref<Student[]>();
 
 const filterTable = () => {
-    filteredStudents.value = students.value.filter(student => {
-        return (student.user.name.toLowerCase().includes(search.value.toLowerCase()) || student.user.surnames.toLowerCase().includes(search.value.toLowerCase()) || student.user.email.toLowerCase().includes(search.value.toLowerCase()));
+    filteredStudents.value = students.value.filter((student) => {
+        return (
+            student.user.name
+                .toLowerCase()
+                .includes(search.value.toLowerCase()) ||
+            student.user.surnames
+                .toLowerCase()
+                .includes(search.value.toLowerCase()) ||
+            student.user.email
+                .toLowerCase()
+                .includes(search.value.toLowerCase())
+        );
     });
 };
 
-onMounted(async() =>  {
+onMounted(async () => {
     await loadStudents();
-    filteredStudents.value = students.value
+    filteredStudents.value = students.value;
 });
 
 export interface ColumnTable {
@@ -53,35 +63,35 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('user.label.photo'),
         field: (row: Student) => row.user.photo,
-        sortable: false
+        sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
         field: (row: Student) => row.user.name,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
         field: (row: Student) => row.user.surnames,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'email',
         align: 'left',
         label: t('user.label.email'),
         field: (row: Student) => row.user.email,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'active',
         align: 'left',
         label: t('student.label.active'),
         field: (row: Student) => row.user.active,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'monthlyPayment',
@@ -89,29 +99,29 @@ const columnsUser: ColumnTable[] = [
         label: t('student.label.monthlyPayment'),
         field: (row: Student) => row.monthlyPayment,
         format: (val: number) => `${val} €`,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'monthlyPaymentPaid',
         align: 'left',
         label: t('student.label.monthlyPaymentPaid'),
         field: (row: Student) => row.monthlyPaymentPaid,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'datePayment',
         align: 'left',
         label: t('student.label.datePayment'),
         field: (row: Student) => row.datePayment,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'actions',
         align: 'right',
         label: '',
         field: 'actions',
-        sortable: false
-    }
+        sortable: false,
+    },
 ];
 
 const checkMonthlyPaymentPaid = async (
@@ -135,7 +145,6 @@ const chooseFile = () => {
         fileInput.value.click();
     }
 };
-
 </script>
 
 <template>
@@ -178,7 +187,7 @@ const chooseFile = () => {
                     dense
                     @click="
                         $router.push({
-                            name: 'students-add'
+                            name: 'students-add',
                         })
                     "
                 />
@@ -190,9 +199,7 @@ const chooseFile = () => {
                         placeholder="Search..."
                         @update:model-value="filterTable"
                     />
-
                 </div>
-
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
@@ -242,7 +249,7 @@ const chooseFile = () => {
                                 @click="
                                     $router.push({
                                         name: 'students-edit',
-                                        params: { id: props.row.id }
+                                        params: { id: props.row.id },
                                     })
                                 "
                             >

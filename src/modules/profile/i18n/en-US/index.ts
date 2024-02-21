@@ -3,6 +3,6 @@ export default {
         label: {},
         validations: {},
         notifications: {},
-        message: {}
-    }
+        message: {},
+    },
 };

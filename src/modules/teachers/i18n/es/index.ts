@@ -3,12 +3,12 @@ export default {
         label: {
             createTeacher: 'Crear profesor',
             editTeacher: 'Editar profesor',
-            teachers: 'Profesores'
+            teachers: 'Profesores',
         },
         notifications: {
             teacherCreateSuccessfully: 'Profesor creado con éxito',
             teacherUpdateSuccessfully: 'Profesor modificada con éxito',
-            teacherDeleteSuccessfully: 'Profesor eliminado'
-        }
-    }
+            teacherDeleteSuccessfully: 'Profesor eliminado',
+        },
+    },
 };

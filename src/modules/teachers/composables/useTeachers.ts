@@ -10,7 +10,7 @@ import {
     getTeacher,
     createTeacher,
     updateTeacher,
-    deleteTeacher
+    deleteTeacher,
 } from 'src/api/teachersApi';
 
 import { Teacher } from '../models/teacher';
@@ -39,8 +39,8 @@ const useTeachers = () => {
             email: '',
             password: '',
             active: false,
-            roles: []
-        }
+            roles: [],
+        },
     });
 
     const loadTeachers = async () => {
@@ -73,7 +73,7 @@ const useTeachers = () => {
             notifySuccess(t('teacher.notifications.teacherCreateSuccessfully'));
             router.replace({
                 name: 'teachers-edit',
-                params: { id: teacher.value.id }
+                params: { id: teacher.value.id },
             });
         } catch (error) {
             notifyError(error);
@@ -99,7 +99,7 @@ const useTeachers = () => {
             title: t('teacher.label.confirmation'),
             message: t('teacher.message.teacherDelete'),
             cancel: true,
-            persistent: true
+            persistent: true,
         }).onOk(async () => {
             try {
                 await deleteTeacher(id);
@@ -122,7 +122,7 @@ const useTeachers = () => {
         loadTeacher,
         saveTeacher,
         editTeacher,
-        removeTeacher
+        removeTeacher,
     };
 };
 

@@ -87,8 +87,8 @@
                             scope: {
                                 timestamp,
                                 timeStartPos,
-                                timeDurationHeight
-                            }
+                                timeDurationHeight,
+                            },
                         }"
                     >
                         <template
@@ -130,7 +130,7 @@ import {
     isBetweenDates,
     today,
     parsed,
-    parseTime
+    parseTime,
 } from '@quasar/quasar-ui-qcalendar/src/QCalendarDay.js';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass';
@@ -148,14 +148,14 @@ export default defineComponent({
     components: {
         NavigationBar,
         QCalendarDay,
-        AppointmentDialog
+        AppointmentDialog,
     },
     data() {
         return {
             selectedDate: today(),
             events: [],
             eventsMap: {},
-            isOpen: false
+            isOpen: false,
         };
     },
     mounted() {
@@ -251,7 +251,7 @@ export default defineComponent({
                     !isHeader && (!event.side || event.side === 'full'),
                 'left-side': !isHeader && event.side === 'left',
                 'right-side': !isHeader && event.side === 'right',
-                'rounded-border': true
+                'rounded-border': true,
             };
         },
         badgeStyles(
@@ -286,16 +286,16 @@ export default defineComponent({
                 // check if the two events overlap and if so, select
                 // left or right side alignment to prevent overlap
                 const startTime = addToDate(parsed(events[0].date), {
-                    minute: parseTime(events[0].time)
+                    minute: parseTime(events[0].time),
                 });
                 const endTime = addToDate(startTime, {
-                    minute: events[0].duration
+                    minute: events[0].duration,
                 });
                 const startTime2 = addToDate(parsed(events[1].date), {
-                    minute: parseTime(events[1].time)
+                    minute: parseTime(events[1].time),
                 });
                 const endTime2 = addToDate(startTime2, {
-                    minute: events[1].duration
+                    minute: events[1].duration,
                 });
                 if (
                     isBetweenDates(startTime2, startTime, endTime, true) ||
@@ -325,7 +325,7 @@ export default defineComponent({
             const dateObject = {
                 start: startOfWeek.toISOString().split('T')[0],
                 end: endOfWeek.toISOString().split('T')[0],
-                days: []
+                days: [],
             };
 
             for (let i = 0; i < 7; i++) {
@@ -351,7 +351,8 @@ export default defineComponent({
                         currentDate.toISOString().split('T')[0],
                     future: currentDay > currentDate,
                     disabled: false,
-                    currentWeekday: currentDay.getDay() === currentDate.getDay()
+                    currentWeekday:
+                        currentDay.getDay() === currentDate.getDay(),
                 };
 
                 dateObject.days.push(dayObject);
@@ -404,8 +405,8 @@ export default defineComponent({
         },
         onClickHeadDay(data) {
             console.log('onClickHeadDay', data);
-        }
-    }
+        },
+    },
 });
 </script>
 

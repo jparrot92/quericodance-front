@@ -81,7 +81,7 @@ export const createActivityStudent = async (
             studentId,
             activityId,
             danceRole,
-            price
+            price,
         };
 
         const { data } = await api.post<ActivityStudent[]>(

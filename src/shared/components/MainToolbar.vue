@@ -14,7 +14,7 @@ const handleLogout = async () => {
         title: t('shared.label.logout'),
         message: t('shared.message.logout'),
         cancel: true,
-        persistent: true
+        persistent: true,
     }).onOk(async () => {
         logout();
     });
@@ -42,7 +42,7 @@ const handleLogout = async () => {
                         v-close-popup
                         @click="
                             $router.push({
-                                name: 'profile-form-page'
+                                name: 'profile-form-page',
                             })
                         "
                     >

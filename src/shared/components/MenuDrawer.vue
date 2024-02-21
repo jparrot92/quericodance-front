@@ -8,7 +8,7 @@ import MainToolbar from 'src/shared/components/MainToolbar.vue';
 import DetailToolbar from 'src/shared/components/DetailToolbar.vue';
 
 import MenuItemDrawer, {
-    ItemMenu
+    ItemMenu,
 } from 'src/shared/components/MenuItemDrawer.vue';
 
 const { t } = useI18n();
@@ -19,28 +19,28 @@ const itemsMenu: ItemMenu[] = [
     {
         title: t('shared.label.calendar'),
         icon: 'calendar_month',
-        link: 'appointments-list'
+        link: 'appointments-list',
     },
     {
         title: t('shared.label.students'),
         icon: 'person',
-        link: 'students-list'
+        link: 'students-list',
     },
     {
         title: t('shared.label.activities'),
         icon: 'diversity_3',
-        link: 'activities-list'
+        link: 'activities-list',
     },
     {
         title: t('shared.label.teachers'),
         icon: 'school',
-        link: 'teachers-list'
+        link: 'teachers-list',
     },
     {
         title: t('shared.label.users'),
         icon: 'account_circle',
-        link: 'users-list'
-    }
+        link: 'users-list',
+    },
 ];
 
 const leftDrawerOpen = ref(false);

@@ -7,10 +7,10 @@ export default {
             activity: 'Courses',
             teacher: 'Teacher',
             student: 'Student',
-            user: 'User'
+            user: 'User',
         },
         message: {
-            logout: 'Do you really want to leave ?'
-        }
-    }
+            logout: 'Do you really want to leave ?',
+        },
+    },
 };

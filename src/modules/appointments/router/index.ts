@@ -11,12 +11,12 @@ const appointmentsRoutes: RouteRecordRaw = {
             path: `/${ROUTE_NAME}`,
             name: `${ROUTE_NAME}-list`,
             meta: {
-                toolbar: 'MainToolbar'
+                toolbar: 'MainToolbar',
             },
             component: () =>
-                import('src/modules/appointments/pages/AppointmentsPage.vue')
-        }
-    ]
+                import('src/modules/appointments/pages/AppointmentsPage.vue'),
+        },
+    ],
 };
 
 export default appointmentsRoutes;

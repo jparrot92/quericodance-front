@@ -31,43 +31,43 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('user.label.photo'),
         field: 'photo',
-        sortable: false
+        sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
         field: 'name',
-        sortable: true
+        sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
         field: 'surnames',
-        sortable: true
+        sortable: true,
     },
     {
         name: 'email',
         align: 'left',
         label: t('user.label.email'),
         field: 'email',
-        sortable: true
+        sortable: true,
     },
     {
         name: 'roles',
         align: 'left',
         label: t('user.label.permissions'),
         field: 'roles',
-        sortable: true
+        sortable: true,
     },
     {
         name: 'actions',
         align: 'right',
         label: '',
         field: 'actions',
-        sortable: false
-    }
+        sortable: false,
+    },
 ];
 </script>
 
@@ -93,7 +93,7 @@ const columnsUser: ColumnTable[] = [
                     dense
                     @click="
                         $router.push({
-                            name: 'users-add'
+                            name: 'users-add',
                         })
                     "
                 />
@@ -126,7 +126,7 @@ const columnsUser: ColumnTable[] = [
                                 @click="
                                     $router.push({
                                         name: 'users-edit',
-                                        params: { id: props.row.id }
+                                        params: { id: props.row.id },
                                     })
                                 "
                             >

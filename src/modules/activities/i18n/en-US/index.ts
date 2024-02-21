@@ -9,18 +9,18 @@ export default {
             save: 'Save',
             edit: 'Edit',
             delete: 'Delete',
-            confirmation: 'Confirmation'
+            confirmation: 'Confirmation',
         },
         validations: {
-            nameRequired: 'Name is required'
+            nameRequired: 'Name is required',
         },
         notifications: {
             activityCreateSuccessfully: 'Course created successfully',
             activityUpdateSuccessfully: 'Course successfully updated',
-            activityDeleteSuccessfully: 'Course deleted'
+            activityDeleteSuccessfully: 'Course deleted',
         },
         message: {
-            activityDelete: 'Do you really want to delete this course?'
-        }
-    }
+            activityDelete: 'Do you really want to delete this course?',
+        },
+    },
 };

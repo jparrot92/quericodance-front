@@ -3,7 +3,7 @@ export default {
         label: {
             createTeacher: 'Create teacher',
             editTeacher: 'Edit teacher',
-            teachers: 'Teachers'
-        }
-    }
+            teachers: 'Teachers',
+        },
+    },
 };

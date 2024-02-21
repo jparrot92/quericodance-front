@@ -10,7 +10,7 @@ import {
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
 } from 'src/api/usersApi';
 
 import { User } from '../models/user';
@@ -37,7 +37,7 @@ const useUsers = () => {
         email: '',
         password: '',
         active: false,
-        roles: []
+        roles: [],
     });
 
     const loadUsers = async () => {
@@ -70,7 +70,7 @@ const useUsers = () => {
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
             router.replace({
                 name: 'users-edit',
-                params: { id: userData.id }
+                params: { id: userData.id },
             });
         } catch (error) {
             notifyError(error);
@@ -96,7 +96,7 @@ const useUsers = () => {
             title: t('user.label.confirmation'),
             message: t('user.message.userDelete'),
             cancel: true,
-            persistent: true
+            persistent: true,
         }).onOk(async () => {
             try {
                 await deleteUser(id);
@@ -117,7 +117,7 @@ const useUsers = () => {
         loadUser,
         saveUser,
         editUser,
-        removeUser
+        removeUser,
     };
 };
 

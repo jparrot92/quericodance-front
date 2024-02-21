@@ -32,36 +32,36 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('user.label.photo'),
         field: (row: Teacher) => row.user.photo,
-        sortable: false
+        sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
         field: (row: Teacher) => row.user.name,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
         field: (row: Teacher) => row.user.surnames,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'email',
         align: 'left',
         label: t('user.label.email'),
         field: (row: Teacher) => row.user.email,
-        sortable: true
+        sortable: true,
     },
     {
         name: 'actions',
         align: 'right',
         label: '',
         field: 'actions',
-        sortable: false
-    }
+        sortable: false,
+    },
 ];
 </script>
 
@@ -89,7 +89,7 @@ const columnsUser: ColumnTable[] = [
                     dense
                     @click="
                         $router.push({
-                            name: 'teachers-add'
+                            name: 'teachers-add',
                         })
                     "
                 />
@@ -115,7 +115,7 @@ const columnsUser: ColumnTable[] = [
                                 @click="
                                     $router.push({
                                         name: 'teachers-edit',
-                                        params: { id: props.row.id }
+                                        params: { id: props.row.id },
                                     })
                                 "
                             >

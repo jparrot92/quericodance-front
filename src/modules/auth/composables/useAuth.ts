@@ -21,13 +21,13 @@ const useAuth = () => {
 
     const userForm = ref<Auth>({
         email: '',
-        password: ''
+        password: '',
     });
 
     const onSubmit = async () => {
         try {
             $q.loading.show({
-                message: t('shared.label.loading')
+                message: t('shared.label.loading'),
             });
             await authStore.login(userForm.value);
             notifySuccess(t('auth.notifications.loginSuccessfully'));
@@ -49,7 +49,7 @@ const useAuth = () => {
         userForm,
         // Methods
         onSubmit,
-        logout
+        logout,
     };
 };
 

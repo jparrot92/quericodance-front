@@ -10,9 +10,9 @@ const usersRoutes: RouteRecordRaw = {
             path: `/${ROUTE_NAME}`,
             name: `${ROUTE_NAME}-list`,
             meta: {
-                toolbar: 'MainToolbar'
+                toolbar: 'MainToolbar',
             },
-            component: () => import('src/modules/users/pages/UserPage.vue')
+            component: () => import('src/modules/users/pages/UserPage.vue'),
         },
         {
             path: `/${ROUTE_NAME}/add`,
@@ -20,8 +20,8 @@ const usersRoutes: RouteRecordRaw = {
             component: () => import('src/modules/users/pages/UserFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'user.label.createUser'
-            }
+                title: 'user.label.createUser',
+            },
         },
         {
             path: `/${ROUTE_NAME}/:id`,
@@ -29,15 +29,15 @@ const usersRoutes: RouteRecordRaw = {
             component: () => import('src/modules/users/pages/UserFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'user.label.editUser'
+                title: 'user.label.editUser',
             },
             props: (route) => {
                 return {
-                    id: route.params.id
+                    id: route.params.id,
                 };
-            }
-        }
-    ]
+            },
+        },
+    ],
 };
 
 export default usersRoutes;

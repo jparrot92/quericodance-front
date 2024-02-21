@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         token: '',
         user: {},
-        expiresIn: ''
+        expiresIn: '',
     }),
     actions: {
         async login(user: Auth) {
@@ -58,6 +58,6 @@ export const useAuthStore = defineStore('auth', {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             localStorage.removeItem('expiresIn');
-        }
-    }
+        },
+    },
 });

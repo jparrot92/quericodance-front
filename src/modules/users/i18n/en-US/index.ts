@@ -24,7 +24,7 @@ export default {
             actions: 'Actions',
             save: 'Save',
             edit: 'Edit',
-            delete: 'Delete'
+            delete: 'Delete',
         },
         validations: {
             nifRequired: 'NIF is required',
@@ -39,15 +39,15 @@ export default {
             zipCodeRequired: 'Zip code is required',
             countryRequired: 'Country is required',
             emailRequired: 'Email is required',
-            passwordRequired: 'Password is required'
+            passwordRequired: 'Password is required',
         },
         notifications: {
             userCreateSuccessfully: 'User created successfully',
             userUpdateSuccessfully: 'User modified successfully',
-            userDeleteSuccessfully: 'User deleted'
+            userDeleteSuccessfully: 'User deleted',
         },
         message: {
-            userDelete: 'Do you really want to delete this user?'
-        }
-    }
+            userDelete: 'Do you really want to delete this user?',
+        },
+    },
 };

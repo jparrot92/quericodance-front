@@ -10,10 +10,10 @@ const studentsRoutes: RouteRecordRaw = {
             path: `/${ROUTE_NAME}`,
             name: `${ROUTE_NAME}-list`,
             meta: {
-                toolbar: 'MainToolbar'
+                toolbar: 'MainToolbar',
             },
             component: () =>
-                import('src/modules/students/pages/StudentPage.vue')
+                import('src/modules/students/pages/StudentPage.vue'),
         },
         {
             path: `/${ROUTE_NAME}/add`,
@@ -22,8 +22,8 @@ const studentsRoutes: RouteRecordRaw = {
                 import('src/modules/students/pages/StudentFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'student.label.createStudent'
-            }
+                title: 'student.label.createStudent',
+            },
         },
         {
             path: `/${ROUTE_NAME}/:id`,
@@ -32,15 +32,15 @@ const studentsRoutes: RouteRecordRaw = {
                 import('src/modules/students/pages/StudentTabsPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'student.label.editStudent'
+                title: 'student.label.editStudent',
             },
             props: (route) => {
                 return {
-                    id: route.params.id
+                    id: route.params.id,
                 };
-            }
-        }
-    ]
+            },
+        },
+    ],
 };
 
 export default studentsRoutes;

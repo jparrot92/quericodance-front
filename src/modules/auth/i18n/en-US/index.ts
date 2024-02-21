@@ -4,14 +4,14 @@ export default {
             email: 'Email',
             password: 'Password',
             login: 'Login',
-            forgotPassword: 'Forgot Password ?'
+            forgotPassword: 'Forgot Password ?',
         },
         validations: {
             emailRequired: 'Email is required',
-            passwordRequired: 'Password is required'
+            passwordRequired: 'Password is required',
         },
         notifications: {
-            loginSuccessfully: 'Login successfully!'
-        }
-    }
+            loginSuccessfully: 'Login successfully!',
+        },
+    },
 };

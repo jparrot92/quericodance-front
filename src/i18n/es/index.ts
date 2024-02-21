@@ -13,5 +13,5 @@ export default {
     ...usersI18n,
     ...teachersI18n,
     ...studentsI18n,
-    ...activitiesI18n
+    ...activitiesI18n,
 };

@@ -23,10 +23,10 @@ export default {
             selectPhoto: 'Seleccionar foto',
             deleteCurrentPhoto: 'Eliminar foto actual',
             importExcel: 'Importar Excel',
-            cancel: 'Cancelar'
+            cancel: 'Cancelar',
         },
         message: {
-            logout: '¿Quieres cerrar sesión?'
-        }
-    }
+            logout: '¿Quieres cerrar sesión?',
+        },
+    },
 };

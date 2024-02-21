@@ -55,8 +55,8 @@ export const uploadPhoto = async (id: number, file: File): Promise<string> => {
             formData,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                    'Content-Type': 'multipart/form-data',
+                },
             }
         );
 

@@ -13,8 +13,8 @@ const activitiesRoutes: RouteRecordRaw = {
             component: () =>
                 import('src/modules/activities/pages/ActivityPage.vue'),
             meta: {
-                toolbar: 'MainToolbar'
-            }
+                toolbar: 'MainToolbar',
+            },
         },
         {
             path: `/${ROUTE_NAME}/add`,
@@ -23,8 +23,8 @@ const activitiesRoutes: RouteRecordRaw = {
                 import('src/modules/activities/pages/ActivityFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'activity.label.createActivity'
-            }
+                title: 'activity.label.createActivity',
+            },
         },
         {
             path: `/${ROUTE_NAME}/:id`,
@@ -33,13 +33,13 @@ const activitiesRoutes: RouteRecordRaw = {
                 import('src/modules/activities/pages/ActivityFormPage.vue'),
             props: (route) => {
                 return {
-                    id: route.params.id
+                    id: route.params.id,
                 };
             },
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'activity.label.editActivity'
-            }
+                title: 'activity.label.editActivity',
+            },
         },
         {
             path: `/${ROUTE_NAME}/:id/students`,
@@ -49,14 +49,14 @@ const activitiesRoutes: RouteRecordRaw = {
                 import('src/modules/activities/pages/ActivityStudentsPage.vue'),
             props: (route) => {
                 return {
-                    id: route.params.id
+                    id: route.params.id,
                 };
             },
             meta: {
-                toolbar: 'MainToolbar'
-            }
-        }
-    ]
+                toolbar: 'MainToolbar',
+            },
+        },
+    ],
 };
 
 export default activitiesRoutes;

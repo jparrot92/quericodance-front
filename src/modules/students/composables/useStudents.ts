@@ -42,7 +42,7 @@ const useStudents = () => {
             email: '',
             password: '',
             active: false,
-            roles: []
+            roles: [],
         },
         monthlyPayment: 0,
         monthlyPaymentPaid: false,
@@ -78,7 +78,7 @@ const useStudents = () => {
             notifySuccess(t('user.notifications.userCreateSuccessfully'));
             router.replace({
                 name: 'students-edit',
-                params: { id: student.value.id }
+                params: { id: student.value.id },
             });
         } catch (error) {
             notifyError(error);
@@ -104,7 +104,7 @@ const useStudents = () => {
             title: t('user.label.confirmation'),
             message: t('user.message.userDelete'),
             cancel: true,
-            persistent: true
+            persistent: true,
         }).onOk(async () => {
             try {
                 await deleteStudent(id);
@@ -145,15 +145,17 @@ const useStudents = () => {
     const handleFileUpload = async (event: Event) => {
         const file = (event.target as HTMLInputElement).files?.[0];
 
-        if (file && (
-            file.type === 'application/vnd.ms-excel' ||
-            file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-            file.name.endsWith('.xls') ||
-            file.name.endsWith('.xlsx')
-        )) {
+        if (
+            file &&
+            (file.type === 'application/vnd.ms-excel' ||
+                file.type ===
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                file.name.endsWith('.xls') ||
+                file.name.endsWith('.xlsx'))
+        ) {
             try {
                 $q.loading.show({
-                    message: t('shared.label.loading')
+                    message: t('shared.label.loading'),
                 });
                 await uploadExcel(file);
                 notifySuccess('Excel importado');
@@ -178,7 +180,7 @@ const useStudents = () => {
         removeStudent,
         markPaymentPaid,
         cancelPaymentPaid,
-        handleFileUpload
+        handleFileUpload,
     };
 };
 

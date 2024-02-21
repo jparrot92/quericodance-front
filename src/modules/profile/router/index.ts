@@ -14,10 +14,10 @@ const profileRoutes: RouteRecordRaw = {
                 import('src/modules/profile/pages/ProfileFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'profile.label.profile'
-            }
-        }
-    ]
+                title: 'profile.label.profile',
+            },
+        },
+    ],
 };
 
 export default profileRoutes;

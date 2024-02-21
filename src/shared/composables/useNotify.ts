@@ -5,7 +5,7 @@ export default function useNotify() {
     const notifySuccess = (message: string) => {
         $q.notify({
             type: 'positive',
-            message: message || 'All right !'
+            message: message || 'All right !',
         });
     };
 
@@ -13,20 +13,20 @@ export default function useNotify() {
         if (typeof error === 'string') {
             $q.notify({
                 type: 'negative',
-                message: error || 'Failed !'
+                message: error || 'Failed !',
             });
         } else if (error && typeof error === 'object' && 'message' in error) {
             if (Array.isArray(error.message)) {
                 error.message.forEach((errorMessage) => {
                     $q.notify({
                         type: 'negative',
-                        message: String(errorMessage) || 'Failed !'
+                        message: String(errorMessage) || 'Failed !',
                     });
                 });
             } else {
                 $q.notify({
                     type: 'negative',
-                    message: String(error.message) || 'Failed !'
+                    message: String(error.message) || 'Failed !',
                 });
             }
         } else {
@@ -36,6 +36,6 @@ export default function useNotify() {
 
     return {
         notifySuccess,
-        notifyError
+        notifyError,
     };
 }

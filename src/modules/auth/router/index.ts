@@ -8,9 +8,9 @@ const authRoutes: RouteRecordRaw = {
         {
             path: '',
             name: 'login',
-            component: () => import('src/modules/auth/pages/LoginPage.vue')
-        }
-    ]
+            component: () => import('src/modules/auth/pages/LoginPage.vue'),
+        },
+    ],
 };
 
 export default authRoutes;
