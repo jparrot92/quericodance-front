@@ -17,7 +17,8 @@ export default {
             addStudent: 'Añadir estudiante',
             add: 'Añadir',
             cancel: 'Cancelar',
-            changePrice: 'Modificar precio'
+            changePrice: 'Modificar precio',
+            datePayment: 'Fecha de pago'
         },
         message: {
             addCourse:

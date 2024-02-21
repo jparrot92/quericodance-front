@@ -22,6 +22,7 @@ export default {
             selectProfilePhoto: 'Seleccionar foto de perfil',
             selectPhoto: 'Seleccionar foto',
             deleteCurrentPhoto: 'Eliminar foto actual',
+            importExcel: 'Importar Excel',
             cancel: 'Cancelar'
         },
         message: {

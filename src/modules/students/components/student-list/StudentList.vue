@@ -24,6 +24,7 @@ const $q = useQuasar();
 const { t } = useI18n();
 
 const fileInput = ref<HTMLInputElement | null>(null);
+const filter = ref('')
 
 onMounted(() => {
     loadStudents();
@@ -137,6 +138,7 @@ const chooseFile = () => {
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
+            :filter="filter"
             :no-data-label="$t('shared.label.noData')"
             :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
@@ -147,9 +149,9 @@ const chooseFile = () => {
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    label="Importar excel"
-                    color="primary"
-                    icon="mdi-plus"
+                    :label="$t('shared.label.importExcel')"
+                    color="green"
+                    icon="file_present"
                     dense
                     @click="chooseFile"
                 />
@@ -162,6 +164,7 @@ const chooseFile = () => {
                 />
                 <q-btn
                     v-if="$q.platform.is.desktop"
+                    class="q-ml-sm"
                     :label="$t('student.label.createStudent')"
                     color="primary"
                     icon="mdi-plus"
