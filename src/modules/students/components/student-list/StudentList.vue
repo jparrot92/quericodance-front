@@ -24,10 +24,18 @@ const $q = useQuasar();
 const { t } = useI18n();
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const filter = ref('')
+const search = ref<string>('')
+const filteredStudents = ref<Student[]>();
 
-onMounted(() => {
-    loadStudents();
+const filterTable = () => {
+    filteredStudents.value = students.value.filter(student => {
+        return (student.user.name.toLowerCase().includes(search.value.toLowerCase()) || student.user.surnames.toLowerCase().includes(search.value.toLowerCase()) || student.user.email.toLowerCase().includes(search.value.toLowerCase()));
+    });
+};
+
+onMounted(async() =>  {
+    await loadStudents();
+    filteredStudents.value = students.value
 });
 
 export interface ColumnTable {
@@ -133,12 +141,11 @@ const chooseFile = () => {
 <template>
     <div class="row">
         <q-table
-            :rows="students"
+            :rows="filteredStudents"
             :columns="columnsUser"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
-            :filter="filter"
             :no-data-label="$t('shared.label.noData')"
             :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
@@ -174,6 +181,14 @@ const chooseFile = () => {
                             name: 'students-add'
                         })
                     "
+                />
+                <q-input
+                    v-model="search"
+                    dense
+                    filled
+                    placeholder="Search..."
+                    class="q-ml-sm"
+                    @update:model-value="filterTable"
                 />
             </template>
             <template v-slot:body-cell-photo="props">
