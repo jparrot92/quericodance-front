@@ -109,33 +109,44 @@ const deleteActivityStudent = async (idActivityStudent: number) => {
                 </span>
                 <q-space />
 
-                <!-- Disponible mas adelante
-                <q-btn
+                <!-- <q-btn
                     v-if="$q.platform.is.desktop"
                     :label="$t('student.label.addStudent')"
                     color="primary"
                     icon="mdi-plus"
                     dense
-                    @click="
-                        $router.push({
-                            name: 'activities-add'
-                        })
-                    "
-                />
-                -->
-                <div style="width: 100%" class="q-pa-md q-gutter-md">
-                    <q-chip color="blue" text-color="white">
-                        {{ $t('activity.label.numberLeaders') }} :
-                        {{ activity.numberLeaders }}
-                    </q-chip>
-                    <q-chip color="pink" text-color="white">
-                        {{ $t('activity.label.numberFollowers') }} :
-                        {{ activity.numberFollowers }}
-                    </q-chip>
-                    <q-chip color="green" text-color="white">
-                        {{ $t('activity.label.costEffectiveness') }} :
-                        {{ activity.costEffectiveness + ' €' }}
-                    </q-chip>
+                    @click="showModalAddActivity = true"
+                /> -->
+
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">
+                            <q-chip color="blue" text-color="white">
+                                {{ $t('activity.label.numberLeaders') }} :
+                                {{ activity.numberLeaders }}
+                            </q-chip>
+                        </div>
+                        <div class="col-4">
+                            <q-chip
+                                class="col-4"
+                                color="pink"
+                                text-color="white"
+                            >
+                                {{ $t('activity.label.numberFollowers') }} :
+                                {{ activity.numberFollowers }}
+                            </q-chip>
+                        </div>
+                        <div class="col-4">
+                            <q-chip
+                                class="col-4"
+                                color="green"
+                                text-color="white"
+                            >
+                                {{ $t('activity.label.costEffectiveness') }} :
+                                {{ activity.costEffectiveness + ' €' }}
+                            </q-chip>
+                        </div>
+                    </div>
                 </div>
             </template>
             <template v-slot:body-cell-photo="props">

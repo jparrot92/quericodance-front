@@ -34,8 +34,6 @@ const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const filteredStudents = ref<Student[]>();
 
 const filterTable = (studentFilter: StudentFilter) => {
-    console.log(studentFilter.paymentStatus);
-
     filteredStudents.value = students.value
         .filter((student: Student) => {
             return (
