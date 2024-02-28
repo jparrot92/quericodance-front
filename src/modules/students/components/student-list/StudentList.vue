@@ -3,12 +3,18 @@ import { ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
+import { Option, PaymentsStatus } from 'src/types/UtilTypes';
+
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import { Student } from '../../models/student';
+import { Student, StudentFilter } from '../../models/student';
 
+import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import useStudents from '../../composables/useStudents';
 
+import StudentListFilter from '../../components/student-list-filter/StudentListFilter.vue';
+
+const { generateEnumOptions } = useEnumOptions();
 const {
     loading,
     students,
@@ -24,23 +30,35 @@ const $q = useQuasar();
 const { t } = useI18n();
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const search = ref<string>('');
+const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const filteredStudents = ref<Student[]>();
 
-const filterTable = () => {
-    filteredStudents.value = students.value.filter((student) => {
-        return (
-            student.user.name
-                .toLowerCase()
-                .includes(search.value.toLowerCase()) ||
-            student.user.surnames
-                .toLowerCase()
-                .includes(search.value.toLowerCase()) ||
-            student.user.email
-                .toLowerCase()
-                .includes(search.value.toLowerCase())
-        );
-    });
+const filterTable = (studentFilter: StudentFilter) => {
+    console.log(studentFilter.paymentStatus);
+
+    filteredStudents.value = students.value
+        .filter((student: Student) => {
+            return (
+                student.user.name
+                    .toLowerCase()
+                    .includes(studentFilter.textFilter.toLowerCase()) ||
+                student.user.surnames
+                    .toLowerCase()
+                    .includes(studentFilter.textFilter.toLowerCase()) ||
+                student.user.email
+                    .toLowerCase()
+                    .includes(studentFilter.textFilter.toLowerCase())
+            );
+        })
+        .filter((student: Student) => {
+            if (studentFilter.paymentStatus === null) {
+                return true;
+            } else {
+                return (
+                    student.paymentStatus === studentFilter.paymentStatus.value
+                );
+            }
+        });
 };
 
 onMounted(async () => {
@@ -89,7 +107,7 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'active',
         align: 'left',
-        label: t('student.label.active'),
+        label: t('student.label.state'),
         field: (row: Student) => row.user.active,
         sortable: true,
     },
@@ -102,10 +120,10 @@ const columnsUser: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'monthlyPaymentPaid',
+        name: 'paymentStatus',
         align: 'left',
-        label: t('student.label.monthlyPaymentPaid'),
-        field: (row: Student) => row.monthlyPaymentPaid,
+        label: t('student.label.paymentStatus'),
+        field: (row: Student) => row.paymentStatus,
         sortable: true,
     },
     {
@@ -126,17 +144,16 @@ const columnsUser: ColumnTable[] = [
 
 const checkMonthlyPaymentPaid = async (
     student: Student,
-    monthlyPaymentPaid: boolean
+    paymentStatus: Option
 ) => {
     try {
-        if (monthlyPaymentPaid) {
+        if (paymentStatus.value === PaymentsStatus.PAYED) {
             await markPaymentPaid(student.id);
         } else {
             await cancelPaymentPaid(student.id);
         }
     } catch (error) {
-        student.monthlyPaymentPaid = !monthlyPaymentPaid;
-        console.error(error);
+        student.paymentStatus = PaymentsStatus.PENDING;
     }
 };
 
@@ -192,14 +209,7 @@ const chooseFile = () => {
                     "
                 />
 
-                <div class="col-12">
-                    <q-input
-                        v-model="search"
-                        dense
-                        placeholder="Search..."
-                        @update:model-value="filterTable"
-                    />
-                </div>
+                <StudentListFilter @filter-table="filterTable" />
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
@@ -214,31 +224,70 @@ const chooseFile = () => {
                     />
                 </q-td>
             </template>
+            <template v-slot:body-cell-active="props">
+                <q-td :props="props">
+                    <q-badge
+                        :color="props.row.active ? 'green' : 'red'"
+                        :label="
+                            props.row.active
+                                ? $t('student.label.active')
+                                : $t('student.label.inactivo')
+                        "
+                    />
+                </q-td>
+            </template>
             <template v-slot:body-cell-monthlyPayment="props">
                 <q-td :props="props">
                     <q-badge
-                        :color="props.row.monthlyPaymentPaid ? 'green' : 'red'"
+                        :color="
+                            props.row.paymentStatus === PaymentsStatus.PAYED ||
+                            (props.row.paymentStatus.value &&
+                                props.row.paymentStatus.value ===
+                                    PaymentsStatus.PAYED)
+                                ? 'green'
+                                : 'red'
+                        "
                         :label="props.value"
                     />
                 </q-td>
             </template>
-            <template v-slot:body-cell-monthlyPaymentPaid="props">
+            <template v-slot:body-cell-datePayment="props">
                 <q-td :props="props">
-                    <q-toggle
-                        :label="
-                            props.row.monthlyPaymentPaid
-                                ? $t('student.label.paid')
-                                : $t('student.label.unpaid')
+                    {{
+                        props.row.paymentStatus === PaymentsStatus.PAYED ||
+                        (props.row.paymentStatus.value &&
+                            props.row.paymentStatus.value ===
+                                PaymentsStatus.PAYED)
+                            ? props.row.datePayment
+                            : '-'
+                    }}
+                </q-td>
+            </template>
+            <template v-slot:body-cell-paymentStatus="props">
+                <q-td :props="props">
+                    <q-select
+                        :bg-color="
+                            props.row.paymentStatus === PaymentsStatus.PAYED ||
+                            (props.row.paymentStatus.value &&
+                                props.row.paymentStatus.value ===
+                                    PaymentsStatus.PAYED)
+                                ? 'green'
+                                : 'red'
                         "
-                        color="green"
-                        v-model="props.row.monthlyPaymentPaid"
-                        @click="
+                        v-model="props.row.paymentStatus"
+                        dense
+                        :options="paymentStatuses"
+                        @update:model-value="
                             checkMonthlyPaymentPaid(
                                 props.row,
-                                props.row.monthlyPaymentPaid
+                                props.row.paymentStatus
                             )
                         "
-                    />
+                    >
+                        <template v-slot:selected-item="{ opt }">
+                            {{ t('shared.enum.' + (opt.value || opt)) }}
+                        </template>
+                    </q-select>
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">

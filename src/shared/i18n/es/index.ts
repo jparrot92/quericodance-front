@@ -1,5 +1,9 @@
 export default {
     shared: {
+        enum: {
+            payed: 'Pagado',
+            pending: 'Pendiente',
+        },
         label: {
             profile: 'Perfil',
             logout: 'Cerrar sesión',

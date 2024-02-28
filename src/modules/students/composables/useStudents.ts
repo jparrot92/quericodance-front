@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
+import { PaymentsStatus } from 'src/types/UtilTypes';
 
 import useNotify from 'src/shared/composables/useNotify';
 
@@ -45,7 +46,7 @@ const useStudents = () => {
             roles: [],
         },
         monthlyPayment: 0,
-        monthlyPaymentPaid: false,
+        paymentStatus: PaymentsStatus.PENDING,
     });
 
     const loadStudents = async () => {
