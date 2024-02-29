@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, defineProps } from 'vue';
+import { watch, defineProps, onMounted } from 'vue';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 import DateSelector from 'src/shared/components/DateSelector.vue';
@@ -18,6 +18,12 @@ const props = defineProps<Props>();
 const selectedStudent = newStudent;
 
 watch(props, () => {
+    if (props.student !== undefined) {
+        selectedStudent.value = props.student;
+    }
+});
+
+onMounted(() => {
     if (props.student !== undefined) {
         selectedStudent.value = props.student;
     }
