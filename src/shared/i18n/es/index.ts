@@ -28,9 +28,13 @@ export default {
             deleteCurrentPhoto: 'Eliminar foto actual',
             importExcel: 'Importar Excel',
             cancel: 'Cancelar',
+            resetPayments: 'Reiniciar cobros',
         },
         message: {
             logout: '¿Quieres cerrar sesión?',
+        },
+        notifications: {
+            resetPayments: 'Cobros reiniciados con éxito',
         },
     },
 };

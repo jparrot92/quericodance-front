@@ -14,6 +14,7 @@ import {
     deleteStudent,
     markPayment,
     cancelPayment,
+    resetPaymentsStatus,
     uploadExcel,
 } from 'src/api/studentsApi';
 
@@ -143,6 +144,24 @@ const useStudents = () => {
         });
     };
 
+    const resetPayments = async () => {
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                $q.loading.show({
+                    message: t('shared.label.loading'),
+                });
+                await resetPaymentsStatus();
+                notifySuccess(t('shared.notifications.resetPayments'));
+                resolve();
+            } catch (error) {
+                notifyError(error);
+                reject(error);
+            } finally {
+                $q.loading.hide();
+            }
+        });
+    };
+
     const handleFileUpload = async (event: Event) => {
         const file = (event.target as HTMLInputElement).files?.[0];
 
@@ -181,6 +200,7 @@ const useStudents = () => {
         removeStudent,
         markPaymentPaid,
         cancelPaymentPaid,
+        resetPayments,
         handleFileUpload,
     };
 };

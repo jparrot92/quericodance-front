@@ -22,6 +22,7 @@ const {
     removeStudent,
     markPaymentPaid,
     cancelPaymentPaid,
+    resetPayments,
     handleFileUpload,
 } = useStudents();
 
@@ -155,6 +156,16 @@ const checkMonthlyPaymentPaid = async (
     }
 };
 
+const handleResetPayments = async () => {
+    try {
+        await resetPayments();
+        await loadStudents();
+        filteredStudents.value = students.value;
+    } catch (error) {
+        student.paymentStatus = PaymentsStatus.PENDING;
+    }
+};
+
 const chooseFile = () => {
     if (fileInput.value) {
         fileInput.value.click();
@@ -180,6 +191,16 @@ const chooseFile = () => {
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
+                    class="q-ml-sm"
+                    :label="$t('shared.label.resetPayments')"
+                    color="green"
+                    icon="mdi-restart"
+                    dense
+                    @click="handleResetPayments"
+                />
+                <q-btn
+                    v-if="$q.platform.is.desktop"
+                    class="q-ml-sm"
                     :label="$t('shared.label.importExcel')"
                     color="green"
                     icon="file_present"
