@@ -21,7 +21,6 @@ export default {
             datePayment: 'Fecha de pago',
             active: 'Activo',
             inactivo: 'Inactivo',
-            search: 'Buscar',
             serachPlaceholder:
                 'Introduzca el nombre/apellido o correo electrónico del alumno',
         },

@@ -27,6 +27,7 @@ export default {
             edit: 'Editar',
             delete: 'Borrar',
             confirmation: 'Confirmación',
+            serachPlaceholder: 'Introduzca el nombre y/o nivel del curso',
         },
         validation: {
             nameRequired: 'El nombre es requerido',

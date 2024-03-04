@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
+import { ColumnTable } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
+import { Activity, ActivityFilter } from '../../models/activity';
 import useActivities from '../../composables/useActivities';
+import ActivityListFilter from '../../components/activity-list-filter/ActivityListFilter.vue';
 
 const { loading, activities, loadActivities, removeActivity } = useActivities();
 
@@ -13,21 +16,24 @@ const $q = useQuasar();
 
 const { t } = useI18n();
 
-onMounted(() => {
-    loadActivities();
+const activitiesFilter = ref<Activity[]>();
+
+const filterTable = (activityFilter: ActivityFilter) => {
+    activitiesFilter.value = activities.value.filter((activity: Activity) => {
+        const activityFullName = activity.name.toLowerCase() + activity.level;
+
+        return activityFullName.includes(
+            activityFilter.textFilter.replace(/\s/g, '').toLowerCase()
+        );
+    });
+};
+
+onMounted(async () => {
+    await loadActivities();
+    activitiesFilter.value = activities.value;
 });
 
-export interface ColumnTable {
-    name: string;
-    label: string;
-    field: string | ((row: any) => string);
-    align?: 'left' | 'right' | 'center';
-    format?: any;
-    sortable?: boolean;
-    headerStyle?: string;
-}
-
-const columnsUser: ColumnTable[] = [
+const columns: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
@@ -36,17 +42,17 @@ const columnsUser: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'day',
-        align: 'left',
-        label: t('activity.label.day'),
-        field: (row) => t('shared.label.' + row.day),
-        sortable: true,
-    },
-    {
         name: 'level',
         align: 'left',
         label: t('activity.label.level'),
         field: 'level',
+        sortable: true,
+    },
+    {
+        name: 'day',
+        align: 'left',
+        label: t('activity.label.day'),
+        field: (row) => t('shared.label.' + row.day),
         sortable: true,
     },
     {
@@ -118,8 +124,8 @@ const columnsUser: ColumnTable[] = [
 <template>
     <div class="row">
         <q-table
-            :rows="activities"
-            :columns="columnsUser"
+            :rows="activitiesFilter"
+            :columns="columns"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
@@ -143,6 +149,7 @@ const columnsUser: ColumnTable[] = [
                         })
                     "
                 />
+                <ActivityListFilter @filter-table="filterTable" />
             </template>
             <template v-slot:body-cell-numberLeaders="props">
                 <q-td :props="props">

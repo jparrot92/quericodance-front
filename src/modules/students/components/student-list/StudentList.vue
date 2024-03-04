@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { Option, PaymentsStatus } from 'src/types/UtilTypes';
+import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
@@ -32,10 +32,10 @@ const { t } = useI18n();
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
-const filteredStudents = ref<Student[]>();
+const studentsFilter = ref<Student[]>();
 
 const filterTable = (studentFilter: StudentFilter) => {
-    filteredStudents.value = students.value
+    studentsFilter.value = students.value
         .filter((student: Student) => {
             return (
                 student.user.name
@@ -62,17 +62,8 @@ const filterTable = (studentFilter: StudentFilter) => {
 
 onMounted(async () => {
     await loadStudents();
-    filteredStudents.value = students.value;
+    studentsFilter.value = students.value;
 });
-
-export interface ColumnTable {
-    name: string;
-    label: string;
-    field: string | ((row: Student) => string | number | boolean);
-    align?: 'left' | 'right' | 'center';
-    format?: (val: number) => string;
-    sortable?: boolean;
-}
 
 const columnsUser: ColumnTable[] = [
     {
@@ -160,9 +151,9 @@ const handleResetPayments = async () => {
     try {
         await resetPayments();
         await loadStudents();
-        filteredStudents.value = students.value;
+        studentsFilter.value = students.value;
     } catch (error) {
-        student.paymentStatus = PaymentsStatus.PENDING;
+        console.error(error);
     }
 };
 
@@ -176,7 +167,7 @@ const chooseFile = () => {
 <template>
     <div class="row">
         <q-table
-            :rows="filteredStudents"
+            :rows="studentsFilter"
             :columns="columnsUser"
             row-key="id"
             class="col-12 my-sticky-last-column-table"

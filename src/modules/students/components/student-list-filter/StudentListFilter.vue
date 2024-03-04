@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 import { PaymentsStatus } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import { StudentFilter } from '../../models/student';
 
-const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
 
 interface Emits {
@@ -36,7 +34,7 @@ const initPayment = () => {
                 class="col-6"
                 v-model="studentFilter.textFilter"
                 dense
-                :label="$t('student.label.search')"
+                :label="$t('shared.label.search')"
                 :placeholder="$t('student.label.serachPlaceholder')"
                 @update:model-value="emits('filterTable', studentFilter)"
             />

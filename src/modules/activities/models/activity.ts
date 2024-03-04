@@ -19,3 +19,7 @@ export interface Activity {
     numberFollowers?: string;
     costEffectiveness?: string;
 }
+
+export interface ActivityFilter {
+    textFilter: string;
+}

@@ -29,6 +29,7 @@ export default {
             importExcel: 'Importar Excel',
             cancel: 'Cancelar',
             resetPayments: 'Reiniciar cobros',
+            search: 'Buscar',
         },
         message: {
             logout: '¿Quieres cerrar sesión?',

@@ -1,3 +1,15 @@
+export interface ColumnTable {
+    name: string;
+    label: string;
+    field:
+        | string
+        | ((row: any) => string | number | boolean | Date | undefined);
+    align?: 'left' | 'right' | 'center';
+    format?: (val: number) => string;
+    sortable?: boolean;
+    headerStyle?: string;
+}
+
 export interface Option {
     label: string;
     value: string;
