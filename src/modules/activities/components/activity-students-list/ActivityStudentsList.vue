@@ -3,29 +3,32 @@ import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
+import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
+
+import useEnumOptions from 'src/shared/composables/useEnumOptions';
+import MenuList from 'src/shared/components/MenuList.vue';
+
+import useStudents from 'src/modules/students/composables/useStudents';
+import { Student } from 'src/modules/students/models/student';
+
 import useActivities from '../../composables/useActivities';
 import { ActivityStudent } from '../../models/activityStudent';
 
-import MenuList from 'src/shared/components/MenuList.vue';
-
 const { t } = useI18n();
 const route = useRoute();
+
+const { generateEnumOptions } = useEnumOptions();
+const { markPaymentPaid, cancelPaymentPaid } = useStudents();
 
 const { loading, activity, loadStudentsActivity, removeActivityStudent } =
     useActivities();
 const { id } = route.params as { id: string };
 
+const paymentStatuses = generateEnumOptions(PaymentsStatus);
+
 onMounted(() => {
     loadStudentsActivity(+id);
 });
-
-export interface ColumnTable {
-    name: string;
-    label: string;
-    field: string | ((row: ActivityStudent) => string | undefined);
-    align?: 'left' | 'right' | 'center';
-    sortable?: boolean;
-}
 
 const columnTable: ColumnTable[] = [
     {
@@ -68,6 +71,29 @@ const columnTable: ColumnTable[] = [
         align: 'left',
         label: t('activity.label.price'),
         field: (row: ActivityStudent) => row.price || undefined,
+        format: (val: number) => `${val} €`,
+        sortable: true,
+    },
+    {
+        name: 'monthlyPayment',
+        align: 'left',
+        label: t('student.label.monthlyPayment'),
+        field: (row: ActivityStudent) => row.student?.monthlyPayment,
+        format: (val: number) => `${val} €`,
+        sortable: true,
+    },
+    {
+        name: 'paymentStatus',
+        align: 'left',
+        label: t('student.label.paymentStatus'),
+        field: (row: ActivityStudent) => row.student?.paymentStatus,
+        sortable: true,
+    },
+    {
+        name: 'datePayment',
+        align: 'left',
+        label: t('student.label.datePayment'),
+        field: (row: ActivityStudent) => row.student?.datePayment,
         sortable: true,
     },
     {
@@ -85,6 +111,21 @@ const deleteActivityStudent = async (idActivityStudent: number) => {
         loadStudentsActivity(+id);
     } catch (error) {
         console.error(error);
+    }
+};
+
+const checkMonthlyPaymentPaid = async (
+    student: Student,
+    paymentStatus: Option
+) => {
+    try {
+        if (paymentStatus.value === PaymentsStatus.PAYED) {
+            await markPaymentPaid(student.id);
+        } else {
+            await cancelPaymentPaid(student.id);
+        }
+    } catch (error) {
+        student.paymentStatus = PaymentsStatus.PENDING;
     }
 };
 </script>
@@ -160,6 +201,63 @@ const deleteActivityStudent = async (idActivityStudent: number) => {
                         text-color="white"
                         icon="mdi-image-off"
                     />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-monthlyPayment="props">
+                <q-td :props="props">
+                    <q-badge
+                        :color="
+                            props.row.student.paymentStatus ===
+                                PaymentsStatus.PAYED ||
+                            (props.row.student.paymentStatus.value &&
+                                props.row.student.paymentStatus.value ===
+                                    PaymentsStatus.PAYED)
+                                ? 'green'
+                                : 'red'
+                        "
+                        :label="props.value"
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-paymentStatus="props">
+                <q-td :props="props">
+                    <q-select
+                        :bg-color="
+                            props.row.student.paymentStatus ===
+                                PaymentsStatus.PAYED ||
+                            (props.row.student.paymentStatus.value &&
+                                props.row.student.paymentStatus.value ===
+                                    PaymentsStatus.PAYED)
+                                ? 'green'
+                                : 'red'
+                        "
+                        v-model="props.row.student.paymentStatus"
+                        dense
+                        :options="paymentStatuses"
+                        @update:model-value="
+                            checkMonthlyPaymentPaid(
+                                props.row.student,
+                                props.row.student.paymentStatus
+                            )
+                        "
+                    >
+                        <template v-slot:selected-item="{ opt }">
+                            {{ t('shared.enum.' + (opt.value || opt)) }}
+                        </template>
+                    </q-select>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-datePayment="props">
+                <q-td :props="props">
+                    {{
+                        props.row.student.paymentStatus ===
+                            PaymentsStatus.PAYED ||
+                        (props.row.student.paymentStatus.value &&
+                            props.row.student.paymentStatus.value ===
+                                PaymentsStatus.PAYED)
+                            ? props.row.student.datePayment
+                            : '-'
+                    }}
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">

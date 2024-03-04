@@ -5,11 +5,11 @@ import { useI18n } from 'vue-i18n';
 
 import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
 
+import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import MenuList from 'src/shared/components/MenuList.vue';
 
 import { Student, StudentFilter } from '../../models/student';
 
-import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import useStudents from '../../composables/useStudents';
 
 import StudentListFilter from '../../components/student-list-filter/StudentListFilter.vue';
