@@ -37,16 +37,13 @@ const studentsFilter = ref<Student[]>();
 const filterTable = (studentFilter: StudentFilter) => {
     studentsFilter.value = students.value
         .filter((student: Student) => {
-            return (
-                student.user.name
-                    .toLowerCase()
-                    .includes(studentFilter.textFilter.toLowerCase()) ||
-                student.user.surnames
-                    .toLowerCase()
-                    .includes(studentFilter.textFilter.toLowerCase()) ||
-                student.user.email
-                    .toLowerCase()
-                    .includes(studentFilter.textFilter.toLowerCase())
+            const studentFullName =
+                student.user.name.toLowerCase() +
+                student.user.surnames.toLowerCase() +
+                student.user.email.toLowerCase();
+
+            return studentFullName.includes(
+                studentFilter.textFilter.replace(/\s/g, '').toLowerCase()
             );
         })
         .filter((student: Student) => {
