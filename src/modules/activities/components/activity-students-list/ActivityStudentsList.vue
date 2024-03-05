@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
@@ -9,10 +9,12 @@ import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import MenuList from 'src/shared/components/MenuList.vue';
 
 import useStudents from 'src/modules/students/composables/useStudents';
-import { Student } from 'src/modules/students/models/student';
+import { Student, StudentFilter } from 'src/modules/students/models/student';
 
 import useActivities from '../../composables/useActivities';
 import { ActivityStudent } from '../../models/activityStudent';
+
+import ActivityStudentsListFilter from '../activity-students-list-filter/ActivityStudentsListFilter.vue';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -25,9 +27,39 @@ const { loading, activity, loadStudentsActivity, removeActivityStudent } =
 const { id } = route.params as { id: string };
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
+const activityStudentFilter = ref<ActivityStudent[]>();
 
-onMounted(() => {
-    loadStudentsActivity(+id);
+const filterTable = (studentFilter: StudentFilter) => {
+    if (activity?.value?.activitiesStudent) {
+        activityStudentFilter.value = activity.value.activitiesStudent
+            .filter((activityStudent: ActivityStudent) => {
+                const studentFullName =
+                    (activityStudent.student?.user.name ?? '').toLowerCase() +
+                    (
+                        activityStudent.student?.user.surnames ?? ''
+                    ).toLowerCase() +
+                    (activityStudent.student?.user.email ?? '').toLowerCase();
+
+                return studentFullName.includes(
+                    studentFilter.textFilter.replace(/\s/g, '').toLowerCase()
+                );
+            })
+            .filter((activityStudent: ActivityStudent) => {
+                if (studentFilter.paymentStatus === null) {
+                    return true;
+                } else {
+                    return (
+                        activityStudent.student?.paymentStatus ===
+                        studentFilter.paymentStatus.value
+                    );
+                }
+            });
+    }
+};
+
+onMounted(async () => {
+    await loadStudentsActivity(+id);
+    activityStudentFilter.value = activity.value.activitiesStudent;
 });
 
 const columnTable: ColumnTable[] = [
@@ -133,7 +165,7 @@ const checkMonthlyPaymentPaid = async (
 <template>
     <div class="row">
         <q-table
-            :rows="activity.activitiesStudent"
+            :rows="activityStudentFilter"
             :columns="columnTable"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
@@ -189,6 +221,7 @@ const checkMonthlyPaymentPaid = async (
                         </div>
                     </div>
                 </div>
+                <ActivityStudentsListFilter @filter-table="filterTable" />
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
