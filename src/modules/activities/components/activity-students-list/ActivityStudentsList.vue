@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
@@ -28,6 +28,7 @@ const { id } = route.params as { id: string };
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const activityStudentFilter = ref<ActivityStudent[]>();
+const showProfitability = ref(false);
 
 const filterTable = (studentFilter: StudentFilter) => {
     if (activity?.value?.activitiesStudent) {
@@ -70,12 +71,23 @@ const filterTable = (studentFilter: StudentFilter) => {
     }
 };
 
+const filteredColumns = computed(() => {
+    if (showProfitability.value) {
+        return columns;
+    } else {
+        return columns.filter(
+            (column) =>
+                column.name !== 'price' && column.name !== 'monthlyPayment'
+        );
+    }
+});
+
 onMounted(async () => {
     await loadStudentsActivity(+id);
     activityStudentFilter.value = activity.value.activitiesStudent;
 });
 
-const columnTable: ColumnTable[] = [
+const columns: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
@@ -179,7 +191,7 @@ const checkMonthlyPaymentPaid = async (
     <div class="row">
         <q-table
             :rows="activityStudentFilter"
-            :columns="columnTable"
+            :columns="filteredColumns"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
@@ -194,6 +206,10 @@ const checkMonthlyPaymentPaid = async (
                     {{ activity.startHour }}
                 </span>
                 <q-space />
+                <q-toggle
+                    :label="$t('activity.label.showProfitability')"
+                    v-model="showProfitability"
+                ></q-toggle>
 
                 <!-- <q-btn
                     v-if="$q.platform.is.desktop"
@@ -222,7 +238,7 @@ const checkMonthlyPaymentPaid = async (
                                 {{ activity.numberFollowers }}
                             </q-chip>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4" v-if="showProfitability">
                             <q-chip
                                 class="col-4"
                                 color="green"

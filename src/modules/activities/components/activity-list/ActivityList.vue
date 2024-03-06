@@ -147,11 +147,12 @@ const columns: ColumnTable[] = [
                 </span>
                 <q-space />
                 <q-toggle
-                    v-model="showProfitability"
                     :label="$t('activity.label.showProfitability')"
+                    v-model="showProfitability"
                 ></q-toggle>
                 <q-btn
                     v-if="$q.platform.is.desktop"
+                    class="q-ml-sm"
                     :label="$t('activity.label.createActivity')"
                     color="primary"
                     icon="mdi-plus"
