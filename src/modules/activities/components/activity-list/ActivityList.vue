@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
@@ -17,6 +17,7 @@ const $q = useQuasar();
 const { t } = useI18n();
 
 const activitiesFilter = ref<Activity[]>();
+const showProfitability = ref(false);
 
 const filterTable = (activityFilter: ActivityFilter) => {
     activitiesFilter.value = activities.value.filter((activity: Activity) => {
@@ -27,6 +28,14 @@ const filterTable = (activityFilter: ActivityFilter) => {
         );
     });
 };
+
+const filteredColumns = computed(() => {
+    if (showProfitability.value) {
+        return columns;
+    } else {
+        return columns.filter((column) => column.name !== 'costEffectiveness');
+    }
+});
 
 onMounted(async () => {
     await loadActivities();
@@ -125,7 +134,7 @@ const columns: ColumnTable[] = [
     <div class="row">
         <q-table
             :rows="activitiesFilter"
-            :columns="columns"
+            :columns="filteredColumns"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
@@ -137,6 +146,10 @@ const columns: ColumnTable[] = [
                     {{ $t('activity.label.activities') }}
                 </span>
                 <q-space />
+                <q-toggle
+                    v-model="showProfitability"
+                    :label="$t('activity.label.showProfitability')"
+                ></q-toggle>
                 <q-btn
                     v-if="$q.platform.is.desktop"
                     :label="$t('activity.label.createActivity')"

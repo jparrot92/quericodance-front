@@ -28,6 +28,7 @@ export default {
             delete: 'Borrar',
             confirmation: 'Confirmación',
             serachPlaceholder: 'Introduzca el nombre y/o nivel del curso',
+            showProfitability: 'Mostrar Rentabilidad',
         },
         validation: {
             nameRequired: 'El nombre es requerido',

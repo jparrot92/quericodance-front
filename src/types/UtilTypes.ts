@@ -3,6 +3,7 @@ export interface ColumnTable {
     label: string;
     field:
         | string
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         | ((row: any) => string | number | boolean | Date | undefined);
     align?: 'left' | 'right' | 'center';
     format?: (val: number) => string;
