@@ -53,6 +53,19 @@ const filterTable = (studentFilter: StudentFilter) => {
                         studentFilter.paymentStatus.value
                     );
                 }
+            })
+            .filter((activityStudent: ActivityStudent) => {
+                if (
+                    studentFilter.danceRole === null ||
+                    studentFilter.danceRole === undefined
+                ) {
+                    return true;
+                } else {
+                    return (
+                        activityStudent.danceRole ===
+                        studentFilter.danceRole.value
+                    );
+                }
             });
     }
 };

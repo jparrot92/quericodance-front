@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { PaymentsStatus } from 'src/types/UtilTypes';
+import { PaymentsStatus, DanceRole } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import { StudentFilter } from 'src/modules/students/models/student';
@@ -20,9 +20,15 @@ const studentFilter = ref<StudentFilter>({
 });
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
+const danceRoles = generateEnumOptions(DanceRole);
 
 const initPayment = () => {
     studentFilter.value.paymentStatus = null;
+    emits('filterTable', studentFilter.value);
+};
+
+const initDanceRole = () => {
+    studentFilter.value.danceRole = null;
     emits('filterTable', studentFilter.value);
 };
 </script>
@@ -52,6 +58,23 @@ const initPayment = () => {
                         class="cursor-pointer"
                         name="clear"
                         @click.stop.prevent="initPayment"
+                    />
+                </template>
+            </q-select>
+            <q-select
+                class="q-ml-sm col-2"
+                dense
+                v-model="studentFilter.danceRole"
+                :options="danceRoles"
+                :label="$t('student.label.role')"
+                @update:model-value="emits('filterTable', studentFilter)"
+            >
+                <template v-slot:append>
+                    <q-icon
+                        v-if="studentFilter.danceRole !== null"
+                        class="cursor-pointer"
+                        name="clear"
+                        @click.stop.prevent="initDanceRole"
                     />
                 </template>
             </q-select>

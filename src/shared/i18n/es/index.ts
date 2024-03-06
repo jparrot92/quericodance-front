@@ -3,6 +3,8 @@ export default {
         enum: {
             payed: 'Pagado',
             pending: 'Pendiente',
+            leader: 'Líder',
+            follower: 'Follower',
         },
         label: {
             profile: 'Perfil',

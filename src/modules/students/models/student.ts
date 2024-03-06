@@ -14,4 +14,5 @@ export interface Student {
 export interface StudentFilter {
     textFilter: string;
     paymentStatus: Option | null;
+    danceRole?: Option | null;
 }
