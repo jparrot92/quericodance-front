@@ -18,6 +18,15 @@ export interface Activity {
     numberLeaders?: string;
     numberFollowers?: string;
     costEffectiveness?: string;
+    totalPaid?: string;
+}
+
+export interface ActivityCounters {
+    numberStudents: string;
+    numberLeaders: string;
+    numberFollowers: string;
+    totalPaid: string;
+    costEffectiveness: string;
 }
 
 export interface ActivityFilter {

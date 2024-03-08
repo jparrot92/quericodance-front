@@ -22,8 +22,14 @@ const route = useRoute();
 const { generateEnumOptions } = useEnumOptions();
 const { markPaymentPaid, cancelPaymentPaid } = useStudents();
 
-const { loading, activity, loadStudentsActivity, removeActivityStudent } =
-    useActivities();
+const {
+    loading,
+    activity,
+    activityCounters,
+    loadStudentsActivity,
+    loadCountersActivity,
+    removeActivityStudent,
+} = useActivities();
 const { id } = route.params as { id: string };
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
@@ -83,6 +89,7 @@ const filteredColumns = computed(() => {
 });
 
 onMounted(async () => {
+    await loadCountersActivity(+id);
     await loadStudentsActivity(+id);
     activityStudentFilter.value = activity.value.activitiesStudent;
 });
@@ -181,6 +188,7 @@ const checkMonthlyPaymentPaid = async (
         } else {
             await cancelPaymentPaid(student.id);
         }
+        await loadCountersActivity(+id);
     } catch (error) {
         student.paymentStatus = PaymentsStatus.PENDING;
     }
@@ -225,7 +233,7 @@ const checkMonthlyPaymentPaid = async (
                         <div class="col-4">
                             <q-chip color="blue" text-color="white">
                                 {{ $t('activity.label.numberLeaders') }} :
-                                {{ activity.numberLeaders }}
+                                {{ activityCounters.numberLeaders }}
                             </q-chip>
                         </div>
                         <div class="col-4">
@@ -235,19 +243,36 @@ const checkMonthlyPaymentPaid = async (
                                 text-color="white"
                             >
                                 {{ $t('activity.label.numberFollowers') }} :
-                                {{ activity.numberFollowers }}
+                                {{ activityCounters.numberFollowers }}
                             </q-chip>
                         </div>
-                        <div class="col-4" v-if="showProfitability">
-                            <q-chip
-                                class="col-4"
-                                color="green"
-                                text-color="white"
-                            >
-                                {{ $t('activity.label.costEffectiveness') }} :
-                                {{ activity.costEffectiveness + ' €' }}
-                            </q-chip>
-                        </div>
+                        <template v-if="showProfitability">
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
+                                    text-color="white"
+                                >
+                                    {{ $t('activity.label.costEffectiveness') }}
+                                    :
+                                    {{
+                                        activityCounters.costEffectiveness +
+                                        ' €'
+                                    }}
+                                </q-chip>
+                            </div>
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
+                                    text-color="white"
+                                >
+                                    {{ $t('activity.label.totalPaid') }}
+                                    :
+                                    {{ activityCounters.totalPaid + ' €' }}
+                                </q-chip>
+                            </div>
+                        </template>
                     </div>
                 </div>
                 <ActivityStudentsListFilter @filter-table="filterTable" />

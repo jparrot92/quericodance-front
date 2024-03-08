@@ -8,6 +8,7 @@ import useNotify from 'src/shared/composables/useNotify';
 import {
     listActivities,
     listStudentsActivity,
+    getCountersActivity,
     getActivity,
     createActivity,
     updateActivity,
@@ -16,7 +17,7 @@ import {
     deleteActivityStudent,
 } from 'src/api/activitiesApi';
 
-import { Activity } from '../models/activity';
+import { Activity, ActivityCounters } from '../models/activity';
 import { ActivityStudent } from '../models/activityStudent';
 
 const useActivities = () => {
@@ -60,6 +61,14 @@ const useActivities = () => {
         },
     });
 
+    const activityCounters = ref<ActivityCounters>({
+        numberStudents: '0',
+        numberLeaders: '0',
+        numberFollowers: '0',
+        totalPaid: '0',
+        costEffectiveness: '0',
+    });
+
     const loadActivities = async () => {
         try {
             activities.value = [];
@@ -76,6 +85,17 @@ const useActivities = () => {
         try {
             loading.value = true;
             activity.value = await listStudentsActivity(id);
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    const loadCountersActivity = async (id: number) => {
+        try {
+            loading.value = true;
+            activityCounters.value = await getCountersActivity(id);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -203,8 +223,10 @@ const useActivities = () => {
         activities,
         activity,
         activityStudent,
+        activityCounters,
         loadActivities,
         loadStudentsActivity,
+        loadCountersActivity,
         loadActivity,
         saveActivity,
         editActivity,

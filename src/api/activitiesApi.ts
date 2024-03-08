@@ -1,5 +1,8 @@
 import { api } from 'boot/axios';
-import { Activity } from 'src/modules/activities/models/activity';
+import {
+    Activity,
+    ActivityCounters,
+} from 'src/modules/activities/models/activity';
 import { handleError } from './errorApi';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
@@ -19,6 +22,20 @@ export const listActivities = async (): Promise<Activity[]> => {
 export const listStudentsActivity = async (id: number): Promise<Activity> => {
     try {
         const { data } = await api.get<Activity>(`/activities/${id}/students`);
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const getCountersActivity = async (
+    id: number
+): Promise<ActivityCounters> => {
+    try {
+        const { data } = await api.get<ActivityCounters>(
+            `/activities/${id}/counters`
+        );
 
         return data;
     } catch (error) {

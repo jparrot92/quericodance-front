@@ -29,6 +29,7 @@ export default {
             confirmation: 'Confirmación',
             serachPlaceholder: 'Introduzca el nombre y/o nivel del curso',
             showProfitability: 'Mostrar Rentabilidad',
+            totalPaid: 'Total pagado',
         },
         validation: {
             nameRequired: 'El nombre es requerido',

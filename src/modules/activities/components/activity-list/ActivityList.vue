@@ -33,7 +33,11 @@ const filteredColumns = computed(() => {
     if (showProfitability.value) {
         return columns;
     } else {
-        return columns.filter((column) => column.name !== 'costEffectiveness');
+        return columns.filter(
+            (column) =>
+                column.name !== 'costEffectiveness' &&
+                column.name !== 'totalPaid'
+        );
     }
 });
 
@@ -121,6 +125,14 @@ const columns: ColumnTable[] = [
         sortable: true,
     },
     {
+        name: 'totalPaid',
+        align: 'left',
+        label: t('activity.label.totalPaid'),
+        field: 'totalPaid',
+        format: (val: number) => `${val} €`,
+        sortable: true,
+    },
+    {
         name: 'actions',
         align: 'center',
         label: '',
@@ -180,6 +192,13 @@ const columns: ColumnTable[] = [
                 </q-td>
             </template>
             <template v-slot:body-cell-costEffectiveness="props">
+                <q-td :props="props">
+                    <div>
+                        <q-badge color="green" :label="props.value" />
+                    </div>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-totalPaid="props">
                 <q-td :props="props">
                     <div>
                         <q-badge color="green" :label="props.value" />
