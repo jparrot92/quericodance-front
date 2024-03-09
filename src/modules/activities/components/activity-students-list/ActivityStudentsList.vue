@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { format } from '@formkit/tempo';
 
 import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
 
@@ -342,7 +343,7 @@ const checkMonthlyPaymentPaid = async (
                         (props.row.student.paymentStatus.value &&
                             props.row.student.paymentStatus.value ===
                                 PaymentsStatus.PAYED)
-                            ? props.row.student.datePayment
+                            ? format(props.row.student.datePayment)
                             : '-'
                     }}
                 </q-td>

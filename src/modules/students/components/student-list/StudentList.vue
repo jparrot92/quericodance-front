@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
+import { format } from '@formkit/tempo';
 
 import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
 
@@ -265,7 +266,7 @@ const chooseFile = () => {
                         (props.row.paymentStatus.value &&
                             props.row.paymentStatus.value ===
                                 PaymentsStatus.PAYED)
-                            ? props.row.datePayment
+                            ? format(props.row.datePayment)
                             : '-'
                     }}
                 </q-td>

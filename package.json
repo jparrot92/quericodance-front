@@ -13,6 +13,7 @@
         "build": "quasar build"
     },
     "dependencies": {
+        "@formkit/tempo": "^0.0.15",
         "@quasar/extras": "^1.0.0",
         "axios": "^1.2.1",
         "pinia": "^2.0.11",
