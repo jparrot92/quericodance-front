@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { ColumnTable } from 'src/types/UtilTypes';
+import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
 import { Activity, ActivityFilter } from '../../models/activity';
@@ -46,6 +46,37 @@ onMounted(async () => {
     activitiesFilter.value = activities.value;
 });
 
+function getWeekNumber(day: string): number {
+    switch (day) {
+        case WeekDay.SUNDAY:
+            return 0;
+        case WeekDay.MONDAY:
+            return 1;
+        case WeekDay.TUESDAY:
+            return 2;
+        case WeekDay.WEDNESDAY:
+            return 3;
+        case WeekDay.THURSDAY:
+            return 4;
+        case WeekDay.FRIDAY:
+            return 5;
+        case WeekDay.SATURDAY:
+            return 6;
+        default:
+            throw new Error('Invalid day of the week');
+    }
+}
+
+const orderByDay = (a: Activity, b: Activity) => {
+    const dayA = getWeekNumber(a.day);
+    const dayB = getWeekNumber(b.day);
+
+    // Cambiar el orden de retorno para ordenar de mayor a menor
+    if (dayA > dayB) return -1;
+    if (dayA < dayB) return 1;
+    return 0;
+};
+
 const columns: ColumnTable[] = [
     {
         name: 'name',
@@ -67,6 +98,8 @@ const columns: ColumnTable[] = [
         label: t('activity.label.day'),
         field: (row) => t('shared.label.' + row.day),
         sortable: true,
+        sort: (a: string, b: string, rowA: Activity, rowB: Activity) =>
+            orderByDay(rowA, rowB),
     },
     {
         name: 'startHour',

@@ -8,6 +8,8 @@ export interface ColumnTable {
     align?: 'left' | 'right' | 'center';
     format?: (val: number) => string;
     sortable?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    sort?: void | any;
     headerStyle?: string;
 }
 
