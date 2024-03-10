@@ -7,6 +7,7 @@ import useStudents from '../composables/useStudents';
 
 import StudentFormPage from './StudentFormPage.vue';
 import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
+import ObservationsStudentFormPage from './ObservationsStudentFormPage.vue';
 
 const route = useRoute();
 
@@ -39,6 +40,10 @@ const tab = ref('student-data');
                 :label="$t('student.label.studentData')"
             />
             <q-tab name="courses" :label="$t('student.label.courses')" />
+            <q-tab
+                name="observations"
+                :label="$t('student.label.observations')"
+            />
         </q-tabs>
 
         <q-separator />
@@ -53,6 +58,10 @@ const tab = ref('student-data');
                     :activitiesStudent="student.activitiesStudent"
                     :id-student="student.id"
                 />
+            </q-tab-panel>
+
+            <q-tab-panel name="observations">
+                <observations-student-form-page :student="student" />
             </q-tab-panel>
         </q-tab-panels>
     </q-card>

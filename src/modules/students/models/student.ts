@@ -6,6 +6,7 @@ export interface Student {
     id: number;
     user: User;
     datePayment?: Date;
+    observations?: string;
     monthlyPayment: number;
     paymentStatus: PaymentsStatus;
     activitiesStudent?: ActivityStudent[];

@@ -23,6 +23,7 @@ export default {
             inactivo: 'Inactivo',
             serachPlaceholder:
                 'Introduzca el nombre/apellido o correo electrónico del alumno',
+            observations: 'Observaciones',
         },
         message: {
             addCourse:
