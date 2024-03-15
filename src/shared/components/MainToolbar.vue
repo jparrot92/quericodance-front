@@ -33,7 +33,7 @@ const handleLogout = async () => {
                 @click="$emit('toggleLeftDrawer')"
             />
 
-            <q-toolbar-title> Quericodance </q-toolbar-title>
+            <q-toolbar-title> QueRicoDance </q-toolbar-title>
 
             <q-btn-dropdown flat color="white" icon="person">
                 <q-list>
