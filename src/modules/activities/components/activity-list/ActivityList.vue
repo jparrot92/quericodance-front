@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
@@ -15,6 +16,7 @@ const { loading, activities, loadActivities, removeActivity } = useActivities();
 const $q = useQuasar();
 
 const { t } = useI18n();
+const router = useRouter();
 
 const activitiesFilter = ref<Activity[]>();
 const showProfitability = ref(false);
@@ -173,6 +175,15 @@ const columns: ColumnTable[] = [
         sortable: false,
     },
 ];
+
+const onRowClick = (evt: Event, row: Activity) => {
+    router.push({
+        name: 'activities-list-students',
+        params: {
+            id: row.id,
+        },
+    });
+};
 </script>
 
 <template>
@@ -183,6 +194,7 @@ const columns: ColumnTable[] = [
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
+            @row-click="onRowClick"
             :no-data-label="$t('shared.label.noData')"
             :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
@@ -240,7 +252,7 @@ const columns: ColumnTable[] = [
             </template>
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
-                    <menu-list>
+                    <menu-list @click.stop>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="

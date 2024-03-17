@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
 
 import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
@@ -30,6 +31,7 @@ const {
 const $q = useQuasar();
 
 const { t } = useI18n();
+const router = useRouter();
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
@@ -130,6 +132,15 @@ const columnsUser: ColumnTable[] = [
     },
 ];
 
+const onRowClick = (evt: Event, row: Student) => {
+    router.push({
+        name: 'students-edit',
+        params: {
+            id: row.id,
+        },
+    });
+};
+
 const checkMonthlyPaymentPaid = async (
     student: Student,
     paymentStatus: Option
@@ -170,6 +181,7 @@ const chooseFile = () => {
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
+            @row-click="onRowClick"
             :no-data-label="$t('shared.label.noData')"
             :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
@@ -247,6 +259,7 @@ const chooseFile = () => {
             <template v-slot:body-cell-phone="props">
                 <q-td :props="props">
                     <a
+                        @click.stop
                         :href="'https://wa.me/34' + props.row.user.phone"
                         target="_blank"
                     >
@@ -282,7 +295,7 @@ const chooseFile = () => {
                 </q-td>
             </template>
             <template v-slot:body-cell-paymentStatus="props">
-                <q-td :props="props">
+                <q-td :props="props" @click.stop>
                     <q-select
                         :bg-color="
                             props.row.paymentStatus === PaymentsStatus.PAYED ||
@@ -310,7 +323,7 @@ const chooseFile = () => {
             </template>
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
-                    <menu-list>
+                    <menu-list @click.stop>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
 
 import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
@@ -19,6 +19,7 @@ import ActivityStudentsListFilter from '../activity-students-list-filter/Activit
 
 const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
 
 const { generateEnumOptions } = useEnumOptions();
 const { markPaymentPaid, cancelPaymentPaid } = useStudents();
@@ -170,6 +171,15 @@ const columns: ColumnTable[] = [
     },
 ];
 
+const onRowClick = (evt: Event, row: ActivityStudent) => {
+    router.push({
+        name: 'students-edit',
+        params: {
+            id: row.student?.id,
+        },
+    });
+};
+
 const deleteActivityStudent = async (idActivityStudent: number) => {
     try {
         await removeActivityStudent(idActivityStudent);
@@ -204,6 +214,7 @@ const checkMonthlyPaymentPaid = async (
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
+            @row-click="onRowClick"
             :no-data-label="$t('shared.label.noData')"
             :rows-per-page-label="$t('shared.label.recordsPerPage')"
         >
@@ -294,6 +305,7 @@ const checkMonthlyPaymentPaid = async (
             <template v-slot:body-cell-phone="props">
                 <q-td :props="props">
                     <a
+                        @click.stop
                         :href="
                             'https://wa.me/34' + props.row.student.user.phone
                         "
@@ -320,7 +332,7 @@ const checkMonthlyPaymentPaid = async (
                 </q-td>
             </template>
             <template v-slot:body-cell-paymentStatus="props">
-                <q-td :props="props">
+                <q-td :props="props" @click.stop>
                     <q-select
                         :bg-color="
                             props.row.student.paymentStatus ===
@@ -362,7 +374,7 @@ const checkMonthlyPaymentPaid = async (
             </template>
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
-                    <menu-list>
+                    <menu-list @click.stop>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="
