@@ -291,6 +291,18 @@ const checkMonthlyPaymentPaid = async (
                     />
                 </q-td>
             </template>
+            <template v-slot:body-cell-phone="props">
+                <q-td :props="props">
+                    <a
+                        :href="
+                            'https://wa.me/34' + props.row.student.user.phone
+                        "
+                        target="_blank"
+                    >
+                        {{ props.row.student.user.phone }}
+                    </a>
+                </q-td>
+            </template>
             <template v-slot:body-cell-monthlyPayment="props">
                 <q-td :props="props">
                     <q-badge

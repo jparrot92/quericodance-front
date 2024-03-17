@@ -86,10 +86,10 @@ const columnsUser: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'email',
+        name: 'phone',
         align: 'left',
-        label: t('user.label.email'),
-        field: (row: Student) => row.user.email,
+        label: t('user.label.phone'),
+        field: (row: Student) => row.user.phone,
         sortable: true,
     },
     {
@@ -242,6 +242,16 @@ const chooseFile = () => {
                                 : $t('student.label.inactivo')
                         "
                     />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-phone="props">
+                <q-td :props="props">
+                    <a
+                        :href="'https://wa.me/34' + props.row.user.phone"
+                        target="_blank"
+                    >
+                        {{ props.row.user.phone }}
+                    </a>
                 </q-td>
             </template>
             <template v-slot:body-cell-monthlyPayment="props">
