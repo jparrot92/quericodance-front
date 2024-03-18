@@ -7,6 +7,7 @@ export default {
             studentData: 'Datos estudiante',
             courses: 'Cursos',
             course: 'Curso',
+            confirmationPayment: 'Confirmación pago',
             role: 'Rol',
             state: 'Estado',
             monthlyPayment: 'Mensualidad',
@@ -18,12 +19,13 @@ export default {
             add: 'Añadir',
             cancel: 'Cancelar',
             changePrice: 'Modificar precio',
-            datePayment: 'Fecha de pago',
+            datePayment: 'Fecha pago',
             active: 'Activo',
             inactivo: 'Inactivo',
             serachPlaceholder:
                 'Introduzca el nombre/apellido o correo electrónico del alumno',
             observations: 'Observaciones',
+            send: 'Enviar',
         },
         message: {
             addCourse:
@@ -32,6 +34,8 @@ export default {
         notifications: {
             paymentMade: 'Paga efectuado',
             cancelPayment: 'Pago cancelado',
+            sendMailPaymentPaid:
+                'El correo electrónico ha sido enviado correctamente.',
         },
     },
 };

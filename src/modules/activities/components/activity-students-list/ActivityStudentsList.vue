@@ -22,7 +22,12 @@ const route = useRoute();
 const router = useRouter();
 
 const { generateEnumOptions } = useEnumOptions();
-const { markPaymentPaid, cancelPaymentPaid } = useStudents();
+const {
+    markPaymentPaid,
+    cancelPaymentPaid,
+    isPaymentStatusPaid,
+    sendMailPaymentPaid,
+} = useStudents();
 
 const {
     loading,
@@ -156,6 +161,13 @@ const columns: ColumnTable[] = [
         sortable: true,
     },
     {
+        name: 'mail',
+        align: 'left',
+        label: t('student.label.confirmationPayment'),
+        field: 'mail',
+        sortable: false,
+    },
+    {
         name: 'datePayment',
         align: 'left',
         label: t('student.label.datePayment'),
@@ -203,6 +215,10 @@ const checkMonthlyPaymentPaid = async (
     } catch (error) {
         student.paymentStatus = PaymentsStatus.PENDING;
     }
+};
+
+const handleSendMail = async (student: Student) => {
+    sendMailPaymentPaid(student.id);
 };
 </script>
 
@@ -319,11 +335,7 @@ const checkMonthlyPaymentPaid = async (
                 <q-td :props="props">
                     <q-badge
                         :color="
-                            props.row.student.paymentStatus ===
-                                PaymentsStatus.PAYED ||
-                            (props.row.student.paymentStatus.value &&
-                                props.row.student.paymentStatus.value ===
-                                    PaymentsStatus.PAYED)
+                            isPaymentStatusPaid(props.row.student.paymentStatus)
                                 ? 'green'
                                 : 'red'
                         "
@@ -335,16 +347,15 @@ const checkMonthlyPaymentPaid = async (
                 <q-td :props="props" @click.stop>
                     <q-select
                         :bg-color="
-                            props.row.student.paymentStatus ===
-                                PaymentsStatus.PAYED ||
-                            (props.row.student.paymentStatus.value &&
-                                props.row.student.paymentStatus.value ===
-                                    PaymentsStatus.PAYED)
+                            isPaymentStatusPaid(props.row.student.paymentStatus)
                                 ? 'green'
                                 : 'red'
                         "
                         v-model="props.row.student.paymentStatus"
+                        rounded
+                        outlined
                         dense
+                        options-dense
                         :options="paymentStatuses"
                         @update:model-value="
                             checkMonthlyPaymentPaid(
@@ -359,14 +370,24 @@ const checkMonthlyPaymentPaid = async (
                     </q-select>
                 </q-td>
             </template>
+            <template v-slot:body-cell-mail="props">
+                <q-td :props="props" @click.stop>
+                    <q-btn
+                        v-if="
+                            isPaymentStatusPaid(props.row.student.paymentStatus)
+                        "
+                        color="primary"
+                        rounded
+                        size="md"
+                        :label="$t('student.label.send')"
+                        @click="handleSendMail(props.row.student)"
+                    />
+                </q-td>
+            </template>
             <template v-slot:body-cell-datePayment="props">
                 <q-td :props="props">
                     {{
-                        props.row.student.paymentStatus ===
-                            PaymentsStatus.PAYED ||
-                        (props.row.student.paymentStatus.value &&
-                            props.row.student.paymentStatus.value ===
-                                PaymentsStatus.PAYED)
+                        isPaymentStatusPaid(props.row.student.paymentStatus)
                             ? format(props.row.student.datePayment)
                             : '-'
                     }}

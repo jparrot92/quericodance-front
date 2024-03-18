@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { PaymentsStatus } from 'src/types/UtilTypes';
+import { PaymentsStatus, Option } from 'src/types/UtilTypes';
 
 import useNotify from 'src/shared/composables/useNotify';
 
@@ -16,6 +16,7 @@ import {
     cancelPayment,
     resetPaymentsStatus,
     uploadExcel,
+    sendMailPayment,
 } from 'src/api/studentsApi';
 
 import { Student } from '../models/student';
@@ -131,6 +132,19 @@ const useStudents = () => {
         });
     };
 
+    const sendMailPaymentPaid = async (id: number) => {
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                await sendMailPayment(id);
+                notifySuccess(t('student.notifications.sendMailPaymentPaid'));
+                resolve();
+            } catch (error) {
+                notifyError(error);
+                reject(error);
+            }
+        });
+    };
+
     const cancelPaymentPaid = async (id: number) => {
         return new Promise<void>(async (resolve, reject) => {
             try {
@@ -160,6 +174,18 @@ const useStudents = () => {
                 $q.loading.hide();
             }
         });
+    };
+
+    const isPaymentStatusPaid = (status: Option | string) => {
+        if (typeof status === 'string') {
+            return status === PaymentsStatus.PAYED;
+        }
+
+        // Si status es un objeto Option, obtenemos su valor
+        const value = status.value;
+
+        // Comparamos el valor con el estado de pago esperado
+        return value === PaymentsStatus.PAYED;
     };
 
     const handleFileUpload = async (event: Event) => {
@@ -199,8 +225,10 @@ const useStudents = () => {
         editStudent,
         removeStudent,
         markPaymentPaid,
+        sendMailPaymentPaid,
         cancelPaymentPaid,
         resetPayments,
+        isPaymentStatusPaid,
         handleFileUpload,
     };
 };

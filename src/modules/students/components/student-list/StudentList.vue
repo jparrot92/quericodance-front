@@ -23,8 +23,10 @@ const {
     loadStudents,
     removeStudent,
     markPaymentPaid,
+    sendMailPaymentPaid,
     cancelPaymentPaid,
     resetPayments,
+    isPaymentStatusPaid,
     handleFileUpload,
 } = useStudents();
 
@@ -117,6 +119,13 @@ const columnsUser: ColumnTable[] = [
         sortable: true,
     },
     {
+        name: 'mail',
+        align: 'left',
+        label: t('student.label.confirmationPayment'),
+        field: 'mail',
+        sortable: false,
+    },
+    {
         name: 'datePayment',
         align: 'left',
         label: t('student.label.datePayment'),
@@ -154,6 +163,10 @@ const checkMonthlyPaymentPaid = async (
     } catch (error) {
         student.paymentStatus = PaymentsStatus.PENDING;
     }
+};
+
+const handleSendMail = async (student: Student) => {
+    sendMailPaymentPaid(student.id);
 };
 
 const handleResetPayments = async () => {
@@ -271,10 +284,7 @@ const chooseFile = () => {
                 <q-td :props="props">
                     <q-badge
                         :color="
-                            props.row.paymentStatus === PaymentsStatus.PAYED ||
-                            (props.row.paymentStatus.value &&
-                                props.row.paymentStatus.value ===
-                                    PaymentsStatus.PAYED)
+                            isPaymentStatusPaid(props.row.paymentStatus)
                                 ? 'green'
                                 : 'red'
                         "
@@ -285,10 +295,7 @@ const chooseFile = () => {
             <template v-slot:body-cell-datePayment="props">
                 <q-td :props="props">
                     {{
-                        props.row.paymentStatus === PaymentsStatus.PAYED ||
-                        (props.row.paymentStatus.value &&
-                            props.row.paymentStatus.value ===
-                                PaymentsStatus.PAYED)
+                        isPaymentStatusPaid(props.row.paymentStatus)
                             ? format(props.row.datePayment)
                             : '-'
                     }}
@@ -298,15 +305,15 @@ const chooseFile = () => {
                 <q-td :props="props" @click.stop>
                     <q-select
                         :bg-color="
-                            props.row.paymentStatus === PaymentsStatus.PAYED ||
-                            (props.row.paymentStatus.value &&
-                                props.row.paymentStatus.value ===
-                                    PaymentsStatus.PAYED)
+                            isPaymentStatusPaid(props.row.paymentStatus)
                                 ? 'green'
                                 : 'red'
                         "
                         v-model="props.row.paymentStatus"
+                        rounded
+                        outlined
                         dense
+                        options-dense
                         :options="paymentStatuses"
                         @update:model-value="
                             checkMonthlyPaymentPaid(
@@ -319,6 +326,18 @@ const chooseFile = () => {
                             {{ t('shared.enum.' + (opt.value || opt)) }}
                         </template>
                     </q-select>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-mail="props">
+                <q-td :props="props" @click.stop>
+                    <q-btn
+                        v-if="isPaymentStatusPaid(props.row.paymentStatus)"
+                        color="primary"
+                        rounded
+                        size="md"
+                        :label="$t('student.label.send')"
+                        @click="handleSendMail(props.row)"
+                    />
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">
