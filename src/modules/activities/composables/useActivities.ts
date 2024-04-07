@@ -17,7 +17,11 @@ import {
     deleteActivityStudent,
 } from 'src/api/activitiesApi';
 
-import { Activity, ActivityCounters } from '../models/activity';
+import {
+    ActivityForm,
+    ActivityCounters,
+    ActivityList,
+} from '../models/activity';
 import { ActivityStudent } from '../models/activityStudent';
 
 const useActivities = () => {
@@ -30,16 +34,16 @@ const useActivities = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const activities = ref<Activity[]>([]);
-    const activity = ref<Activity>({
+    const activities = ref<ActivityList[]>([]);
+    const activity = ref<ActivityForm>({
         id: 0,
         name: '',
-        level: 0,
+        level: null,
         day: '',
         startHour: '',
         endHour: '',
-        numberPlaces: 0,
-        price: 0,
+        numberPlaces: null,
+        price: null,
         color: '',
         teachersIds: [],
     });

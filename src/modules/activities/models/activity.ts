@@ -1,18 +1,21 @@
 import { Teacher } from 'src/modules/teachers/models/teacher';
 import { ActivityStudent } from './activityStudent';
 
-export interface Activity {
+export interface ActivityForm {
     id: number;
     name: string;
-    level: number;
+    level: number | null;
     day: string;
     startHour: string;
     endHour: string;
-    numberPlaces: number;
-    price: number;
+    numberPlaces: number | null;
+    price: number | null;
     color: string;
     teachersIds: number[];
     teachers?: Teacher[];
+}
+
+export interface ActivityList extends ActivityForm {
     activitiesStudent?: ActivityStudent[];
     numberStudents?: string;
     numberLeaders?: string;

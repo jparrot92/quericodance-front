@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router';
 import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import { Activity, ActivityFilter } from '../../models/activity';
+import { ActivityList, ActivityFilter } from '../../models/activity';
 import useActivities from '../../composables/useActivities';
 import ActivityListFilter from '../../components/activity-list-filter/ActivityListFilter.vue';
 
@@ -18,17 +18,20 @@ const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
 
-const activitiesFilter = ref<Activity[]>();
+const activitiesFilter = ref<ActivityList[]>();
 const showProfitability = ref(false);
 
 const filterTable = (activityFilter: ActivityFilter) => {
-    activitiesFilter.value = activities.value.filter((activity: Activity) => {
-        const activityFullName = activity.name.toLowerCase() + activity.level;
+    activitiesFilter.value = activities.value.filter(
+        (activity: ActivityList) => {
+            const activityFullName =
+                activity.name.toLowerCase() + activity.level;
 
-        return activityFullName.includes(
-            activityFilter.textFilter.replace(/\s/g, '').toLowerCase()
-        );
-    });
+            return activityFullName.includes(
+                activityFilter.textFilter.replace(/\s/g, '').toLowerCase()
+            );
+        }
+    );
 };
 
 const filteredColumns = computed(() => {
@@ -69,7 +72,7 @@ function getWeekNumber(day: string): number {
     }
 }
 
-const orderByDay = (a: Activity, b: Activity) => {
+const orderByDay = (a: ActivityList, b: ActivityList) => {
     const dayA = getWeekNumber(a.day);
     const dayB = getWeekNumber(b.day);
 
@@ -100,7 +103,7 @@ const columns: ColumnTable[] = [
         label: t('activity.label.day'),
         field: (row) => t('shared.label.' + row.day),
         sortable: true,
-        sort: (a: string, b: string, rowA: Activity, rowB: Activity) =>
+        sort: (a: string, b: string, rowA: ActivityList, rowB: ActivityList) =>
             orderByDay(rowA, rowB),
     },
     {
@@ -176,7 +179,7 @@ const columns: ColumnTable[] = [
     },
 ];
 
-const onRowClick = (evt: Event, row: Activity) => {
+const onRowClick = (evt: Event, row: ActivityList) => {
     router.push({
         name: 'activities-list-students',
         params: {

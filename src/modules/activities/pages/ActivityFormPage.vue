@@ -147,6 +147,18 @@ const removeTeacherActivity = async () => {
                 </div>
 
                 <q-input
+                    :label="$t('activity.label.numberPlaces')"
+                    v-model.number="activity.numberPlaces"
+                    :rules="[
+                        (val) =>
+                            (val !== null &&
+                                val !== undefined &&
+                                val.toString().trim() !== '') ||
+                            $t('activity.validation.priceRequired'),
+                    ]"
+                />
+
+                <!-- <q-input
                     prefix="€"
                     :label="$t('activity.label.price')"
                     v-model.number="activity.price"
@@ -157,13 +169,18 @@ const removeTeacherActivity = async () => {
                                 val.toString().trim() !== '') ||
                             $t('activity.validation.priceRequired'),
                     ]"
-                />
+                /> -->
 
                 <div class="row">
                     <q-input
                         :label="$t('activity.label.color')"
                         v-model="activity.color"
                         class="col-md-11 col-sm-11 col-xs-10"
+                        :rules="[
+                        (val: string) =>
+                            (val && val.length > 0) ||
+                            $t('activity.validation.colorRequired')
+                        ]"
                     >
                         <template v-slot:append>
                             <q-icon name="colorize" class="cursor-pointer">

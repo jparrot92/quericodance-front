@@ -39,6 +39,7 @@ export default {
             endHourRequired: 'La hora de fin es requerida',
             numberPlacesRequired: 'El número de plazas es requerido',
             priceRequired: 'El preció es requerido',
+            colorRequired: 'El color es requerido',
         },
         notifications: {
             activityCreateSuccessfully: 'Curso creado con éxito',
