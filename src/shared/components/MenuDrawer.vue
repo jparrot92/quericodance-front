@@ -20,26 +20,50 @@ const itemsMenu: ItemMenu[] = [
         title: t('shared.label.calendar'),
         icon: 'calendar_month',
         link: 'appointments-list',
+        level: 0,
+        children: [],
     },
     {
         title: t('shared.label.students'),
         icon: 'person',
         link: 'students-list',
+        level: 0,
+        children: [],
     },
     {
-        title: t('shared.label.activities'),
+        title: t('shared.label.services'),
         icon: 'diversity_3',
-        link: 'activities-list',
+        level: 0,
+        children: [
+            {
+                title: t('shared.label.tariffs'),
+                icon: 'euro',
+                link: 'tariffs-list',
+                level: 0.5,
+                children: [],
+            },
+            {
+                title: t('shared.label.activities'),
+                icon: 'school',
+                link: 'activities-list',
+                level: 0.5,
+                children: [],
+            },
+        ],
     },
     {
         title: t('shared.label.teachers'),
         icon: 'school',
         link: 'teachers-list',
+        level: 0,
+        children: [],
     },
     {
         title: t('shared.label.users'),
         icon: 'account_circle',
         link: 'users-list',
+        level: 0,
+        children: [],
     },
 ];
 

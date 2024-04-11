@@ -1,10 +1,18 @@
 export default {
     shared: {
+        save: 'Guardar',
+        confirmation: 'Confirmación',
         enum: {
             payed: 'Pagado',
             pending: 'Pendiente',
             leader: 'Líder',
             follower: 'Follower',
+            single_class: 'Clase única',
+            weekly: 'Semanal',
+            unlimited: 'Ilimitada',
+            single_payment: 'Pago único',
+            monthly: 'Mensual',
+            trimestral: 'Trimestral',
         },
         label: {
             profile: 'Perfil',
@@ -13,6 +21,8 @@ export default {
             activities: 'Cursos',
             teachers: 'Professores',
             students: 'Estudiantes',
+            services: 'Servicios',
+            tariffs: 'Tarifas',
             users: 'Usuarios',
             loading: 'Cargando...',
             noData: 'Datos no disponibles',

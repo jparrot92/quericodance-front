@@ -16,14 +16,13 @@ const idStudent = computed<string | undefined>(() =>
 );
 
 const { student, loadStudent } = useStudents();
+const tab = ref('student-data');
 
 onMounted(() => {
     if (idStudent.value) {
         loadStudent(idStudent.value);
     }
 });
-
-const tab = ref('student-data');
 </script>
 
 <template>

@@ -42,3 +42,15 @@ export enum WeekDay {
     FRIDAY = 'FR',
     SATURDAY = 'SA',
 }
+
+export enum SessionFrequency {
+    SINGLE_CLASS = 'single_class',
+    WEEKLY = 'weekly',
+    UNLIMITED = 'unlimited',
+}
+
+export enum PaymentFrequency {
+    SINGLE_PAYMENT = 'single_payment',
+    MONTHLY = 'monthly',
+    TRIMESTRAL = 'trimestral',
+}
