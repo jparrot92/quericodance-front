@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 const route = useRoute();
 const { t } = useI18n();
 
-// Extraer la clave de route.meta.titleEdit
-let titleKey = route.meta.title;
+const titleKey = ref<string>(route.meta.title as string);
 
 const translatedTitle = computed(() => {
-    if (typeof titleKey === 'string') {
-        return t(titleKey);
-    }
-    // Si el tipo de titleKey no es una cadena, puedes proporcionar un valor predeterminado o manejarlo según tus necesidades
-    return '';
+    return t(titleKey.value || '');
 });
+
+watch(
+    () => route.meta.title,
+    (newTitle) => {
+        if (typeof newTitle === 'string') {
+            titleKey.value = newTitle;
+        }
+    }
+);
 </script>
 
 <template>
