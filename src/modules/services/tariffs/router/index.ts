@@ -4,7 +4,8 @@ const ROUTE_NAME = 'tariffs';
 
 const tariffsRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () => import('src/modules/tariffs/layouts/TariffLayout.vue'),
+    component: () =>
+        import('src/modules/services/tariffs/layouts/TariffLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,
@@ -12,13 +13,14 @@ const tariffsRoutes: RouteRecordRaw = {
             meta: {
                 toolbar: 'MainToolbar',
             },
-            component: () => import('src/modules/tariffs/pages/TariffPage.vue'),
+            component: () =>
+                import('src/modules/services/tariffs/pages/TariffPage.vue'),
         },
         {
             path: `/${ROUTE_NAME}/add`,
             name: `${ROUTE_NAME}-add`,
             component: () =>
-                import('src/modules/tariffs/pages/TariffFormPage.vue'),
+                import('src/modules/services/tariffs/pages/TariffFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
                 title: 'tariff.createTariff',
@@ -28,7 +30,7 @@ const tariffsRoutes: RouteRecordRaw = {
             path: `/${ROUTE_NAME}/:id`,
             name: `${ROUTE_NAME}-edit`,
             component: () =>
-                import('src/modules/tariffs/pages/TariffFormPage.vue'),
+                import('src/modules/services/tariffs/pages/TariffFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
                 title: 'tariff.editTariff',
