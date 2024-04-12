@@ -162,7 +162,7 @@ const useStudents = () => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 $q.loading.show({
-                    message: t('shared.label.loading'),
+                    message: t('shared.loading'),
                 });
                 await resetPaymentsStatus();
                 notifySuccess(t('shared.notifications.resetPayments'));
@@ -201,7 +201,7 @@ const useStudents = () => {
         ) {
             try {
                 $q.loading.show({
-                    message: t('shared.label.loading'),
+                    message: t('shared.loading'),
                 });
                 await uploadExcel(file);
                 notifySuccess('Excel importado');

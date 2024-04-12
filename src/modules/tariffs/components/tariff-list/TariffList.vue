@@ -38,14 +38,14 @@ const columnsTariff: ColumnTable[] = [
         name: 'sessionFrequency',
         align: 'left',
         label: t('tariff.sessionFrequency'),
-        field: 'sessionFrequency',
+        field: (row) => t('shared.enum.' + row.sessionFrequency),
         sortable: true,
     },
     {
         name: 'paymentFrequency',
         align: 'left',
         label: t('tariff.paymentFrequency'),
-        field: 'paymentFrequency',
+        field: (row) => t('shared.enum.' + row.paymentFrequency),
         sortable: true,
     },
     {
@@ -73,11 +73,11 @@ const columnsTariff: ColumnTable[] = [
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
-            :no-data-label="$t('shared.label.noData')"
-            :rows-per-page-label="$t('shared.label.recordsPerPage')"
+            :no-data-label="$t('shared.noData')"
+            :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <span class="text-h6"> {{ $t('shared.label.tariffs') }} </span>
+                <span class="text-h6"> {{ $t('shared.tariffs') }} </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"

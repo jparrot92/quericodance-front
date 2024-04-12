@@ -11,7 +11,7 @@ const { logout } = useAuth();
 
 const handleLogout = async () => {
     $q.dialog({
-        title: t('shared.label.logout'),
+        title: t('shared.logout'),
         message: t('shared.message.logout'),
         cancel: true,
         persistent: true,
@@ -48,14 +48,14 @@ const handleLogout = async () => {
                     >
                         <q-item-section>
                             <q-item-label>
-                                {{ $t('shared.label.profile') }}
+                                {{ $t('shared.profile') }}
                             </q-item-label>
                         </q-item-section>
                     </q-item>
                     <q-item clickable v-close-popup @click="handleLogout">
                         <q-item-section>
                             <q-item-label>
-                                {{ $t('shared.label.logout') }}
+                                {{ $t('shared.logout') }}
                             </q-item-label>
                         </q-item-section>
                     </q-item>

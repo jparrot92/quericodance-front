@@ -18,13 +18,13 @@ type Day = {
 };
 
 const days: Day[] = [
-    { label: t('shared.label.MO'), value: 'MO' },
-    { label: t('shared.label.TU'), value: 'TU' },
-    { label: t('shared.label.WE'), value: 'WE' },
-    { label: t('shared.label.TH'), value: 'TH' },
-    { label: t('shared.label.FR'), value: 'FR' },
-    { label: t('shared.label.SA'), value: 'SA' },
-    { label: t('shared.label.SU'), value: 'SU' },
+    { label: t('shared.enum.MO'), value: 'MO' },
+    { label: t('shared.enum.TU'), value: 'TU' },
+    { label: t('shared.enum.WE'), value: 'WE' },
+    { label: t('shared.enum.TH'), value: 'TH' },
+    { label: t('shared.enum.FR'), value: 'FR' },
+    { label: t('shared.enum.SA'), value: 'SA' },
+    { label: t('shared.enum.SU'), value: 'SU' },
 ];
 
 watch(props, () => {
@@ -33,13 +33,9 @@ watch(props, () => {
 </script>
 
 <template>
-    <q-select
-        v-model="selectedDay"
-        :options="days"
-        :label="$t('shared.label.day')"
-    >
+    <q-select v-model="selectedDay" :options="days" :label="$t('shared.day')">
         <template v-slot:selected-item="{ opt }" v-if="selectedDay">
-            {{ t('shared.label.' + opt) }}
+            {{ t('shared.enum.' + opt) }}
         </template>
         <template v-slot:option="{ itemProps, opt }">
             <q-item v-bind="itemProps">

@@ -94,7 +94,7 @@ const calculatePrice = () => {
                                   ' ' +
                                   opt.level +
                                   ' - ' +
-                                  t('shared.label.' + opt.day) +
+                                  t('shared.enum.' + opt.day) +
                                   ' ' +
                                   opt.startHour
                                 : ''
@@ -108,7 +108,7 @@ const calculatePrice = () => {
                                     ' ' +
                                     opt.level +
                                     ' - ' +
-                                    t('shared.label.' + opt.day) +
+                                    t('shared.enum.' + opt.day) +
                                     ' ' +
                                     opt.startHour
                                 }}

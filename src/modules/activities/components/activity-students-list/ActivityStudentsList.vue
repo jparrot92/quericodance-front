@@ -231,14 +231,14 @@ const handleSendMail = async (student: Student) => {
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
             @row-click="onRowClick"
-            :no-data-label="$t('shared.label.noData')"
-            :rows-per-page-label="$t('shared.label.recordsPerPage')"
+            :no-data-label="$t('shared.noData')"
+            :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
                 <span class="text-h6">
                     {{ $t('activity.label.activity') }} {{ activity.name }}
                     {{ activity.level }} -
-                    {{ $t('shared.label.' + activity.day) }}
+                    {{ $t('shared.enum.' + activity.day) }}
                     {{ activity.startHour }}
                 </span>
                 <q-space />

@@ -195,8 +195,8 @@ const chooseFile = () => {
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
             @row-click="onRowClick"
-            :no-data-label="$t('shared.label.noData')"
-            :rows-per-page-label="$t('shared.label.recordsPerPage')"
+            :no-data-label="$t('shared.noData')"
+            :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
                 <span class="text-h6">
@@ -206,7 +206,7 @@ const chooseFile = () => {
                 <q-btn
                     v-if="$q.platform.is.desktop"
                     class="q-ml-sm"
-                    :label="$t('shared.label.resetPayments')"
+                    :label="$t('shared.resetPayments')"
                     color="green"
                     icon="mdi-restart"
                     dense
@@ -215,7 +215,7 @@ const chooseFile = () => {
                 <q-btn
                     v-if="$q.platform.is.desktop"
                     class="q-ml-sm"
-                    :label="$t('shared.label.importExcel')"
+                    :label="$t('shared.importExcel')"
                     color="green"
                     icon="file_present"
                     dense

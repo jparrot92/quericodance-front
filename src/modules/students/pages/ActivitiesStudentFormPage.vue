@@ -82,7 +82,7 @@ const deleteActivityStudent = async (id: number) => {
                                         -
                                         {{
                                             t(
-                                                'shared.label.' +
+                                                'shared.enum.' +
                                                     item.activity.day
                                             )
                                         }}

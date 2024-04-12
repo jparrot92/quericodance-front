@@ -20,7 +20,7 @@ const activityFilter = ref<ActivityFilter>({
                 class="col-12"
                 v-model="activityFilter.textFilter"
                 dense
-                :label="$t('shared.label.search')"
+                :label="$t('shared.search')"
                 :placeholder="$t('activity.label.serachPlaceholder')"
                 @update:model-value="emits('filterTable', activityFilter)"
             />

@@ -34,7 +34,7 @@ const initPayment = () => {
                 class="col-6"
                 v-model="studentFilter.textFilter"
                 dense
-                :label="$t('shared.label.search')"
+                :label="$t('shared.search')"
                 :placeholder="$t('student.label.serachPlaceholder')"
                 @update:model-value="emits('filterTable', studentFilter)"
             />

@@ -101,7 +101,7 @@ const columns: ColumnTable[] = [
         name: 'day',
         align: 'left',
         label: t('activity.label.day'),
-        field: (row) => t('shared.label.' + row.day),
+        field: (row) => t('shared.enum.' + row.day),
         sortable: true,
         sort: (a: string, b: string, rowA: ActivityList, rowB: ActivityList) =>
             orderByDay(rowA, rowB),
@@ -198,8 +198,8 @@ const onRowClick = (evt: Event, row: ActivityList) => {
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
             @row-click="onRowClick"
-            :no-data-label="$t('shared.label.noData')"
-            :rows-per-page-label="$t('shared.label.recordsPerPage')"
+            :no-data-label="$t('shared.noData')"
+            :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
                 <span class="text-h6">

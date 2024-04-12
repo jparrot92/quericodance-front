@@ -17,33 +17,40 @@ const route = useRoute();
 
 const itemsMenu: ItemMenu[] = [
     {
-        title: t('shared.label.calendar'),
+        title: t('shared.calendar'),
         icon: 'calendar_month',
         link: 'appointments-list',
         level: 0,
         children: [],
     },
     {
-        title: t('shared.label.students'),
+        title: t('shared.students'),
         icon: 'person',
         link: 'students-list',
         level: 0,
         children: [],
     },
     {
-        title: t('shared.label.services'),
+        title: t('shared.services'),
         icon: 'diversity_3',
         level: 0,
         children: [
             {
-                title: t('shared.label.tariffs'),
+                title: t('shared.tariffs'),
                 icon: 'euro',
                 link: 'tariffs-list',
                 level: 0.5,
                 children: [],
             },
             {
-                title: t('shared.label.activities'),
+                title: t('shared.passes'),
+                icon: 'school',
+                link: 'activities-list',
+                level: 0.5,
+                children: [],
+            },
+            {
+                title: t('shared.personalClasses'),
                 icon: 'school',
                 link: 'activities-list',
                 level: 0.5,
@@ -52,14 +59,21 @@ const itemsMenu: ItemMenu[] = [
         ],
     },
     {
-        title: t('shared.label.teachers'),
+        title: t('shared.activities'),
+        icon: 'school',
+        link: 'activities-list',
+        level: 0,
+        children: [],
+    },
+    {
+        title: t('shared.teachers'),
         icon: 'school',
         link: 'teachers-list',
         level: 0,
         children: [],
     },
     {
-        title: t('shared.label.users'),
+        title: t('shared.users'),
         icon: 'account_circle',
         link: 'users-list',
         level: 0,

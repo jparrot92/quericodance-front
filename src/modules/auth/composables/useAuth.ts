@@ -27,7 +27,7 @@ const useAuth = () => {
     const onSubmit = async () => {
         try {
             $q.loading.show({
-                message: t('shared.label.loading'),
+                message: t('shared.loading'),
             });
             await authStore.login(userForm.value);
             notifySuccess(t('auth.notifications.loginSuccessfully'));

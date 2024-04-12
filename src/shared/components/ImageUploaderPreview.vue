@@ -74,7 +74,7 @@ const deletePicture = async () => {
             style="top: 8px; left: 115px; cursor: pointer"
             @click="showDialog = true"
         >
-            <q-tooltip>{{ $t('shared.label.selectProfilePhoto') }}</q-tooltip>
+            <q-tooltip>{{ $t('shared.selectProfilePhoto') }}</q-tooltip>
         </q-icon>
     </q-avatar>
 
@@ -90,26 +90,26 @@ const deletePicture = async () => {
         <q-card style="width: 500px; max-width: 60vw">
             <q-card-section>
                 <div class="text-center text-h6">
-                    {{ $t('shared.label.selectProfilePhoto') }}
+                    {{ $t('shared.selectProfilePhoto') }}
                 </div>
             </q-card-section>
 
             <q-list bordered separator>
                 <q-item clickable v-ripple @click="choosePicture">
                     <q-item-section class="text-center text-bold text-positive">
-                        {{ $t('shared.label.selectPhoto') }}
+                        {{ $t('shared.selectPhoto') }}
                     </q-item-section>
                 </q-item>
 
                 <q-item clickable v-ripple @click="deletePicture">
                     <q-item-section class="text-center text-bold text-negative">
-                        {{ $t('shared.label.deleteCurrentPhoto') }}
+                        {{ $t('shared.deleteCurrentPhoto') }}
                     </q-item-section>
                 </q-item>
 
                 <q-item clickable v-ripple @click="showDialog = false">
                     <q-item-section class="text-center">
-                        {{ $t('shared.label.cancel') }}
+                        {{ $t('shared.cancel') }}
                     </q-item-section>
                 </q-item>
             </q-list>
