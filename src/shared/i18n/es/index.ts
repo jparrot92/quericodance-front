@@ -15,6 +15,8 @@ export default {
         noData: 'Datos no disponibles',
         recordsPerPage: 'Registros por página',
         day: 'Dia',
+        passes: 'Abonos',
+        personalClasses: 'Classes personales',
         selectProfilePhoto: 'Seleccionar foto de perfil',
         selectPhoto: 'Seleccionar foto',
         deleteCurrentPhoto: 'Eliminar foto actual',

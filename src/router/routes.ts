@@ -8,6 +8,7 @@ import studentsRoutes from '../modules/students/router';
 import usersRoutes from '../modules/users/router';
 import activitiesRoutes from '../modules/activities/router';
 import tariffsRoutes from '../modules/tariffs/router';
+import servicesRoutes from '../modules/services/router';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -33,6 +34,9 @@ const routes: RouteRecordRaw[] = [
     },
     {
         ...tariffsRoutes,
+    },
+    {
+        ...servicesRoutes,
     },
     //default route redirection
     { path: '/', redirect: { name: 'appointments-list' } },
