@@ -2,8 +2,8 @@ import { RouteRecordRaw } from 'vue-router';
 
 import passesRoutes from '../passes/router';
 
-const tariffsRoutes: RouteRecordRaw = {
+const servicesRoutes: RouteRecordRaw = {
     ...passesRoutes,
 };
 
-export default tariffsRoutes;
+export default servicesRoutes;
