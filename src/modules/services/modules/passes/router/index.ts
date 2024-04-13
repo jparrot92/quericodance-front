@@ -5,7 +5,7 @@ const ROUTE_NAME = 'passes';
 const passesRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
     component: () =>
-        import('src/modules/services/passes/layouts/PassLayout.vue'),
+        import('src/modules/services/modules/passes/layouts/PassLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,
@@ -14,13 +14,17 @@ const passesRoutes: RouteRecordRaw = {
                 toolbar: 'MainToolbar',
             },
             component: () =>
-                import('src/modules/services/passes/pages/PassPage.vue'),
+                import(
+                    'src/modules/services/modules/passes/pages/PassPage.vue'
+                ),
         },
         {
             path: `/${ROUTE_NAME}/add`,
             name: `${ROUTE_NAME}-add`,
             component: () =>
-                import('src/modules/services/passes/pages/PassFormPage.vue'),
+                import(
+                    'src/modules/services/modules/passes/pages/PassFormPage.vue'
+                ),
             meta: {
                 toolbar: 'DetailToolbar',
                 title: 'tariff.createPass',
@@ -30,7 +34,9 @@ const passesRoutes: RouteRecordRaw = {
             path: `/${ROUTE_NAME}/:id`,
             name: `${ROUTE_NAME}-edit`,
             component: () =>
-                import('src/modules/services/passes/pages/PassFormPage.vue'),
+                import(
+                    'src/modules/services/modules/passes/pages/PassFormPage.vue'
+                ),
             meta: {
                 toolbar: 'DetailToolbar',
                 title: 'tariff.editPass',

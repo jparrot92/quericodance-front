@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
-import tariffsRoutes from '../tariffs/router';
-import passesRoutes from '../passes/router';
+import tariffsRoutes from '../modules/tariffs/router';
+import passesRoutes from '../modules/passes/router';
 
 const servicesRoutes: RouteRecordRaw[] = [tariffsRoutes, passesRoutes];
 
