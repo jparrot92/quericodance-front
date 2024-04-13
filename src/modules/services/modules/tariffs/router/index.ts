@@ -34,7 +34,9 @@ const tariffsRoutes: RouteRecordRaw = {
             path: `/${ROUTE_NAME}/:id`,
             name: `${ROUTE_NAME}-edit`,
             component: () =>
-                import('src/modules/services/tariffs/pages/TariffFormPage.vue'),
+                import(
+                    'src/modules/services/modules/tariffs/pages/TariffFormPage.vue'
+                ),
             meta: {
                 toolbar: 'DetailToolbar',
                 title: 'tariff.editTariff',
