@@ -31,12 +31,7 @@ const routes: RouteRecordRaw[] = [
     {
         ...activitiesRoutes,
     },
-    {
-        ...servicesRoutes[0],
-    },
-    {
-        ...servicesRoutes[1],
-    },
+    ...servicesRoutes,
     //default route redirection
     { path: '/', redirect: { name: 'appointments-list' } },
     /*{
