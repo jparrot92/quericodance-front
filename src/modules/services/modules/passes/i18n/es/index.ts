@@ -1,17 +1,14 @@
 export default {
     pass: {
-        createPass: 'Crear tarifa',
+        createPass: 'Crear abono',
         price: 'Precio',
         sessions: 'Sesiones',
-        intensity: 'Intensidad',
-        editPass: 'Editar tarifa',
+        editPass: 'Editar abono',
         name: 'Nombre',
         description: 'Descripción',
-        createdSuccessfully: 'Tarifa creada correctamente',
-        updatedSuccessfully: 'Tarifa modificada correctamente',
-        deleteSuccessfully: 'Tarifa eliminada correctamente',
-        delete: '¿Realmente desea eliminar esta tarifa?',
-        sessionFrequency: 'Frecuencia',
-        paymentFrequency: 'Pago',
+        createdSuccessfully: 'Abono creada correctamente',
+        updatedSuccessfully: 'Abono modificada correctamente',
+        deleteSuccessfully: 'Abono eliminada correctamente',
+        delete: '¿Realmente desea eliminar este abono?',
     },
 };

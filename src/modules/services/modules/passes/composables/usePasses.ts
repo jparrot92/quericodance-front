@@ -31,8 +31,6 @@ const usePasses = () => {
         id: 0,
         name: '',
         sessions: null,
-        sessionFrequency: SessionFrequency.WEEKLY,
-        paymentFrequency: PaymentFrequency.MONTHLY,
         price: null,
         description: '',
     });

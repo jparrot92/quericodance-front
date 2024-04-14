@@ -1,17 +1,14 @@
 export default {
     personalClass: {
-        createPersonalClass: 'Crear tarifa',
+        createPersonalClass: 'Crear clase personal',
         price: 'Precio',
         sessions: 'Sesiones',
-        intensity: 'Intensidad',
-        editPersonalClass: 'Editar tarifa',
+        editPersonalClass: 'Editar clase personal',
         name: 'Nombre',
         description: 'Descripción',
-        createdSuccessfully: 'Tarifa creada correctamente',
-        updatedSuccessfully: 'Tarifa modificada correctamente',
-        deleteSuccessfully: 'Tarifa eliminada correctamente',
-        delete: '¿Realmente desea eliminar esta tarifa?',
-        sessionFrequency: 'Frecuencia',
-        paymentFrequency: 'Pago',
+        createdSuccessfully: 'Clase personal creada correctamente',
+        updatedSuccessfully: 'Clase personal modificada correctamente',
+        deleteSuccessfully: 'Clase personal eliminada correctamente',
+        delete: '¿Realmente desea eliminar esta clase personal?',
     },
 };

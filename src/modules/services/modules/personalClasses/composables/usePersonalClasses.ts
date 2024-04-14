@@ -31,8 +31,6 @@ const usePersonalClasses = () => {
         id: 0,
         name: '',
         sessions: null,
-        sessionFrequency: SessionFrequency.WEEKLY,
-        paymentFrequency: PaymentFrequency.MONTHLY,
         price: null,
         description: '',
     });
@@ -63,7 +61,9 @@ const usePersonalClasses = () => {
     const savePersonalClass = async () => {
         try {
             loading.value = true;
-            const personalClassData = await createPersonalClass(personalClass.value);
+            const personalClassData = await createPersonalClass(
+                personalClass.value
+            );
             notifySuccess(t('personalClass.createdSuccessfully'));
             router.replace({
                 name: 'personalClasses-edit',
@@ -79,7 +79,10 @@ const usePersonalClasses = () => {
     const editPersonalClass = async (id: string) => {
         try {
             loading.value = true;
-            personalClass.value = await updatePersonalClass(id, personalClass.value);
+            personalClass.value = await updatePersonalClass(
+                id,
+                personalClass.value
+            );
             notifySuccess(t('personalClass.updatedSuccessfully'));
         } catch (error) {
             notifyError(error);

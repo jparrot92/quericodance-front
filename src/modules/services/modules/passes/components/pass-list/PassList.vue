@@ -35,20 +35,6 @@ const columnsPass: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'sessionFrequency',
-        align: 'left',
-        label: t('pass.sessionFrequency'),
-        field: (row) => t('shared.enum.' + row.sessionFrequency),
-        sortable: true,
-    },
-    {
-        name: 'paymentFrequency',
-        align: 'left',
-        label: t('pass.paymentFrequency'),
-        field: (row) => t('shared.enum.' + row.paymentFrequency),
-        sortable: true,
-    },
-    {
         name: 'price',
         align: 'left',
         label: t('pass.price'),

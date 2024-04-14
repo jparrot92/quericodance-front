@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
-
-import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import usePersonalClasses from '../composables/usePersonalClasses';
 
@@ -13,11 +10,12 @@ const idPersonalClass = computed<string | undefined>(() =>
     route.params.id?.toString()
 );
 
-const { generateEnumOptions } = useEnumOptions();
-const { personalClass, loadPersonalClass, savePersonalClass, editPersonalClass } = usePersonalClasses();
-
-const sessionFrequency = generateEnumOptions(SessionFrequency);
-const paymentFrequency = generateEnumOptions(PaymentFrequency);
+const {
+    personalClass,
+    loadPersonalClass,
+    savePersonalClass,
+    editPersonalClass,
+} = usePersonalClasses();
 
 const onSubmit = async () => {
     if (idPersonalClass.value) {
@@ -50,18 +48,6 @@ onMounted(() => {
                     type="number"
                     :label="$t('personalClass.sessions') + '*'"
                     v-model.number="personalClass.sessions"
-                />
-
-                <pd-select
-                    v-model="personalClass.sessionFrequency"
-                    :label="$t('personalClass.sessionFrequency') + '*'"
-                    :options="sessionFrequency"
-                />
-
-                <pd-select
-                    v-model="personalClass.paymentFrequency"
-                    :label="$t('personalClass.paymentFrequency') + '*'"
-                    :options="paymentFrequency"
                 />
 
                 <q-input

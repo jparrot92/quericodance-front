@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
-
-import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import usePasses from '../composables/usePasses';
 
 const route = useRoute();
 
-const idPass = computed<string | undefined>(() =>
-    route.params.id?.toString()
-);
+const idPass = computed<string | undefined>(() => route.params.id?.toString());
 
-const { generateEnumOptions } = useEnumOptions();
 const { pass, loadPass, savePass, editPass } = usePasses();
-
-const sessionFrequency = generateEnumOptions(SessionFrequency);
-const paymentFrequency = generateEnumOptions(PaymentFrequency);
 
 const onSubmit = async () => {
     if (idPass.value) {
@@ -41,27 +32,12 @@ onMounted(() => {
                 class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
                 @submit.prevent="onSubmit"
             >
-                <q-input
-                    :label="$t('pass.name') + '*'"
-                    v-model="pass.name"
-                />
+                <q-input :label="$t('pass.name') + '*'" v-model="pass.name" />
 
                 <q-input
                     type="number"
                     :label="$t('pass.sessions') + '*'"
                     v-model.number="pass.sessions"
-                />
-
-                <pd-select
-                    v-model="pass.sessionFrequency"
-                    :label="$t('pass.sessionFrequency') + '*'"
-                    :options="sessionFrequency"
-                />
-
-                <pd-select
-                    v-model="pass.paymentFrequency"
-                    :label="$t('pass.paymentFrequency') + '*'"
-                    :options="paymentFrequency"
                 />
 
                 <q-input

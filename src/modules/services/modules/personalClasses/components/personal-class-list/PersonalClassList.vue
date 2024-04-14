@@ -9,7 +9,8 @@ import MenuList from 'src/shared/components/MenuList.vue';
 
 import usePersonalClasses from '../../composables/usePersonalClasses';
 
-const { loading, personalClasses, loadPersonalClasses, removePersonalClass } = usePersonalClasses();
+const { loading, personalClasses, loadPersonalClasses, removePersonalClass } =
+    usePersonalClasses();
 
 const $q = useQuasar();
 
@@ -32,20 +33,6 @@ const columnsPersonalClass: ColumnTable[] = [
         align: 'left',
         label: t('personalClass.sessions'),
         field: 'sessions',
-        sortable: true,
-    },
-    {
-        name: 'sessionFrequency',
-        align: 'left',
-        label: t('personalClass.sessionFrequency'),
-        field: (row) => t('shared.enum.' + row.sessionFrequency),
-        sortable: true,
-    },
-    {
-        name: 'paymentFrequency',
-        align: 'left',
-        label: t('personalClass.paymentFrequency'),
-        field: (row) => t('shared.enum.' + row.paymentFrequency),
         sortable: true,
     },
     {
@@ -77,7 +64,9 @@ const columnsPersonalClass: ColumnTable[] = [
             :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <span class="text-h6"> {{ $t('shared.personalClasses') }} </span>
+                <span class="text-h6">
+                    {{ $t('shared.personalClasses') }}
+                </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
@@ -128,7 +117,9 @@ const columnsPersonalClass: ColumnTable[] = [
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
-                            <q-item-section @click="removePersonalClass(props.row.id)">
+                            <q-item-section
+                                @click="removePersonalClass(props.row.id)"
+                            >
                                 {{ $t('user.label.delete') }}
                             </q-item-section>
                         </q-item>
