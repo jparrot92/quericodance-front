@@ -7,51 +7,51 @@ import { ColumnTable } from 'src/types/UtilTypes';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import usePasses from '../../composables/usePasses';
+import usePersonalClasses from '../../composables/usePersonalClasses';
 
-const { loading, passes, loadPasses, removePass } = usePasses();
+const { loading, personalClasses, loadPersonalClasses, removePersonalClass } = usePersonalClasses();
 
 const $q = useQuasar();
 
 const { t } = useI18n();
 
 onMounted(() => {
-    loadPasses();
+    loadPersonalClasses();
 });
 
-const columnsPass: ColumnTable[] = [
+const columnsPersonalClass: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('pass.name'),
+        label: t('personalClass.name'),
         field: 'name',
         sortable: false,
     },
     {
         name: 'sessions',
         align: 'left',
-        label: t('pass.sessions'),
+        label: t('personalClass.sessions'),
         field: 'sessions',
         sortable: true,
     },
     {
         name: 'sessionFrequency',
         align: 'left',
-        label: t('pass.sessionFrequency'),
+        label: t('personalClass.sessionFrequency'),
         field: (row) => t('shared.enum.' + row.sessionFrequency),
         sortable: true,
     },
     {
         name: 'paymentFrequency',
         align: 'left',
-        label: t('pass.paymentFrequency'),
+        label: t('personalClass.paymentFrequency'),
         field: (row) => t('shared.enum.' + row.paymentFrequency),
         sortable: true,
     },
     {
         name: 'price',
         align: 'left',
-        label: t('pass.price'),
+        label: t('personalClass.price'),
         field: 'price',
         sortable: false,
     },
@@ -68,8 +68,8 @@ const columnsPass: ColumnTable[] = [
 <template>
     <div class="row">
         <q-table
-            :rows="passes"
-            :columns="columnsPass"
+            :rows="personalClasses"
+            :columns="columnsPersonalClass"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
@@ -77,17 +77,17 @@ const columnsPass: ColumnTable[] = [
             :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <span class="text-h6"> {{ $t('shared.passes') }} </span>
+                <span class="text-h6"> {{ $t('shared.personalClasses') }} </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    :label="$t('pass.createPass')"
+                    :label="$t('personalClass.createPersonalClass')"
                     color="primary"
                     icon="mdi-plus"
                     dense
                     @click="
                         $router.push({
-                            name: 'passes-add',
+                            name: 'personalClasses-add',
                         })
                     "
                 />
@@ -119,7 +119,7 @@ const columnsPass: ColumnTable[] = [
                             <q-item-section
                                 @click="
                                     $router.push({
-                                        name: 'passes-edit',
+                                        name: 'personalClasses-edit',
                                         params: { id: props.row.id },
                                     })
                                 "
@@ -128,7 +128,7 @@ const columnsPass: ColumnTable[] = [
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
-                            <q-item-section @click="removePass(props.row.id)">
+                            <q-item-section @click="removePersonalClass(props.row.id)">
                                 {{ $t('user.label.delete') }}
                             </q-item-section>
                         </q-item>

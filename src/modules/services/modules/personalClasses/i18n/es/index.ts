@@ -1,10 +1,10 @@
 export default {
-    pass: {
-        createPass: 'Crear tarifa',
+    personalClass: {
+        createPersonalClass: 'Crear tarifa',
         price: 'Precio',
         sessions: 'Sesiones',
         intensity: 'Intensidad',
-        editPass: 'Editar tarifa',
+        editPersonalClass: 'Editar tarifa',
         name: 'Nombre',
         description: 'Descripción',
         createdSuccessfully: 'Tarifa creada correctamente',

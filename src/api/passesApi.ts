@@ -1,15 +1,15 @@
 import { api } from 'boot/axios';
-import { Tariff } from 'src/modules/tariffs/models/tariff';
+import { Pass } from 'src/modules/services/modules/passes/models/pass';
 import { handleError } from './errorApi';
 
-const tariffsEndpoint = '/tariffs';
+const tariffsEndpoint = '/passes';
 
 api.defaults.headers.common['Authorization'] =
     'Bearer ' + localStorage.getItem('token');
 
-export const listPasses = async (): Promise<Tariff[]> => {
+export const listPasses = async (): Promise<Pass[]> => {
     try {
-        const { data } = await api.get<Tariff[]>(tariffsEndpoint);
+        const { data } = await api.get<Pass[]>(tariffsEndpoint);
 
         return data;
     } catch (error) {
@@ -17,9 +17,9 @@ export const listPasses = async (): Promise<Tariff[]> => {
     }
 };
 
-export const getTariff = async (id: string): Promise<Tariff> => {
+export const getPass = async (id: string): Promise<Pass> => {
     try {
-        const { data } = await api.get<Tariff>(`${tariffsEndpoint}/${id}`);
+        const { data } = await api.get<Pass>(`${tariffsEndpoint}/${id}`);
 
         return data;
     } catch (error) {
@@ -27,9 +27,9 @@ export const getTariff = async (id: string): Promise<Tariff> => {
     }
 };
 
-export const createTariff = async (tariff: Tariff): Promise<Tariff> => {
+export const createPass = async (pass: Pass): Promise<Pass> => {
     try {
-        const { data } = await api.post<Tariff>(tariffsEndpoint, tariff);
+        const { data } = await api.post<Pass>(tariffsEndpoint, pass);
 
         return data;
     } catch (error) {
@@ -37,15 +37,9 @@ export const createTariff = async (tariff: Tariff): Promise<Tariff> => {
     }
 };
 
-export const updateTariff = async (
-    id: string,
-    tariff: Tariff
-): Promise<Tariff> => {
+export const updatePass = async (id: string, pass: Pass): Promise<Pass> => {
     try {
-        const { data } = await api.put<Tariff>(
-            `${tariffsEndpoint}/${id}`,
-            tariff
-        );
+        const { data } = await api.put<Pass>(`${tariffsEndpoint}/${id}`, pass);
 
         return data;
     } catch (error) {
@@ -53,42 +47,9 @@ export const updateTariff = async (
     }
 };
 
-export const uploadPhoto = async (id: number, file: File): Promise<string> => {
+export const deletePass = async (id: string): Promise<Pass> => {
     try {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const { data } = await api.post<{ imageUrl: string }>(
-            `${tariffsEndpoint}/${id}/profile-picture`,
-            formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            }
-        );
-
-        return data.imageUrl;
-    } catch (error) {
-        throw handleError(error);
-    }
-};
-
-export const deleteTariff = async (id: string): Promise<Tariff> => {
-    try {
-        const { data } = await api.delete<Tariff>(`${tariffsEndpoint}/${id}`);
-
-        return data;
-    } catch (error) {
-        throw handleError(error);
-    }
-};
-
-export const deletePhoto = async (id: number): Promise<Tariff> => {
-    try {
-        const { data } = await api.delete<Tariff>(
-            `${tariffsEndpoint}/${id}/profile-picture`
-        );
+        const { data } = await api.delete<Pass>(`${tariffsEndpoint}/${id}`);
 
         return data;
     } catch (error) {

@@ -7,16 +7,16 @@ import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
 import useNotify from 'src/shared/composables/useNotify';
 
 import {
-    listPasses,
-    getPass,
-    createPass,
-    updatePass,
-    deletePass,
-} from 'src/api/passesApi';
+    listPersonalClasses,
+    getPersonalClass,
+    createPersonalClass,
+    updatePersonalClass,
+    deletePersonalClass,
+} from 'src/api/personalClassesApi';
 
-import { Pass } from '../models/pass';
+import { PersonalClass } from '../models/personalClass';
 
-const usePasses = () => {
+const usePersonalClasses = () => {
     const router = useRouter();
 
     const $q = useQuasar();
@@ -26,8 +26,8 @@ const usePasses = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const passes = ref<Pass[]>([]);
-    const pass = ref<Pass>({
+    const personalClasses = ref<PersonalClass[]>([]);
+    const personalClass = ref<PersonalClass>({
         id: 0,
         name: '',
         sessions: null,
@@ -37,11 +37,11 @@ const usePasses = () => {
         description: '',
     });
 
-    const loadPasses = async () => {
+    const loadPersonalClasses = async () => {
         try {
-            passes.value = [];
+            personalClasses.value = [];
             loading.value = true;
-            passes.value = await listPasses();
+            personalClasses.value = await listPersonalClasses();
         } catch (error) {
             notifyError(error);
         } finally {
@@ -49,10 +49,10 @@ const usePasses = () => {
         }
     };
 
-    const loadPass = async (id: string) => {
+    const loadPersonalClass = async (id: string) => {
         try {
             loading.value = true;
-            pass.value = await getPass(id);
+            personalClass.value = await getPersonalClass(id);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -60,14 +60,14 @@ const usePasses = () => {
         }
     };
 
-    const savePass = async () => {
+    const savePersonalClass = async () => {
         try {
             loading.value = true;
-            const passData = await createPass(pass.value);
-            notifySuccess(t('pass.createdSuccessfully'));
+            const personalClassData = await createPersonalClass(personalClass.value);
+            notifySuccess(t('personalClass.createdSuccessfully'));
             router.replace({
-                name: 'passes-edit',
-                params: { id: passData.id },
+                name: 'personalClasses-edit',
+                params: { id: personalClassData.id },
             });
         } catch (error) {
             notifyError(error);
@@ -76,11 +76,11 @@ const usePasses = () => {
         }
     };
 
-    const editPass = async (id: string) => {
+    const editPersonalClass = async (id: string) => {
         try {
             loading.value = true;
-            pass.value = await updatePass(id, pass.value);
-            notifySuccess(t('pass.updatedSuccessfully'));
+            personalClass.value = await updatePersonalClass(id, personalClass.value);
+            notifySuccess(t('personalClass.updatedSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -88,17 +88,17 @@ const usePasses = () => {
         }
     };
 
-    const removePass = async (id: string) => {
+    const removePersonalClass = async (id: string) => {
         $q.dialog({
             title: t('shared.confirmation'),
-            message: t('pass.delete'),
+            message: t('personalClass.delete'),
             cancel: true,
             persistent: true,
         }).onOk(async () => {
             try {
-                await deletePass(id);
-                notifySuccess(t('pass.deleteSuccessfully'));
-                await loadPasses();
+                await deletePersonalClass(id);
+                notifySuccess(t('personalClass.deleteSuccessfully'));
+                await loadPersonalClasses();
             } catch (error) {
                 notifyError(error);
             }
@@ -108,14 +108,14 @@ const usePasses = () => {
     return {
         // Properties
         loading,
-        passes,
-        pass,
-        loadPasses,
-        loadPass,
-        savePass,
-        editPass,
-        removePass,
+        personalClasses,
+        personalClass,
+        loadPersonalClasses,
+        loadPersonalClass,
+        savePersonalClass,
+        editPersonalClass,
+        removePersonalClass,
     };
 };
 
-export default usePasses;
+export default usePersonalClasses;

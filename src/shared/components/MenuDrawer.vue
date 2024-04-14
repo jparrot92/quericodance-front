@@ -52,7 +52,7 @@ const itemsMenu: ItemMenu[] = [
             {
                 title: t('shared.personalClasses'),
                 icon: 'school',
-                link: 'activities-list',
+                link: 'personalClasses-list',
                 level: 0.5,
                 children: [],
             },

@@ -5,31 +5,31 @@ import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
-import usePasses from '../composables/usePasses';
+import usePersonalClasses from '../composables/usePersonalClasses';
 
 const route = useRoute();
 
-const idPass = computed<string | undefined>(() =>
+const idPersonalClass = computed<string | undefined>(() =>
     route.params.id?.toString()
 );
 
 const { generateEnumOptions } = useEnumOptions();
-const { pass, loadPass, savePass, editPass } = usePasses();
+const { personalClass, loadPersonalClass, savePersonalClass, editPersonalClass } = usePersonalClasses();
 
 const sessionFrequency = generateEnumOptions(SessionFrequency);
 const paymentFrequency = generateEnumOptions(PaymentFrequency);
 
 const onSubmit = async () => {
-    if (idPass.value) {
-        editPass(idPass.value);
+    if (idPersonalClass.value) {
+        editPersonalClass(idPersonalClass.value);
     } else {
-        savePass();
+        savePersonalClass();
     }
 };
 
 onMounted(() => {
-    if (idPass.value) {
-        loadPass(idPass.value);
+    if (idPersonalClass.value) {
+        loadPersonalClass(idPersonalClass.value);
     }
 });
 </script>
@@ -42,37 +42,37 @@ onMounted(() => {
                 @submit.prevent="onSubmit"
             >
                 <q-input
-                    :label="$t('pass.name') + '*'"
-                    v-model="pass.name"
+                    :label="$t('personalClass.name') + '*'"
+                    v-model="personalClass.name"
                 />
 
                 <q-input
                     type="number"
-                    :label="$t('pass.sessions') + '*'"
-                    v-model.number="pass.sessions"
+                    :label="$t('personalClass.sessions') + '*'"
+                    v-model.number="personalClass.sessions"
                 />
 
                 <pd-select
-                    v-model="pass.sessionFrequency"
-                    :label="$t('pass.sessionFrequency') + '*'"
+                    v-model="personalClass.sessionFrequency"
+                    :label="$t('personalClass.sessionFrequency') + '*'"
                     :options="sessionFrequency"
                 />
 
                 <pd-select
-                    v-model="pass.paymentFrequency"
-                    :label="$t('pass.paymentFrequency') + '*'"
+                    v-model="personalClass.paymentFrequency"
+                    :label="$t('personalClass.paymentFrequency') + '*'"
                     :options="paymentFrequency"
                 />
 
                 <q-input
                     type="number"
-                    :label="$t('pass.price') + '*'"
-                    v-model.number="pass.price"
+                    :label="$t('personalClass.price') + '*'"
+                    v-model.number="personalClass.price"
                 />
 
                 <q-input
-                    v-model="pass.description"
-                    :label="$t('pass.description') + '*'"
+                    v-model="personalClass.description"
+                    :label="$t('personalClass.description') + '*'"
                     type="textarea"
                 />
 

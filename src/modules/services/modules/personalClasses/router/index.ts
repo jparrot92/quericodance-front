@@ -1,11 +1,11 @@
 import { RouteRecordRaw } from 'vue-router';
 
-const ROUTE_NAME = 'passes';
+const ROUTE_NAME = 'personalClasses';
 
-const passesRoutes: RouteRecordRaw = {
+const personalClassesRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
     component: () =>
-        import('src/modules/services/modules/passes/layouts/PassLayout.vue'),
+        import('src/modules/services/modules/personalClasses/layouts/PersonalClassLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,
@@ -15,7 +15,7 @@ const passesRoutes: RouteRecordRaw = {
             },
             component: () =>
                 import(
-                    'src/modules/services/modules/passes/pages/PassPage.vue'
+                    'src/modules/services/modules/personalClasses/pages/PersonalClassPage.vue'
                 ),
         },
         {
@@ -23,11 +23,11 @@ const passesRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-add`,
             component: () =>
                 import(
-                    'src/modules/services/modules/passes/pages/PassFormPage.vue'
+                    'src/modules/services/modules/personalClasses/pages/PersonalClassFormPage.vue'
                 ),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'pass.createPass',
+                title: 'personalClass.createPersonalClass',
             },
         },
         {
@@ -35,11 +35,11 @@ const passesRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-edit`,
             component: () =>
                 import(
-                    'src/modules/services/modules/passes/pages/PassFormPage.vue'
+                    'src/modules/services/modules/personalClasses/pages/PersonalClassFormPage.vue'
                 ),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'pass.editPass',
+                title: 'personalClass.editPersonalClass',
             },
             props: (route) => {
                 return {
@@ -50,4 +50,4 @@ const passesRoutes: RouteRecordRaw = {
     ],
 };
 
-export default passesRoutes;
+export default personalClassesRoutes;
