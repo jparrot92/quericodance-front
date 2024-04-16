@@ -70,10 +70,9 @@ onMounted(() => {
                     v-model.number="tariff.price"
                 />
 
-                <q-input
-                    v-model="tariff.description"
+                <pd-editor
                     :label="$t('tariff.description') + '*'"
-                    type="textarea"
+                    v-model="tariff.description"
                 />
 
                 <q-btn

@@ -42,10 +42,7 @@ const onSubmit = async () => {
                 class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
                 @submit.prevent="onSubmit"
             >
-                <q-input
-                    v-model="selectedStudent.observations"
-                    type="textarea"
-                />
+                <pd-editor v-model="selectedStudent.observations" />
 
                 <q-btn
                     :label="$t('user.label.save')"

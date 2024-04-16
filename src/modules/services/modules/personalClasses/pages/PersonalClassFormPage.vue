@@ -56,10 +56,9 @@ onMounted(() => {
                     v-model.number="personalClass.price"
                 />
 
-                <q-input
-                    v-model="personalClass.description"
+                <pd-editor
                     :label="$t('personalClass.description') + '*'"
-                    type="textarea"
+                    v-model="personalClass.description"
                 />
 
                 <q-btn
