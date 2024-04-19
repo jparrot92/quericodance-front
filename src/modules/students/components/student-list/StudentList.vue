@@ -273,7 +273,7 @@ const chooseFile = () => {
                 <q-td :props="props">
                     <a
                         @click.stop
-                        :href="'https://wa.me/34' + props.row.user.phone"
+                        :href="'https://wa.me/' + props.row.user.phone"
                         target="_blank"
                     >
                         {{ props.row.user.phone }}
