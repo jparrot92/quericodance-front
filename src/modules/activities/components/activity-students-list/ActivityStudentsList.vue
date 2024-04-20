@@ -81,6 +81,7 @@ const filterTable = (studentFilter: StudentFilter) => {
                     );
                 }
             });
+        showProfitability.value = studentFilter.showProfitability;
     }
 };
 
@@ -242,10 +243,6 @@ const handleSendMail = async (student: Student) => {
                     {{ activity.startHour }}
                 </span>
                 <q-space />
-                <q-toggle
-                    :label="$t('activity.label.showProfitability')"
-                    v-model="showProfitability"
-                ></q-toggle>
 
                 <!-- <q-btn
                     v-if="$q.platform.is.desktop"
@@ -255,7 +252,7 @@ const handleSendMail = async (student: Student) => {
                     dense
                     @click="showModalAddActivity = true"
                 /> -->
-
+                <ActivityStudentsListFilter @filter-table="filterTable" />
                 <div class="col-12">
                     <div class="row">
                         <div class="col-4">
@@ -303,7 +300,6 @@ const handleSendMail = async (student: Student) => {
                         </template>
                     </div>
                 </div>
-                <ActivityStudentsListFilter @filter-table="filterTable" />
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">

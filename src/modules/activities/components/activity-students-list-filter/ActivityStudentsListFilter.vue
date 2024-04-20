@@ -18,6 +18,7 @@ const studentFilter = ref<StudentFilter>({
     textFilter: '',
     paymentStatus: null,
     danceRole: null,
+    showProfitability: false,
 });
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
@@ -79,6 +80,12 @@ const initDanceRole = () => {
                     />
                 </template>
             </q-select>
+            <q-toggle
+                class="col-3"
+                :label="$t('activity.label.showProfitability')"
+                v-model="studentFilter.showProfitability"
+                @update:model-value="emits('filterTable', studentFilter)"
+            ></q-toggle>
         </div>
     </div>
 </template>
