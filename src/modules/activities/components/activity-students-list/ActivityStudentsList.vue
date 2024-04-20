@@ -318,9 +318,7 @@ const handleSendMail = async (student: Student) => {
                 <q-td :props="props">
                     <a
                         @click.stop
-                        :href="
-                            'https://wa.me/34' + props.row.student.user.phone
-                        "
+                        :href="'https://wa.me/' + props.row.student.user.phone"
                         target="_blank"
                     >
                         {{ props.row.student.user.phone }}
