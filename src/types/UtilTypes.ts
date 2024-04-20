@@ -34,13 +34,13 @@ export enum DanceRole {
 }
 
 export enum WeekDay {
-    SUNDAY = 'SU',
     MONDAY = 'MO',
     TUESDAY = 'TU',
     WEDNESDAY = 'WE',
     THURSDAY = 'TH',
     FRIDAY = 'FR',
     SATURDAY = 'SA',
+    SUNDAY = 'SU',
 }
 
 export enum SessionFrequency {

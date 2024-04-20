@@ -34,4 +34,6 @@ export interface ActivityCounters {
 
 export interface ActivityFilter {
     textFilter: string;
+    day: string;
+    showProfitability: boolean;
 }

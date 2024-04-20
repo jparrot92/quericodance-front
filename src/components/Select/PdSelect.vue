@@ -35,5 +35,8 @@ const [model] = defineModel();
                 </q-item-section>
             </q-item>
         </template>
+        <template v-slot:append>
+            <slot name="append"></slot>
+        </template>
     </q-select>
 </template>

@@ -22,16 +22,23 @@ const activitiesFilter = ref<ActivityList[]>();
 const showProfitability = ref(false);
 
 const filterTable = (activityFilter: ActivityFilter) => {
-    activitiesFilter.value = activities.value.filter(
-        (activity: ActivityList) => {
+    activitiesFilter.value = activities.value
+        .filter((activity: ActivityList) => {
             const activityFullName =
                 activity.name.toLowerCase() + activity.level;
 
             return activityFullName.includes(
                 activityFilter.textFilter.replace(/\s/g, '').toLowerCase()
             );
-        }
-    );
+        })
+        .filter((activity: ActivityList) => {
+            if (activityFilter.day === '') {
+                return true;
+            } else {
+                return activity.day === activityFilter.day;
+            }
+        });
+    showProfitability.value = activityFilter.showProfitability;
 };
 
 const filteredColumns = computed(() => {
@@ -206,10 +213,6 @@ const onRowClick = (evt: Event, row: ActivityList) => {
                     {{ $t('activity.label.activities') }}
                 </span>
                 <q-space />
-                <q-toggle
-                    :label="$t('activity.label.showProfitability')"
-                    v-model="showProfitability"
-                ></q-toggle>
                 <q-btn
                     v-if="$q.platform.is.desktop"
                     class="q-ml-sm"
