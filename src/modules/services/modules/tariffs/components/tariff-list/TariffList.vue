@@ -25,7 +25,7 @@ const columnsTariff: ColumnTable[] = [
         align: 'left',
         label: t('tariff.name'),
         field: 'name',
-        sortable: false,
+        sortable: true,
     },
     {
         name: 'sessions',
@@ -53,7 +53,7 @@ const columnsTariff: ColumnTable[] = [
         align: 'left',
         label: t('tariff.price'),
         field: 'price',
-        sortable: false,
+        sortable: true,
     },
     {
         name: 'actions',
