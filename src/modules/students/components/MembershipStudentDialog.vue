@@ -33,7 +33,6 @@ const handleMembership = async () => {
         await saveMembership();
     }
 
-    debugger;
     if (membershipView.value) {
         emits('update-membership', membershipView.value);
         emits('close');
