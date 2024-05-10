@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
+import { SessionFrequency } from 'src/types/UtilTypes';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
@@ -17,7 +17,6 @@ const { generateEnumOptions } = useEnumOptions();
 const { tariff, loadTariff, saveTariff, editTariff } = useTariffs();
 
 const sessionFrequency = generateEnumOptions(SessionFrequency);
-const paymentFrequency = generateEnumOptions(PaymentFrequency);
 
 const onSubmit = async () => {
     if (idTariff.value) {
@@ -56,12 +55,6 @@ onMounted(() => {
                     v-model="tariff.sessionFrequency"
                     :label="$t('tariff.sessionFrequency') + '*'"
                     :options="sessionFrequency"
-                />
-
-                <pd-select
-                    v-model="tariff.paymentFrequency"
-                    :label="$t('tariff.paymentFrequency') + '*'"
-                    :options="paymentFrequency"
                 />
 
                 <q-input

@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router';
 import useStudents from '../composables/useStudents';
 
 import StudentFormPage from './StudentFormPage.vue';
+import MembershipStudentFormPage from './MembershipStudentFormPage.vue';
 import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
 import ObservationsStudentFormPage from './ObservationsStudentFormPage.vue';
 
@@ -38,6 +39,7 @@ onMounted(() => {
                 name="student-data"
                 :label="$t('student.label.studentData')"
             />
+            <q-tab name="membership" :label="$t('student.membership')" />
             <q-tab name="courses" :label="$t('student.label.courses')" />
             <q-tab
                 name="observations"
@@ -50,6 +52,13 @@ onMounted(() => {
         <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="student-data">
                 <student-form-page :student="student" />
+            </q-tab-panel>
+
+            <q-tab-panel name="membership">
+                <membership-student-form-page
+                    :id-student="student.id"
+                    :membership="student.membership"
+                />
             </q-tab-panel>
 
             <q-tab-panel name="courses">

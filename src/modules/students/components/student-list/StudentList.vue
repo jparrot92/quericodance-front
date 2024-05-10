@@ -242,7 +242,10 @@ const chooseFile = () => {
                     "
                 />
 
-                <StudentListFilter @filter-table="filterTable" />
+                <StudentListFilter
+                    @filter-table="filterTable"
+                    class="q-mt-sm"
+                />
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">

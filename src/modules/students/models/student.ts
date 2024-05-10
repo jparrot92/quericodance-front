@@ -1,6 +1,7 @@
 import { PaymentsStatus, Option } from 'src/types/UtilTypes';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 import { User } from 'src/modules/users/models/user';
+import { MembershipViewDTO } from './membership';
 
 export interface Student {
     id: number;
@@ -10,6 +11,7 @@ export interface Student {
     monthlyPayment: number;
     paymentStatus: PaymentsStatus;
     activitiesStudent?: ActivityStudent[];
+    membership: MembershipViewDTO;
 }
 
 export interface StudentFilter {

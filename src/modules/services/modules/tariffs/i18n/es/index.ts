@@ -12,6 +12,5 @@ export default {
         deleteSuccessfully: 'Tarifa eliminada correctamente',
         delete: '¿Realmente desea eliminar esta tarifa?',
         sessionFrequency: 'Frecuencia',
-        paymentFrequency: 'Pago',
     },
 };

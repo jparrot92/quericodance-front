@@ -17,6 +17,7 @@ const emits = defineEmits<Emits>();
 const studentFilter = ref<StudentFilter>({
     textFilter: '',
     paymentStatus: null,
+    showProfitability: false,
 });
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);

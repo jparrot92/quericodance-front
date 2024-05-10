@@ -1,6 +1,7 @@
 export default {
     shared: {
         save: 'Guardar',
+        edit: 'Editar',
         confirmation: 'Confirmación',
         profile: 'Perfil',
         logout: 'Cerrar sesión',

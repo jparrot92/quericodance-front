@@ -1,5 +1,16 @@
 export default {
     student: {
+        membership: 'Cuota',
+        addMembership: 'Crear cuota',
+        tariff: 'Tarifa',
+        paymentFrequency: 'Frecuencia pago',
+        payment: 'Pago',
+        paymentStatus: 'Estado pago',
+        paymentDate: 'Fecha pago',
+        notMembership:
+            'Este estudiante no tiene una cuota creada. Si desea crear una cuota haga clic en "Crear cuota"',
+        membershipCreatedSuccessfully: 'Cuota creada correctamente.',
+        editMembership: 'Editar cuota',
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',

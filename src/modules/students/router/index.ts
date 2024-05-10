@@ -8,7 +8,7 @@ const studentsRoutes: RouteRecordRaw = {
     children: [
         {
             path: `/${ROUTE_NAME}`,
-            name: `${ROUTE_NAME}-list`,
+            name: 'students-list',
             meta: {
                 toolbar: 'MainToolbar',
             },

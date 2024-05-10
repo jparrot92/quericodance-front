@@ -42,13 +42,6 @@ const columnsTariff: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'paymentFrequency',
-        align: 'left',
-        label: t('tariff.paymentFrequency'),
-        field: (row) => t('shared.enum.' + row.paymentFrequency),
-        sortable: true,
-    },
-    {
         name: 'price',
         align: 'left',
         label: t('tariff.price'),
