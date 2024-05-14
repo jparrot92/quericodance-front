@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { computed, defineProps, ref } from 'vue';
+import { defineProps, ref } from 'vue';
 import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 
 import { PaymentsStatus } from 'src/types/UtilTypes';
-import { PaymentFrequency } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import MembershipStudentDialog from '../components/MembershipStudentDialog.vue';
+import MembershipDialog from '../components/membership-dialog/MembershipDialog.vue';
+
 import { MembershipViewDTO } from '../models/membership';
 
 const props = withDefaults(
@@ -26,17 +27,6 @@ const paymentStatuses = generateEnumOptions(PaymentsStatus);
 
 const membership = ref<MembershipViewDTO>(props.membership);
 
-const paymentFrequency = computed<string>(() => {
-    if (membership.value.paymentFrequency === PaymentFrequency.TRIMESTRAL) {
-        return t('shared.enum.' + PaymentFrequency.TRIMESTRAL);
-    }
-    return t('shared.enum.' + PaymentFrequency.MONTHLY);
-});
-
-const paymentDate = computed<string>(() => {
-    return format(membership.value.paymentDate);
-});
-
 const updateMembership = async (membershipView: MembershipViewDTO) => {
     membership.value = membershipView;
 };
@@ -47,23 +37,46 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
         <div class="row justify-center">
             <div class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
                 <q-card v-if="membership" flat>
-                    <q-input
-                        :readonly="true"
-                        :label="$t('student.tariff')"
-                        v-model="membership.tariff.name"
-                    />
+                    <q-field :label="$t('student.tariff')" stack-label>
+                        <template v-slot:control>
+                            <div
+                                class="self-center full-width no-outline"
+                                tabindex="0"
+                            >
+                                {{ membership.tariff.name }}
+                            </div>
+                        </template>
+                    </q-field>
 
-                    <q-input
-                        :readonly="true"
+                    <q-field
                         :label="$t('student.paymentFrequency')"
-                        v-model="paymentFrequency"
-                    />
+                        stack-label
+                    >
+                        <template v-slot:control>
+                            <div
+                                class="self-center full-width no-outline"
+                                tabindex="0"
+                            >
+                                {{
+                                    t(
+                                        'shared.enum.' +
+                                            membership.paymentFrequency
+                                    )
+                                }}
+                            </div>
+                        </template>
+                    </q-field>
 
-                    <q-input
-                        :readonly="true"
-                        :label="$t('student.payment')"
-                        v-model="membership.payment"
-                    />
+                    <q-field :label="$t('student.payment')" stack-label>
+                        <template v-slot:control>
+                            <div
+                                class="self-center full-width no-outline"
+                                tabindex="0"
+                            >
+                                {{ membership.payment }}
+                            </div>
+                        </template>
+                    </q-field>
 
                     <pd-select
                         v-model="membership.paymentStatus"
@@ -71,11 +84,16 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
                         :options="paymentStatuses"
                     />
 
-                    <q-input
-                        :readonly="true"
-                        :label="$t('student.paymentDate')"
-                        v-model="paymentDate"
-                    />
+                    <q-field :label="$t('student.paymentDate')" stack-label>
+                        <template v-slot:control>
+                            <div
+                                class="self-center full-width no-outline"
+                                tabindex="0"
+                            >
+                                {{ format(membership.paymentDate) }}
+                            </div>
+                        </template>
+                    </q-field>
                 </q-card>
 
                 <q-card flat v-else>
