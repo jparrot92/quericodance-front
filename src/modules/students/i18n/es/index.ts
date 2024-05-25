@@ -11,6 +11,9 @@ export default {
             'Este estudiante no tiene una cuota creada. Si desea crear una cuota haga clic en "Crear cuota"',
         membershipCreatedSuccessfully: 'Cuota creada correctamente.',
         editMembership: 'Editar cuota',
+        courses: 'Cursos',
+        summary: 'Resumen',
+        role: 'Rol',
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',

@@ -1,10 +1,15 @@
 import { Tariff } from 'src/modules/services/modules/tariffs/models/tariff';
+import {
+    MembershipActivityDTO,
+    MembershipActivityViewDTO,
+} from './membershipActivity';
 
 export interface MembershipDTO {
     id: number;
     studentId: number;
     tariffId: number;
     paymentFrequency: string;
+    membershipActivities?: MembershipActivityDTO[];
 }
 
 export interface MembershipViewDTO {
@@ -15,4 +20,5 @@ export interface MembershipViewDTO {
     paymentStatus: string;
     tariff: Tariff;
     updateAt: Date;
+    membershipActivities?: MembershipActivityViewDTO[];
 }

@@ -28,6 +28,7 @@ const useMemberships = () => {
         studentId: 0,
         tariffId: 0,
         paymentFrequency: '',
+        membershipActivities: [],
     });
     const membershipView = ref<MembershipViewDTO>();
 
@@ -58,7 +59,6 @@ const useMemberships = () => {
         try {
             loading.value = true;
             membershipView.value = await createMembership(membership.value);
-            console.log(membershipView.value);
             notifySuccess(t('student.membershipCreatedSuccessfully'));
         } catch (error) {
             notifyError(error);

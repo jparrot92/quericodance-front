@@ -15,6 +15,20 @@ export interface ActivityForm {
     teachers?: Teacher[];
 }
 
+export interface ActivityForm {
+    id: number;
+    name: string;
+    level: number | null;
+    day: string;
+    startHour: string;
+    endHour: string;
+    numberPlaces: number | null;
+    price: number | null;
+    color: string;
+    teachersIds: number[];
+    teachers?: Teacher[];
+}
+
 export interface ActivityList extends ActivityForm {
     activitiesStudent?: ActivityStudent[];
     numberStudents?: string;
@@ -36,4 +50,16 @@ export interface ActivityFilter {
     textFilter: string;
     day: string;
     showProfitability: boolean;
+}
+
+export interface ActivityViewDTO {
+    id: number;
+    name: string;
+    level: number | null;
+    day: string;
+    startHour: string;
+    endHour: string;
+    numberPlaces: number | null;
+    price: number | null;
+    color: string;
 }
