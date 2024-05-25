@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { watch, onMounted, defineProps, ref } from 'vue';
+import { onMounted, defineProps, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { DanceRole } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
-import { MembershipDTO, MembershipViewDTO } from '../../models/membership';
+import { MembershipDTO } from '../../models/membership';
 import useMemberships from 'src/modules/students/composables/useMemberships';
-
 import useActivities from 'src/modules/activities/composables/useActivities';
-import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
-import { MembershipActivityDTO } from '../../models/membershipActivity';
+import { ActivityViewDTO } from 'src/modules/activities/models/activity';
 
 const props = withDefaults(
     defineProps<{
@@ -22,10 +20,10 @@ const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
 
 const { membership } = useMemberships();
-const { activities, activityStudent, loadActivities } = useActivities();
+const { activities, loadActivities } = useActivities();
 
 const roles = generateEnumOptions(DanceRole);
-const numActivities = ref<number>(3);
+const activitiesTariff = ref<ActivityViewDTO[]>([]);
 
 const addActivity = () => {
     membership.value.membershipActivities?.push({
@@ -39,12 +37,28 @@ const removeActivity = (index: number) => {
     membership.value.membershipActivities?.splice(index, 1);
 };
 
-onMounted(() => {
-    loadActivities();
+// Function to update activitiesTariff based on membershipActivities
+const updateActivitiesTariff = () => {
+    const activityIds =
+        membership.value.membershipActivities?.map(
+            (activity) => activity.activityId
+        ) || [];
+    activitiesTariff.value = activities.value.filter((activity) =>
+        activityIds.includes(activity.id)
+    );
+};
 
+onMounted(async () => {
+    await loadActivities();
     if (props.membershipStudent) {
         membership.value = props.membershipStudent;
     }
+    updateActivitiesTariff();
+});
+
+// Watch for changes in membershipActivities to update activitiesTariff
+watch(() => membership.value.membershipActivities, updateActivitiesTariff, {
+    deep: true,
 });
 </script>
 
@@ -54,26 +68,24 @@ onMounted(() => {
         :key="index"
     >
         <q-select
-            v-model="activityStudent.activity"
+            v-model="activitiesTariff[index]"
             :label="$t('student.label.course')"
             :options="activities"
             :option-value="'id'"
             @update:model-value="
                 activityStudent &&
-                    (activityStudent.activityId = activityStudent.activity.id)
+                    (activityStudent.activityId = activitiesTariff[index].id)
             "
         >
             <template v-slot:selected-item="{ opt }">
                 {{
-                    activityStudent.activity.id !== 0
-                        ? opt.name +
-                          ' ' +
-                          opt.level +
-                          ' - ' +
-                          t('shared.enum.' + opt.day) +
-                          ' ' +
-                          opt.startHour
-                        : ''
+                    opt.name +
+                    ' ' +
+                    opt.level +
+                    ' - ' +
+                    t('shared.enum.' + opt.day) +
+                    ' ' +
+                    opt.startHour
                 }}
             </template>
             <template v-slot:option="{ itemProps, opt }">
