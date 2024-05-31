@@ -1,7 +1,12 @@
 export default {
     shared: {
+        next: 'Siguiente',
+        cancel: 'Cancelar',
+        back: 'Atrás',
+        finish: 'Finalizar',
         save: 'Guardar',
         edit: 'Editar',
+        delete: 'Eliminar',
         confirmation: 'Confirmación',
         profile: 'Perfil',
         logout: 'Cerrar sesión',
@@ -22,7 +27,6 @@ export default {
         selectPhoto: 'Seleccionar foto',
         deleteCurrentPhoto: 'Eliminar foto actual',
         importExcel: 'Importar Excel',
-        cancel: 'Cancelar',
         resetPayments: 'Reiniciar cobros',
         search: 'Buscar',
         enum: {

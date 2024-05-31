@@ -14,7 +14,7 @@ const props = withDefaults(
     }>(),
     {}
 );
-const emits = defineEmits(['nextStep']);
+const emits = defineEmits(['close', 'nextStep']);
 
 const { generateEnumOptions } = useEnumOptions();
 const { tariffs, loadTariffs } = useTariffs();
@@ -62,6 +62,18 @@ onMounted(async () => {
         />
     </q-form>
     <q-stepper-navigation>
-        <q-btn @click="emits('nextStep')" color="primary" label="Continue" />
+        <div class="row justify-between">
+            <q-btn
+                flat
+                @click="emits('close')"
+                color="primary"
+                :label="$t('shared.cancel')"
+            />
+            <q-btn
+                @click="emits('nextStep')"
+                color="primary"
+                :label="$t('shared.next')"
+            />
+        </div>
     </q-stepper-navigation>
 </template>

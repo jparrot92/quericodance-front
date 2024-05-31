@@ -59,13 +59,14 @@ onMounted(() => {
 });
 </script>
 <template>
-    <q-dialog v-model="isDialogVisible" full-width @hide="emits('close')">
+    <q-dialog v-model="isDialogVisible" @hide="emits('close')">
         <q-stepper
             v-model="step"
             header-nav
             ref="stepper"
             color="primary"
             animated
+            style="width: 700px; max-width: 80vw"
         >
             <q-step
                 :name="1"
@@ -76,6 +77,7 @@ onMounted(() => {
             >
                 <step-tariff
                     :membership-student="membership"
+                    @close="emits('close')"
                     @next-step="
                         () => {
                             done1 = true;
@@ -94,6 +96,7 @@ onMounted(() => {
             >
                 <step-activity-student
                     :membership-student="membership"
+                    @close="emits('close')"
                     @next-step="
                         () => {
                             done2 = true;
@@ -112,6 +115,7 @@ onMounted(() => {
             >
                 <step-membership-summary
                     :membership-student="membership"
+                    @close="emits('close')"
                     @next-step="handleMembership()"
                     @previous-step="step = 2"
                 />

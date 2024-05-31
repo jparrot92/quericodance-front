@@ -14,7 +14,7 @@ const props = withDefaults(
     }>(),
     {}
 );
-const emits = defineEmits(['previousStep', 'nextStep']);
+const emits = defineEmits(['close', 'previousStep', 'nextStep']);
 
 const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
@@ -63,6 +63,14 @@ watch(() => membership.value.membershipActivities, updateActivitiesTariff, {
 </script>
 
 <template>
+    <div class="row justify-end">
+        <q-btn
+            @click="addActivity"
+            color="positive"
+            :label="$t('student.addCourse')"
+            icon="add"
+        />
+    </div>
     <q-form
         v-for="(activityStudent, index) in membership.membershipActivities"
         :key="index"
@@ -112,27 +120,38 @@ watch(() => membership.value.membershipActivities, updateActivitiesTariff, {
         />
 
         <q-btn
+            class="q-mt-sm"
             color="negative"
             icon="clear"
             v-on:click="removeActivity(index)"
-            label="Remove"
+            :label="$t('shared.delete')"
         />
     </q-form>
 
     <q-stepper-navigation>
-        <q-btn @click="emits('nextStep')" color="primary" label="Continue" />
-        <q-btn
-            @click="addActivity"
-            color="primary"
-            label="Add"
-            class="q-ml-sm"
-        />
-        <q-btn
-            flat
-            @click="emits('previousStep')"
-            color="primary"
-            label="Back"
-            class="q-ml-sm"
-        />
+        <div class="row justify-between">
+            <div class="row">
+                <q-btn
+                    flat
+                    @click="emits('close')"
+                    color="primary"
+                    :label="$t('shared.cancel')"
+                />
+            </div>
+            <div class="row">
+                <q-btn
+                    outline
+                    @click="emits('previousStep')"
+                    color="primary"
+                    :label="$t('shared.back')"
+                />
+                <q-btn
+                    @click="emits('nextStep')"
+                    color="primary"
+                    :label="$t('shared.next')"
+                    class="q-ml-sm"
+                />
+            </div>
+        </div>
     </q-stepper-navigation>
 </template>
