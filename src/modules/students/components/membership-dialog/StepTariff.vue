@@ -70,7 +70,7 @@ onMounted(async () => {
                 :label="$t('shared.cancel')"
             />
             <q-btn
-                @click="emits('nextStep')"
+                @click="emits('nextStep', tariff)"
                 color="primary"
                 :label="$t('shared.next')"
             />

@@ -3,9 +3,10 @@ import { Ref, onMounted, ref } from 'vue';
 import StepTariff from './StepTariff.vue';
 import StepActivityStudent from './StepActivityStudent.vue';
 import StepMembershipSummary from './StepMembershipSummary.vue';
-import { MembershipDTO, MembershipViewDTO } from '../../models/membership';
+import { MembershipViewDTO } from '../../models/membership';
 import useMemberships from 'src/modules/students/composables/useMemberships';
 import { MembershipActivityViewDTO } from '../../models/membershipActivity';
+import { Tariff } from 'src/modules/services/modules/tariffs/models/tariff';
 
 const props = withDefaults(
     defineProps<{
@@ -24,6 +25,7 @@ const isDialogVisible: Ref<boolean> = ref<boolean>(true);
 const step: Ref<number> = ref<number>(1);
 const done1: Ref<boolean> = ref<boolean>(false);
 const done2: Ref<boolean> = ref<boolean>(false);
+const tariff = ref<Tariff>();
 
 const handleMembership = async () => {
     if (props.membershipStudent) {
@@ -38,6 +40,12 @@ const handleMembership = async () => {
     }
 };
 
+const showStepActivityStudent = (newTariff: Tariff) => {
+    tariff.value = newTariff;
+    done1.value = true;
+    step.value = 2;
+};
+
 onMounted(() => {
     membership.value.studentId = props.idStudent;
     if (props.membershipStudent) {
@@ -47,13 +55,13 @@ onMounted(() => {
             tariffId: props.membershipStudent.tariff.id,
             paymentFrequency: props.membershipStudent.paymentFrequency,
             membershipActivities:
-                props.membershipStudent.membershipActivities.map(
+                props.membershipStudent.membershipActivities?.map(
                     (item: MembershipActivityViewDTO) => ({
                         membershipId: props.membershipStudent.id,
                         activityId: item.activity.id,
                         danceRole: item.danceRole,
                     })
-                ),
+                ) ?? [],
         };
     }
 });
@@ -78,12 +86,7 @@ onMounted(() => {
                 <step-tariff
                     :membership-student="membership"
                     @close="emits('close')"
-                    @next-step="
-                        () => {
-                            done1 = true;
-                            step = 2;
-                        }
-                    "
+                    @next-step="showStepActivityStudent"
                 />
             </q-step>
 
@@ -114,7 +117,7 @@ onMounted(() => {
                 :header-nav="step > 3"
             >
                 <step-membership-summary
-                    :membership-student="membership"
+                    :membership="props.membershipStudent"
                     @close="emits('close')"
                     @next-step="handleMembership()"
                     @previous-step="step = 2"

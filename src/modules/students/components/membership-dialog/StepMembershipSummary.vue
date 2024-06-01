@@ -1,17 +1,28 @@
 <script setup lang="ts">
-import { MembershipDTO } from '../../models/membership';
+import { useI18n } from 'vue-i18n';
+import { MembershipViewDTO } from '../../models/membership';
 
 const props = withDefaults(
     defineProps<{
-        membershipStudent: MembershipDTO;
+        membership: MembershipViewDTO;
     }>(),
     {}
 );
 const emits = defineEmits(['close', 'previousStep', 'nextStep']);
+
+const { t } = useI18n();
 </script>
 <template>
     <q-form>
-        {{ props.membershipStudent }}
+        <pd-field
+            :label="$t('student.tariff')"
+            :value="props.membership.tariff.name"
+        />
+
+        <pd-field
+            :label="$t('student.paymentFrequency')"
+            :value="t('shared.enum.' + membership.paymentFrequency)"
+        />
     </q-form>
     <q-stepper-navigation>
         <div class="row justify-between">

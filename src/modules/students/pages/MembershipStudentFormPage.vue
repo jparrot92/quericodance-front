@@ -37,46 +37,20 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
         <div class="row justify-center">
             <div class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
                 <q-card v-if="membership" flat>
-                    <q-field :label="$t('student.tariff')" stack-label>
-                        <template v-slot:control>
-                            <div
-                                class="self-center full-width no-outline"
-                                tabindex="0"
-                            >
-                                {{ membership.tariff.name }}
-                            </div>
-                        </template>
-                    </q-field>
+                    <pd-field
+                        :label="$t('student.tariff')"
+                        :value="membership.tariff.name"
+                    />
 
-                    <q-field
+                    <pd-field
                         :label="$t('student.paymentFrequency')"
-                        stack-label
-                    >
-                        <template v-slot:control>
-                            <div
-                                class="self-center full-width no-outline"
-                                tabindex="0"
-                            >
-                                {{
-                                    t(
-                                        'shared.enum.' +
-                                            membership.paymentFrequency
-                                    )
-                                }}
-                            </div>
-                        </template>
-                    </q-field>
+                        :value="t('shared.enum.' + membership.paymentFrequency)"
+                    />
 
-                    <q-field :label="$t('student.payment')" stack-label>
-                        <template v-slot:control>
-                            <div
-                                class="self-center full-width no-outline"
-                                tabindex="0"
-                            >
-                                {{ membership.payment }}
-                            </div>
-                        </template>
-                    </q-field>
+                    <pd-field
+                        :label="$t('student.payment')"
+                        :value="membership.payment"
+                    />
 
                     <pd-select
                         v-model="membership.paymentStatus"
@@ -84,16 +58,10 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
                         :options="paymentStatuses"
                     />
 
-                    <q-field :label="$t('student.paymentDate')" stack-label>
-                        <template v-slot:control>
-                            <div
-                                class="self-center full-width no-outline"
-                                tabindex="0"
-                            >
-                                {{ format(membership.paymentDate) }}
-                            </div>
-                        </template>
-                    </q-field>
+                    <pd-field
+                        :label="$t('student.paymentDate')"
+                        :value="format(membership.paymentDate)"
+                    />
 
                     <q-card-actions class="bg-primary text-white q-mt-md">
                         <div class="text-weight-medium">
