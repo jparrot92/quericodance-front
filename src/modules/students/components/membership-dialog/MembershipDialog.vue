@@ -25,7 +25,7 @@ const isDialogVisible: Ref<boolean> = ref<boolean>(true);
 const step: Ref<number> = ref<number>(1);
 const done1: Ref<boolean> = ref<boolean>(false);
 const done2: Ref<boolean> = ref<boolean>(false);
-const tariff = ref<Tariff>();
+const membershipStudent = ref<MembershipViewDTO>(props.membershipStudent);
 
 const handleMembership = async () => {
     if (props.membershipStudent) {
@@ -41,7 +41,7 @@ const handleMembership = async () => {
 };
 
 const showStepActivityStudent = (newTariff: Tariff) => {
-    tariff.value = newTariff;
+    membershipStudent.value.tariff = newTariff;
     done1.value = true;
     step.value = 2;
 };
@@ -62,6 +62,17 @@ onMounted(() => {
                         danceRole: item.danceRole,
                     })
                 ) ?? [],
+        };
+    } else {
+        membershipStudent.value = {
+            id: 0,
+            payment: 0,
+            paymentDate: new Date(0), // Fecha mínima representativa de un "objeto vacío"
+            paymentFrequency: '',
+            paymentStatus: '',
+            tariff: null as unknown as Tariff, // Utilizamos un tipo de aserción para permitir un valor nulo
+            updateAt: new Date(0), // Fecha mínima representativa de un "objeto vacío"
+            membershipActivities: [], // Array vacío para las actividades de membresía
         };
     }
 });
@@ -117,7 +128,7 @@ onMounted(() => {
                 :header-nav="step > 3"
             >
                 <step-membership-summary
-                    :membership="props.membershipStudent"
+                    :membership="membershipStudent"
                     @close="emits('close')"
                     @next-step="handleMembership()"
                     @previous-step="step = 2"

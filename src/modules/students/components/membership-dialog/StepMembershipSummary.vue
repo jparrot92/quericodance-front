@@ -18,11 +18,6 @@ const { t } = useI18n();
             :label="$t('student.tariff')"
             :value="props.membership.tariff.name"
         />
-
-        <pd-field
-            :label="$t('student.paymentFrequency')"
-            :value="t('shared.enum.' + membership.paymentFrequency)"
-        />
     </q-form>
     <q-stepper-navigation>
         <div class="row justify-between">
