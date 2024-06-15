@@ -60,7 +60,11 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
 
                     <pd-field
                         :label="$t('student.paymentDate')"
-                        :value="format(membership.paymentDate)"
+                        :value="
+                            membership.paymentDate
+                                ? format(membership.paymentDate)
+                                : '-'
+                        "
                     />
 
                     <q-card-actions class="bg-primary text-white q-mt-md">
