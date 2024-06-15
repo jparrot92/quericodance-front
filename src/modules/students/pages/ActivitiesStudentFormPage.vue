@@ -118,19 +118,6 @@ const deleteActivityStudent = async (id: number) => {
                                                 {{ $t('activity.label.see') }}
                                             </q-item-section>
                                         </q-item>
-                                        <q-item clickable v-close-popup>
-                                            <q-item-section
-                                                @click="
-                                                    deleteActivityStudent(
-                                                        item.id
-                                                    )
-                                                "
-                                            >
-                                                {{
-                                                    $t('activity.label.delete')
-                                                }}
-                                            </q-item-section>
-                                        </q-item>
                                     </menu-list>
                                 </div>
                             </q-item-section>
@@ -144,13 +131,6 @@ const deleteActivityStudent = async (id: number) => {
                 <q-banner v-else class="bg-primary text-white">
                     {{ $t('student.message.addCourse') }}
                 </q-banner>
-                <q-btn
-                    :label="$t('student.label.addActivity')"
-                    color="primary"
-                    class="full-width"
-                    rounded
-                    @click="showModalAddActivity = true"
-                />
             </div>
         </div>
     </q-page>

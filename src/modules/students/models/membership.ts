@@ -15,7 +15,7 @@ export interface MembershipDTO {
 export interface MembershipViewDTO {
     id: number;
     payment: number;
-    paymentDate: Date;
+    paymentDate?: Date;
     paymentFrequency: string;
     paymentStatus: string;
     tariff: Tariff;
