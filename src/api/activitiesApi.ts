@@ -19,16 +19,6 @@ export const listActivities = async (): Promise<Activity[]> => {
     }
 };
 
-export const listStudentsActivity = async (id: number): Promise<Activity> => {
-    try {
-        const { data } = await api.get<Activity>(`/activities/${id}/students`);
-
-        return data;
-    } catch (error) {
-        throw handleError(error);
-    }
-};
-
 export const getCountersActivity = async (
     id: number
 ): Promise<ActivityCounters> => {

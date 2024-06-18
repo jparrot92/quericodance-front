@@ -187,10 +187,17 @@ const columns: ColumnTable[] = [
 ];
 
 const onRowClick = (evt: Event, row: ActivityList) => {
+    let title = `${t('activity.label.activity')} ${row.name} ${row.level} - ${t(
+        'shared.enum.' + row.day
+    )} ${row.startHour}`;
+
     router.push({
         name: 'activities-list-students',
         params: {
             id: row.id,
+        },
+        query: {
+            name: title,
         },
     });
 };

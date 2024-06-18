@@ -7,7 +7,6 @@ import useNotify from 'src/shared/composables/useNotify';
 
 import {
     listActivities,
-    listStudentsActivity,
     getCountersActivity,
     getActivity,
     createActivity,
@@ -78,17 +77,6 @@ const useActivities = () => {
             activities.value = [];
             loading.value = true;
             activities.value = await listActivities();
-        } catch (error) {
-            notifyError(error);
-        } finally {
-            loading.value = false;
-        }
-    };
-
-    const loadStudentsActivity = async (id: number) => {
-        try {
-            loading.value = true;
-            activity.value = await listStudentsActivity(id);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -229,7 +217,6 @@ const useActivities = () => {
         activityStudent,
         activityCounters,
         loadActivities,
-        loadStudentsActivity,
         loadCountersActivity,
         loadActivity,
         saveActivity,

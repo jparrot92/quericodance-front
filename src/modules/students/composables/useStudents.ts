@@ -51,11 +51,11 @@ const useStudents = () => {
         paymentStatus: PaymentsStatus.PENDING,
     });
 
-    const loadStudents = async () => {
+    const loadStudents = async (idActivity: number) => {
         try {
             students.value = [];
             loading.value = true;
-            students.value = await listStudents();
+            students.value = await listStudents(idActivity);
         } catch (error) {
             notifyError(error);
         } finally {

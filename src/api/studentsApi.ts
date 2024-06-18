@@ -5,9 +5,11 @@ import { handleError } from './errorApi';
 api.defaults.headers.common['Authorization'] =
     'Bearer ' + localStorage.getItem('token');
 
-export const listStudents = async (): Promise<Student[]> => {
+export const listStudents = async (idActivity: number): Promise<Student[]> => {
     try {
-        const { data } = await api.get<Student[]>('/students');
+        const params = idActivity ? { idActivity } : {};
+
+        const { data } = await api.get<Student[]>('/students', { params });
 
         return data;
     } catch (error) {

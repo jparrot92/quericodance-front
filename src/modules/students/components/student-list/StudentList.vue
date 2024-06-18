@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
 
 import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import MenuList from 'src/shared/components/MenuList.vue';
+
+import useActivities from 'src/modules/activities/composables/useActivities';
 
 import { Student, StudentFilter } from '../../models/student';
 
@@ -30,14 +32,40 @@ const {
     handleFileUpload,
 } = useStudents();
 
+const { activityCounters, loadCountersActivity } = useActivities();
+
 const $q = useQuasar();
 
 const { t } = useI18n();
+const route = useRoute();
 const router = useRouter();
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const studentsFilter = ref<Student[]>();
+const showProfitability = ref(false);
+const { id } = route.params as { id: string };
+
+const idActivity = computed<number>(() => {
+    const id = route.params.id;
+    return id ? Number(id) : 0;
+});
+
+const filteredColumns = computed(() => {
+    if (!idActivity.value) {
+        return columnsUser.filter(
+            (column) => column.name !== 'danceRole' && column.name !== 'price'
+        );
+    }
+    if (showProfitability.value) {
+        return columnsUser;
+    } else {
+        return columnsUser.filter(
+            (column) =>
+                column.name !== 'price' && column.name !== 'monthlyPayment'
+        );
+    }
+});
 
 const filterTable = (studentFilter: StudentFilter) => {
     studentsFilter.value = students.value
@@ -59,13 +87,23 @@ const filterTable = (studentFilter: StudentFilter) => {
                     student.paymentStatus === studentFilter.paymentStatus.value
                 );
             }
+        })
+        .filter((student: Student) => {
+            if (
+                studentFilter.danceRole === null ||
+                studentFilter.danceRole === undefined
+            ) {
+                return true;
+            } else {
+                return (
+                    student.activitiesStudent[0].danceRole ===
+                    studentFilter.danceRole.value
+                );
+            }
         });
-};
 
-onMounted(async () => {
-    await loadStudents();
-    studentsFilter.value = students.value;
-});
+    showProfitability.value = studentFilter.showProfitability;
+};
 
 const columnsUser: ColumnTable[] = [
     {
@@ -101,6 +139,22 @@ const columnsUser: ColumnTable[] = [
         align: 'left',
         label: t('student.label.state'),
         field: (row: Student) => row.user.active,
+        sortable: true,
+    },
+    {
+        name: 'danceRole',
+        align: 'left',
+        label: t('student.label.role'),
+        field: (row: Student) => row.activitiesStudent[0].danceRole,
+        sortable: true,
+    },
+    {
+        name: 'price',
+        align: 'left',
+        label: t('activity.label.price'),
+        field: (row: ActivityStudent) =>
+            row.activitiesStudent[0].price || undefined,
+        format: (val: number) => `${val} €`,
         sortable: true,
     },
     {
@@ -172,7 +226,7 @@ const handleSendMail = async (student: Student) => {
 const handleResetPayments = async () => {
     try {
         await resetPayments();
-        await loadStudents();
+        await loadStudents(+id);
         studentsFilter.value = students.value;
     } catch (error) {
         console.error(error);
@@ -184,13 +238,21 @@ const chooseFile = () => {
         fileInput.value.click();
     }
 };
+
+onMounted(async () => {
+    if (idActivity.value) {
+        await loadCountersActivity(idActivity.value);
+    }
+    await loadStudents(idActivity.value);
+    studentsFilter.value = students.value;
+});
 </script>
 
 <template>
     <div class="row">
         <q-table
             :rows="studentsFilter"
-            :columns="columnsUser"
+            :columns="filteredColumns"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
@@ -242,10 +304,58 @@ const chooseFile = () => {
                     "
                 />
 
-                <StudentListFilter
+                <student-list-filter
                     @filter-table="filterTable"
                     class="q-mt-sm"
                 />
+
+                <div class="col-12" v-if="idActivity">
+                    <div class="row">
+                        <div class="col-4">
+                            <q-chip color="blue" text-color="white">
+                                {{ $t('activity.label.numberLeaders') }} :
+                                {{ activityCounters.numberLeaders }}
+                            </q-chip>
+                        </div>
+                        <div class="col-4">
+                            <q-chip
+                                class="col-4"
+                                color="pink"
+                                text-color="white"
+                            >
+                                {{ $t('activity.label.numberFollowers') }} :
+                                {{ activityCounters.numberFollowers }}
+                            </q-chip>
+                        </div>
+                        <template v-if="showProfitability">
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
+                                    text-color="white"
+                                >
+                                    {{ $t('activity.label.costEffectiveness') }}
+                                    :
+                                    {{
+                                        activityCounters.costEffectiveness +
+                                        ' €'
+                                    }}
+                                </q-chip>
+                            </div>
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
+                                    text-color="white"
+                                >
+                                    {{ $t('activity.label.totalPaid') }}
+                                    :
+                                    {{ activityCounters.totalPaid + ' €' }}
+                                </q-chip>
+                            </div>
+                        </template>
+                    </div>
+                </div>
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">

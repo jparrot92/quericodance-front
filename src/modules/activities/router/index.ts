@@ -46,14 +46,18 @@ const activitiesRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-list-students`,
 
             component: () =>
-                import('src/modules/activities/pages/ActivityStudentsPage.vue'),
+                import('src/modules/students/pages/StudentPage.vue'),
             props: (route) => {
                 return {
                     id: route.params.id,
                 };
             },
             meta: {
-                toolbar: 'MainToolbar',
+                toolbar: 'DetailToolbar',
+            },
+            beforeEnter: (to, from, next) => {
+                to.meta.title = to.query.name;
+                next();
             },
         },
     ],
