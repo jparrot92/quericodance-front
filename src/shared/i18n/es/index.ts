@@ -47,6 +47,9 @@ export default {
             FR: 'Viernes',
             SA: 'Sábado',
             SU: 'Domingo',
+            new: 'Nuevo',
+            active: 'Activo',
+            inactive: 'Inactivo',
         },
         message: {
             logout: '¿Quieres cerrar sesión?',

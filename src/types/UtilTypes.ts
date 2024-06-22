@@ -24,8 +24,9 @@ export enum PaymentsStatus {
 }
 
 export enum Status {
+    NEW = 'new',
     ACTIVE = 'active',
-    DISABLED = 'disabled',
+    INACTIVE = 'inactive',
 }
 
 export enum DanceRole {

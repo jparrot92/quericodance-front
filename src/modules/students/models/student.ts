@@ -12,11 +12,13 @@ export interface Student {
     paymentStatus: PaymentsStatus;
     activitiesStudent?: ActivityStudent[];
     membership: MembershipViewDTO;
+    status: string;
 }
 
 export interface StudentFilter {
     textFilter: string;
+    status?: Option | null;
     paymentStatus: Option | null;
     danceRole?: Option | null;
-    showProfitability: boolean;
+    showProfitability?: boolean;
 }

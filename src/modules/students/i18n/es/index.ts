@@ -15,6 +15,7 @@ export default {
         summary: 'Resumen',
         role: 'Rol',
         addCourse: 'Añadir curso',
+        status: 'Estado',
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',

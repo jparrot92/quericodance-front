@@ -80,6 +80,13 @@ const filterTable = (studentFilter: StudentFilter) => {
             );
         })
         .filter((student: Student) => {
+            if (studentFilter.status === null) {
+                return true;
+            } else {
+                return student.status === studentFilter.status.value;
+            }
+        })
+        .filter((student: Student) => {
             if (studentFilter.paymentStatus === null) {
                 return true;
             } else {
@@ -135,10 +142,10 @@ const columnsUser: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'active',
+        name: 'status',
         align: 'left',
         label: t('student.label.state'),
-        field: (row: Student) => row.user.active,
+        field: (row: Student) => row.status,
         sortable: true,
     },
     {
@@ -152,8 +159,7 @@ const columnsUser: ColumnTable[] = [
         name: 'price',
         align: 'left',
         label: t('activity.label.price'),
-        field: (row: ActivityStudent) =>
-            row.activitiesStudent[0].price || undefined,
+        field: (row: Student) => row.activitiesStudent[0].price || undefined,
         format: (val: number) => `${val} €`,
         sortable: true,
     },
@@ -305,6 +311,7 @@ onMounted(async () => {
                 />
 
                 <student-list-filter
+                    :id-activity="idActivity"
                     @filter-table="filterTable"
                     class="q-mt-sm"
                 />
