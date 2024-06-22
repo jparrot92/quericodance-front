@@ -67,7 +67,7 @@ const initDanceRole = () => {
             >
                 <template v-slot:append>
                     <q-icon
-                        v-if="studentFilter.paymentStatus !== null"
+                        v-if="studentFilter.status !== null"
                         class="cursor-pointer"
                         name="clear"
                         @click.stop.prevent="initStatus"
