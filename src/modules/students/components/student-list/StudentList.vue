@@ -157,14 +157,6 @@ const columnsUser: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'price',
-        align: 'left',
-        label: t('activity.label.price'),
-        field: (row: Student) => row.activitiesStudent[0].price || undefined,
-        format: (val: number) => `${val} €`,
-        sortable: true,
-    },
-    {
         name: 'payment',
         align: 'left',
         label: t('student.label.monthlyPayment'),
