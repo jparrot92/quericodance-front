@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n';
 
 import { PaymentsStatus } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
-import MembershipDialog from '../components/membership-dialog/MembershipDialog.vue';
+import MembershipDialog from '../components/MembershipDialog.vue';
 
 import { MembershipViewDTO } from '../models/membership';
 
@@ -67,7 +67,7 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
                         "
                     />
 
-                    <q-card-actions class="bg-primary text-white q-mt-md">
+                    <!--<q-card-actions class="bg-primary text-white q-mt-md">
                         <div class="text-weight-medium">
                             {{ t('student.courses') }}
                         </div>
@@ -146,7 +146,7 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
                                 </template>
                             </q-list>
                         </div>
-                    </q-slide-transition>
+                    </q-slide-transition>-->
                 </q-card>
 
                 <q-card flat v-else>
@@ -167,7 +167,7 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
         </div>
     </q-page>
 
-    <MembershipDialog
+    <membership-dialog
         v-if="showModalMembership"
         :id-student="props.idStudent"
         :membership-student="membership"

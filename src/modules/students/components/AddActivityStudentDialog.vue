@@ -124,7 +124,7 @@ const calculatePrice = () => {
                     emit-value
                 />
 
-                <div class="row">
+                <!--<div class="row">
                     <q-input
                         type="number"
                         prefix="€"
@@ -145,7 +145,7 @@ const calculatePrice = () => {
                         :label="$t('student.label.changePrice')"
                         color="primary"
                     />
-                </div>
+                </div>-->
             </q-card-section>
 
             <q-separator />
