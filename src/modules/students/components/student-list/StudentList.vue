@@ -91,7 +91,8 @@ const filterTable = (studentFilter: StudentFilter) => {
                 return true;
             } else {
                 return (
-                    student.paymentStatus === studentFilter.paymentStatus.value
+                    student.membership?.paymentStatus ===
+                    studentFilter.paymentStatus.value
                 );
             }
         })
@@ -164,10 +165,10 @@ const columnsUser: ColumnTable[] = [
         sortable: true,
     },
     {
-        name: 'monthlyPayment',
+        name: 'payment',
         align: 'left',
         label: t('student.label.monthlyPayment'),
-        field: (row: Student) => row.monthlyPayment,
+        field: (row: Student) => row.membership?.payment,
         format: (val: number) => `${val} €`,
         sortable: true,
     },
@@ -175,7 +176,7 @@ const columnsUser: ColumnTable[] = [
         name: 'paymentStatus',
         align: 'left',
         label: t('student.label.paymentStatus'),
-        field: (row: Student) => row.paymentStatus,
+        field: (row: Student) => row.membership?.paymentStatus,
         sortable: true,
     },
     {
@@ -189,7 +190,7 @@ const columnsUser: ColumnTable[] = [
         name: 'datePayment',
         align: 'left',
         label: t('student.label.datePayment'),
-        field: (row: Student) => row.datePayment,
+        field: (row: Student) => row.membership?.paymentDate,
         sortable: true,
     },
     {
@@ -400,11 +401,14 @@ onMounted(async () => {
                     </a>
                 </q-td>
             </template>
-            <template v-slot:body-cell-monthlyPayment="props">
+            <template v-slot:body-cell-payment="props">
                 <q-td :props="props">
                     <q-badge
+                        v-if="props.row.membership"
                         :color="
-                            isPaymentStatusPaid(props.row.paymentStatus)
+                            isPaymentStatusPaid(
+                                props.row.membership?.paymentStatus
+                            )
                                 ? 'green'
                                 : 'red'
                         "
@@ -412,52 +416,67 @@ onMounted(async () => {
                     />
                 </q-td>
             </template>
-            <template v-slot:body-cell-datePayment="props">
-                <q-td :props="props">
-                    {{
-                        isPaymentStatusPaid(props.row.paymentStatus)
-                            ? format(props.row.datePayment)
-                            : '-'
-                    }}
-                </q-td>
-            </template>
             <template v-slot:body-cell-paymentStatus="props">
                 <q-td :props="props" @click.stop>
-                    <q-select
-                        :bg-color="
-                            isPaymentStatusPaid(props.row.paymentStatus)
-                                ? 'green'
-                                : 'red'
-                        "
-                        v-model="props.row.paymentStatus"
-                        rounded
-                        outlined
-                        dense
-                        options-dense
-                        :options="paymentStatuses"
-                        @update:model-value="
-                            checkMonthlyPaymentPaid(
-                                props.row,
-                                props.row.paymentStatus
-                            )
-                        "
-                    >
-                        <template v-slot:selected-item="{ opt }">
-                            {{ t('shared.enum.' + (opt.value || opt)) }}
-                        </template>
-                    </q-select>
+                    <template v-if="props.row.membership">
+                        <q-select
+                            :bg-color="
+                                isPaymentStatusPaid(
+                                    props.row.membership.paymentStatus
+                                )
+                                    ? 'green'
+                                    : 'red'
+                            "
+                            v-model="props.row.membership.paymentStatus"
+                            rounded
+                            outlined
+                            dense
+                            options-dense
+                            :options="paymentStatuses"
+                            @update:model-value="
+                                checkMonthlyPaymentPaid(
+                                    props.row,
+                                    props.row.membership.paymentStatus
+                                )
+                            "
+                        >
+                            <template v-slot:selected-item="{ opt }">
+                                {{ t('shared.enum.' + (opt.value || opt)) }}
+                            </template>
+                        </q-select>
+                    </template>
                 </q-td>
             </template>
             <template v-slot:body-cell-mail="props">
                 <q-td :props="props" @click.stop>
-                    <q-btn
-                        v-if="isPaymentStatusPaid(props.row.paymentStatus)"
-                        color="primary"
-                        rounded
-                        size="md"
-                        :label="$t('student.label.send')"
-                        @click="handleSendMail(props.row)"
-                    />
+                    <template v-if="props.row.membership">
+                        <q-btn
+                            v-if="
+                                props.row.membership?.paymentStatus &&
+                                isPaymentStatusPaid(
+                                    props.row.membership.paymentStatus
+                                )
+                            "
+                            color="primary"
+                            rounded
+                            size="md"
+                            :label="$t('student.label.send')"
+                            @click="handleSendMail(props.row)"
+                        />
+                    </template>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-datePayment="props">
+                <q-td :props="props">
+                    <template v-if="props.row.membership">
+                        {{
+                            isPaymentStatusPaid(
+                                props.row.membership?.paymentStatus
+                            )
+                                ? format(props.row.membership.datePayment)
+                                : '-'
+                        }}
+                    </template>
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">

@@ -6,13 +6,10 @@ import { MembershipViewDTO } from './membership';
 export interface Student {
     id: number;
     user: User;
-    datePayment?: Date;
     observations?: string;
-    monthlyPayment: number;
-    paymentStatus: PaymentsStatus;
+    status?: string;
     activitiesStudent?: ActivityStudent[];
-    membership: MembershipViewDTO;
-    status: string;
+    membership?: MembershipViewDTO;
 }
 
 export interface StudentFilter {

@@ -44,11 +44,8 @@ const useStudents = () => {
             instagram: '',
             email: '',
             password: '',
-            active: false,
             roles: [],
         },
-        monthlyPayment: 0,
-        paymentStatus: PaymentsStatus.PENDING,
     });
 
     const loadStudents = async (idActivity: number) => {
@@ -176,7 +173,7 @@ const useStudents = () => {
         });
     };
 
-    const isPaymentStatusPaid = (status: Option | string) => {
+    const isPaymentStatusPaid = (status: Option | string): boolean => {
         if (typeof status === 'string') {
             return status === PaymentsStatus.PAYED;
         }
