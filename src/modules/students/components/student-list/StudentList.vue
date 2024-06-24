@@ -214,7 +214,7 @@ const checkMonthlyPaymentPaid = async (
             await cancelPaymentPaid(student.id);
         }
     } catch (error) {
-        student.paymentStatus = PaymentsStatus.PENDING;
+        student.membership.paymentStatus = PaymentsStatus.PENDING;
     }
 };
 

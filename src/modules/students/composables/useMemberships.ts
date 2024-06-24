@@ -72,7 +72,7 @@ const useMemberships = () => {
             loading.value = true;
             membershipView.value = await updateMembership(id, membership.value);
             console.log(membershipView.value);
-            notifySuccess(t('membership.updatedSuccessfully'));
+            notifySuccess(t('student.updatedSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -80,20 +80,23 @@ const useMemberships = () => {
         }
     };
 
-    const removeMembership = async (id: string) => {
-        $q.dialog({
-            title: t('shared.confirmation'),
-            message: t('membership.delete'),
-            cancel: true,
-            persistent: true,
-        }).onOk(async () => {
-            try {
-                await deleteMembership(id);
-                notifySuccess(t('membership.deleteSuccessfully'));
-                await loadMemberships();
-            } catch (error) {
-                notifyError(error);
-            }
+    const removeMembership = (id: number): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            $q.dialog({
+                title: t('shared.confirmation'),
+                message: t('student.msgDeleteMembership'),
+                cancel: true,
+                persistent: true,
+            }).onOk(async () => {
+                try {
+                    await deleteMembership(id);
+                    notifySuccess(t('student.deleteMembershipSuccessfully'));
+                    resolve();
+                } catch (error) {
+                    notifyError(error);
+                    reject(error);
+                }
+            });
         });
     };
 

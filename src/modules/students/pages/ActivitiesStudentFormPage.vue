@@ -15,6 +15,7 @@ const emits = defineEmits(['update-activities-student']);
 const props = withDefaults(
     defineProps<{
         idStudent: number;
+        hasMembership: boolean;
         activitiesStudent?: ActivityStudent[];
     }>(),
     {}
@@ -64,90 +65,107 @@ const deleteActivityStudent = async (id: number) => {
     <q-page padding>
         <div class="row justify-center">
             <div class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
-                <q-list
-                    v-if="studentActivitiesList.length > 0"
-                    bordered
-                    class="rounded-borders"
-                >
-                    <template
-                        v-for="(item, index) in studentActivitiesList"
-                        :key="item.id"
+                <template v-if="props.hasMembership">
+                    <q-list
+                        v-if="studentActivitiesList.length > 0"
+                        bordered
+                        class="rounded-borders"
                     >
-                        <q-item>
-                            <q-item-section top>
-                                <q-item-label lines="1">
-                                    <span class="text-weight-medium">
-                                        {{ $t('activity.label.activity') }}
-                                        {{ item.activity.name }}
-                                        {{ item.activity.level }}
-                                    </span>
-                                    <span class="text-grey-8">
-                                        -
-                                        {{
-                                            t(
-                                                'shared.enum.' +
-                                                    item.activity.day
-                                            )
-                                        }}
-                                        {{ item.activity.startHour }}
-                                    </span>
-                                </q-item-label>
-                                <q-item-label caption lines="1">
-                                    {{ item.danceRole }}
-                                </q-item-label>
-                            </q-item-section>
+                        <template
+                            v-for="(item, index) in studentActivitiesList"
+                            :key="item.id"
+                        >
+                            <q-item>
+                                <q-item-section top>
+                                    <q-item-label lines="1">
+                                        <span class="text-weight-medium">
+                                            {{ $t('activity.label.activity') }}
+                                            {{ item.activity.name }}
+                                            {{ item.activity.level }}
+                                        </span>
+                                        <span class="text-grey-8">
+                                            -
+                                            {{
+                                                t(
+                                                    'shared.enum.' +
+                                                        item.activity.day
+                                                )
+                                            }}
+                                            {{ item.activity.startHour }}
+                                        </span>
+                                    </q-item-label>
+                                    <q-item-label caption lines="1">
+                                        {{ item.danceRole }}
+                                    </q-item-label>
+                                </q-item-section>
 
-                            <q-item-section top side>
-                                <div class="text-grey-8 q-gutter-xs">
-                                    <menu-list>
-                                        <q-item clickable v-close-popup>
-                                            <q-item-section
-                                                @click="
-                                                    $router.push({
-                                                        name: 'activities-list-students',
-                                                        params: {
-                                                            id: item.activity
-                                                                .id,
-                                                        },
-                                                    })
-                                                "
-                                            >
-                                                {{ $t('activity.label.see') }}
-                                            </q-item-section>
-                                        </q-item>
-                                        <q-item clickable v-close-popup>
-                                            <q-item-section
-                                                @click="
-                                                    deleteActivityStudent(
-                                                        item.id
-                                                    )
-                                                "
-                                            >
-                                                {{
-                                                    $t('activity.label.delete')
-                                                }}
-                                            </q-item-section>
-                                        </q-item>
-                                    </menu-list>
-                                </div>
-                            </q-item-section>
-                        </q-item>
-                        <q-separator
-                            spaced
-                            v-if="index < studentActivitiesList.length - 1"
-                        />
-                    </template>
-                </q-list>
-                <q-banner v-else class="bg-primary text-white">
-                    {{ $t('student.message.addCourse') }}
-                </q-banner>
-                <q-btn
-                    :label="$t('student.label.addActivity')"
-                    color="primary"
-                    class="full-width"
-                    rounded
-                    @click="showModalAddActivity = true"
-                />
+                                <q-item-section top side>
+                                    <div class="text-grey-8 q-gutter-xs">
+                                        <menu-list>
+                                            <q-item clickable v-close-popup>
+                                                <q-item-section
+                                                    @click="
+                                                        $router.push({
+                                                            name: 'activities-list-students',
+                                                            params: {
+                                                                id: item
+                                                                    .activity
+                                                                    .id,
+                                                            },
+                                                        })
+                                                    "
+                                                >
+                                                    {{
+                                                        $t('activity.label.see')
+                                                    }}
+                                                </q-item-section>
+                                            </q-item>
+                                            <q-item clickable v-close-popup>
+                                                <q-item-section
+                                                    @click="
+                                                        deleteActivityStudent(
+                                                            item.id
+                                                        )
+                                                    "
+                                                >
+                                                    {{
+                                                        $t(
+                                                            'activity.label.delete'
+                                                        )
+                                                    }}
+                                                </q-item-section>
+                                            </q-item>
+                                        </menu-list>
+                                    </div>
+                                </q-item-section>
+                            </q-item>
+                            <q-separator
+                                spaced
+                                v-if="index < studentActivitiesList.length - 1"
+                            />
+                        </template>
+                    </q-list>
+
+                    <q-card flat v-else>
+                        <q-banner class="bg-info text-white">
+                            {{ $t('student.message.addCourse') }}
+                        </q-banner>
+                    </q-card>
+                    <q-btn
+                        :label="$t('student.label.addActivity')"
+                        color="primary"
+                        class="full-width"
+                        rounded
+                        @click="showModalAddActivity = true"
+                    />
+                </template>
+                <template v-else>
+                    <q-card flat>
+                        <q-banner class="bg-info text-white">
+                            {{ $t('student.messageNotMembership') }}
+                        </q-banner>
+                    </q-card>
+                </template>
             </div>
         </div>
     </q-page>

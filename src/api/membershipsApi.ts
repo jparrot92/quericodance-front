@@ -63,7 +63,7 @@ export const updateMembership = async (
     }
 };
 
-export const deleteMembership = async (id: string): Promise<MembershipDTO> => {
+export const deleteMembership = async (id: number): Promise<MembershipDTO> => {
     try {
         const { data } = await api.delete<MembershipDTO>(
             `${membershipsEndpoint}/${id}`

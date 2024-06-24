@@ -16,6 +16,12 @@ export default {
         role: 'Rol',
         addCourse: 'Añadir curso',
         status: 'Estado',
+        deleteMembership: 'Eliminar cuota',
+        msgDeleteMembership:
+            'Una vez eliminada la cuota, el estudiante será dado de baja, y será eliminado de todas la clase a las que asiste. ¿Desa continuar?',
+        deleteMembershipSuccessfully: 'Estudiante dado de baja',
+        messageNotMembership:
+            'Este estudiante no tiene una cuota creada, dirigiese al apartado "Cuota" para crear una cuota al estudiante.',
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',

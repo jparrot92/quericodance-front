@@ -5,11 +5,12 @@ import { useI18n } from 'vue-i18n';
 
 import { PaymentsStatus } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
-import MembershipDialog from '../components/MembershipDialog.vue';
 
+import useMemberships from 'src/modules/students/composables/useMemberships';
+import MembershipDialog from '../components/MembershipDialog.vue';
 import { MembershipViewDTO } from '../models/membership';
 
-const emits = defineEmits(['update-membership']);
+const emits = defineEmits(['update-membership', 'delete-membership']);
 
 const props = withDefaults(
     defineProps<{
@@ -21,6 +22,7 @@ const props = withDefaults(
 
 const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
+const { removeMembership } = useMemberships();
 
 const showModalMembership = ref(false);
 
@@ -31,6 +33,17 @@ const membership = ref<MembershipViewDTO>(props.membership);
 const updateMembership = async (membershipView: MembershipViewDTO) => {
     membership.value = membershipView;
     emits('update-membership', membershipView);
+};
+
+const handleDeleteMembership = async () => {
+    try {
+        await removeMembership(props.membership?.id);
+
+        membership.value = undefined;
+        emits('delete-membership');
+    } catch (error) {
+        console.error(error);
+    }
 };
 </script>
 
@@ -71,7 +84,9 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
                 </q-card>
 
                 <q-card flat v-else>
-                    {{ $t('student.notMembership') }}
+                    <q-banner class="bg-info text-white">
+                        {{ $t('student.notMembership') }}
+                    </q-banner>
                 </q-card>
                 <q-btn
                     :label="
@@ -83,6 +98,14 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
                     class="full-width"
                     rounded
                     @click="showModalMembership = true"
+                />
+                <q-btn
+                    v-if="membership"
+                    :label="$t('student.deleteMembership')"
+                    color="red"
+                    class="full-width"
+                    rounded
+                    @click="handleDeleteMembership"
                 />
             </div>
         </div>

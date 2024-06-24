@@ -27,6 +27,11 @@ const updateMembership = async (membershipView: MembershipViewDTO) =>
 const updateActivitiesStudent = async (activitiesStudent: ActivityStudent[]) =>
     (student.value.activitiesStudent = activitiesStudent);
 
+const deleteMembership = async (activitiesStudent: ActivityStudent[]) => {
+    student.value.membership = undefined;
+    student.value.activitiesStudent = [];
+};
+
 onMounted(() => {
     if (idStudent.value) {
         loadStudent(idStudent.value);
@@ -67,12 +72,14 @@ onMounted(() => {
                     :id-student="student.id"
                     :membership="student.membership"
                     @update-membership="updateMembership"
+                    @delete-membership="deleteMembership"
                 />
             </q-tab-panel>
 
             <q-tab-panel name="courses">
                 <activities-student-form-page
                     :id-student="student.id"
+                    :has-membership="!!student.membership"
                     :activitiesStudent="student.activitiesStudent"
                     @update-activities-student="updateActivitiesStudent"
                 />
