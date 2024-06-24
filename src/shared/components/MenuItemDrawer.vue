@@ -45,7 +45,7 @@ const isItemSelected = (link?: string) => {
         </q-item>
     </template>
     <template v-else>
-        <q-expansion-item :header-inset-level="item.level" default-opened>
+        <q-expansion-item :header-inset-level="item.level">
             <template v-slot:header>
                 <q-item-section v-if="item.icon" avatar>
                     <q-icon :name="item.icon" />

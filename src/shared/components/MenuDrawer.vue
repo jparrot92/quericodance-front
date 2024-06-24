@@ -42,7 +42,7 @@ const itemsMenu: ItemMenu[] = [
                 level: 0.5,
                 children: [],
             },
-            {
+            /**{
                 title: t('shared.passes'),
                 icon: 'school',
                 link: 'passes-list',
@@ -55,7 +55,7 @@ const itemsMenu: ItemMenu[] = [
                 link: 'personalClasses-list',
                 level: 0.5,
                 children: [],
-            },
+            },*/
         ],
     },
     {
