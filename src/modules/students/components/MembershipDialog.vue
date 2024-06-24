@@ -3,12 +3,8 @@ import { Ref, onMounted, ref } from 'vue';
 import { PaymentFrequency } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
-import StepTariff from './StepTariff.vue';
-import StepActivityStudent from './StepActivityStudent.vue';
-import StepMembershipSummary from './StepMembershipSummary.vue';
-import { MembershipViewDTO } from '../../models/membership';
+import { MembershipViewDTO } from '../models/membership';
 import useMemberships from 'src/modules/students/composables/useMemberships';
-import { MembershipActivityViewDTO } from '../../models/membershipActivity';
 import { Tariff } from 'src/modules/services/modules/tariffs/models/tariff';
 import useTariffs from 'src/modules/services/modules/tariffs/composables/useTariffs';
 
@@ -32,8 +28,6 @@ const { membership, membershipView, saveMembership, editMembership } =
     useMemberships();
 
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
-
-const membershipStudent = ref<MembershipViewDTO>(props.membershipStudent);
 
 const handleMembership = async () => {
     if (props.membershipStudent) {

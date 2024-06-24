@@ -9,6 +9,8 @@ import StudentFormPage from './StudentFormPage.vue';
 import MembershipStudentFormPage from './MembershipStudentFormPage.vue';
 import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
 import ObservationsStudentFormPage from './ObservationsStudentFormPage.vue';
+import { MembershipViewDTO } from '../models/membership';
+import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
 const route = useRoute();
 
@@ -18,6 +20,12 @@ const idStudent = computed<string | undefined>(() =>
 
 const { student, loadStudent } = useStudents();
 const tab = ref('student-data');
+
+const updateMembership = async (membershipView: MembershipViewDTO) =>
+    (student.value.membership = membershipView);
+
+const updateActivitiesStudent = async (activitiesStudent: ActivityStudent[]) =>
+    (student.value.activitiesStudent = activitiesStudent);
 
 onMounted(() => {
     if (idStudent.value) {
@@ -58,13 +66,15 @@ onMounted(() => {
                 <membership-student-form-page
                     :id-student="student.id"
                     :membership="student.membership"
+                    @update-membership="updateMembership"
                 />
             </q-tab-panel>
 
             <q-tab-panel name="courses">
                 <activities-student-form-page
-                    :activitiesStudent="student.activitiesStudent"
                     :id-student="student.id"
+                    :activitiesStudent="student.activitiesStudent"
+                    @update-activities-student="updateActivitiesStudent"
                 />
             </q-tab-panel>
 

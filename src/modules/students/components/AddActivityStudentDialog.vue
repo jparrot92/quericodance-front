@@ -34,8 +34,6 @@ const roles: Role[] = [
     { label: 'Follower', value: 'follower' },
 ];
 
-const changePrice = ref<boolean>(false);
-
 const activityId = ref<number>(0);
 const danceRole = ref<string>('');
 const price = ref<number>(0);
@@ -123,29 +121,6 @@ const calculatePrice = () => {
                     :label="$t('student.label.role')"
                     emit-value
                 />
-
-                <!--<div class="row">
-                    <q-input
-                        type="number"
-                        prefix="€"
-                        :label="$t('activity.label.price')"
-                        v-model="activityStudent.price"
-                        :disable="!changePrice"
-                        :rules="[
-                            (val) =>
-                                (val !== null &&
-                                    val !== undefined &&
-                                    val.toString().trim() !== '') ||
-                                $t('activity.validation.priceRequired'),
-                        ]"
-                    />
-
-                    <q-checkbox
-                        v-model="changePrice"
-                        :label="$t('student.label.changePrice')"
-                        color="primary"
-                    />
-                </div>-->
             </q-card-section>
 
             <q-separator />

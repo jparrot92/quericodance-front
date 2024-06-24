@@ -6,20 +6,22 @@ import useActivities from 'src/modules/activities/composables/useActivities';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
-const { t } = useI18n();
-
-const { removeActivityStudent } = useActivities();
-
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
 import AddActivityStudentDialog from '../components/AddActivityStudentDialog.vue';
 
-interface Props {
-    activitiesStudent?: ActivityStudent[];
-    idStudent: number;
-}
+const emits = defineEmits(['update-activities-student']);
 
-const props = defineProps<Props>();
+const props = withDefaults(
+    defineProps<{
+        idStudent: number;
+        activitiesStudent?: ActivityStudent[];
+    }>(),
+    {}
+);
+
+const { t } = useI18n();
+const { removeActivityStudent } = useActivities();
 
 const studentActivitiesList = ref<ActivityStudent[]>([]);
 const idStudentDialog = ref<number>(0);
@@ -44,13 +46,14 @@ onMounted(() => {
 
 const addActivityStudent = (activitiesStudent: ActivityStudent[]) => {
     studentActivitiesList.value = activitiesStudent;
+    emits('update-activities-student', activitiesStudent);
 };
 
 const deleteActivityStudent = async (id: number) => {
     try {
         const activitiesStudent = await removeActivityStudent(id);
-        // La eliminación de la lista se realiza después de la eliminación exitosa en removeActivityStudent
         studentActivitiesList.value = activitiesStudent;
+        emits('update-activities-student', activitiesStudent);
     } catch (error) {
         console.error(error);
     }
@@ -91,12 +94,6 @@ const deleteActivityStudent = async (id: number) => {
                                 </q-item-label>
                                 <q-item-label caption lines="1">
                                     {{ item.danceRole }}
-                                </q-item-label>
-                            </q-item-section>
-
-                            <q-item-section top class="col-2">
-                                <q-item-label>
-                                    {{ item.price }} €
                                 </q-item-label>
                             </q-item-section>
 
