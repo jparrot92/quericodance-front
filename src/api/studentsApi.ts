@@ -94,17 +94,6 @@ export const cancelPayment = async (id: number): Promise<Student> => {
     }
 };
 
-export const resetPaymentsStatus = async (): Promise<string> => {
-    try {
-        const { data } = await api.post<string>(
-            '/students/reset-payments-status'
-        );
-        return data;
-    } catch (error) {
-        throw handleError(error);
-    }
-};
-
 export const uploadExcel = async (file: File): Promise<string> => {
     try {
         const formData = new FormData();

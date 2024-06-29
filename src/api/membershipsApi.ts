@@ -74,3 +74,14 @@ export const deleteMembership = async (id: number): Promise<MembershipDTO> => {
         throw handleError(error);
     }
 };
+
+export const resetPaymentsStatus = async (): Promise<string> => {
+    try {
+        const { data } = await api.post<string>(
+            `${membershipsEndpoint}/reset-payments-status`
+        );
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
