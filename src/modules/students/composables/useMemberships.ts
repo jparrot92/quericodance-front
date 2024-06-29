@@ -28,7 +28,8 @@ const useMemberships = () => {
         studentId: 0,
         tariffId: 0,
         paymentFrequency: '',
-        membershipActivities: [],
+        discountPercentage: 0,
+        discountReason: '',
     });
     const membershipView = ref<MembershipViewDTO>();
 

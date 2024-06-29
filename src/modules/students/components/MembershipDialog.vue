@@ -52,6 +52,8 @@ onMounted(async () => {
             studentId: props.idStudent,
             tariffId: props.membershipStudent.tariff.id,
             paymentFrequency: props.membershipStudent.paymentFrequency,
+            discountPercentage: props.membershipStudent.discountPercentage,
+            discountReason: props.membershipStudent.discountReason,
         };
 
         tariff.value = tariffs.value.find(
@@ -100,6 +102,21 @@ onMounted(async () => {
                         :label="$t('student.paymentFrequency')"
                         :options="paymentFrequency"
                     />
+
+                    <div class="row">
+                        <q-input
+                            class="col-md-3 col-sm-3 col-xs-3 q-pr-md q-pr-sm"
+                            type="number"
+                            v-model.number="membership.discountPercentage"
+                            :label="$t('student.discountPercentage')"
+                        />
+
+                        <q-input
+                            class="col-md-9 col-sm-9 col-xs-9 q-pl-md q-pl-sm"
+                            v-model="membership.discountReason"
+                            :label="$t('student.discountReason')"
+                        />
+                    </div>
                 </q-form>
             </q-card-section>
 

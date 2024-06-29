@@ -54,7 +54,12 @@ const handleDeleteMembership = async () => {
                 <q-card v-if="membership" flat>
                     <pd-field
                         :label="$t('student.tariff')"
-                        :value="membership.tariff.name"
+                        :value="
+                            membership.tariff.name +
+                            ' - ' +
+                            membership.tariff.price +
+                            '€'
+                        "
                     />
 
                     <pd-field
@@ -62,9 +67,23 @@ const handleDeleteMembership = async () => {
                         :value="t('shared.enum.' + membership.paymentFrequency)"
                     />
 
+                    <div class="row">
+                        <pd-field
+                            class="col-md-3 col-sm-3 col-xs-3 q-pr-md q-pr-sm"
+                            :label="$t('student.discountPercentage')"
+                            :value="membership.discountPercentage + ' %'"
+                        />
+
+                        <pd-field
+                            class="col-md-9 col-sm-9 col-xs-9 q-pl-md q-pl-sm"
+                            :label="$t('student.discountReason')"
+                            :value="membership.discountReason"
+                        />
+                    </div>
+
                     <pd-field
                         :label="$t('student.payment')"
-                        :value="membership.payment"
+                        :value="membership.payment + ' €'"
                     />
 
                     <pd-select
@@ -78,6 +97,15 @@ const handleDeleteMembership = async () => {
                         :value="
                             membership.paymentDate
                                 ? format(membership.paymentDate)
+                                : '-'
+                        "
+                    />
+
+                    <pd-field
+                        :label="$t('student.dueDate')"
+                        :value="
+                            membership.dueDate
+                                ? format(membership.dueDate)
                                 : '-'
                         "
                     />

@@ -22,6 +22,10 @@ export default {
         deleteMembershipSuccessfully: 'Estudiante dado de baja',
         messageNotMembership:
             'Este estudiante no tiene una cuota creada, dirigiese al apartado "Cuota" para crear una cuota al estudiante.',
+
+        discountPercentage: 'Descuento',
+        discountReason: 'Motivo descuento',
+        dueDate: 'Fecha de vencimiento',
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',
