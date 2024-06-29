@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref } from 'vue';
 import { PaymentFrequency } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
@@ -28,6 +28,22 @@ const { membership, membershipView, saveMembership, editMembership } =
     useMemberships();
 
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
+
+const totalPayment = computed(() => {
+    if (!tariff.value || !membership.value) {
+        return 0;
+    }
+
+    const basePrice = tariff.value.price ? tariff.value.price : 0;
+    const discount = (membership.value.discountPercentage / 100) * basePrice;
+    let finalPrice = basePrice - discount;
+
+    if (membership.value.paymentFrequency === PaymentFrequency.TRIMESTRAL) {
+        finalPrice = basePrice * 3 - discount * 3;
+    }
+
+    return finalPrice.toFixed(2);
+});
 
 const handleMembership = async () => {
     if (props.membershipStudent) {
@@ -68,7 +84,12 @@ onMounted(async () => {
         <q-card style="width: 50vh">
             <q-card-section>
                 <div class="text-h6">
-                    {{ $t('student.addMembership') }}
+                    <template v-if="props.membershipStudent">
+                        {{ $t('student.editMembership') }}
+                    </template>
+                    <template v-else>
+                        {{ $t('student.addMembership') }}
+                    </template>
                 </div>
             </q-card-section>
 
@@ -109,6 +130,7 @@ onMounted(async () => {
                             type="number"
                             v-model.number="membership.discountPercentage"
                             :label="$t('student.discountPercentage')"
+                            prefix="%"
                         />
 
                         <q-input
@@ -117,6 +139,14 @@ onMounted(async () => {
                             :label="$t('student.discountReason')"
                         />
                     </div>
+
+                    <q-input
+                        prefix="€"
+                        v-model="totalPayment"
+                        :label="$t('student.payment')"
+                        disable
+                        readonly
+                    />
                 </q-form>
             </q-card-section>
 
@@ -125,7 +155,7 @@ onMounted(async () => {
             <q-card-actions align="right">
                 <q-btn
                     flat
-                    :label="$t('student.label.add')"
+                    :label="$t('shared.save')"
                     color="primary"
                     @click="handleMembership()"
                 />

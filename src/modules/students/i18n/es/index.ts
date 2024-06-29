@@ -26,6 +26,7 @@ export default {
         discountPercentage: 'Descuento',
         discountReason: 'Motivo descuento',
         dueDate: 'Fecha de vencimiento',
+        membershipUpdatedSuccessfully: 'Cuota modificada correctamente.',
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',

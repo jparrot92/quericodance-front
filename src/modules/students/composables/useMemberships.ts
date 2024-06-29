@@ -73,7 +73,7 @@ const useMemberships = () => {
             loading.value = true;
             membershipView.value = await updateMembership(id, membership.value);
             console.log(membershipView.value);
-            notifySuccess(t('student.updatedSuccessfully'));
+            notifySuccess(t('student.membershipUpdatedSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
