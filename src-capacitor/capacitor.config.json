@@ -1,0 +1,9 @@
+{
+  "appId": "paaldemy.app",
+  "appName": "Querico dance",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "url": "http://192.168.0.16:9500"
+  }
+}

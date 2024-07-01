@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Querico dance</string>
+    <string name="title_activity_main">Querico dance</string>
+    <string name="package_name">paaldemy.app</string>
+    <string name="custom_url_scheme">paaldemy.app</string>
+</resources>
