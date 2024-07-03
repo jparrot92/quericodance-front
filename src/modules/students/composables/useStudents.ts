@@ -12,13 +12,15 @@ import {
     createStudent,
     updateStudent,
     deleteStudent,
-    markPayment,
-    cancelPayment,
     uploadExcel,
     sendMailPayment,
 } from 'src/api/studentsApi';
 
-import { resetPaymentsStatus } from 'src/api/membershipsApi';
+import {
+    markPayment,
+    cancelPayment,
+    resetPaymentsStatus,
+} from 'src/api/membershipsApi';
 
 import { Student } from '../models/student';
 

@@ -60,32 +60,10 @@ export const deleteStudent = async (id: string): Promise<Student> => {
     }
 };
 
-export const markPayment = async (id: number): Promise<Student> => {
-    try {
-        const { data } = await api.put<Student>(`/students/${id}/make-payment`);
-
-        return data;
-    } catch (error) {
-        throw handleError(error);
-    }
-};
-
 export const sendMailPayment = async (id: number): Promise<Student> => {
     try {
         const { data } = await api.post<Student>(
             `/students/${id}/send-mail-payment`
-        );
-
-        return data;
-    } catch (error) {
-        throw handleError(error);
-    }
-};
-
-export const cancelPayment = async (id: number): Promise<Student> => {
-    try {
-        const { data } = await api.put<Student>(
-            `/students/${id}/cancel-payment`
         );
 
         return data;
