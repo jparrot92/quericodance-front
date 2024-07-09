@@ -12,6 +12,7 @@ const tariffsRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar',
+                title: 'shared.tariffs',
             },
             component: () =>
                 import(

@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
+import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 import useAuth from 'src/modules/auth/composables/useAuth';
+import { computed, ref } from 'vue';
 
 const $q = useQuasar();
+const route = useRoute();
 const { t } = useI18n();
 
 const { logout } = useAuth();
+
+const titleKey = ref<string>(route.meta.title as string);
+
+const translatedTitle = computed(() => {
+    return t(titleKey.value || '');
+});
 
 const handleLogout = async () => {
     $q.dialog({
@@ -33,7 +42,7 @@ const handleLogout = async () => {
                 @click="$emit('toggleLeftDrawer')"
             />
 
-            <q-toolbar-title> QueRicoDance </q-toolbar-title>
+            <q-toolbar-title> {{ translatedTitle }} </q-toolbar-title>
 
             <q-btn-dropdown flat color="white" icon="person">
                 <q-list>

@@ -14,6 +14,7 @@ const activitiesRoutes: RouteRecordRaw = {
                 import('src/modules/activities/pages/ActivityPage.vue'),
             meta: {
                 toolbar: 'MainToolbar',
+                title: 'shared.activities',
             },
         },
         {

@@ -11,6 +11,7 @@ const usersRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar',
+                title: 'shared.users',
             },
             component: () => import('src/modules/users/pages/UserPage.vue'),
         },

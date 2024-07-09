@@ -12,6 +12,7 @@ const appointmentsRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar',
+                title: 'shared.calendar',
             },
             component: () =>
                 import('src/modules/appointments/pages/AppointmentsPage.vue'),

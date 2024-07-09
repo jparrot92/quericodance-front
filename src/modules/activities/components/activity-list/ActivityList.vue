@@ -216,9 +216,6 @@ const onRowClick = (evt: Event, row: ActivityList) => {
             :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <span class="text-h6">
-                    {{ $t('activity.label.activities') }}
-                </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"

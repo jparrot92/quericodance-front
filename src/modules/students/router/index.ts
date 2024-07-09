@@ -11,6 +11,7 @@ const studentsRoutes: RouteRecordRaw = {
             name: 'students-list',
             meta: {
                 toolbar: 'MainToolbar',
+                title: 'shared.students',
             },
             component: () =>
                 import('src/modules/students/pages/StudentPage.vue'),

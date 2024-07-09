@@ -11,6 +11,7 @@ const teachersRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar',
+                title: 'shared.teachers',
             },
             component: () =>
                 import('src/modules/teachers/pages/TeacherPage.vue'),
