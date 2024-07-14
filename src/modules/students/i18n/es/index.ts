@@ -1,3 +1,5 @@
+import { DanceRole } from 'src/types/UtilTypes';
+
 export default {
     student: {
         membership: 'Cuota',
@@ -27,6 +29,7 @@ export default {
         discountReason: 'Motivo descuento',
         dueDate: 'Fecha de vencimiento',
         membershipUpdatedSuccessfully: 'Cuota modificada correctamente.',
+        danceRole: 'Rol',
         label: {
             createStudent: 'Crear estudiante',
             editStudent: 'Editar estudiante',

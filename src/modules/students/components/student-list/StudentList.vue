@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, Ref, watch } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
 
-import { ColumnTable, Option, PaymentsStatus } from 'src/types/UtilTypes';
+import {
+    ColumnTable,
+    DanceRole,
+    Option,
+    PaymentsStatus,
+    Status,
+} from 'src/types/UtilTypes';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import MenuList from 'src/shared/components/MenuList.vue';
@@ -17,6 +23,8 @@ import { Student, StudentFilter } from '../../models/student';
 import useStudents from '../../composables/useStudents';
 
 import StudentListFilter from '../../components/student-list-filter/StudentListFilter.vue';
+import { FilterField } from 'src/composables/useFilterTypes';
+import { reactive } from 'vue';
 
 const { generateEnumOptions } = useEnumOptions();
 const {
@@ -40,18 +48,17 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const fileInput = ref<HTMLInputElement | null>(null);
+const states = generateEnumOptions(Status);
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
-const studentsFilter = ref<Student[]>();
+const danceRoles = generateEnumOptions(DanceRole);
+
+const fileInput = ref<HTMLInputElement | null>(null);
+const studentsFiltered = ref<Student[]>();
 const showProfitability = ref(false);
-const { id } = route.params as { id: string };
 
-const idActivity = computed<number>(() => {
-    const id = route.params.id;
-    return id ? Number(id) : 0;
-});
+const idActivity = computed<string>(() => route.params.id?.toString());
 
-const filteredColumns = computed(() => {
+const columnsFiltered = computed(() => {
     if (!idActivity.value) {
         return columnsUser.filter(
             (column) => column.name !== 'danceRole' && column.name !== 'price'
@@ -66,52 +73,6 @@ const filteredColumns = computed(() => {
         );
     }
 });
-
-const filterTable = (studentFilter: StudentFilter) => {
-    studentsFilter.value = students.value
-        .filter((student: Student) => {
-            const studentFullName =
-                student.user.name.toLowerCase() +
-                student.user.surnames.toLowerCase() +
-                student.user.email.toLowerCase();
-
-            return studentFullName.includes(
-                studentFilter.textFilter.replace(/\s/g, '').toLowerCase()
-            );
-        })
-        .filter((student: Student) => {
-            if (studentFilter.status === null) {
-                return true;
-            } else {
-                return student.status === studentFilter.status.value;
-            }
-        })
-        .filter((student: Student) => {
-            if (studentFilter.paymentStatus === null) {
-                return true;
-            } else {
-                return (
-                    student.membership?.paymentStatus ===
-                    studentFilter.paymentStatus.value
-                );
-            }
-        })
-        .filter((student: Student) => {
-            if (
-                studentFilter.danceRole === null ||
-                studentFilter.danceRole === undefined
-            ) {
-                return true;
-            } else {
-                return (
-                    student.activitiesStudent[0].danceRole ===
-                    studentFilter.danceRole.value
-                );
-            }
-        });
-
-    showProfitability.value = studentFilter.showProfitability;
-};
 
 const columnsUser: ColumnTable[] = [
     {
@@ -194,6 +155,59 @@ const columnsUser: ColumnTable[] = [
     },
 ];
 
+const filtersSelected = reactive({
+    query: '',
+    status: null,
+    paymentStatus: null,
+    danceRole: null,
+});
+
+const filters: Ref<Array<FilterField>> = ref([] as Array<FilterField>);
+
+const filterTable = () => {
+    studentsFiltered.value = students.value
+        .filter((student: Student) => {
+            const studentFullName =
+                student.user.name.toLowerCase() +
+                student.user.surnames.toLowerCase() +
+                student.user.email.toLowerCase();
+
+            return studentFullName.includes(
+                filtersSelected.query.replace(/\s/g, '').toLowerCase()
+            );
+        })
+        .filter((student: Student) => {
+            if (filtersSelected.status === null) {
+                return true;
+            } else {
+                return student.status === filtersSelected.status;
+            }
+        })
+        .filter((student: Student) => {
+            if (filtersSelected.paymentStatus === null) {
+                return true;
+            } else {
+                return (
+                    student.membership?.paymentStatus ===
+                    filtersSelected.paymentStatus
+                );
+            }
+        })
+        .filter((student: Student) => {
+            if (
+                filtersSelected.danceRole === null ||
+                filtersSelected.danceRole === undefined
+            ) {
+                return true;
+            } else {
+                return (
+                    student.activitiesStudent[0].danceRole ===
+                    filtersSelected.danceRole
+                );
+            }
+        });
+};
+
 const onRowClick = (evt: Event, row: Student) => {
     router.push({
         name: 'students-edit',
@@ -226,7 +240,7 @@ const handleResetPayments = async () => {
     try {
         await resetPayments();
         await loadStudents(+id);
-        studentsFilter.value = students.value;
+        studentsFiltered.value = students.value;
     } catch (error) {
         console.error(error);
     }
@@ -238,20 +252,50 @@ const chooseFile = () => {
     }
 };
 
+watch(
+    filtersSelected,
+    () => {
+        if ($q.platform.is.desktop) {
+            filterTable();
+        }
+    },
+    { deep: true }
+);
+
 onMounted(async () => {
+    filters.value = [
+        {
+            field: 'paymentStatus',
+            label: t('student.paymentStatus'),
+            options: paymentStatuses,
+        },
+    ] as Array<FilterField>;
+
     if (idActivity.value) {
+        filters.value.push({
+            field: 'danceRole',
+            label: t('student.danceRole'),
+            options: danceRoles,
+        });
+
         await loadCountersActivity(idActivity.value);
+    } else {
+        filters.value.push({
+            field: 'status',
+            label: t('student.status'),
+            options: states,
+        });
     }
     await loadStudents(idActivity.value);
-    studentsFilter.value = students.value;
+    studentsFiltered.value = students.value;
 });
 </script>
 
 <template>
-    <div class="row">
+    <div class="row" v-if="$q.platform.is.desktop">
         <q-table
-            :rows="studentsFilter"
-            :columns="filteredColumns"
+            :rows="studentsFiltered"
+            :columns="columnsFiltered"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
             :loading="loading"
@@ -260,54 +304,63 @@ onMounted(async () => {
             :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <span class="text-h6">
-                    {{ $t('student.label.students') }}
-                </span>
-                <q-space />
-                <q-btn
-                    v-if="$q.platform.is.desktop"
-                    class="q-ml-sm"
-                    :label="$t('shared.resetPayments')"
-                    color="green"
-                    icon="mdi-restart"
-                    dense
-                    @click="handleResetPayments"
-                />
-                <q-btn
-                    v-if="$q.platform.is.desktop"
-                    class="q-ml-sm"
-                    :label="$t('shared.importExcel')"
-                    color="green"
-                    icon="file_present"
-                    dense
-                    @click="chooseFile"
-                />
-                <input
-                    type="file"
-                    ref="fileInput"
-                    accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    @change="handleFileUpload"
-                    style="display: none"
-                />
-                <q-btn
-                    v-if="$q.platform.is.desktop"
-                    class="q-ml-sm"
-                    :label="$t('student.label.createStudent')"
-                    color="primary"
-                    icon="mdi-plus"
-                    dense
-                    @click="
-                        $router.push({
-                            name: 'students-add',
-                        })
-                    "
-                />
-
-                <student-list-filter
-                    :id-activity="idActivity"
-                    @filter-table="filterTable"
-                    class="q-mt-sm"
-                />
+                <div class="col-12 justify-between">
+                    <div class="row justify-between">
+                        <div class="col-6">
+                            <pd-filter
+                                v-model="filtersSelected"
+                                :filters="filters"
+                            ></pd-filter>
+                        </div>
+                        <template v-if="idActivity">
+                            <q-toggle
+                                class="col-3"
+                                :label="$t('activity.label.showProfitability')"
+                                v-model="showProfitability"
+                            ></q-toggle>
+                            <q-btn
+                                :label="$t('student.label.createStudent')"
+                                color="primary"
+                                icon="mdi-plus"
+                                dense
+                                class="col-3"
+                                @click="
+                                    $router.push({
+                                        name: 'students-add',
+                                    })
+                                "
+                            />
+                        </template>
+                        <template v-else>
+                            <div class="col-2">
+                                <q-btn
+                                    class="q-ml-sm"
+                                    :label="$t('shared.resetPayments')"
+                                    color="green"
+                                    icon="mdi-restart"
+                                    dense
+                                    @click="handleResetPayments"
+                                />
+                            </div>
+                            <div class="col-2">
+                                <q-btn
+                                    :label="$t('shared.importExcel')"
+                                    color="green"
+                                    icon="file_present"
+                                    dense
+                                    @click="chooseFile"
+                                />
+                                <input
+                                    type="file"
+                                    ref="fileInput"
+                                    accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                    @change="handleFileUpload"
+                                    style="display: none"
+                                />
+                            </div>
+                        </template>
+                    </div>
+                </div>
 
                 <div class="col-12" v-if="idActivity">
                     <div class="row">
@@ -497,5 +550,87 @@ onMounted(async () => {
                 </q-td>
             </template>
         </q-table>
+    </div>
+    <div class="row" v-if="$q.platform.is.mobile">
+        <q-table
+            :rows="studentsFiltered"
+            :columns="columnsFiltered"
+            row-key="id"
+            class="col-12 my-sticky-last-column-table"
+            :loading="loading"
+            @row-click="onRowClick"
+            :no-data-label="$t('shared.noData')"
+            :rows-per-page-label="$t('shared.recordsPerPage')"
+            grid
+            hide-pagination
+        >
+            <template v-slot:top>
+                <div class="col-12">
+                    <pd-filter
+                        v-model="filtersSelected"
+                        :filters="filters"
+                    ></pd-filter>
+                </div>
+
+                {{ filtersSelected }}
+            </template>
+
+            <template v-slot:item="props">
+                <transition-group
+                    appear
+                    enter-active-class="animated fadeInLeft"
+                    leave-active-class="animated fadeOutRight"
+                >
+                    <div class="q-pa-xs col-xs-12 col-sm-6 col-md-3" key="card">
+                        <q-item class="q-mb-sm" clickable v-ripple:primary>
+                            <q-item-section avatar>
+                                <q-avatar v-if="props.row.user.photo">
+                                    <q-img
+                                        :ratio="1"
+                                        :src="props.row.user.photo"
+                                    />
+                                </q-avatar>
+                                <q-avatar
+                                    v-else
+                                    color="grey"
+                                    text-color="white"
+                                    icon="mdi-image-off"
+                                />
+                            </q-item-section>
+
+                            <q-item-section>
+                                <q-item-label>
+                                    {{ props.row.user.name }}
+                                    {{ props.row.user.surnames }}
+                                </q-item-label>
+                                <q-item-label caption lines="1">
+                                    {{ props.row.user.name }}
+                                </q-item-label>
+                            </q-item-section>
+
+                            <q-item-section top side>
+                                <div class="text-grey-8 q-gutter-xs">
+                                    <q-btn
+                                        size="12px"
+                                        flat
+                                        dense
+                                        round
+                                        icon="more_vert"
+                                    />
+                                </div>
+                            </q-item-section>
+                        </q-item>
+                    </div>
+                </transition-group>
+            </template>
+        </q-table>
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+            <q-btn
+                fab
+                icon="mdi-plus"
+                color="primary"
+                :to="{ name: 'students-add' }"
+            />
+        </q-page-sticky>
     </div>
 </template>

@@ -20,6 +20,8 @@ const [model] = defineModel();
 
 <template>
     <q-select
+        dense
+        options-dense
         v-model="model"
         :options="props.options"
         :label="props.label"
