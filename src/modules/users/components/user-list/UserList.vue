@@ -83,7 +83,6 @@ const columnsUser: ColumnTable[] = [
             :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <span class="text-h6"> {{ $t('user.label.users') }} </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
