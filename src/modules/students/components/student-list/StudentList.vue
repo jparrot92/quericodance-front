@@ -238,7 +238,7 @@ const handleSendMail = async (student: Student) => {
 const handleResetPayments = async () => {
     try {
         await resetPayments();
-        await loadStudents('');
+        await loadStudents(idActivity.value);
         studentsFiltered.value = students.value;
     } catch (error) {
         console.error(error);
