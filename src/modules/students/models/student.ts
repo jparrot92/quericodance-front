@@ -1,4 +1,3 @@
-import { PaymentsStatus, Option } from 'src/types/UtilTypes';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 import { User } from 'src/modules/users/models/user';
 import { MembershipViewDTO } from './membership';
@@ -10,12 +9,4 @@ export interface Student {
     status?: string;
     activitiesStudent?: ActivityStudent[];
     membership?: MembershipViewDTO;
-}
-
-export interface StudentFilter {
-    textFilter: string;
-    status?: Option | null;
-    paymentStatus: Option | null;
-    danceRole?: Option | null;
-    showProfitability?: boolean;
 }

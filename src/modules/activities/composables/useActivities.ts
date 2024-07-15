@@ -84,7 +84,7 @@ const useActivities = () => {
         }
     };
 
-    const loadCountersActivity = async (id: number) => {
+    const loadCountersActivity = async (id: string) => {
         try {
             loading.value = true;
             activityCounters.value = await getCountersActivity(id);

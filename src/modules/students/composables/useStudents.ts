@@ -51,7 +51,7 @@ const useStudents = () => {
         },
     });
 
-    const loadStudents = async (idActivity: number) => {
+    const loadStudents = async (idActivity: string) => {
         try {
             students.value = [];
             loading.value = true;

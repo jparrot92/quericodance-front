@@ -18,11 +18,10 @@ import MenuList from 'src/shared/components/MenuList.vue';
 
 import useActivities from 'src/modules/activities/composables/useActivities';
 
-import { Student, StudentFilter } from '../../models/student';
+import { Student } from '../../models/student';
 
 import useStudents from '../../composables/useStudents';
 
-import StudentListFilter from '../../components/student-list-filter/StudentListFilter.vue';
 import { FilterField } from 'src/composables/useFilterTypes';
 import { reactive } from 'vue';
 
@@ -239,7 +238,7 @@ const handleSendMail = async (student: Student) => {
 const handleResetPayments = async () => {
     try {
         await resetPayments();
-        await loadStudents(+id);
+        await loadStudents('');
         studentsFiltered.value = students.value;
     } catch (error) {
         console.error(error);
@@ -306,35 +305,41 @@ onMounted(async () => {
             <template v-slot:top>
                 <div class="col-12 justify-between">
                     <div class="row justify-between">
-                        <div class="col-6">
+                        <div :class="idActivity ? 'col-8' : 'col-6'">
                             <pd-filter
                                 v-model="filtersSelected"
                                 :filters="filters"
                             ></pd-filter>
                         </div>
                         <template v-if="idActivity">
-                            <q-toggle
-                                class="col-3"
-                                :label="$t('activity.label.showProfitability')"
-                                v-model="showProfitability"
-                            ></q-toggle>
-                            <q-btn
-                                :label="$t('student.label.createStudent')"
-                                color="primary"
-                                icon="mdi-plus"
-                                dense
-                                class="col-3"
-                                @click="
-                                    $router.push({
-                                        name: 'students-add',
-                                    })
-                                "
-                            />
+                            <div class="col-2 flex justify-end">
+                                <q-toggle
+                                    class="h-2rem"
+                                    :label="
+                                        $t('activity.label.showProfitability')
+                                    "
+                                    v-model="showProfitability"
+                                ></q-toggle>
+                            </div>
+                            <div class="col-2 flex justify-end">
+                                <q-btn
+                                    :label="$t('student.label.createStudent')"
+                                    color="primary"
+                                    icon="mdi-plus"
+                                    dense
+                                    class="h-2rem"
+                                    @click="
+                                        $router.push({
+                                            name: 'students-add',
+                                        })
+                                    "
+                                />
+                            </div>
                         </template>
                         <template v-else>
-                            <div class="col-2">
+                            <div class="col-2 flex justify-end">
                                 <q-btn
-                                    class="q-ml-sm"
+                                    class="q-ml-sm h-2rem"
                                     :label="$t('shared.resetPayments')"
                                     color="green"
                                     icon="mdi-restart"
@@ -342,12 +347,13 @@ onMounted(async () => {
                                     @click="handleResetPayments"
                                 />
                             </div>
-                            <div class="col-2">
+                            <div class="col-2 flex justify-end">
                                 <q-btn
                                     :label="$t('shared.importExcel')"
                                     color="green"
                                     icon="file_present"
                                     dense
+                                    class="h-2rem"
                                     @click="chooseFile"
                                 />
                                 <input
@@ -356,6 +362,20 @@ onMounted(async () => {
                                     accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                     @change="handleFileUpload"
                                     style="display: none"
+                                />
+                            </div>
+                            <div class="col-2 flex justify-end">
+                                <q-btn
+                                    class="h-2rem"
+                                    :label="$t('student.label.createStudent')"
+                                    color="primary"
+                                    icon="mdi-plus"
+                                    dense
+                                    @click="
+                                        $router.push({
+                                            name: 'students-add',
+                                        })
+                                    "
                                 />
                             </div>
                         </template>

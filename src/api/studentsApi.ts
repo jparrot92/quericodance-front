@@ -5,7 +5,7 @@ import { handleError } from './errorApi';
 api.defaults.headers.common['Authorization'] =
     'Bearer ' + localStorage.getItem('token');
 
-export const listStudents = async (idActivity: number): Promise<Student[]> => {
+export const listStudents = async (idActivity: string): Promise<Student[]> => {
     try {
         const params = idActivity ? { idActivity } : {};
 
