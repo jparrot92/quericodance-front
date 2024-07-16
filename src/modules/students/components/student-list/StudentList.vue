@@ -581,67 +581,205 @@ onMounted(async () => {
             @row-click="onRowClick"
             :no-data-label="$t('shared.noData')"
             :rows-per-page-label="$t('shared.recordsPerPage')"
-            grid
-            hide-pagination
         >
             <template v-slot:top>
-                <div class="col-12">
-                    <pd-filter
-                        v-model="filtersSelected"
-                        :filters="filters"
-                    ></pd-filter>
+                <div class="col-12 justify-between">
+                    <div class="row justify-between">
+                        <div class="col-12">
+                            <pd-filter
+                                v-model="filtersSelected"
+                                :filters="filters"
+                            ></pd-filter>
+                        </div>
+                    </div>
                 </div>
 
-                {{ filtersSelected }}
-            </template>
-
-            <template v-slot:item="props">
-                <transition-group
-                    appear
-                    enter-active-class="animated fadeInLeft"
-                    leave-active-class="animated fadeOutRight"
-                >
-                    <div class="q-pa-xs col-xs-12 col-sm-6 col-md-3" key="card">
-                        <q-item class="q-mb-sm" clickable v-ripple:primary>
-                            <q-item-section avatar>
-                                <q-avatar v-if="props.row.user.photo">
-                                    <q-img
-                                        :ratio="1"
-                                        :src="props.row.user.photo"
-                                    />
-                                </q-avatar>
-                                <q-avatar
-                                    v-else
-                                    color="grey"
+                <div class="col-12" v-if="idActivity">
+                    <div class="row">
+                        <div class="col-4">
+                            <q-chip color="blue" text-color="white">
+                                {{ $t('activity.label.numberLeaders') }} :
+                                {{ activityCounters.numberLeaders }}
+                            </q-chip>
+                        </div>
+                        <div class="col-4">
+                            <q-chip
+                                class="col-4"
+                                color="pink"
+                                text-color="white"
+                            >
+                                {{ $t('activity.label.numberFollowers') }} :
+                                {{ activityCounters.numberFollowers }}
+                            </q-chip>
+                        </div>
+                        <template v-if="showProfitability">
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
                                     text-color="white"
-                                    icon="mdi-image-off"
-                                />
-                            </q-item-section>
-
-                            <q-item-section>
-                                <q-item-label>
-                                    {{ props.row.user.name }}
-                                    {{ props.row.user.surnames }}
-                                </q-item-label>
-                                <q-item-label caption lines="1">
-                                    {{ props.row.user.name }}
-                                </q-item-label>
-                            </q-item-section>
-
-                            <q-item-section top side>
-                                <div class="text-grey-8 q-gutter-xs">
-                                    <q-btn
-                                        size="12px"
-                                        flat
-                                        dense
-                                        round
-                                        icon="more_vert"
-                                    />
-                                </div>
+                                >
+                                    {{ $t('activity.label.costEffectiveness') }}
+                                    :
+                                    {{
+                                        activityCounters.costEffectiveness +
+                                        ' €'
+                                    }}
+                                </q-chip>
+                            </div>
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
+                                    text-color="white"
+                                >
+                                    {{ $t('activity.label.totalPaid') }}
+                                    :
+                                    {{ activityCounters.totalPaid + ' €' }}
+                                </q-chip>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:body-cell-photo="props">
+                <q-td :props="props">
+                    <q-avatar v-if="props.row.user.photo">
+                        <q-img :ratio="1" :src="props.row.user.photo" />
+                    </q-avatar>
+                    <q-avatar
+                        v-else
+                        color="grey"
+                        text-color="white"
+                        icon="mdi-image-off"
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-active="props">
+                <q-td :props="props">
+                    <q-badge
+                        :color="props.row.active ? 'green' : 'red'"
+                        :label="
+                            props.row.active
+                                ? $t('student.label.active')
+                                : $t('student.label.inactivo')
+                        "
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-phone="props">
+                <q-td :props="props">
+                    <a
+                        @click.stop
+                        :href="'https://wa.me/' + props.row.user.phone"
+                        target="_blank"
+                    >
+                        {{ props.row.user.phone }}
+                    </a>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-payment="props">
+                <q-td :props="props">
+                    <q-badge
+                        v-if="props.row.membership"
+                        :color="
+                            isPaymentStatusPaid(
+                                props.row.membership?.paymentStatus
+                            )
+                                ? 'green'
+                                : 'red'
+                        "
+                        :label="props.value"
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-paymentStatus="props">
+                <q-td :props="props" @click.stop>
+                    <template v-if="props.row.membership">
+                        <q-select
+                            :bg-color="
+                                isPaymentStatusPaid(
+                                    props.row.membership.paymentStatus
+                                )
+                                    ? 'green'
+                                    : 'red'
+                            "
+                            v-model="props.row.membership.paymentStatus"
+                            rounded
+                            outlined
+                            dense
+                            options-dense
+                            :options="paymentStatuses"
+                            @update:model-value="
+                                checkMonthlyPaymentPaid(
+                                    props.row,
+                                    props.row.membership.paymentStatus
+                                )
+                            "
+                        >
+                            <template v-slot:selected-item="{ opt }">
+                                {{ t('shared.enum.' + (opt.value || opt)) }}
+                            </template>
+                        </q-select>
+                    </template>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-mail="props">
+                <q-td :props="props" @click.stop>
+                    <template v-if="props.row.membership">
+                        <q-btn
+                            v-if="
+                                props.row.membership?.paymentStatus &&
+                                isPaymentStatusPaid(
+                                    props.row.membership.paymentStatus
+                                )
+                            "
+                            color="primary"
+                            rounded
+                            size="md"
+                            :label="$t('student.label.send')"
+                            @click="handleSendMail(props.row)"
+                        />
+                    </template>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-datePayment="props">
+                <q-td :props="props">
+                    <template v-if="props.row.membership">
+                        {{
+                            isPaymentStatusPaid(
+                                props.row.membership?.paymentStatus
+                            )
+                                ? format(props.row.membership.datePayment)
+                                : '-'
+                        }}
+                    </template>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-actions="props">
+                <q-td :props="props">
+                    <menu-list @click.stop>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="
+                                    $router.push({
+                                        name: 'students-edit',
+                                        params: { id: props.row.id },
+                                    })
+                                "
+                            >
+                                {{ $t('user.label.edit') }}
                             </q-item-section>
                         </q-item>
-                    </div>
-                </transition-group>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="removeStudent(props.row.id)"
+                            >
+                                {{ $t('user.label.delete') }}
+                            </q-item-section>
+                        </q-item>
+                    </menu-list>
+                </q-td>
             </template>
         </q-table>
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
