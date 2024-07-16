@@ -254,9 +254,7 @@ const chooseFile = () => {
 watch(
     filtersSelected,
     () => {
-        if ($q.platform.is.desktop) {
-            filterTable();
-        }
+        filterTable();
     },
     { deep: true }
 );
