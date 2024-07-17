@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import { ref, watch, defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 
-interface Props {
-    date: string;
-    label: string;
-}
+const props = withDefaults(
+    defineProps<{
+        modelValue?: any;
+        label?: string;
+    }>(),
+    {}
+);
 
-interface Emits {
-    (e: 'updateDate', value: string): void;
-}
+const emit = defineEmits(['update:modelValue']);
 
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
-
-const selectedDate = ref<string>('');
-
-watch(props, () => {
-    selectedDate.value = props.date;
+const model = computed({
+    get: () => props.modelValue,
+    set: (value: string) => {
+        emit('update:modelValue', convertISODate(value));
+    },
 });
-
-const updateDate = (value: string) => {
-    emit('updateDate', convertISODate(value));
-};
 
 const convertISODate = (date: string) => {
     const isoDate = new Date(date);
@@ -56,12 +51,7 @@ const locale = {
 </script>
 
 <template>
-    <q-input
-        :label="label"
-        v-model="selectedDate"
-        mask="date"
-        :rules="['date']"
-    >
+    <q-input :label="props.label" v-model="model" mask="date">
         <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy
@@ -69,11 +59,7 @@ const locale = {
                     transition-show="scale"
                     transition-hide="scale"
                 >
-                    <q-date
-                        v-model="selectedDate"
-                        @update:model-value="updateDate"
-                        :locale="locale"
-                    >
+                    <q-date v-model="model" :locale="locale">
                         <div class="row items-center justify-end">
                             <q-btn
                                 v-close-popup

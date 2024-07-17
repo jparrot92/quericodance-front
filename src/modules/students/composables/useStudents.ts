@@ -74,10 +74,10 @@ const useStudents = () => {
         }
     };
 
-    const saveStudent = async () => {
+    const saveStudent = async (data: Student) => {
         try {
             loading.value = true;
-            student.value = await createStudent(student.value);
+            student.value = await createStudent(data);
             notifySuccess(t('user.notifications.userCreateSuccessfully'));
             router.replace({
                 name: 'students-edit',

@@ -1,39 +1,43 @@
 <script setup lang="ts">
-import { watch, defineProps, onMounted } from 'vue';
+import { defineProps, ref } from 'vue';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
-import DateSelector from 'src/shared/components/DateSelector.vue';
 
 import useStudents from '../composables/useStudents';
 import { Student } from '../models/student';
 
-const { student: newStudent, saveStudent, editStudent } = useStudents();
+const { saveStudent, editStudent } = useStudents();
 
-interface Props {
-    student?: Student;
-}
-
-const props = defineProps<Props>();
-
-const selectedStudent = newStudent;
-
-watch(props, () => {
-    if (props.student !== undefined) {
-        selectedStudent.value = props.student;
+const props = withDefaults(
+    defineProps<{
+        student?: Student;
+    }>(),
+    {
+        student: () => ({
+            id: 0,
+            user: {
+                id: 0,
+                name: '',
+                surnames: '',
+                dateOfBirth: '',
+                phone: '',
+                photo: '',
+                instagram: '',
+                email: '',
+                password: '',
+                roles: [],
+            },
+        }),
     }
-});
+);
 
-onMounted(() => {
-    if (props.student !== undefined) {
-        selectedStudent.value = props.student;
-    }
-});
+const student = ref<Student>(props.student);
 
 const onSubmit = async () => {
-    if (selectedStudent.value.id) {
-        editStudent(selectedStudent.value.id);
+    if (props.student.id !== 0) {
+        editStudent(props.student.id);
     } else {
-        saveStudent();
+        saveStudent(student.value);
     }
 };
 </script>
@@ -47,15 +51,15 @@ const onSubmit = async () => {
             >
                 <div style="text-align: center">
                     <ImageUploaderPreview
-                        v-if="selectedStudent.user.id"
-                        :id="selectedStudent.user.id"
-                        :photo="selectedStudent.user.photo"
+                        v-if="student.user.id"
+                        :id="student.user.id"
+                        :photo="student.user.photo"
                     />
                 </div>
 
                 <q-input
                     :label="$t('user.label.name') + '*'"
-                    v-model="selectedStudent.user.name"
+                    v-model="student.user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -65,7 +69,7 @@ const onSubmit = async () => {
 
                 <q-input
                     :label="$t('user.label.surnames') + '*'"
-                    v-model="selectedStudent.user.surnames"
+                    v-model="student.user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -73,18 +77,14 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <date-selector
-                    :date="selectedStudent.user.dateOfBirth"
-                    :label="$t('user.label.dateOfBirth')"
-                    @update-date="
-                        (newValue: string) =>
-                            (selectedStudent.user.dateOfBirth = newValue)
-                    "
+                <pd-date
+                    :label="$t('user.label.dateOfBirth') + '*'"
+                    v-model="student.user.dateOfBirth"
                 />
 
-                <q-input
+                <pd-phone-input
                     :label="$t('user.label.phone') + '*'"
-                    v-model="selectedStudent.user.phone"
+                    v-model="student.user.phone"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -92,14 +92,16 @@ const onSubmit = async () => {
                     ]"
                 />
 
+                {{ student.user.phone }}
+
                 <q-input
                     :label="$t('user.label.instagram')"
-                    v-model="selectedStudent.user.instagram"
+                    v-model="student.user.instagram"
                 />
 
                 <q-input
                     :label="$t('user.label.email') + '*'"
-                    v-model="selectedStudent.user.email"
+                    v-model="student.user.email"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -109,13 +111,13 @@ const onSubmit = async () => {
 
                 <q-input
                     :label="
-                        selectedStudent.id
+                        student.id
                             ? $t('user.label.changePassword')
                             : $t('user.label.password') + '*'
                     "
-                    v-model="selectedStudent.user.password"
+                    v-model="student.user.password"
                     :rules="
-                        selectedStudent.id
+                        student.id
                             ? []
                             : [
                                   (val: string | any[]) =>

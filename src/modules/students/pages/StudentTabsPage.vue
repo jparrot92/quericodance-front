@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -21,6 +21,8 @@ const idStudent = computed<string | undefined>(() =>
 const { student, loadStudent } = useStudents();
 const tab = ref('student-data');
 
+const isModalVisible: Ref<boolean> = ref(false);
+
 const updateMembership = async (membershipView: MembershipViewDTO) =>
     (student.value.membership = membershipView);
 
@@ -32,15 +34,16 @@ const deleteMembership = async (activitiesStudent: ActivityStudent[]) => {
     student.value.activitiesStudent = [];
 };
 
-onMounted(() => {
+onMounted(async () => {
     if (idStudent.value) {
-        loadStudent(idStudent.value);
+        await loadStudent(idStudent.value);
     }
+    isModalVisible.value = true;
 });
 </script>
 
 <template>
-    <q-card>
+    <q-card v-if="isModalVisible">
         <q-tabs
             v-model="tab"
             narrow-indicator
