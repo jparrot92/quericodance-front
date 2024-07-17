@@ -3,7 +3,6 @@ import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
-import DateSelector from 'src/shared/components/DateSelector.vue';
 
 import useTeachers from '../composables/useTeachers';
 
@@ -65,13 +64,9 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <date-selector
-                    :date="teacher.user.dateOfBirth"
+                <pd-date
                     :label="$t('user.label.dateOfBirth') + '*'"
-                    @update-date="
-                        (newValue: string) =>
-                            (teacher.user.dateOfBirth = newValue)
-                    "
+                    v-model="teacher.user.dateOfBirth"
                 />
 
                 <q-input

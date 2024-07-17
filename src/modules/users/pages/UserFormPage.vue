@@ -6,7 +6,6 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
-import DateSelector from 'src/shared/components/DateSelector.vue';
 
 import useUsers from '../composables/useUsers';
 
@@ -91,11 +90,9 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                <date-selector
-                    :date="user.dateOfBirth"
+                <pd-date
                     :label="$t('user.label.dateOfBirth') + '*'"
-                    @update-date="(newDate: string) =>
-                            (user.dateOfBirth = newDate)"
+                    v-model="user.dateOfBirth"
                 />
 
                 <q-input
