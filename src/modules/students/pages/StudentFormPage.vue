@@ -92,7 +92,7 @@ const onSubmit = async () => {
                     ]"
                 />
 
-                {{ student.user.phone }}
+                <!-- {{ student.user.phone }} -->
 
                 <q-input
                     :label="$t('user.label.instagram')"

@@ -67,7 +67,7 @@ watch([country, phoneNumber], updateModelValue);
             class="col-4"
             v-model="country"
             :options="countryOptions"
-            label="Standard"
+            label="Codigo pais:"
             clearable
             options-selected-class="text-deep-orange"
         >
