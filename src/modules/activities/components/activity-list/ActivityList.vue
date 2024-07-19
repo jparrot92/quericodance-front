@@ -252,8 +252,8 @@ onMounted(async () => {
                         </div>
                         <div class="col-2 flex justify-end">
                             <q-toggle
-                                class="col-3"
                                 :label="$t('activity.label.showProfitability')"
+                                class="h-2rem"
                                 v-model="showProfitability"
                             ></q-toggle>
                         </div>
