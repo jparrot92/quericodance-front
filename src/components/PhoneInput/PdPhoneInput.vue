@@ -15,7 +15,7 @@ const props = withDefaults(
 
 const emit = defineEmits(['update:modelValue']);
 
-const country = ref<Country>({
+const country = ref<Country | null>({
     iso2: 'ES',
     name: 'Spain',
     native: 'España',
@@ -29,17 +29,43 @@ const country = ref<Country>({
 });
 
 const countryOptions: Ref<Country[]> = ref([]);
-const phoneNumber = ref('');
+const phoneNumber: Ref<string> = ref('');
 
 const validatePhoneNumber = (number: string) => {
     const phoneNumberInstance = parsePhoneNumberFromString(
-        '+' + country.value.dialCode + number
+        '+' + country.value?.dialCode + number
     );
     return phoneNumberInstance ? phoneNumberInstance.isValid() : false;
 };
 
 const updateModelValue = () => {
-    emit('update:modelValue', '+' + country.value.dialCode + phoneNumber.value);
+    if (country.value) {
+        emit(
+            'update:modelValue',
+            '+' + country.value.dialCode + phoneNumber.value
+        );
+    } else {
+        emit('update:modelValue', phoneNumber.value);
+    }
+};
+
+const filterFn = (val: string, update: (fn: () => void) => void) => {
+    if (val === '') {
+        update(() => {
+            countryOptions.value = [...countryInformation];
+        });
+        return;
+    }
+
+    update(() => {
+        const needle = val.toLowerCase();
+        countryOptions.value = countryInformation.filter(
+            (country: Country) =>
+                country.name.toLowerCase().includes(needle) ||
+                country.native?.toLowerCase().includes(needle) ||
+                country.dialCode.includes(val)
+        );
+    });
 };
 
 onMounted(() => {
@@ -68,8 +94,10 @@ watch([country, phoneNumber], updateModelValue);
             v-model="country"
             :options="countryOptions"
             label="Codigo pais:"
-            clearable
-            options-selected-class="text-deep-orange"
+            virtual-scroll-slice-size="9999"
+            hide-dropdown-icon
+            :use-input="country === null"
+            @filter="filterFn"
         >
             <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps">
@@ -98,6 +126,13 @@ watch([country, phoneNumber], updateModelValue);
                         <q-item-label>{{ scope.opt.dialCode }}</q-item-label>
                     </q-item-section>
                 </q-item>
+            </template>
+            <template v-if="country" v-slot:append>
+                <q-icon
+                    name="cancel"
+                    @click.stop.prevent="country = null"
+                    class="cursor-pointer"
+                />
             </template>
         </q-select>
         <q-input
