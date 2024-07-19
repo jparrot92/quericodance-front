@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, reactive, ref, watch } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -7,87 +7,22 @@ import { useRouter } from 'vue-router';
 import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import { ActivityList, ActivityFilter } from '../../models/activity';
+import { ActivityList } from '../../models/activity';
 import useActivities from '../../composables/useActivities';
-import ActivityListFilter from '../../components/activity-list-filter/ActivityListFilter.vue';
-
-const { loading, activities, loadActivities, removeActivity } = useActivities();
+import { FilterField } from 'src/composables/useFilterTypes';
+import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 const $q = useQuasar();
-
 const { t } = useI18n();
 const router = useRouter();
 
+const { generateEnumOptions } = useEnumOptions();
+
+const { loading, activities, loadActivities, removeActivity } = useActivities();
+
+const weekDays = generateEnumOptions(WeekDay);
 const activitiesFilter = ref<ActivityList[]>();
 const showProfitability = ref(false);
-
-const filterTable = (activityFilter: ActivityFilter) => {
-    activitiesFilter.value = activities.value
-        .filter((activity: ActivityList) => {
-            const activityFullName =
-                activity.name.toLowerCase() + activity.level;
-
-            return activityFullName.includes(
-                activityFilter.textFilter.replace(/\s/g, '').toLowerCase()
-            );
-        })
-        .filter((activity: ActivityList) => {
-            if (activityFilter.day === '') {
-                return true;
-            } else {
-                return activity.day === activityFilter.day;
-            }
-        });
-    showProfitability.value = activityFilter.showProfitability;
-};
-
-const filteredColumns = computed(() => {
-    if (showProfitability.value) {
-        return columns;
-    } else {
-        return columns.filter(
-            (column) =>
-                column.name !== 'costEffectiveness' &&
-                column.name !== 'totalPaid'
-        );
-    }
-});
-
-onMounted(async () => {
-    await loadActivities();
-    activitiesFilter.value = activities.value;
-});
-
-function getWeekNumber(day: string): number {
-    switch (day) {
-        case WeekDay.SUNDAY:
-            return 0;
-        case WeekDay.MONDAY:
-            return 1;
-        case WeekDay.TUESDAY:
-            return 2;
-        case WeekDay.WEDNESDAY:
-            return 3;
-        case WeekDay.THURSDAY:
-            return 4;
-        case WeekDay.FRIDAY:
-            return 5;
-        case WeekDay.SATURDAY:
-            return 6;
-        default:
-            throw new Error('Invalid day of the week');
-    }
-}
-
-const orderByDay = (a: ActivityList, b: ActivityList) => {
-    const dayA = getWeekNumber(a.day);
-    const dayB = getWeekNumber(b.day);
-
-    // Cambiar el orden de retorno para ordenar de mayor a menor
-    if (dayA > dayB) return -1;
-    if (dayA < dayB) return 1;
-    return 0;
-};
 
 const columns: ColumnTable[] = [
     {
@@ -186,6 +121,81 @@ const columns: ColumnTable[] = [
     },
 ];
 
+const filtersSelected = reactive({
+    query: '',
+    weekDay: null,
+});
+
+const filters: Ref<Array<FilterField>> = ref([
+    {
+        field: 'weekDay',
+        label: t('activity.label.day'),
+        options: weekDays,
+    },
+] as Array<FilterField>);
+
+const filterTable = () => {
+    activitiesFilter.value = activities.value
+        .filter((activity: ActivityList) => {
+            const activityFullName =
+                activity.name.toLowerCase() + activity.level;
+
+            return activityFullName.includes(
+                filtersSelected.query.replace(/\s/g, '').toLowerCase()
+            );
+        })
+        .filter((activity: ActivityList) => {
+            if (filtersSelected.weekDay === null) {
+                return true;
+            } else {
+                return activity.day === filtersSelected.weekDay;
+            }
+        });
+};
+
+const filteredColumns = computed(() => {
+    if (showProfitability.value) {
+        return columns;
+    } else {
+        return columns.filter(
+            (column) =>
+                column.name !== 'costEffectiveness' &&
+                column.name !== 'totalPaid'
+        );
+    }
+});
+
+function getWeekNumber(day: string): number {
+    switch (day) {
+        case WeekDay.SUNDAY:
+            return 0;
+        case WeekDay.MONDAY:
+            return 1;
+        case WeekDay.TUESDAY:
+            return 2;
+        case WeekDay.WEDNESDAY:
+            return 3;
+        case WeekDay.THURSDAY:
+            return 4;
+        case WeekDay.FRIDAY:
+            return 5;
+        case WeekDay.SATURDAY:
+            return 6;
+        default:
+            throw new Error('Invalid day of the week');
+    }
+}
+
+const orderByDay = (a: ActivityList, b: ActivityList) => {
+    const dayA = getWeekNumber(a.day);
+    const dayB = getWeekNumber(b.day);
+
+    // Cambiar el orden de retorno para ordenar de mayor a menor
+    if (dayA > dayB) return -1;
+    if (dayA < dayB) return 1;
+    return 0;
+};
+
 const onRowClick = (evt: Event, row: ActivityList) => {
     let title = `${t('activity.label.activity')} ${row.name} ${row.level} - ${t(
         'shared.enum.' + row.day
@@ -201,6 +211,19 @@ const onRowClick = (evt: Event, row: ActivityList) => {
         },
     });
 };
+
+watch(
+    filtersSelected,
+    () => {
+        filterTable();
+    },
+    { deep: true }
+);
+
+onMounted(async () => {
+    await loadActivities();
+    activitiesFilter.value = activities.value;
+});
 </script>
 
 <template>
@@ -216,21 +239,41 @@ const onRowClick = (evt: Event, row: ActivityList) => {
             :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <q-space />
-                <q-btn
-                    v-if="$q.platform.is.desktop"
-                    class="q-ml-sm"
-                    :label="$t('activity.label.createActivity')"
-                    color="primary"
-                    icon="mdi-plus"
-                    dense
-                    @click="
-                        $router.push({
-                            name: 'activities-add',
-                        })
-                    "
-                />
-                <ActivityListFilter @filter-table="filterTable" />
+                <div class="col-12 justify-between">
+                    <div class="row justify-between">
+                        <div class="col-6">
+                            <pd-filter
+                                v-model="filtersSelected"
+                                :filters="filters"
+                                :placeholder="
+                                    $t('activity.label.serachPlaceholder')
+                                "
+                            ></pd-filter>
+                        </div>
+                        <div class="col-2 flex justify-end">
+                            <q-toggle
+                                class="col-3"
+                                :label="$t('activity.label.showProfitability')"
+                                v-model="showProfitability"
+                            ></q-toggle>
+                        </div>
+                        <div class="col-2 flex justify-end">
+                            <q-btn
+                                v-if="$q.platform.is.desktop"
+                                :label="$t('activity.label.createActivity')"
+                                color="primary"
+                                icon="mdi-plus"
+                                dense
+                                class="h-2rem"
+                                @click="
+                                    $router.push({
+                                        name: 'activities-add',
+                                    })
+                                "
+                            />
+                        </div>
+                    </div>
+                </div>
             </template>
             <template v-slot:body-cell-numberLeaders="props">
                 <q-td :props="props">

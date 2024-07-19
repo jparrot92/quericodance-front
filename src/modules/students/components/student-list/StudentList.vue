@@ -307,6 +307,9 @@ onMounted(async () => {
                             <pd-filter
                                 v-model="filtersSelected"
                                 :filters="filters"
+                                :placeholder="
+                                    $t('student.label.serachPlaceholder')
+                                "
                             ></pd-filter>
                         </div>
                         <template v-if="idActivity">

@@ -8,9 +8,11 @@ const props = withDefaults(
     defineProps<{
         modelValue?: object & { query: string };
         filters?: Array<FilterField>;
+        placeholder: string;
     }>(),
     {
         filters: () => [],
+        placeholder: '',
     }
 );
 
@@ -62,7 +64,7 @@ const search = () => {
         outlined
         dense
         debounce="300"
-        placeholder="Search"
+        :placeholder="props.placeholder"
     >
         <template v-slot:prepend>
             <q-icon name="mdi-magnify" />
