@@ -66,7 +66,7 @@ export const updateActivity = async (
     }
 };
 
-export const deleteActivity = async (id: string): Promise<Activity> => {
+export const deleteActivity = async (id: number): Promise<Activity> => {
     try {
         const { data } = await api.delete<Activity>(`/activities/${id}`);
 

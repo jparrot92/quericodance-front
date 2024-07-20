@@ -285,7 +285,7 @@ watch(
     filtersSelected,
     () => {
         filterTable();
-        saveFiltersToLocalStorage(); // Guardar el estado en localStorage cada vez que cambie
+        saveFiltersToLocalStorage();
     },
     { deep: true }
 );

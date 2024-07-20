@@ -2,30 +2,26 @@
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-import DaysSelector from 'src/shared/components/DaysSelector.vue';
+import { WeekDay } from 'src/types/UtilTypes';
+import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useTeachers from 'src/modules/teachers/composables/useTeachers';
 import useActivities from '../composables/useActivities';
 
 const route = useRoute();
 
-const { id } = route.params as { id: string };
+const idActivity = computed<string>(() => route.params.id?.toString());
 
-const isUpdate = computed(() => route.params.id);
+const { generateEnumOptions } = useEnumOptions();
 
 const { teachers, loadTeachers } = useTeachers();
 const { activity, loadActivity, saveActivity, editActivity } = useActivities();
 
-onMounted(() => {
-    loadTeachers();
-    if (isUpdate.value) {
-        loadActivity(id);
-    }
-});
+const weekDays = generateEnumOptions(WeekDay);
 
 const onSubmit = async () => {
-    if (isUpdate.value) {
-        editActivity(id);
+    if (idActivity.value) {
+        editActivity(idActivity.value);
     } else {
         saveActivity();
     }
@@ -34,6 +30,13 @@ const onSubmit = async () => {
 const removeTeacherActivity = async () => {
     console.log('Elinar del chip');
 };
+
+onMounted(() => {
+    loadTeachers();
+    if (idActivity.value) {
+        loadActivity(idActivity.value);
+    }
+});
 </script>
 
 <template>
@@ -69,12 +72,12 @@ const removeTeacherActivity = async () => {
                     ]"
                 />
 
-                <days-selector
-                    :day="activity.day"
-                    @update:model-value="
-                        (newValue: any) =>
-                            (activity.day = newValue.value)
-                    "
+                <pd-select
+                    :dense="false"
+                    :options-dense="false"
+                    v-model="activity.day"
+                    :label="$t('shared.day') + '*'"
+                    :options="weekDays"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||

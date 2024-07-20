@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router';
 import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import { ActivityList } from '../../models/activity';
+import { ActivityForm, ActivityList } from '../../models/activity';
 import useActivities from '../../composables/useActivities';
 import { FilterField } from 'src/composables/useFilterTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
@@ -21,7 +21,7 @@ const { generateEnumOptions } = useEnumOptions();
 const { loading, activities, loadActivities, removeActivity } = useActivities();
 
 const weekDays = generateEnumOptions(WeekDay);
-const activitiesFilter = ref<ActivityList[]>();
+const activitiesFiltered = ref<ActivityList[]>();
 const showProfitability = ref(false);
 
 const columns: ColumnTable[] = [
@@ -135,7 +135,7 @@ const filters: Ref<Array<FilterField>> = ref([
 ] as Array<FilterField>);
 
 const filterTable = () => {
-    activitiesFilter.value = activities.value
+    activitiesFiltered.value = activities.value
         .filter((activity: ActivityList) => {
             const activityFullName =
                 activity.name.toLowerCase() + activity.level;
@@ -212,6 +212,20 @@ const onRowClick = (evt: Event, row: ActivityList) => {
     });
 };
 
+const handleRemoveActivity = async (idActivity: number) => {
+    try {
+        await removeActivity(idActivity);
+        const index = activitiesFiltered.value?.findIndex(
+            (activity: ActivityForm) => activity.id === idActivity
+        );
+        if (index !== undefined && index !== -1) {
+            activitiesFiltered.value?.splice(index, 1);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 watch(
     filtersSelected,
     () => {
@@ -222,14 +236,14 @@ watch(
 
 onMounted(async () => {
     await loadActivities();
-    activitiesFilter.value = activities.value;
+    activitiesFiltered.value = activities.value;
 });
 </script>
 
 <template>
     <div class="row">
         <q-table
-            :rows="activitiesFilter"
+            :rows="activitiesFiltered"
             :columns="filteredColumns"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
@@ -336,7 +350,7 @@ onMounted(async () => {
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
-                                @click="removeActivity(props.row.id)"
+                                @click="handleRemoveActivity(props.row.id)"
                             >
                                 {{ $t('activity.label.delete') }}
                             </q-item-section>

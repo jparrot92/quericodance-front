@@ -84,7 +84,7 @@ const useActivities = () => {
         }
     };
 
-    const loadCountersActivity = async (id: string) => {
+    const loadCountersActivity = async (id: number) => {
         try {
             loading.value = true;
             activityCounters.value = await getCountersActivity(id);
@@ -143,22 +143,25 @@ const useActivities = () => {
         }
     };
 
-    const removeActivity = async (id: string) => {
-        $q.dialog({
-            title: t('activity.label.confirmation'),
-            message: t('activity.message.activityDelete'),
-            cancel: true,
-            persistent: true,
-        }).onOk(async () => {
-            try {
-                await deleteActivity(id);
-                notifySuccess(
-                    t('activity.notifications.activityDeleteSuccessfully')
-                );
-                await loadActivities();
-            } catch (error) {
-                notifyError(error);
-            }
+    const removeActivity = async (id: number) => {
+        return new Promise<void>(async (resolve, reject) => {
+            $q.dialog({
+                title: t('activity.label.confirmation'),
+                message: t('activity.message.activityDelete'),
+                cancel: true,
+                persistent: true,
+            }).onOk(async () => {
+                try {
+                    await deleteActivity(id);
+                    notifySuccess(
+                        t('activity.notifications.activityDeleteSuccessfully')
+                    );
+                    resolve();
+                } catch (error) {
+                    notifyError(error);
+                    reject(error);
+                }
+            });
         });
     };
 
