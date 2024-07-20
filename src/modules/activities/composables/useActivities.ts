@@ -17,7 +17,7 @@ import {
 } from 'src/api/activitiesApi';
 
 import {
-    ActivityForm,
+    ActivityDTO,
     ActivityCounters,
     ActivityList,
 } from '../models/activity';
@@ -34,7 +34,7 @@ const useActivities = () => {
 
     const loading = ref<boolean>(false);
     const activities = ref<ActivityList[]>([]);
-    const activity = ref<ActivityForm>({
+    const activity = ref<ActivityDTO>({
         id: 0,
         name: '',
         level: null,

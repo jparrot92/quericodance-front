@@ -1,5 +1,3 @@
-import { DanceRole } from 'src/types/UtilTypes';
-
 export default {
     student: {
         membership: 'Cuota',
@@ -24,48 +22,39 @@ export default {
         deleteMembershipSuccessfully: 'Estudiante dado de baja',
         messageNotMembership:
             'Este estudiante no tiene una cuota creada, dirigiese al apartado "Cuota" para crear una cuota al estudiante.',
-
         discountPercentage: 'Descuento',
         discountReason: 'Motivo descuento',
         dueDate: 'Fecha de vencimiento',
         membershipUpdatedSuccessfully: 'Cuota modificada correctamente.',
         danceRole: 'Rol',
-        label: {
-            createStudent: 'Crear estudiante',
-            editStudent: 'Editar estudiante',
-            students: 'Estudiantes',
-            studentData: 'Datos estudiante',
-            courses: 'Cursos',
-            course: 'Curso',
-            confirmationPayment: 'Confirmación pago',
-            role: 'Rol',
-            state: 'Estado',
-            monthlyPayment: 'Mensualidad',
-            paymentStatus: 'Estado pago',
-            paid: 'Pagado',
-            pending: 'Pendiente',
-            addActivity: 'Añadir curso',
-            addStudent: 'Añadir estudiante',
-            add: 'Añadir',
-            cancel: 'Cancelar',
-            changePrice: 'Modificar precio',
-            datePayment: 'Fecha pago',
-            active: 'Activo',
-            inactivo: 'Inactivo',
-            serachPlaceholder:
-                'Introduzca el nombre/apellido o correo electrónico del alumno',
-            observations: 'Observaciones',
-            send: 'Enviar',
-        },
-        message: {
-            addCourse:
-                'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante',
-        },
-        notifications: {
-            paymentMade: 'Paga efectuado',
-            cancelPayment: 'Pago cancelado',
-            sendMailPaymentPaid:
-                'El correo electrónico ha sido enviado correctamente.',
-        },
+        createStudent: 'Crear estudiante',
+        editStudent: 'Editar estudiante',
+        students: 'Estudiantes',
+        studentData: 'Datos estudiante',
+        course: 'Curso',
+        confirmationPayment: 'Confirmación pago',
+        state: 'Estado',
+        monthlyPayment: 'Mensualidad',
+        paid: 'Pagado',
+        pending: 'Pendiente',
+        addActivity: 'Añadir curso',
+        addStudent: 'Añadir estudiante',
+        add: 'Añadir',
+        cancel: 'Cancelar',
+        changePrice: 'Modificar precio',
+        datePayment: 'Fecha pago',
+        active: 'Activo',
+        inactivo: 'Inactivo',
+        serachPlaceholder:
+            'Introduzca el nombre/apellido o correo electrónico del alumno',
+        observations: 'Observaciones',
+        send: 'Enviar',
+        msgAddCourse:
+            'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante',
+        paymentMade: 'Paga efectuado',
+        cancelPayment: 'Pago cancelado',
+        sendMailPaymentPaid:
+            'El correo electrónico ha sido enviado correctamente.',
+        coursesInterest: 'Cursos de interés',
     },
 };

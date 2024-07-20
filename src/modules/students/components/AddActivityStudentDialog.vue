@@ -72,7 +72,7 @@ const calculatePrice = () => {
     <q-dialog v-model="isOpenDialog" @hide="emits('onClose')">
         <q-card style="width: 50vh">
             <q-card-section>
-                <div class="text-h6">{{ $t('student.label.addActivity') }}</div>
+                <div class="text-h6">{{ $t('student.addActivity') }}</div>
             </q-card-section>
 
             <q-separator />
@@ -80,7 +80,7 @@ const calculatePrice = () => {
             <q-card-section style="max-height: 50vh" class="scroll">
                 <q-select
                     v-model="activityStudent.activity"
-                    :label="$t('student.label.course')"
+                    :label="$t('student.course')"
                     :options="activities"
                     :option-value="'id'"
                     @update:model-value="calculatePrice"
@@ -118,7 +118,7 @@ const calculatePrice = () => {
                 <q-select
                     v-model="activityStudent.danceRole"
                     :options="roles"
-                    :label="$t('student.label.role')"
+                    :label="$t('student.role')"
                     emit-value
                 />
             </q-card-section>
@@ -128,13 +128,13 @@ const calculatePrice = () => {
             <q-card-actions align="right">
                 <q-btn
                     flat
-                    :label="$t('student.label.add')"
+                    :label="$t('student.add')"
                     color="primary"
                     @click="addActivityStudent()"
                 />
                 <q-btn
                     flat
-                    :label="$t('student.label.cancel')"
+                    :label="$t('student.cancel')"
                     color="primary"
                     @click="emits('onClose')"
                 />

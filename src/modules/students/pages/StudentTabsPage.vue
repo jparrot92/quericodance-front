@@ -51,16 +51,10 @@ onMounted(async () => {
             class="bg-secondary text-white shadow-2"
             align="justify"
         >
-            <q-tab
-                name="student-data"
-                :label="$t('student.label.studentData')"
-            />
+            <q-tab name="student-data" :label="$t('student.studentData')" />
             <q-tab name="membership" :label="$t('student.membership')" />
-            <q-tab name="courses" :label="$t('student.label.courses')" />
-            <q-tab
-                name="observations"
-                :label="$t('student.label.observations')"
-            />
+            <q-tab name="courses" :label="$t('student.courses')" />
+            <q-tab name="observations" :label="$t('student.observations')" />
         </q-tabs>
 
         <q-separator />

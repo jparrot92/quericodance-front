@@ -161,19 +161,6 @@ onMounted(() => {
                     ]"
                 />
 
-                <!-- <q-input
-                    prefix="€"
-                    :label="$t('activity.label.price')"
-                    v-model.number="activity.price"
-                    :rules="[
-                        (val) =>
-                            (val !== null &&
-                                val !== undefined &&
-                                val.toString().trim() !== '') ||
-                            $t('activity.validation.priceRequired'),
-                    ]"
-                /> -->
-
                 <div class="row">
                     <q-input
                         :label="$t('activity.label.color')"

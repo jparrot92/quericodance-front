@@ -22,7 +22,7 @@ import {
     resetPaymentsStatus,
 } from 'src/api/membershipsApi';
 
-import { Student } from '../models/student';
+import { StudentDTO } from '../models/student';
 
 const useStudents = () => {
     const router = useRouter();
@@ -34,8 +34,8 @@ const useStudents = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const students = ref<Student[]>([]);
-    const student = ref<Student>({
+    const students = ref<StudentDTO[]>([]);
+    const student = ref<StudentDTO>({
         id: 0,
         user: {
             id: 0,
@@ -74,7 +74,7 @@ const useStudents = () => {
         }
     };
 
-    const saveStudent = async (data: Student) => {
+    const saveStudent = async (data: StudentDTO) => {
         try {
             loading.value = true;
             student.value = await createStudent(data);
@@ -128,7 +128,7 @@ const useStudents = () => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await markPayment(id);
-                notifySuccess(t('student.notifications.paymentMade'));
+                notifySuccess(t('student.paymentMade'));
                 resolve();
             } catch (error) {
                 notifyError(error);
@@ -141,7 +141,7 @@ const useStudents = () => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await sendMailPayment(id);
-                notifySuccess(t('student.notifications.sendMailPaymentPaid'));
+                notifySuccess(t('student.sendMailPaymentPaid'));
                 resolve();
             } catch (error) {
                 notifyError(error);
@@ -154,7 +154,7 @@ const useStudents = () => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await cancelPayment(id);
-                notifySuccess(t('student.notifications.cancelPayment'));
+                notifySuccess(t('student.cancelPayment'));
                 resolve();
             } catch (error) {
                 notifyError(error);

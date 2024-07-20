@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router';
 import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import { ActivityForm, ActivityList } from '../../models/activity';
+import { ActivityDTO, ActivityList } from '../../models/activity';
 import useActivities from '../../composables/useActivities';
 import { FilterField } from 'src/composables/useFilterTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
@@ -216,7 +216,7 @@ const handleRemoveActivity = async (idActivity: number) => {
     try {
         await removeActivity(idActivity);
         const index = activitiesFiltered.value?.findIndex(
-            (activity: ActivityForm) => activity.id === idActivity
+            (activity: ActivityDTO) => activity.id === idActivity
         );
         if (index !== undefined && index !== -1) {
             activitiesFiltered.value?.splice(index, 1);

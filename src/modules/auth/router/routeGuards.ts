@@ -10,7 +10,8 @@ export const requireAuth = (
 
     const isAuthenticated = authStore.checkAuthentication();
 
-    if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' });
+    if (to.name !== 'login' && to.name !== 'register' && !isAuthenticated)
+        next({ name: 'login' });
     else next();
 };
 

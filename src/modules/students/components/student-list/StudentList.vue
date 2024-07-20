@@ -20,7 +20,7 @@ import MenuList from 'src/shared/components/MenuList.vue';
 import useActivities from 'src/modules/activities/composables/useActivities';
 import useStudents from '../../composables/useStudents';
 
-import { Student } from '../../models/student';
+import { StudentDTO } from '../../models/student';
 import { FilterField } from 'src/composables/useFilterTypes';
 
 const { generateEnumOptions } = useEnumOptions();
@@ -49,7 +49,7 @@ const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const danceRoles = generateEnumOptions(DanceRole);
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const studentsFiltered = ref<Student[]>();
+const studentsFiltered = ref<StudentDTO[]>();
 const showProfitability = ref(false);
 
 const idActivity = computed<string>(() => route.params.id?.toString());
@@ -75,71 +75,71 @@ const columnsUser: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.label.photo'),
-        field: (row: Student) => row.user.photo,
+        field: (row: StudentDTO) => row.user.photo,
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
-        field: (row: Student) => row.user.name,
+        field: (row: StudentDTO) => row.user.name,
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
-        field: (row: Student) => row.user.surnames,
+        field: (row: StudentDTO) => row.user.surnames,
         sortable: true,
     },
     {
         name: 'phone',
         align: 'left',
         label: t('user.label.phone'),
-        field: (row: Student) => row.user.phone,
+        field: (row: StudentDTO) => row.user.phone,
         sortable: true,
     },
     {
         name: 'status',
         align: 'left',
-        label: t('student.label.state'),
-        field: (row: Student) => row.status,
+        label: t('student.state'),
+        field: (row: StudentDTO) => row.status,
         sortable: true,
     },
     {
         name: 'danceRole',
         align: 'left',
-        label: t('student.label.role'),
-        field: (row: Student) => row.activitiesStudent[0].danceRole,
+        label: t('student.role'),
+        field: (row: StudentDTO) => row.activitiesStudent[0].danceRole,
         sortable: true,
     },
     {
         name: 'payment',
         align: 'left',
-        label: t('student.label.monthlyPayment'),
-        field: (row: Student) => row.membership?.payment,
+        label: t('student.monthlyPayment'),
+        field: (row: StudentDTO) => row.membership?.payment,
         format: (val: number) => `${val} €`,
         sortable: true,
     },
     {
         name: 'paymentStatus',
         align: 'left',
-        label: t('student.label.paymentStatus'),
-        field: (row: Student) => row.membership?.paymentStatus,
+        label: t('student.paymentStatus'),
+        field: (row: StudentDTO) => row.membership?.paymentStatus,
         sortable: true,
     },
     {
         name: 'mail',
         align: 'left',
-        label: t('student.label.confirmationPayment'),
+        label: t('student.confirmationPayment'),
         field: 'mail',
         sortable: false,
     },
     {
         name: 'datePayment',
         align: 'left',
-        label: t('student.label.datePayment'),
-        field: (row: Student) => row.membership?.paymentDate,
+        label: t('student.datePayment'),
+        field: (row: StudentDTO) => row.membership?.paymentDate,
         sortable: true,
     },
     {
@@ -181,7 +181,7 @@ const filters: Ref<Array<FilterField>> = ref([] as Array<FilterField>);
 
 const filterTable = () => {
     studentsFiltered.value = students.value
-        .filter((student: Student) => {
+        .filter((student: StudentDTO) => {
             const studentFullName =
                 student.user.name.toLowerCase() +
                 student.user.surnames.toLowerCase() +
@@ -191,14 +191,14 @@ const filterTable = () => {
                 filtersSelected.query.replace(/\s/g, '').toLowerCase()
             );
         })
-        .filter((student: Student) => {
+        .filter((student: StudentDTO) => {
             if (filtersSelected.status === null) {
                 return true;
             } else {
                 return student.status === filtersSelected.status;
             }
         })
-        .filter((student: Student) => {
+        .filter((student: StudentDTO) => {
             if (filtersSelected.paymentStatus === null) {
                 return true;
             } else {
@@ -208,7 +208,7 @@ const filterTable = () => {
                 );
             }
         })
-        .filter((student: Student) => {
+        .filter((student: StudentDTO) => {
             if (
                 filtersSelected.danceRole === null ||
                 filtersSelected.danceRole === undefined
@@ -223,7 +223,7 @@ const filterTable = () => {
         });
 };
 
-const onRowClick = (evt: Event, row: Student) => {
+const onRowClick = (evt: Event, row: StudentDTO) => {
     router.push({
         name: 'students-edit',
         params: {
@@ -233,7 +233,7 @@ const onRowClick = (evt: Event, row: Student) => {
 };
 
 const checkMonthlyPaymentPaid = async (
-    student: Student,
+    student: StudentDTO,
     paymentStatus: Option
 ) => {
     try {
@@ -247,7 +247,7 @@ const checkMonthlyPaymentPaid = async (
     }
 };
 
-const handleSendMail = async (student: Student) => {
+const handleSendMail = async (student: StudentDTO) => {
     sendMailPaymentPaid(student.id);
 };
 
@@ -271,7 +271,7 @@ const handleRemoveStudent = async (id: number) => {
     try {
         await removeStudent(id);
         const index = studentsFiltered.value?.findIndex(
-            (student: Student) => student.id === id
+            (student: StudentDTO) => student.id === id
         );
         if (index !== undefined && index !== -1) {
             studentsFiltered.value?.splice(index, 1);
@@ -340,9 +340,7 @@ onMounted(async () => {
                             <pd-filter
                                 v-model="filtersSelected"
                                 :filters="filters"
-                                :placeholder="
-                                    $t('student.label.serachPlaceholder')
-                                "
+                                :placeholder="$t('student.serachPlaceholder')"
                             ></pd-filter>
                         </div>
                         <template v-if="idActivity">
@@ -357,7 +355,7 @@ onMounted(async () => {
                             </div>
                             <div class="col-2 flex justify-end">
                                 <q-btn
-                                    :label="$t('student.label.createStudent')"
+                                    :label="$t('student.createStudent')"
                                     color="primary"
                                     icon="mdi-plus"
                                     dense
@@ -401,7 +399,7 @@ onMounted(async () => {
                             <div class="col-2 flex justify-end">
                                 <q-btn
                                     class="h-2rem"
-                                    :label="$t('student.label.createStudent')"
+                                    :label="$t('student.createStudent')"
                                     color="primary"
                                     icon="mdi-plus"
                                     dense
@@ -483,8 +481,8 @@ onMounted(async () => {
                         :color="props.row.active ? 'green' : 'red'"
                         :label="
                             props.row.active
-                                ? $t('student.label.active')
-                                : $t('student.label.inactivo')
+                                ? $t('student.active')
+                                : $t('student.inactivo')
                         "
                     />
                 </q-td>
@@ -559,7 +557,7 @@ onMounted(async () => {
                             color="primary"
                             rounded
                             size="md"
-                            :label="$t('student.label.send')"
+                            :label="$t('student.send')"
                             @click="handleSendMail(props.row)"
                         />
                     </template>
@@ -695,8 +693,8 @@ onMounted(async () => {
                         :color="props.row.active ? 'green' : 'red'"
                         :label="
                             props.row.active
-                                ? $t('student.label.active')
-                                : $t('student.label.inactivo')
+                                ? $t('student.active')
+                                : $t('student.inactivo')
                         "
                     />
                 </q-td>
@@ -771,7 +769,7 @@ onMounted(async () => {
                             color="primary"
                             rounded
                             size="md"
-                            :label="$t('student.label.send')"
+                            :label="$t('student.send')"
                             @click="handleSendMail(props.row)"
                         />
                     </template>

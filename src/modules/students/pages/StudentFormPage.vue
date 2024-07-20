@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 
+import useActivities from 'src/modules/activities/composables/useActivities';
 import useStudents from '../composables/useStudents';
-import { Student } from '../models/student';
+import { StudentDTO } from '../models/student';
+import { ActivityDTO } from 'src/modules/activities/models/activity';
 
+const { activities, loadActivities } = useActivities();
 const { saveStudent, editStudent } = useStudents();
 
 const props = withDefaults(
     defineProps<{
-        student?: Student;
+        student?: StudentDTO;
     }>(),
     {
         student: () => ({
@@ -31,15 +35,30 @@ const props = withDefaults(
     }
 );
 
-const student = ref<Student>(props.student);
+const { t } = useI18n();
 
-const onSubmit = async () => {
+const student = ref<StudentDTO>(props.student);
+
+const removeCoursesInterest = (idActivity: number) => {
+    const index = student.value.coursesInterest?.findIndex(
+        (student: ActivityDTO) => student.id === idActivity
+    );
+    if (index !== undefined && index !== -1) {
+        student.value.coursesInterest?.splice(index, 1);
+    }
+};
+
+const onSubmit = () => {
     if (props.student.id !== 0) {
         editStudent(props.student.id);
     } else {
         saveStudent(student.value);
     }
 };
+
+onMounted(() => {
+    loadActivities();
+});
 </script>
 
 <template>
@@ -126,6 +145,44 @@ const onSubmit = async () => {
                               ]
                     "
                 />
+
+                <q-select
+                    v-model="student.coursesInterest"
+                    multiple
+                    :options="activities"
+                    :label="$t('student.coursesInterest')"
+                >
+                    <template v-slot:option="{ itemProps, opt }">
+                        <q-item v-bind="itemProps">
+                            <q-item-section>
+                                {{
+                                    opt.name +
+                                    ' ' +
+                                    opt.level +
+                                    ' - ' +
+                                    t('shared.enum.' + opt.day) +
+                                    ' ' +
+                                    opt.startHour
+                                }}
+                            </q-item-section>
+                        </q-item>
+                    </template>
+                    <template v-slot:selected-item="{ opt }">
+                        <q-chip
+                            removable
+                            :label="
+                                opt.name +
+                                ' ' +
+                                opt.level +
+                                ' - ' +
+                                t('shared.enum.' + opt.day) +
+                                ' ' +
+                                opt.startHour
+                            "
+                            @remove="removeCoursesInterest(opt.id)"
+                        />
+                    </template>
+                </q-select>
 
                 <q-btn
                     :label="$t('user.label.save')"

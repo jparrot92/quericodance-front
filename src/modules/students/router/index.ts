@@ -23,7 +23,7 @@ const studentsRoutes: RouteRecordRaw = {
                 import('src/modules/students/pages/StudentFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'student.label.createStudent',
+                title: 'student.createStudent',
             },
         },
         {
@@ -33,7 +33,7 @@ const studentsRoutes: RouteRecordRaw = {
                 import('src/modules/students/pages/StudentTabsPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'student.label.editStudent',
+                title: 'student.editStudent',
             },
             props: (route) => {
                 return {

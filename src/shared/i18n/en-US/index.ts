@@ -6,7 +6,7 @@ export default {
             calendar: 'Calendario',
             activity: 'Courses',
             teacher: 'Teacher',
-            student: 'Student',
+            student: 'StudentDTO',
             user: 'User',
         },
         message: {

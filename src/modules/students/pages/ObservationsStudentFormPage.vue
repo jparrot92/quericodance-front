@@ -2,12 +2,12 @@
 import { watch, defineProps, onMounted } from 'vue';
 
 import useStudents from '../composables/useStudents';
-import { Student } from '../models/student';
+import { StudentDTO } from '../models/student';
 
 const { student: newStudent, saveStudent, editStudent } = useStudents();
 
 interface Props {
-    student?: Student;
+    student?: StudentDTO;
 }
 
 const props = defineProps<Props>();

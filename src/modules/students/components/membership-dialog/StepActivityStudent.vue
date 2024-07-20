@@ -77,7 +77,7 @@ watch(() => membership.value.membershipActivities, updateActivitiesTariff, {
     >
         <q-select
             v-model="activitiesTariff[index]"
-            :label="$t('student.label.course')"
+            :label="$t('student.course')"
             :options="activities"
             :option-value="'id'"
             @update:model-value="

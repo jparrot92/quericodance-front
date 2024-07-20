@@ -1,7 +1,7 @@
 import { Teacher } from 'src/modules/teachers/models/teacher';
 import { ActivityStudent } from './activityStudent';
 
-export interface ActivityForm {
+export interface ActivityDTO {
     id: number;
     name: string;
     level: number | null;
@@ -15,21 +15,7 @@ export interface ActivityForm {
     teachers?: Teacher[];
 }
 
-export interface ActivityForm {
-    id: number;
-    name: string;
-    level: number | null;
-    day: string;
-    startHour: string;
-    endHour: string;
-    numberPlaces: number | null;
-    price: number | null;
-    color: string;
-    teachersIds: number[];
-    teachers?: Teacher[];
-}
-
-export interface ActivityList extends ActivityForm {
+export interface ActivityList extends ActivityDTO {
     activitiesStudent?: ActivityStudent[];
     numberStudents?: string;
     numberLeaders?: string;
@@ -44,12 +30,6 @@ export interface ActivityCounters {
     numberFollowers: string;
     totalPaid: string;
     costEffectiveness: string;
-}
-
-export interface ActivityFilter {
-    textFilter: string;
-    day: string;
-    showProfitability: boolean;
 }
 
 export interface ActivityViewDTO {

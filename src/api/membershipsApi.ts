@@ -4,7 +4,7 @@ import {
     MembershipDTO,
     MembershipViewDTO,
 } from 'src/modules/students/models/membership';
-import { Student } from 'src/modules/students/models/student';
+import { StudentDTO } from 'src/modules/students/models/student';
 
 const membershipsEndpoint = '/memberships';
 
@@ -87,9 +87,9 @@ export const resetPaymentsStatus = async (): Promise<string> => {
     }
 };
 
-export const markPayment = async (id: number): Promise<Student> => {
+export const markPayment = async (id: number): Promise<StudentDTO> => {
     try {
-        const { data } = await api.put<Student>(
+        const { data } = await api.put<StudentDTO>(
             `${membershipsEndpoint}/${id}/make-payment`
         );
 
@@ -99,9 +99,9 @@ export const markPayment = async (id: number): Promise<Student> => {
     }
 };
 
-export const cancelPayment = async (id: number): Promise<Student> => {
+export const cancelPayment = async (id: number): Promise<StudentDTO> => {
     try {
-        const { data } = await api.put<Student>(
+        const { data } = await api.put<StudentDTO>(
             `${membershipsEndpoint}/${id}/cancel-payment`
         );
 

@@ -148,11 +148,11 @@ const deleteActivityStudent = async (id: number) => {
 
                     <q-card flat v-else>
                         <q-banner class="bg-info text-white">
-                            {{ $t('student.message.addCourse') }}
+                            {{ $t('student.addCourse') }}
                         </q-banner>
                     </q-card>
                     <q-btn
-                        :label="$t('student.label.addActivity')"
+                        :label="$t('student.addActivity')"
                         color="primary"
                         class="full-width"
                         rounded
