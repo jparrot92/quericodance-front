@@ -102,20 +102,25 @@ const useStudents = () => {
         }
     };
 
-    const removeStudent = async (id: string) => {
-        $q.dialog({
-            title: t('user.label.confirmation'),
-            message: t('user.message.userDelete'),
-            cancel: true,
-            persistent: true,
-        }).onOk(async () => {
-            try {
-                await deleteStudent(id);
-                notifySuccess(t('user.notifications.userDeleteSuccessfully'));
-                await loadStudents();
-            } catch (error) {
-                notifyError(error);
-            }
+    const removeStudent = async (id: number) => {
+        return new Promise<void>(async (resolve, reject) => {
+            $q.dialog({
+                title: t('user.label.confirmation'),
+                message: t('user.message.userDelete'),
+                cancel: true,
+                persistent: true,
+            }).onOk(async () => {
+                try {
+                    await deleteStudent(id);
+                    notifySuccess(
+                        t('user.notifications.userDeleteSuccessfully')
+                    );
+                    resolve();
+                } catch (error) {
+                    notifyError(error);
+                    reject(error);
+                }
+            });
         });
     };
 
@@ -205,7 +210,7 @@ const useStudents = () => {
                 });
                 await uploadExcel(file);
                 notifySuccess('Excel importado');
-                await loadStudents();
+                await loadStudents('');
             } catch (error) {
                 notifyError(error);
             } finally {

@@ -4,6 +4,7 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
+import { reactive } from 'vue';
 
 import {
     ColumnTable,
@@ -17,13 +18,10 @@ import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import MenuList from 'src/shared/components/MenuList.vue';
 
 import useActivities from 'src/modules/activities/composables/useActivities';
-
-import { Student } from '../../models/student';
-
 import useStudents from '../../composables/useStudents';
 
+import { Student } from '../../models/student';
 import { FilterField } from 'src/composables/useFilterTypes';
-import { reactive } from 'vue';
 
 const { generateEnumOptions } = useEnumOptions();
 const {
@@ -42,7 +40,6 @@ const {
 const { activityCounters, loadCountersActivity } = useActivities();
 
 const $q = useQuasar();
-
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
@@ -154,12 +151,31 @@ const columnsUser: ColumnTable[] = [
     },
 ];
 
+const saveFiltersToLocalStorage = () => {
+    sessionStorage.setItem('filtersSelected', JSON.stringify(filtersSelected));
+};
+
+const loadFiltersFromLocalStorage = () => {
+    const savedFilters = sessionStorage.getItem('filtersSelected');
+    if (savedFilters) {
+        Object.assign(filtersSelected, JSON.parse(savedFilters));
+    }
+};
+
 const filtersSelected = reactive({
     query: '',
     status: null,
     paymentStatus: null,
     danceRole: null,
+    pagination: {
+        sortBy: 'desc',
+        descending: false,
+        page: 1,
+        rowsPerPage: 10,
+    },
 });
+
+loadFiltersFromLocalStorage();
 
 const filters: Ref<Array<FilterField>> = ref([] as Array<FilterField>);
 
@@ -251,10 +267,25 @@ const chooseFile = () => {
     }
 };
 
+const handleRemoveStudent = async (id: number) => {
+    try {
+        await removeStudent(id);
+        const index = studentsFiltered.value?.findIndex(
+            (student: Student) => student.id === id
+        );
+        if (index !== undefined && index !== -1) {
+            studentsFiltered.value?.splice(index, 1);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 watch(
     filtersSelected,
     () => {
         filterTable();
+        saveFiltersToLocalStorage(); // Guardar el estado en localStorage cada vez que cambie
     },
     { deep: true }
 );
@@ -285,6 +316,7 @@ onMounted(async () => {
     }
     await loadStudents(idActivity.value);
     studentsFiltered.value = students.value;
+    filterTable();
 });
 </script>
 
@@ -299,6 +331,7 @@ onMounted(async () => {
             @row-click="onRowClick"
             :no-data-label="$t('shared.noData')"
             :rows-per-page-label="$t('shared.recordsPerPage')"
+            v-model:pagination="filtersSelected.pagination"
         >
             <template v-slot:top>
                 <div class="col-12 justify-between">
@@ -562,7 +595,7 @@ onMounted(async () => {
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
-                                @click="removeStudent(props.row.id)"
+                                @click="handleRemoveStudent(props.row.id)"
                             >
                                 {{ $t('user.label.delete') }}
                             </q-item-section>
@@ -774,7 +807,7 @@ onMounted(async () => {
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
-                                @click="removeStudent(props.row.id)"
+                                @click="handleRemoveStudent(props.row.id)"
                             >
                                 {{ $t('user.label.delete') }}
                             </q-item-section>

@@ -7,11 +7,7 @@ import MenuDrawer from 'src/shared/components/MenuDrawer.vue';
         <MenuDrawer />
 
         <q-page-container>
-            <router-view v-slot="{ Component }">
-                <keep-alive include="StudentPage">
-                    <component :is="Component" />
-                </keep-alive>
-            </router-view>
+            <router-view> </router-view>
         </q-page-container>
     </q-layout>
 </template>

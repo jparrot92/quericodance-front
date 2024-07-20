@@ -50,7 +50,7 @@ export const updateStudent = async (
     }
 };
 
-export const deleteStudent = async (id: string): Promise<Student> => {
+export const deleteStudent = async (id: number): Promise<Student> => {
     try {
         const { data } = await api.delete<Student>(`/students/${id}`);
 
