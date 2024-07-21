@@ -2,25 +2,25 @@
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-import usePasses from '../composables/usePasses';
+import useBonuses from '../composables/useBonuses';
 
 const route = useRoute();
 
-const idPass = computed<string | undefined>(() => route.params.id?.toString());
+const idBonus = computed<string | undefined>(() => route.params.id?.toString());
 
-const { pass, loadPass, savePass, editPass } = usePasses();
+const { bonus, loadBonus, saveBonus, editBonus } = useBonuses();
 
 const onSubmit = async () => {
-    if (idPass.value) {
-        editPass(idPass.value);
+    if (idBonus.value) {
+        editBonus(idBonus.value);
     } else {
-        savePass();
+        saveBonus();
     }
 };
 
 onMounted(() => {
-    if (idPass.value) {
-        loadPass(idPass.value);
+    if (idBonus.value) {
+        loadBonus(idBonus.value);
     }
 });
 </script>
@@ -32,23 +32,23 @@ onMounted(() => {
                 class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
                 @submit.prevent="onSubmit"
             >
-                <q-input :label="$t('pass.name') + '*'" v-model="pass.name" />
+                <q-input :label="$t('bonus.name') + '*'" v-model="bonus.name" />
 
                 <q-input
                     type="number"
-                    :label="$t('pass.sessions') + '*'"
-                    v-model.number="pass.sessions"
+                    :label="$t('bonus.sessions') + '*'"
+                    v-model.number="bonus.sessions"
                 />
 
                 <q-input
                     type="number"
-                    :label="$t('pass.price') + '*'"
-                    v-model.number="pass.price"
+                    :label="$t('bonus.price') + '*'"
+                    v-model.number="bonus.price"
                 />
 
                 <pd-editor
-                    :label="$t('pass.description') + '*'"
-                    v-model="pass.description"
+                    :label="$t('bonus.description') + '*'"
+                    v-model="bonus.description"
                 />
 
                 <q-btn

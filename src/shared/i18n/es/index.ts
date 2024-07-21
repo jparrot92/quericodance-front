@@ -21,7 +21,7 @@ export default {
         noData: 'Datos no disponibles',
         recordsPerPage: 'Registros por página',
         day: 'Dia',
-        passes: 'Abonos',
+        bonuses: 'Bonos',
         personalClasses: 'Classes personales',
         selectProfilePhoto: 'Seleccionar foto de perfil',
         selectPhoto: 'Seleccionar foto',

@@ -7,37 +7,37 @@ import { ColumnTable } from 'src/types/UtilTypes';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import usePasses from '../../composables/usePasses';
+import useBonuses from '../../composables/useBonuses';
 
-const { loading, passes, loadPasses, removePass } = usePasses();
+const { loading, bonuses, loadBonuses, removeBonus } = useBonuses();
 
 const $q = useQuasar();
 
 const { t } = useI18n();
 
 onMounted(() => {
-    loadPasses();
+    loadBonuses();
 });
 
 const columnsPass: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('pass.name'),
+        label: t('bonus.name'),
         field: 'name',
         sortable: false,
     },
     {
         name: 'sessions',
         align: 'left',
-        label: t('pass.sessions'),
+        label: t('bonus.sessions'),
         field: 'sessions',
         sortable: true,
     },
     {
         name: 'price',
         align: 'left',
-        label: t('pass.price'),
+        label: t('bonus.price'),
         field: 'price',
         sortable: false,
     },
@@ -54,7 +54,7 @@ const columnsPass: ColumnTable[] = [
 <template>
     <div class="row">
         <q-table
-            :rows="passes"
+            :rows="bonuses"
             :columns="columnsPass"
             row-key="id"
             class="col-12 my-sticky-last-column-table"
@@ -63,17 +63,16 @@ const columnsPass: ColumnTable[] = [
             :rows-per-page-label="$t('shared.recordsPerPage')"
         >
             <template v-slot:top>
-                <span class="text-h6"> {{ $t('shared.passes') }} </span>
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    :label="$t('pass.createPass')"
+                    :label="$t('bonus.createBonus')"
                     color="primary"
                     icon="mdi-plus"
                     dense
                     @click="
                         $router.push({
-                            name: 'passes-add',
+                            name: 'bonuses-add',
                         })
                     "
                 />
@@ -105,7 +104,7 @@ const columnsPass: ColumnTable[] = [
                             <q-item-section
                                 @click="
                                     $router.push({
-                                        name: 'passes-edit',
+                                        name: 'bonuses-edit',
                                         params: { id: props.row.id },
                                     })
                                 "
@@ -114,7 +113,7 @@ const columnsPass: ColumnTable[] = [
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
-                            <q-item-section @click="removePass(props.row.id)">
+                            <q-item-section @click="removeBonus(props.row.id)">
                                 {{ $t('user.label.delete') }}
                             </q-item-section>
                         </q-item>

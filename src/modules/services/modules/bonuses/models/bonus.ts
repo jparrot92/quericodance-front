@@ -1,4 +1,4 @@
-export interface Pass {
+export interface Bonus {
     id: number;
     name: string;
     sessions: number | null;

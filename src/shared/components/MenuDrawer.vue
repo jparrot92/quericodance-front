@@ -43,9 +43,9 @@ const itemsMenu: ItemMenu[] = [
                 children: [],
             },
             {
-                title: t('shared.passes'),
+                title: t('shared.bonuses'),
                 icon: 'school',
-                link: 'passes-list',
+                link: 'bonuses-list',
                 level: 0.5,
                 children: [],
             },

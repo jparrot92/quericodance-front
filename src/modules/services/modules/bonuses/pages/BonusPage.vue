@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import PassList from '../components/pass-list/PassList.vue';
+import BonusList from '../components/bonus-list/BonusList.vue';
 </script>
 
 <template>
     <q-page padding>
-        <pass-list />
+        <bonus-list />
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-btn
                 v-if="$q.platform.is.mobile"

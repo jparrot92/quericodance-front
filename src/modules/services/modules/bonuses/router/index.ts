@@ -1,21 +1,22 @@
 import { RouteRecordRaw } from 'vue-router';
 
-const ROUTE_NAME = 'passes';
+const ROUTE_NAME = 'bonuses';
 
-const passesRoutes: RouteRecordRaw = {
+const bonusesRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
     component: () =>
-        import('src/modules/services/modules/passes/layouts/PassLayout.vue'),
+        import('src/modules/services/modules/bonuses/layouts/BonusLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,
             name: `${ROUTE_NAME}-list`,
             meta: {
                 toolbar: 'MainToolbar',
+                title: 'shared.bonuses',
             },
             component: () =>
                 import(
-                    'src/modules/services/modules/passes/pages/PassPage.vue'
+                    'src/modules/services/modules/bonuses/pages/BonusPage.vue'
                 ),
         },
         {
@@ -23,11 +24,11 @@ const passesRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-add`,
             component: () =>
                 import(
-                    'src/modules/services/modules/passes/pages/PassFormPage.vue'
+                    'src/modules/services/modules/bonuses/pages/BonusFormPage.vue'
                 ),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'pass.createPass',
+                title: 'bonus.createBonus',
             },
         },
         {
@@ -35,11 +36,11 @@ const passesRoutes: RouteRecordRaw = {
             name: `${ROUTE_NAME}-edit`,
             component: () =>
                 import(
-                    'src/modules/services/modules/passes/pages/PassFormPage.vue'
+                    'src/modules/services/modules/bonuses/pages/BonusFormPage.vue'
                 ),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'pass.editPass',
+                title: 'bonus.editBonus',
             },
             props: (route) => {
                 return {
@@ -50,4 +51,4 @@ const passesRoutes: RouteRecordRaw = {
     ],
 };
 
-export default passesRoutes;
+export default bonusesRoutes;

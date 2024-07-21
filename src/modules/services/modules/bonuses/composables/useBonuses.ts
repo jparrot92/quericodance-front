@@ -2,21 +2,20 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
 
 import useNotify from 'src/shared/composables/useNotify';
 
 import {
-    listPasses,
-    getPass,
-    createPass,
-    updatePass,
-    deletePass,
-} from 'src/api/passesApi';
+    listBonuses,
+    getBonus,
+    createBonus,
+    updateBonus,
+    deleteBonus,
+} from 'src/api/bonusesApi';
 
-import { Pass } from '../models/pass';
+import { Bonus } from '../models/bonus';
 
-const usePasses = () => {
+const useBonuses = () => {
     const router = useRouter();
 
     const $q = useQuasar();
@@ -26,8 +25,8 @@ const usePasses = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const passes = ref<Pass[]>([]);
-    const pass = ref<Pass>({
+    const bonuses = ref<Bonus[]>([]);
+    const bonus = ref<Bonus>({
         id: 0,
         name: '',
         sessions: null,
@@ -35,11 +34,11 @@ const usePasses = () => {
         description: '',
     });
 
-    const loadPasses = async () => {
+    const loadBonuses = async () => {
         try {
-            passes.value = [];
+            bonuses.value = [];
             loading.value = true;
-            passes.value = await listPasses();
+            bonuses.value = await listBonuses();
         } catch (error) {
             notifyError(error);
         } finally {
@@ -47,10 +46,10 @@ const usePasses = () => {
         }
     };
 
-    const loadPass = async (id: string) => {
+    const loadBonus = async (id: string) => {
         try {
             loading.value = true;
-            pass.value = await getPass(id);
+            bonus.value = await getBonus(id);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -58,13 +57,13 @@ const usePasses = () => {
         }
     };
 
-    const savePass = async () => {
+    const saveBonus = async () => {
         try {
             loading.value = true;
-            const passData = await createPass(pass.value);
-            notifySuccess(t('pass.createdSuccessfully'));
+            const passData = await createBonus(bonus.value);
+            notifySuccess(t('bonus.createdSuccessfully'));
             router.replace({
-                name: 'passes-edit',
+                name: 'bonuses-edit',
                 params: { id: passData.id },
             });
         } catch (error) {
@@ -74,11 +73,11 @@ const usePasses = () => {
         }
     };
 
-    const editPass = async (id: string) => {
+    const editBonus = async (id: string) => {
         try {
             loading.value = true;
-            pass.value = await updatePass(id, pass.value);
-            notifySuccess(t('pass.updatedSuccessfully'));
+            bonus.value = await updateBonus(id, bonus.value);
+            notifySuccess(t('bonus.updatedSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -86,17 +85,17 @@ const usePasses = () => {
         }
     };
 
-    const removePass = async (id: string) => {
+    const removeBonus = async (id: string) => {
         $q.dialog({
             title: t('shared.confirmation'),
-            message: t('pass.delete'),
+            message: t('bonus.delete'),
             cancel: true,
             persistent: true,
         }).onOk(async () => {
             try {
-                await deletePass(id);
-                notifySuccess(t('pass.deleteSuccessfully'));
-                await loadPasses();
+                await deleteBonus(id);
+                notifySuccess(t('bonus.deleteSuccessfully'));
+                await loadBonuses();
             } catch (error) {
                 notifyError(error);
             }
@@ -106,14 +105,14 @@ const usePasses = () => {
     return {
         // Properties
         loading,
-        passes,
-        pass,
-        loadPasses,
-        loadPass,
-        savePass,
-        editPass,
-        removePass,
+        bonuses,
+        bonus,
+        loadBonuses,
+        loadBonus,
+        saveBonus,
+        editBonus,
+        removeBonus,
     };
 };
 
-export default usePasses;
+export default useBonuses;
