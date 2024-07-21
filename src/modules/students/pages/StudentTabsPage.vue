@@ -7,10 +7,12 @@ import useStudents from '../composables/useStudents';
 
 import StudentFormPage from './StudentFormPage.vue';
 import MembershipStudentFormPage from './MembershipStudentFormPage.vue';
+import BonusesStudentFormPage from './BonusesStudentFormPage.vue';
 import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
 import ObservationsStudentFormPage from './ObservationsStudentFormPage.vue';
 import { MembershipViewDTO } from '../models/membership';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
+import { BonusStudentDTO } from '../models/bonusStudent';
 
 const route = useRoute();
 
@@ -28,6 +30,9 @@ const updateMembership = async (membershipView: MembershipViewDTO) =>
 
 const updateActivitiesStudent = async (activitiesStudent: ActivityStudent[]) =>
     (student.value.activitiesStudent = activitiesStudent);
+
+const updateBonusesStudent = async (bonuses: BonusStudentDTO[]) =>
+    (student.value.bonusesStudent = bonuses);
 
 const deleteMembership = async (activitiesStudent: ActivityStudent[]) => {
     student.value.membership = undefined;
@@ -53,6 +58,7 @@ onMounted(async () => {
         >
             <q-tab name="student-data" :label="$t('student.studentData')" />
             <q-tab name="membership" :label="$t('student.membership')" />
+            <q-tab name="bonuses" :label="$t('student.bonuses')" />
             <q-tab name="courses" :label="$t('student.courses')" />
             <q-tab name="observations" :label="$t('student.observations')" />
         </q-tabs>
@@ -70,6 +76,14 @@ onMounted(async () => {
                     :membership="student.membership"
                     @update-membership="updateMembership"
                     @delete-membership="deleteMembership"
+                />
+            </q-tab-panel>
+
+            <q-tab-panel name="bonuses">
+                <bonuses-student-form-page
+                    :id-student="student.id"
+                    :bonuses-student="student.bonusesStudent"
+                    @update-bonuses-student="updateBonusesStudent"
                 />
             </q-tab-panel>
 

@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
 import {
-    Activity,
+    ActivityDTO,
     ActivityCounters,
 } from 'src/modules/activities/models/activity';
 import { handleError } from './errorApi';
@@ -9,9 +9,9 @@ import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 api.defaults.headers.common['Authorization'] =
     'Bearer ' + localStorage.getItem('token');
 
-export const listActivities = async (): Promise<Activity[]> => {
+export const listActivities = async (): Promise<ActivityDTO[]> => {
     try {
-        const { data } = await api.get<Activity[]>('/activities');
+        const { data } = await api.get<ActivityDTO[]>('/activities');
 
         return data;
     } catch (error) {
@@ -33,9 +33,9 @@ export const getCountersActivity = async (
     }
 };
 
-export const getActivity = async (id: string): Promise<Activity> => {
+export const getActivity = async (id: string): Promise<ActivityDTO> => {
     try {
-        const { data } = await api.get<Activity>(`/activities/${id}`);
+        const { data } = await api.get<ActivityDTO>(`/activities/${id}`);
 
         return data;
     } catch (error) {
@@ -43,9 +43,11 @@ export const getActivity = async (id: string): Promise<Activity> => {
     }
 };
 
-export const createActivity = async (activity: Activity): Promise<Activity> => {
+export const createActivity = async (
+    activity: ActivityDTO
+): Promise<ActivityDTO> => {
     try {
-        const { data } = await api.post<Activity>('/activities', activity);
+        const { data } = await api.post<ActivityDTO>('/activities', activity);
 
         return data;
     } catch (error) {
@@ -55,10 +57,13 @@ export const createActivity = async (activity: Activity): Promise<Activity> => {
 
 export const updateActivity = async (
     id: string,
-    activity: Activity
-): Promise<Activity> => {
+    activity: ActivityDTO
+): Promise<ActivityDTO> => {
     try {
-        const { data } = await api.put<Activity>(`/activities/${id}`, activity);
+        const { data } = await api.put<ActivityDTO>(
+            `/activities/${id}`,
+            activity
+        );
 
         return data;
     } catch (error) {
@@ -66,9 +71,9 @@ export const updateActivity = async (
     }
 };
 
-export const deleteActivity = async (id: number): Promise<Activity> => {
+export const deleteActivity = async (id: number): Promise<ActivityDTO> => {
     try {
-        const { data } = await api.delete<Activity>(`/activities/${id}`);
+        const { data } = await api.delete<ActivityDTO>(`/activities/${id}`);
 
         return data;
     } catch (error) {

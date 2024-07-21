@@ -49,12 +49,19 @@ export default {
             'Introduzca el nombre/apellido o correo electrónico del alumno',
         observations: 'Observaciones',
         send: 'Enviar',
-        msgAddCourse:
+        messageAddCourse:
             'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante',
         paymentMade: 'Paga efectuado',
         cancelPayment: 'Pago cancelado',
         sendMailPaymentPaid:
             'El correo electrónico ha sido enviado correctamente.',
         coursesInterest: 'Cursos de interés',
+        bonuses: 'Bonos',
+        messageAddBonus:
+            'Este estudiante no tiene bonos, haga clic en "Añadir bono" para asignar un bono al estudiante',
+        addBonus: 'Añadir bono',
+        bonus: 'Bono',
+        sessions: 'Sesiones',
+        price: 'Precio',
     },
 };

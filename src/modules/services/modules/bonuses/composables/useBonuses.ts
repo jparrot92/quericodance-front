@@ -11,9 +11,12 @@ import {
     createBonus,
     updateBonus,
     deleteBonus,
+    createBonusStudent,
+    deleteBonusStudent,
 } from 'src/api/bonusesApi';
 
 import { Bonus } from '../models/bonus';
+import { BonusStudentDTO } from 'src/modules/students/models/bonusStudent';
 
 const useBonuses = () => {
     const router = useRouter();
@@ -102,6 +105,41 @@ const useBonuses = () => {
         });
     };
 
+    const saveBonusStudent = async (studentId: number, bonusId: number) => {
+        try {
+            const newListActivityStudent: BonusStudentDTO[] =
+                await createBonusStudent(studentId, bonusId);
+
+            return newListActivityStudent;
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    const removeBonusStudent = async (id: number) => {
+        return new Promise<BonusStudentDTO[]>((resolve, reject) => {
+            $q.dialog({
+                title: t('activity.label.confirmation'),
+                message: t('activity.message.activityDelete'),
+                cancel: true,
+                persistent: true,
+            }).onOk(async () => {
+                try {
+                    const studentActivitiesList = await deleteBonusStudent(id);
+                    notifySuccess(
+                        t('activity.notifications.activityDeleteSuccessfully')
+                    );
+                    resolve(studentActivitiesList); // Resuelve la promesa después de que todo esté completo
+                } catch (error) {
+                    notifyError(error);
+                    reject(error); // Rechaza la promesa en caso de error
+                }
+            });
+        });
+    };
+
     return {
         // Properties
         loading,
@@ -112,6 +150,8 @@ const useBonuses = () => {
         saveBonus,
         editBonus,
         removeBonus,
+        saveBonusStudent,
+        removeBonusStudent,
     };
 };
 
