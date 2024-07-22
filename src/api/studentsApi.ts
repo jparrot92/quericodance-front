@@ -96,3 +96,21 @@ export const uploadExcel = async (file: File): Promise<string> => {
         throw handleError(error);
     }
 };
+
+export const downloadExcel = async () => {
+    try {
+        const response = await api.get('/students/export/2', {
+            responseType: 'blob', // importante para manejar blobs
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'users.xlsx'); // el nombre con el que se descargará el archivo
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Limpiar el DOM
+    } catch (error) {
+        throw handleError(error);
+    }
+};

@@ -27,8 +27,10 @@ export default {
         selectPhoto: 'Seleccionar foto',
         deleteCurrentPhoto: 'Eliminar foto actual',
         importExcel: 'Importar Excel',
+        downloadExcel: 'Descargar Excel',
         resetPayments: 'Reiniciar cobros',
         search: 'Buscar',
+        excel: 'Excel',
         enum: {
             payed: 'Pagado',
             pending: 'Pendiente',

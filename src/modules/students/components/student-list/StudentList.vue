@@ -35,6 +35,7 @@ const {
     resetPayments,
     isPaymentStatusPaid,
     handleFileUpload,
+    handleFileDownload,
 } = useStudents();
 
 const { activityCounters, loadCountersActivity } = useActivities();
@@ -371,7 +372,7 @@ onMounted(async () => {
                         <template v-else>
                             <div class="col-2 flex justify-end">
                                 <q-btn
-                                    class="q-ml-sm h-2rem"
+                                    class="h-2rem"
                                     :label="$t('shared.resetPayments')"
                                     color="green"
                                     icon="mdi-restart"
@@ -379,15 +380,46 @@ onMounted(async () => {
                                     @click="handleResetPayments"
                                 />
                             </div>
-                            <div class="col-2 flex justify-end">
-                                <q-btn
-                                    :label="$t('shared.importExcel')"
+                            <div class="col-2 flex justify-center">
+                                <q-btn-dropdown
+                                    :label="$t('shared.excel')"
                                     color="green"
                                     icon="file_present"
                                     dense
                                     class="h-2rem"
-                                    @click="chooseFile"
-                                />
+                                >
+                                    <q-list>
+                                        <q-item
+                                            clickable
+                                            v-close-popup
+                                            @click="chooseFile"
+                                        >
+                                            <q-item-section>
+                                                <q-item-label>
+                                                    {{
+                                                        $t('shared.importExcel')
+                                                    }}
+                                                </q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+
+                                        <q-item
+                                            clickable
+                                            v-close-popup
+                                            @click="handleFileDownload"
+                                        >
+                                            <q-item-section>
+                                                <q-item-label>
+                                                    {{
+                                                        $t(
+                                                            'shared.downloadExcel'
+                                                        )
+                                                    }}
+                                                </q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+                                    </q-list>
+                                </q-btn-dropdown>
                                 <input
                                     type="file"
                                     ref="fileInput"

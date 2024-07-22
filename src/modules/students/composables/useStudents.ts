@@ -14,6 +14,7 @@ import {
     deleteStudent,
     uploadExcel,
     sendMailPayment,
+    downloadExcel,
 } from 'src/api/studentsApi';
 
 import {
@@ -49,6 +50,7 @@ const useStudents = () => {
             password: '',
             roles: [],
         },
+        status: '',
     });
 
     const loadStudents = async (idActivity: string) => {
@@ -219,6 +221,20 @@ const useStudents = () => {
         }
     };
 
+    const handleFileDownload = async () => {
+        try {
+            $q.loading.show({
+                message: t('shared.loading'),
+            });
+            await downloadExcel();
+            notifySuccess('Excel descargado');
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            $q.loading.hide();
+        }
+    };
+
     return {
         // Properties
         loading,
@@ -235,6 +251,7 @@ const useStudents = () => {
         resetPayments,
         isPaymentStatusPaid,
         handleFileUpload,
+        handleFileDownload,
     };
 };
 
