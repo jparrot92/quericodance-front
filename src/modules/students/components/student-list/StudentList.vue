@@ -36,6 +36,7 @@ const {
     isPaymentStatusPaid,
     handleFileUpload,
     handleFileDownload,
+    handleFileDownloadTemplate,
 } = useStudents();
 
 const { activityCounters, loadCountersActivity } = useActivities();
@@ -389,6 +390,22 @@ onMounted(async () => {
                                     class="h-2rem"
                                 >
                                     <q-list>
+                                        <q-item
+                                            clickable
+                                            v-close-popup
+                                            @click="handleFileDownloadTemplate"
+                                        >
+                                            <q-item-section>
+                                                <q-item-label>
+                                                    {{
+                                                        $t(
+                                                            'shared.downloadExcelTemplate'
+                                                        )
+                                                    }}
+                                                </q-item-label>
+                                            </q-item-section>
+                                        </q-item>
+
                                         <q-item
                                             clickable
                                             v-close-popup

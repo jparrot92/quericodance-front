@@ -76,6 +76,24 @@ export const sendMailPayment = async (id: number): Promise<StudentDTO> => {
     }
 };
 
+export const downloadTemplateExcel = async () => {
+    try {
+        const response = await api.get('/students/template', {
+            responseType: 'blob', // importante para manejar blobs
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Estudiantes_template.xlsx'); // el nombre con el que se descargará el archivo
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Limpiar el DOM
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
 export const uploadExcel = async (file: File): Promise<string> => {
     try {
         const formData = new FormData();
@@ -99,14 +117,14 @@ export const uploadExcel = async (file: File): Promise<string> => {
 
 export const downloadExcel = async () => {
     try {
-        const response = await api.get('/students/export/2', {
+        const response = await api.get('/students/export', {
             responseType: 'blob', // importante para manejar blobs
         });
 
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'users.xlsx'); // el nombre con el que se descargará el archivo
+        link.setAttribute('download', 'Estudiantes.xlsx'); // el nombre con el que se descargará el archivo
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link); // Limpiar el DOM

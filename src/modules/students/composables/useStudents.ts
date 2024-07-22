@@ -15,6 +15,7 @@ import {
     uploadExcel,
     sendMailPayment,
     downloadExcel,
+    downloadTemplateExcel,
 } from 'src/api/studentsApi';
 
 import {
@@ -235,6 +236,20 @@ const useStudents = () => {
         }
     };
 
+    const handleFileDownloadTemplate = async () => {
+        try {
+            $q.loading.show({
+                message: t('shared.loading'),
+            });
+            await downloadTemplateExcel();
+            notifySuccess('Excel descargado');
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            $q.loading.hide();
+        }
+    };
+
     return {
         // Properties
         loading,
@@ -252,6 +267,7 @@ const useStudents = () => {
         isPaymentStatusPaid,
         handleFileUpload,
         handleFileDownload,
+        handleFileDownloadTemplate,
     };
 };
 

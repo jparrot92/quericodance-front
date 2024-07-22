@@ -28,6 +28,7 @@ export default {
         deleteCurrentPhoto: 'Eliminar foto actual',
         importExcel: 'Importar Excel',
         downloadExcel: 'Descargar Excel',
+        downloadExcelTemplate: 'Descargar plantilla',
         resetPayments: 'Reiniciar cobros',
         search: 'Buscar',
         excel: 'Excel',
