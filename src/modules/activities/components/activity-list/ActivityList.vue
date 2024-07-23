@@ -18,7 +18,13 @@ const router = useRouter();
 
 const { generateEnumOptions } = useEnumOptions();
 
-const { loading, activities, loadActivities, removeActivity } = useActivities();
+const {
+    loading,
+    activities,
+    loadActivities,
+    removeActivity,
+    handleFileDownload,
+} = useActivities();
 
 const weekDays = generateEnumOptions(WeekDay);
 const activitiesFiltered = ref<ActivityList[]>();
@@ -270,6 +276,17 @@ onMounted(async () => {
                                 class="h-2rem"
                                 v-model="showProfitability"
                             ></q-toggle>
+                        </div>
+                        <div class="col-2 flex justify-end">
+                            <q-btn
+                                v-if="$q.platform.is.desktop"
+                                :label="$t('shared.downloadExcel')"
+                                color="green"
+                                icon="mdi-download"
+                                dense
+                                class="h-2rem"
+                                @click="handleFileDownload"
+                            />
                         </div>
                         <div class="col-2 flex justify-end">
                             <q-btn

@@ -119,3 +119,21 @@ export const deleteActivityStudent = async (
         throw handleError(error);
     }
 };
+
+export const downloadExcel = async () => {
+    try {
+        const response = await api.get('/activities/export', {
+            responseType: 'blob', // importante para manejar blobs
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Cursos.xlsx'); // el nombre con el que se descargará el archivo
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Limpiar el DOM
+    } catch (error) {
+        throw handleError(error);
+    }
+};

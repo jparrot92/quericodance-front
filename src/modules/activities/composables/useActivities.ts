@@ -14,6 +14,7 @@ import {
     deleteActivity,
     createActivityStudent,
     deleteActivityStudent,
+    downloadExcel,
 } from 'src/api/activitiesApi';
 
 import {
@@ -212,6 +213,20 @@ const useActivities = () => {
         });
     };
 
+    const handleFileDownload = async () => {
+        try {
+            $q.loading.show({
+                message: t('shared.loading'),
+            });
+            await downloadExcel();
+            notifySuccess('Excel descargado');
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            $q.loading.hide();
+        }
+    };
+
     return {
         // Properties
         loading,
@@ -227,6 +242,7 @@ const useActivities = () => {
         removeActivity,
         saveActivityStudent,
         removeActivityStudent,
+        handleFileDownload,
     };
 };
 
