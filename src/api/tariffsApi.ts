@@ -4,9 +4,6 @@ import { handleError } from './errorApi';
 
 const tariffsEndpoint = '/tariffs';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listTariffs = async (): Promise<Tariff[]> => {
     try {
         const { data } = await api.get<Tariff[]>(tariffsEndpoint);

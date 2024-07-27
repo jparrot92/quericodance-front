@@ -8,9 +8,6 @@ import { StudentDTO } from 'src/modules/students/models/student';
 
 const membershipsEndpoint = '/memberships';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listMemberships = async (): Promise<MembershipDTO[]> => {
     try {
         const { data } = await api.get<MembershipDTO[]>(membershipsEndpoint);

@@ -4,9 +4,6 @@ import { handleError } from './errorApi';
 
 const personalClassesEndpoint = '/personal-classes';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listPersonalClasses = async (): Promise<PersonalClass[]> => {
     try {
         const { data } = await api.get<PersonalClass[]>(

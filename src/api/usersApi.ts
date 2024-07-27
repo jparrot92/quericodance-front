@@ -2,9 +2,6 @@ import { api } from 'boot/axios';
 import { User } from 'src/modules/users/models/user';
 import { handleError } from './errorApi';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listUsers = async (): Promise<User[]> => {
     try {
         const { data } = await api.get<User[]>('/users');

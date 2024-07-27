@@ -2,9 +2,6 @@ import { api } from 'boot/axios';
 import { Teacher } from 'src/modules/teachers/models/teacher';
 import { handleError } from './errorApi';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listTeachers = async (): Promise<Teacher[]> => {
     try {
         const { data } = await api.get<Teacher[]>('/teachers');

@@ -2,9 +2,6 @@ import { api } from 'boot/axios';
 import { StudentDTO } from 'src/modules/students/models/student';
 import { handleError } from './errorApi';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listStudents = async (
     idActivity: string
 ): Promise<StudentDTO[]> => {

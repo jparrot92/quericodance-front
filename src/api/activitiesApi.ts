@@ -6,9 +6,6 @@ import {
 import { handleError } from './errorApi';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listActivities = async (): Promise<ActivityDTO[]> => {
     try {
         const { data } = await api.get<ActivityDTO[]>('/activities');

@@ -5,9 +5,6 @@ import { BonusStudentDTO } from 'src/modules/students/models/bonusStudent';
 
 const bonusesEndpoint = '/bonuses';
 
-api.defaults.headers.common['Authorization'] =
-    'Bearer ' + localStorage.getItem('token');
-
 export const listBonuses = async (): Promise<Bonus[]> => {
     try {
         const { data } = await api.get<Bonus[]>(bonusesEndpoint);
