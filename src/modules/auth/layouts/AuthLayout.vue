@@ -1,12 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MenuDrawer from 'src/shared/components/MenuDrawer.vue';
+</script>
 
 <template>
     <q-layout view="lHh Lpr lFf">
-        <q-header elevated>
-            <q-toolbar>
-                <q-toolbar-title>Quericodance</q-toolbar-title>
-            </q-toolbar>
-        </q-header>
+        <MenuDrawer />
 
         <q-page-container>
             <router-view />

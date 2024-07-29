@@ -12,10 +12,14 @@ const authRoutes: RouteRecordRaw = {
             component: () => import('src/modules/auth/pages/LoginPage.vue'),
         },
         {
-            path: `/${ROUTE_NAME}/register`,
+            path: '/register',
             name: 'register',
             component: () =>
                 import('src/modules/students/pages/StudentFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'auth.register',
+            },
         },
     ],
 };

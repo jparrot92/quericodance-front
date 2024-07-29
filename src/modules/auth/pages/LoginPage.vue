@@ -5,36 +5,39 @@ const { userForm, onSubmit } = useAuth();
 </script>
 
 <template>
+    <q-header elevated>
+        <q-toolbar>
+            <q-toolbar-title>{{ $t('auth.login') }}</q-toolbar-title>
+        </q-toolbar>
+    </q-header>
     <q-page padding>
         <q-form class="row justify-center" @submit.prevent="onSubmit">
-            <p class="col-12 text-h5 text-center">Login</p>
             <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
                 <q-input
-                    :label="$t('auth.label.email')"
+                    :label="$t('auth.email')"
                     v-model="userForm.email"
                     lazy-rules
                     :rules="[
                         (val) =>
-                            (val && val.length > 0) ||
-                            $t('auth.validations.emailRequired'),
+                            (val && val.length > 0) || $t('auth.emailRequired'),
                     ]"
                     type="email"
                 />
 
                 <q-input
-                    :label="$t('auth.label.password')"
+                    :label="$t('auth.password')"
                     v-model="userForm.password"
                     lazy-rules
                     :rules="[
                         (val) =>
                             (val && val.length > 0) ||
-                            $t('auth.validations.passwordRequired'),
+                            $t('auth.passwordRequired'),
                     ]"
                 />
 
                 <div class="full-width q-pt-md">
                     <q-btn
-                        :label="$t('auth.label.login')"
+                        :label="$t('auth.login')"
                         color="primary"
                         class="full-width"
                         outline
@@ -52,7 +55,7 @@ const { userForm, onSubmit } = useAuth();
                         size="sm"
                     />
                     <q-btn
-                        :label="$t('auth.label.forgotPassword')"
+                        :label="$t('auth.forgotPassword')"
                         color="primary"
                         class="full-width"
                         flat
