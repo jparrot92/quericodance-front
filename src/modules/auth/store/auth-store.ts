@@ -2,12 +2,12 @@ import { defineStore } from 'pinia';
 
 import { login } from 'src/api/authApi';
 
-import { Auth } from '../models/auth';
+import { Auth, UserInfo } from '../models/auth';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         token: '',
-        user: {},
+        user: null as UserInfo | null,
         expiresIn: '',
     }),
     actions: {
@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('auth', {
 
                 if (expirationDate > currentDate) {
                     this.token = token;
-                    this.user = user;
+                    this.user = JSON.parse(user);
                     this.expiresIn = expiresIn;
 
                     return true;
@@ -53,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
         },
         logout() {
             this.token = '';
-            this.user = {};
+            this.user = null;
             this.expiresIn = '';
             localStorage.removeItem('token');
             localStorage.removeItem('user');

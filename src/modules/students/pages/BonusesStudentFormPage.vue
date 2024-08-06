@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { watch, onMounted, defineProps, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-
-import useActivities from 'src/modules/activities/composables/useActivities';
+import { defineProps, ref } from 'vue';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
@@ -22,7 +19,6 @@ const props = withDefaults(
     }
 );
 
-const { t } = useI18n();
 const { removeBonusStudent } = useBonuses();
 
 const showModalAddActivity = ref(false);

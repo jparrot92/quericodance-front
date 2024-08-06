@@ -34,7 +34,7 @@ const updateActivitiesStudent = async (activitiesStudent: ActivityStudent[]) =>
 const updateBonusesStudent = async (bonuses: BonusStudentDTO[]) =>
     (student.value.bonusesStudent = bonuses);
 
-const deleteMembership = async (activitiesStudent: ActivityStudent[]) => {
+const deleteMembership = async () => {
     student.value.membership = undefined;
     student.value.activitiesStudent = [];
 };

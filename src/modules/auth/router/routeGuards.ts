@@ -1,5 +1,7 @@
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
 import { useAuthStore } from '../store/auth-store';
+import useAuth from 'src/modules/auth/composables/useAuth';
+import { Role } from '../models/roles';
 
 export const requireAuth = (
     to: RouteLocationNormalized,
@@ -20,7 +22,10 @@ export const requireAdmin = (
     from: RouteLocationNormalized,
     next: NavigationGuardNext
 ) => {
-    const isAdmin = true;
+    const authStore = useAuthStore();
+
+    const isAdmin = authStore.user?.roles.includes(Role.ADMIN);
+
     if (isAdmin) {
         next();
     } else {

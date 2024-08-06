@@ -8,7 +8,7 @@ export interface StudentDTO {
     id: number;
     user: User;
     observations?: string;
-    status: string;
+    status?: string;
     activitiesStudent?: ActivityStudent[];
     bonusesStudent?: BonusStudentDTO[];
     membership?: MembershipViewDTO;

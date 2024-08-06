@@ -10,7 +10,7 @@ import { StudentDTO } from '../models/student';
 import { ActivityDTO } from 'src/modules/activities/models/activity';
 
 const { activities, loadActivities } = useActivities();
-const { saveStudent, editStudent } = useStudents();
+const { student: studentForm, saveStudent, editStudent } = useStudents();
 
 const props = withDefaults(
     defineProps<{
@@ -37,14 +37,14 @@ const props = withDefaults(
 
 const { t } = useI18n();
 
-const student = ref<StudentDTO>(props.student);
+studentForm.value = props.student;
 
 const removeCoursesInterest = (idActivity: number) => {
-    const index = student.value.coursesInterest?.findIndex(
+    const index = studentForm.value.coursesInterest?.findIndex(
         (student: ActivityDTO) => student.id === idActivity
     );
     if (index !== undefined && index !== -1) {
-        student.value.coursesInterest?.splice(index, 1);
+        studentForm.value.coursesInterest?.splice(index, 1);
     }
 };
 
@@ -52,7 +52,7 @@ const onSubmit = () => {
     if (props.student.id !== 0) {
         editStudent(props.student.id);
     } else {
-        saveStudent(student.value);
+        saveStudent(studentForm.value);
     }
 };
 
@@ -70,15 +70,15 @@ onMounted(() => {
             >
                 <div style="text-align: center">
                     <ImageUploaderPreview
-                        v-if="student.user.id"
-                        :id="student.user.id"
-                        :photo="student.user.photo"
+                        v-if="studentForm.user.id"
+                        :id="studentForm.user.id"
+                        :photo="studentForm.user.photo"
                     />
                 </div>
 
                 <q-input
                     :label="$t('user.label.name') + '*'"
-                    v-model="student.user.name"
+                    v-model="studentForm.user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -88,7 +88,7 @@ onMounted(() => {
 
                 <q-input
                     :label="$t('user.label.surnames') + '*'"
-                    v-model="student.user.surnames"
+                    v-model="studentForm.user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -98,12 +98,12 @@ onMounted(() => {
 
                 <pd-date
                     :label="$t('user.label.dateOfBirth') + '*'"
-                    v-model="student.user.dateOfBirth"
+                    v-model="studentForm.user.dateOfBirth"
                 />
 
                 <pd-phone-input
                     :label="$t('user.label.phone') + '*'"
-                    v-model="student.user.phone"
+                    v-model="studentForm.user.phone"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -115,12 +115,12 @@ onMounted(() => {
 
                 <q-input
                     :label="$t('user.label.instagram')"
-                    v-model="student.user.instagram"
+                    v-model="studentForm.user.instagram"
                 />
 
                 <q-input
                     :label="$t('user.label.email') + '*'"
-                    v-model="student.user.email"
+                    v-model="studentForm.user.email"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -134,7 +134,7 @@ onMounted(() => {
                             ? $t('user.label.changePassword')
                             : $t('user.label.password') + '*'
                     "
-                    v-model="student.user.password"
+                    v-model="studentForm.user.password"
                     :rules="
                         student.id
                             ? []
@@ -147,7 +147,7 @@ onMounted(() => {
                 />
 
                 <q-select
-                    v-model="student.coursesInterest"
+                    v-model="studentForm.coursesInterest"
                     multiple
                     :options="activities"
                     :label="$t('student.coursesInterest')"

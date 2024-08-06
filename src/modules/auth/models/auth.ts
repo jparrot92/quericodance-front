@@ -16,3 +16,11 @@ export interface User {
     createAt: Date;
     updateAt: Date;
 }
+
+export interface UserInfo {
+    id: number;
+    email: string;
+    roles: string;
+    createAt: Date;
+    updateAt: Date;
+}

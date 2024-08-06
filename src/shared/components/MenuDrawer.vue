@@ -7,11 +7,15 @@ import { useRoute } from 'vue-router';
 import MainToolbar from 'src/shared/components/MainToolbar.vue';
 import DetailToolbar from 'src/shared/components/DetailToolbar.vue';
 
+import useAuth from 'src/modules/auth/composables/useAuth';
+
 import MenuItemDrawer, {
     ItemMenu,
 } from 'src/shared/components/MenuItemDrawer.vue';
 
 const { t } = useI18n();
+
+const { isAdmin } = useAuth();
 
 const route = useRoute();
 
@@ -81,6 +85,23 @@ const itemsMenu: ItemMenu[] = [
     },
 ];
 
+const itemsMenuStudent: ItemMenu[] = [
+    {
+        title: t('shared.calendar'),
+        icon: 'calendar_month',
+        link: 'appointments-list',
+        level: 0,
+        children: [],
+    },
+    {
+        title: t('shared.membership'),
+        icon: 'person',
+        link: 'membership',
+        level: 0,
+        children: [],
+    },
+];
+
 const leftDrawerOpen = ref(false);
 
 function toggleLeftDrawer() {
@@ -95,7 +116,7 @@ function toggleLeftDrawer() {
         <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
             <q-list>
                 <MenuItemDrawer
-                    v-for="item in itemsMenu"
+                    v-for="item in isAdmin() ? itemsMenu : itemsMenuStudent"
                     :key="item.title"
                     :item="item"
                 />
