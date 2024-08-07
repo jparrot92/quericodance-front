@@ -168,8 +168,6 @@ export default defineComponent({
             const currentDate = new Date(); // Puedes pasar la fecha actual como parámetro
             const result = this.generateDateObject(currentDate);
 
-            console.log(JSON.stringify(result, null, 2));
-
             this.loadEventsMap(result);
         },
         // convert the events into a map of lists keyed by date
@@ -276,36 +274,59 @@ export default defineComponent({
             return s;
         },
         getEvents(dt) {
-            // get all events for the specified date
+            // Get all events for the specified date
             const events = this.eventsMap[dt] || [];
 
+            // If there's only one event, it takes the full width
             if (events.length === 1) {
                 events[0].side = 'full';
-            } else if (events.length === 2) {
-                // this example does no more than 2 events per day
-                // check if the two events overlap and if so, select
-                // left or right side alignment to prevent overlap
-                const startTime = addToDate(parsed(events[0].date), {
-                    minute: parseTime(events[0].time),
+            } else if (events.length > 1) {
+                // Sort events by start time
+                events.sort((a, b) => {
+                    const startA = parseTime(a.startHour);
+                    const startB = parseTime(b.startHour);
+                    return startA - startB;
                 });
-                const endTime = addToDate(startTime, {
-                    minute: events[0].duration,
-                });
-                const startTime2 = addToDate(parsed(events[1].date), {
-                    minute: parseTime(events[1].time),
-                });
-                const endTime2 = addToDate(startTime2, {
-                    minute: events[1].duration,
-                });
-                if (
-                    isBetweenDates(startTime2, startTime, endTime, true) ||
-                    isBetweenDates(endTime2, startTime, endTime, true)
-                ) {
-                    events[0].side = 'left';
-                    events[1].side = 'right';
-                } else {
-                    events[0].side = 'full';
-                    events[1].side = 'full';
+
+                // Assign sides for overlapping events
+                const sides = new Array(events.length).fill('full');
+
+                for (let i = 0; i < events.length; i++) {
+                    const event = events[i];
+                    const startTime = parseTime(event.startHour);
+                    const endTime = parseTime(event.endHour);
+
+                    for (let j = 0; j < i; j++) {
+                        const prevEvent = events[j];
+                        const prevStartTime = parseTime(prevEvent.startHour);
+                        const prevEndTime = parseTime(prevEvent.endHour);
+
+                        // Check for overlap
+                        if (
+                            (startTime >= prevStartTime &&
+                                startTime < prevEndTime) ||
+                            (endTime > prevStartTime &&
+                                endTime <= prevEndTime) ||
+                            (startTime <= prevStartTime &&
+                                endTime >= prevEndTime)
+                        ) {
+                            // If overlapping, assign sides
+                            if (sides[j] === 'left') {
+                                sides[i] = 'right';
+                            } else if (sides[j] === 'right') {
+                                sides[i] = 'left';
+                            } else {
+                                sides[j] = 'left';
+                                sides[i] = 'right';
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // Apply the calculated sides to the events
+                for (let i = 0; i < events.length; i++) {
+                    events[i].side = sides[i];
                 }
             }
 
