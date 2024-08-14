@@ -71,7 +71,7 @@ module.exports = configure(function (ctx) {
             // analyze: true,
             env: {
                 API: ctx.dev
-                    ? 'https://paaldemy-back-942154096b10.herokuapp.com/'
+                    ? 'http://localhost:3000/'
                     : 'https://paaldemy-back-942154096b10.herokuapp.com/',
             },
             // rawDefine: {}

@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { onMounted, defineProps, ref, Ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-
-const { t } = useI18n();
 
 import useBonuses from 'src/modules/services/modules/bonuses/composables/useBonuses';
-import { BonusStudentDTO } from '../models/bonusStudent';
 
 const props = withDefaults(
     defineProps<{

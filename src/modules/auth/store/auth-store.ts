@@ -2,12 +2,12 @@ import { defineStore } from 'pinia';
 
 import { login } from 'src/api/authApi';
 
-import { Auth, UserInfo } from '../models/auth';
+import { Auth, User } from '../models/auth';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         token: '',
-        user: null as UserInfo | null,
+        user: null as User | null,
         expiresIn: '',
     }),
     actions: {

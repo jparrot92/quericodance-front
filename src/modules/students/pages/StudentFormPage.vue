@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from 'vue';
+import { defineProps, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';

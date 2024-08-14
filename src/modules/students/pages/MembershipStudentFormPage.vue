@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, onMounted } from 'vue';
 import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 
 import { PaymentsStatus } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
+import { useAuthStore } from '../../auth/store/auth-store';
+import useAuth from '../../auth/composables/useAuth';
 
 import useMemberships from 'src/modules/students/composables/useMemberships';
 import MembershipDialog from '../components/MembershipDialog.vue';
@@ -17,11 +19,16 @@ const props = withDefaults(
         idStudent: number;
         membership?: MembershipViewDTO;
     }>(),
-    {}
+    {
+        membership: () => ({}),
+    }
 );
 
 const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
+const { isAdmin } = useAuth();
+const authStore = useAuthStore();
+
 const { removeMembership } = useMemberships();
 
 const showModalMembership = ref(false);
@@ -37,14 +44,24 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
 
 const handleDeleteMembership = async () => {
     try {
-        await removeMembership(props.membership?.id);
-
-        membership.value = undefined;
-        emits('delete-membership');
+        if (membership.value.id) {
+            await removeMembership(membership.value.id);
+            membership.value = {};
+            emits('delete-membership');
+        }
     } catch (error) {
         console.error(error);
     }
 };
+
+onMounted(() => {
+    debugger;
+    if (!isAdmin()) {
+        membership.value = authStore.user?.student?.membership
+            ? authStore.user?.student?.membership
+            : {};
+    }
+});
 </script>
 
 <template>
@@ -55,9 +72,9 @@ const handleDeleteMembership = async () => {
                     <pd-field
                         :label="$t('student.tariff')"
                         :value="
-                            membership.tariff.name +
+                            membership.tariff?.name +
                             ' - ' +
-                            membership.tariff.price +
+                            membership.tariff?.price +
                             '€'
                         "
                     />
@@ -117,6 +134,7 @@ const handleDeleteMembership = async () => {
                     </q-banner>
                 </q-card>
                 <q-btn
+                    v-if="isAdmin()"
                     :label="
                         membership
                             ? $t('student.editMembership')
@@ -128,7 +146,7 @@ const handleDeleteMembership = async () => {
                     @click="showModalMembership = true"
                 />
                 <q-btn
-                    v-if="membership"
+                    v-if="isAdmin() && membership"
                     :label="$t('student.deleteMembership')"
                     color="red"
                     class="full-width"
