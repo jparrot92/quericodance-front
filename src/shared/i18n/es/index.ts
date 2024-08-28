@@ -17,6 +17,7 @@ export default {
         services: 'Servicios',
         tariffs: 'Tarifas',
         users: 'Usuarios',
+        membership: 'Cuota',
         loading: 'Cargando...',
         noData: 'Datos no disponibles',
         recordsPerPage: 'Registros por página',
@@ -53,6 +54,9 @@ export default {
             new: 'Nuevo',
             active: 'Activo',
             inactive: 'Inactivo',
+        },
+        validations: {
+            required: 'Requerido',
         },
         message: {
             logout: '¿Quieres cerrar sesión?',

@@ -3,6 +3,8 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
 
+import { requestResetPassword, updatePassword } from 'src/api/authApi';
+
 import useNotify from 'src/shared/composables/useNotify';
 
 import { useAuthStore } from '../store/auth-store';
@@ -40,6 +42,29 @@ const useAuth = () => {
         }
     };
 
+    const sendMailRequestResetPassword = async (email: string) => {
+        try {
+            await requestResetPassword(email);
+            notifySuccess(t('auth.sendMailPaymentPaid'));
+            router.push({ name: 'login' });
+        } catch (error) {
+            notifyError(error);
+        }
+    };
+
+    const resetPassword = async (
+        resetPasswordToken: string,
+        password: string
+    ) => {
+        try {
+            await updatePassword(resetPasswordToken, password);
+            notifySuccess(t('auth.updatePassword'));
+            router.push({ name: 'login' });
+        } catch (error) {
+            notifyError(error);
+        }
+    };
+
     const logout = async () => {
         authStore.logout();
         router.push({ name: 'login' });
@@ -47,7 +72,7 @@ const useAuth = () => {
 
     const roles = computed(() => authStore.user?.roles || []);
 
-    const hasRole = (role) => roles.value.includes(role);
+    const hasRole = (role: string) => roles.value.includes(role);
 
     const isAdmin = () => hasRole(Role.ADMIN);
     const isStudent = () => hasRole(Role.STUDENT);
@@ -57,6 +82,8 @@ const useAuth = () => {
         userForm,
         // Methods
         onSubmit,
+        sendMailRequestResetPassword,
+        resetPassword,
         logout,
         hasRole,
         isAdmin,

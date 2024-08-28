@@ -55,7 +55,6 @@ const handleDeleteMembership = async () => {
 };
 
 onMounted(() => {
-    debugger;
     if (!isAdmin()) {
         membership.value = authStore.user?.student?.membership
             ? authStore.user?.student?.membership

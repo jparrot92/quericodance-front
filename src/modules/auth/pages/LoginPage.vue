@@ -51,7 +51,7 @@ const { userForm, onSubmit } = useAuth();
                         color="primary"
                         class="full-width"
                         flat
-                        to="/register"
+                        :to="{ name: 'register' }"
                         size="sm"
                     />
                     <q-btn
