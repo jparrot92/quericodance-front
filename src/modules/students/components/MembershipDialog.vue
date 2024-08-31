@@ -46,7 +46,7 @@ const totalPayment = computed(() => {
 });
 
 const handleMembership = async () => {
-    if (props.membershipStudent) {
+    if (props.membershipStudent && props.membershipStudent.id) {
         await editMembership(props.membershipStudent.id);
     } else {
         await saveMembership();
@@ -62,14 +62,20 @@ onMounted(async () => {
     await loadTariffs();
 
     membership.value.studentId = props.idStudent;
-    if (props.membershipStudent) {
+    if (
+        props.membershipStudent &&
+        props.membershipStudent.id &&
+        props.membershipStudent.tariff
+    ) {
         membership.value = {
             id: props.membershipStudent.id,
             studentId: props.idStudent,
             tariffId: props.membershipStudent.tariff.id,
-            paymentFrequency: props.membershipStudent.paymentFrequency,
-            discountPercentage: props.membershipStudent.discountPercentage,
-            discountReason: props.membershipStudent.discountReason,
+            paymentFrequency:
+                props.membershipStudent.paymentFrequency ??
+                PaymentFrequency.MONTHLY,
+            discountPercentage: props.membershipStudent.discountPercentage ?? 0,
+            discountReason: props.membershipStudent.discountReason ?? '',
         };
 
         tariff.value = tariffs.value.find(
