@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from 'vue';
+import { defineProps, ref, onMounted, onUnmounted } from 'vue';
 import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 
@@ -26,7 +26,7 @@ const props = withDefaults(
 
 const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
-const { isAdmin } = useAuth();
+const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 
 const { removeMembership } = useMemberships();
@@ -55,10 +55,10 @@ const handleDeleteMembership = async () => {
 };
 
 onMounted(() => {
-    if (!isAdmin()) {
-        membership.value = authStore.user?.student?.membership
-            ? authStore.user?.student?.membership
-            : {};
+    if (isStudent()) {
+        refreshInfoStudent();
+        membership.value = authStore.user?.student
+            ?.membership as MembershipViewDTO;
     }
 });
 </script>

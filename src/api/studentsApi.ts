@@ -16,7 +16,7 @@ export const listStudents = async (
     }
 };
 
-export const getStudent = async (id: string): Promise<StudentDTO> => {
+export const getStudent = async (id: number): Promise<StudentDTO> => {
     try {
         const { data } = await api.get<StudentDTO>(`/students/${id}`);
 

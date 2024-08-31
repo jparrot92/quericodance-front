@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, onMounted } from 'vue';
 
 import MenuList from 'src/shared/components/MenuList.vue';
+import { useAuthStore } from '../../auth/store/auth-store';
+import useAuth from '../../auth/composables/useAuth';
 
 import AddBonusStudentDialog from '../components/AddBonusStudentDialog.vue';
 import { BonusStudentDTO } from '../models/bonusStudent';
@@ -18,6 +20,9 @@ const props = withDefaults(
         bonusesStudent: () => [],
     }
 );
+
+const { isStudent, isAdmin } = useAuth();
+const authStore = useAuthStore();
 
 const { removeBonusStudent } = useBonuses();
 
@@ -38,6 +43,12 @@ const deleteBonusStudent = async (id: number) => {
         console.error(error);
     }
 };
+
+onMounted(() => {
+    if (isStudent()) {
+        bonusesStudentList.value = authStore.user?.student.bonusesStudent || [];
+    }
+});
 </script>
 
 <template>
@@ -71,7 +82,7 @@ const deleteBonusStudent = async (id: number) => {
                                 </q-item-label>
                             </q-item-section>
 
-                            <q-item-section top side>
+                            <q-item-section top side v-if="isAdmin()">
                                 <div class="text-grey-8 q-gutter-xs">
                                     <menu-list>
                                         <q-item clickable v-close-popup>
@@ -102,6 +113,7 @@ const deleteBonusStudent = async (id: number) => {
                     </q-banner>
                 </q-card>
                 <q-btn
+                    v-if="isAdmin()"
                     :label="$t('student.addBonus')"
                     color="primary"
                     class="full-width"

@@ -70,6 +70,10 @@ const useAuth = () => {
         router.push({ name: 'login' });
     };
 
+    const refreshInfoStudent = () => {
+        authStore.refreshInfoStudent();
+    };
+
     const roles = computed(() => authStore.user?.roles || []);
 
     const hasRole = (role: string) => roles.value.includes(role);
@@ -85,6 +89,7 @@ const useAuth = () => {
         sendMailRequestResetPassword,
         resetPassword,
         logout,
+        refreshInfoStudent,
         hasRole,
         isAdmin,
         isStudent,

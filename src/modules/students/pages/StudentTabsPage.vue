@@ -41,7 +41,7 @@ const deleteMembership = async () => {
 
 onMounted(async () => {
     if (idStudent.value) {
-        await loadStudent(idStudent.value);
+        await loadStudent(Number(idStudent.value));
     }
     isModalVisible.value = true;
 });

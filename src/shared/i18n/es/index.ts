@@ -17,7 +17,6 @@ export default {
         services: 'Servicios',
         tariffs: 'Tarifas',
         users: 'Usuarios',
-        membership: 'Cuota',
         loading: 'Cargando...',
         noData: 'Datos no disponibles',
         recordsPerPage: 'Registros por página',

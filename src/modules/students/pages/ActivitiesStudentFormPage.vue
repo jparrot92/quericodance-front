@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { watch, onMounted, defineProps, ref } from 'vue';
+import { onMounted, defineProps, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import useActivities from 'src/modules/activities/composables/useActivities';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
-import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
+import { useAuthStore } from '../../auth/store/auth-store';
+import useAuth from '../../auth/composables/useAuth';
 
+import useActivities from 'src/modules/activities/composables/useActivities';
+import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 import AddActivityStudentDialog from '../components/AddActivityStudentDialog.vue';
 
 const emits = defineEmits(['update-activities-student']);
@@ -22,28 +23,16 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
+const { isStudent, isAdmin } = useAuth();
+const authStore = useAuthStore();
 const { removeActivityStudent } = useActivities();
 
-const studentActivitiesList = ref<ActivityStudent[]>([]);
-const idStudentDialog = ref<number>(0);
-
-const showModalAddActivity = ref(false);
-
-watch(
-    () => props.activitiesStudent,
-    (newActivitiesStudent) => {
-        studentActivitiesList.value = newActivitiesStudent || [];
-    }
+const hasMembership = ref<boolean>(props.hasMembership);
+const studentActivitiesList = ref<ActivityStudent[]>(
+    props.activitiesStudent || []
 );
 
-watch(props, () => {
-    idStudentDialog.value = props.idStudent;
-});
-
-onMounted(() => {
-    studentActivitiesList.value = props.activitiesStudent || [];
-    idStudentDialog.value = props.idStudent;
-});
+const showModalAddActivity = ref(false);
 
 const addActivityStudent = (activitiesStudent: ActivityStudent[]) => {
     studentActivitiesList.value = activitiesStudent;
@@ -59,13 +48,24 @@ const deleteActivityStudent = async (id: number) => {
         console.error(error);
     }
 };
+
+onMounted(() => {
+    studentActivitiesList.value = props.activitiesStudent || [];
+    if (isStudent()) {
+        hasMembership.value = authStore.user?.student?.membership
+            ? true
+            : false;
+        studentActivitiesList.value =
+            authStore.user?.student.activitiesStudent || [];
+    }
+});
 </script>
 
 <template>
     <q-page padding>
         <div class="row justify-center">
             <div class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
-                <template v-if="props.hasMembership">
+                <template v-if="hasMembership">
                     <q-list
                         v-if="studentActivitiesList.length > 0"
                         bordered
@@ -99,7 +99,7 @@ const deleteActivityStudent = async (id: number) => {
                                     </q-item-label>
                                 </q-item-section>
 
-                                <q-item-section top side>
+                                <q-item-section top side v-if="isAdmin()">
                                     <div class="text-grey-8 q-gutter-xs">
                                         <menu-list>
                                             <q-item clickable v-close-popup>
@@ -152,6 +152,7 @@ const deleteActivityStudent = async (id: number) => {
                         </q-banner>
                     </q-card>
                     <q-btn
+                        v-if="isAdmin()"
                         :label="$t('student.addActivity')"
                         color="primary"
                         class="full-width"
@@ -171,8 +172,9 @@ const deleteActivityStudent = async (id: number) => {
     </q-page>
 
     <AddActivityStudentDialog
+        v-if="isAdmin()"
         :is-open="showModalAddActivity"
-        :id-student="idStudentDialog"
+        :id-student="props.idStudent"
         @on-close="showModalAddActivity = false"
         @add-activity-student="addActivityStudent"
     />

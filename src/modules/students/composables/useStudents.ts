@@ -66,7 +66,7 @@ const useStudents = () => {
         }
     };
 
-    const loadStudent = async (id: string) => {
+    const loadStudent = async (id: number) => {
         try {
             loading.value = true;
             student.value = await getStudent(id);

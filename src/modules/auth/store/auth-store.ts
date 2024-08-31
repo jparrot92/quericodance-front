@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 import { login } from 'src/api/authApi';
+import { getStudent } from 'src/api/studentsApi';
 
 import { Auth, User } from '../models/auth';
 
@@ -58,6 +59,19 @@ export const useAuthStore = defineStore('auth', {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             localStorage.removeItem('expiresIn');
+        },
+        async refreshInfoStudent() {
+            try {
+                if (this.user?.student) {
+                    const data = await getStudent(this.user.student.id);
+
+                    this.user.student = data;
+
+                    localStorage.setItem('user', JSON.stringify(this.user));
+                }
+            } catch (error) {
+                throw error;
+            }
         },
     },
 });

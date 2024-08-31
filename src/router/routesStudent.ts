@@ -7,11 +7,11 @@ const routesStudent: RouteRecordRaw = {
     component: () => import('src/modules/students/layouts/StudentLayout.vue'),
     children: [
         {
-            path: `/${ROUTE_NAME}`,
+            path: '/membership',
             name: 'membership',
             meta: {
                 toolbar: 'MainToolbar',
-                title: 'shared.membership',
+                title: 'student.membership',
             },
             component: () =>
                 import(
@@ -19,29 +19,26 @@ const routesStudent: RouteRecordRaw = {
                 ),
         },
         {
-            path: `/${ROUTE_NAME}`,
-            name: `${ROUTE_NAME}-add`,
-            component: () =>
-                import('src/modules/students/pages/StudentFormPage.vue'),
+            path: '/bonuses',
+            name: 'bonuses',
             meta: {
-                toolbar: 'DetailToolbar',
-                title: 'student.createStudent',
+                toolbar: 'MainToolbar',
+                title: 'student.bonuses',
             },
+            component: () =>
+                import('src/modules/students/pages/BonusesStudentFormPage.vue'),
         },
         {
-            path: `/${ROUTE_NAME}/:id`,
-            name: `${ROUTE_NAME}-edit`,
-            component: () =>
-                import('src/modules/students/pages/StudentTabsPage.vue'),
+            path: '/courses',
+            name: 'courses',
             meta: {
-                toolbar: 'DetailToolbar',
-                title: 'student.editStudent',
+                toolbar: 'MainToolbar',
+                title: 'student.courses',
             },
-            props: (route) => {
-                return {
-                    id: route.params.id,
-                };
-            },
+            component: () =>
+                import(
+                    'src/modules/students/pages/ActivitiesStudentFormPage.vue'
+                ),
         },
     ],
 };
