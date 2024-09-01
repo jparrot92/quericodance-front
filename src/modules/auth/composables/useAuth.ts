@@ -3,6 +3,8 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
 
+import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
+
 import { requestResetPassword, updatePassword } from 'src/api/authApi';
 
 import useNotify from 'src/shared/composables/useNotify';
@@ -19,6 +21,8 @@ const useAuth = () => {
     const { t } = useI18n();
 
     const { notifyError, notifySuccess } = useNotify();
+
+    const { removeFiltersFromLocalStorage } = useLocalStorageFilters();
 
     const authStore = useAuthStore();
 
@@ -67,6 +71,7 @@ const useAuth = () => {
 
     const logout = async () => {
         authStore.logout();
+        removeFiltersFromLocalStorage();
         router.push({ name: 'login' });
     };
 

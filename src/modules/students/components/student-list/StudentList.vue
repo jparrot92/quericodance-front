@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
 import { reactive } from 'vue';
+import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 
 import {
     ColumnTable,
@@ -23,6 +24,8 @@ import useStudents from '../../composables/useStudents';
 import { StudentDTO } from '../../models/student';
 import { FilterField } from 'src/composables/useFilterTypes';
 
+const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
+    useLocalStorageFilters();
 const { generateEnumOptions } = useEnumOptions();
 const {
     loading,
@@ -153,18 +156,8 @@ const columnsUser: ColumnTable[] = [
     },
 ];
 
-const saveFiltersToLocalStorage = () => {
-    sessionStorage.setItem('filtersSelected', JSON.stringify(filtersSelected));
-};
-
-const loadFiltersFromLocalStorage = () => {
-    const savedFilters = sessionStorage.getItem('filtersSelected');
-    if (savedFilters) {
-        Object.assign(filtersSelected, JSON.parse(savedFilters));
-    }
-};
-
 const filtersSelected = reactive({
+    id: idActivity.value ? 'activity' : 'student',
     query: '',
     status: null,
     paymentStatus: null,
@@ -177,7 +170,7 @@ const filtersSelected = reactive({
     },
 });
 
-loadFiltersFromLocalStorage();
+loadFiltersFromLocalStorage(filtersSelected);
 
 const filters: Ref<Array<FilterField>> = ref([] as Array<FilterField>);
 
@@ -287,7 +280,7 @@ watch(
     filtersSelected,
     () => {
         filterTable();
-        saveFiltersToLocalStorage();
+        saveFiltersToLocalStorage(filtersSelected);
     },
     { deep: true }
 );

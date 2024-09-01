@@ -4,6 +4,7 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
@@ -16,6 +17,8 @@ const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
 
+const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
+    useLocalStorageFilters();
 const { generateEnumOptions } = useEnumOptions();
 
 const {
@@ -128,9 +131,18 @@ const columns: ColumnTable[] = [
 ];
 
 const filtersSelected = reactive({
+    id: 'activity',
     query: '',
     weekDay: null,
+    pagination: {
+        sortBy: 'desc',
+        descending: false,
+        page: 1,
+        rowsPerPage: 10,
+    },
 });
+
+loadFiltersFromLocalStorage(filtersSelected);
 
 const filters: Ref<Array<FilterField>> = ref([
     {
@@ -236,6 +248,7 @@ watch(
     filtersSelected,
     () => {
         filterTable();
+        saveFiltersToLocalStorage(filtersSelected);
     },
     { deep: true }
 );
@@ -243,6 +256,7 @@ watch(
 onMounted(async () => {
     await loadActivities();
     activitiesFiltered.value = activities.value;
+    filterTable();
 });
 </script>
 
@@ -257,6 +271,7 @@ onMounted(async () => {
             @row-click="onRowClick"
             :no-data-label="$t('shared.noData')"
             :rows-per-page-label="$t('shared.recordsPerPage')"
+            v-model:pagination="filtersSelected.pagination"
         >
             <template v-slot:top>
                 <div class="col-12 justify-between">

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { toRef } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 
 export interface ItemMenu {
     title: string;
@@ -15,9 +16,11 @@ const item = toRef(props, 'item');
 
 const router = useRouter();
 const route = useRoute();
+const { removeFiltersFromLocalStorage } = useLocalStorageFilters();
 
 const goToLink = (link?: string) => {
     if (link) {
+        removeFiltersFromLocalStorage();
         router.push({ name: link });
     }
 };
