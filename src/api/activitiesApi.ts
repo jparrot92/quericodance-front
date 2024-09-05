@@ -6,9 +6,11 @@ import {
 import { handleError } from './errorApi';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
+const activitiesEndpoint = '/activities';
+
 export const listActivities = async (): Promise<ActivityDTO[]> => {
     try {
-        const { data } = await api.get<ActivityDTO[]>('/activities');
+        const { data } = await api.get<ActivityDTO[]>(activitiesEndpoint);
 
         return data;
     } catch (error) {
@@ -21,7 +23,7 @@ export const getCountersActivity = async (
 ): Promise<ActivityCounters> => {
     try {
         const { data } = await api.get<ActivityCounters>(
-            `/activities/${id}/counters`
+            `${activitiesEndpoint}/${id}/counters`
         );
 
         return data;
@@ -32,7 +34,9 @@ export const getCountersActivity = async (
 
 export const getActivity = async (id: string): Promise<ActivityDTO> => {
     try {
-        const { data } = await api.get<ActivityDTO>(`/activities/${id}`);
+        const { data } = await api.get<ActivityDTO>(
+            `${activitiesEndpoint}/${id}`
+        );
 
         return data;
     } catch (error) {
@@ -44,7 +48,10 @@ export const createActivity = async (
     activity: ActivityDTO
 ): Promise<ActivityDTO> => {
     try {
-        const { data } = await api.post<ActivityDTO>('/activities', activity);
+        const { data } = await api.post<ActivityDTO>(
+            activitiesEndpoint,
+            activity
+        );
 
         return data;
     } catch (error) {
@@ -58,7 +65,7 @@ export const updateActivity = async (
 ): Promise<ActivityDTO> => {
     try {
         const { data } = await api.put<ActivityDTO>(
-            `/activities/${id}`,
+            `${activitiesEndpoint}/${id}`,
             activity
         );
 
@@ -70,7 +77,9 @@ export const updateActivity = async (
 
 export const deleteActivity = async (id: number): Promise<ActivityDTO> => {
     try {
-        const { data } = await api.delete<ActivityDTO>(`/activities/${id}`);
+        const { data } = await api.delete<ActivityDTO>(
+            `${activitiesEndpoint}/${id}`
+        );
 
         return data;
     } catch (error) {
@@ -93,7 +102,7 @@ export const createActivityStudent = async (
         };
 
         const { data } = await api.post<ActivityStudent[]>(
-            '/activity-student',
+            `${activitiesEndpoint}/student`,
             requestData
         );
 
@@ -108,7 +117,7 @@ export const deleteActivityStudent = async (
 ): Promise<ActivityStudent[]> => {
     try {
         const { data } = await api.delete<ActivityStudent[]>(
-            `/activity-student/${id}`
+            `${activitiesEndpoint}/student/${id}`
         );
 
         return data;
@@ -119,7 +128,7 @@ export const deleteActivityStudent = async (
 
 export const downloadExcel = async () => {
     try {
-        const response = await api.get('/activities/export', {
+        const response = await api.get(`${activitiesEndpoint}/export`, {
             responseType: 'blob', // importante para manejar blobs
         });
 
