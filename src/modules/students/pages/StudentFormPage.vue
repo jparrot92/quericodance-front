@@ -40,11 +40,11 @@ const { t } = useI18n();
 studentForm.value = props.student;
 
 const removeCoursesInterest = (idActivity: number) => {
-    const index = studentForm.value.coursesInterest?.findIndex(
+    const index = studentForm.value.interestedActivities?.findIndex(
         (student: ActivityDTO) => student.id === idActivity
     );
     if (index !== undefined && index !== -1) {
-        studentForm.value.coursesInterest?.splice(index, 1);
+        studentForm.value.interestedActivities?.splice(index, 1);
     }
 };
 
@@ -111,8 +111,6 @@ onMounted(() => {
                     ]"
                 />
 
-                <!-- {{ student.user.phone }} -->
-
                 <q-input
                     :label="$t('user.label.instagram')"
                     v-model="studentForm.user.instagram"
@@ -147,7 +145,7 @@ onMounted(() => {
                 />
 
                 <q-select
-                    v-model="studentForm.coursesInterest"
+                    v-model="studentForm.interestedActivities"
                     multiple
                     :options="activities"
                     :label="$t('student.coursesInterest')"

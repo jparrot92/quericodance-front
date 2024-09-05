@@ -12,5 +12,5 @@ export interface StudentDTO {
     activitiesStudent?: ActivityStudent[];
     bonusesStudent?: BonusStudentDTO[];
     membership?: MembershipViewDTO;
-    coursesInterest?: ActivityDTO[];
+    interestedActivities?: ActivityDTO[];
 }

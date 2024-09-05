@@ -1,7 +1,25 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useQuasar } from 'quasar';
 import useAuth from '../composables/useAuth';
 
+const route = useRoute();
 const { userForm, onSubmit } = useAuth();
+
+const $q = useQuasar();
+
+onMounted(() => {
+    const activated = route.query.activated;
+    if (activated) {
+        $q.notify({
+            type: 'positive',
+            message: '¡Tu cuenta ha sido activada exitosamente!',
+            timeout: 3000,
+            position: 'top',
+        });
+    }
+});
 </script>
 
 <template>
