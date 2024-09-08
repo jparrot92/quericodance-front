@@ -13,7 +13,9 @@ import {
     updateActivity,
     deleteActivity,
     createActivityStudent,
+    createActivityAbsence,
     deleteActivityStudent,
+    deleteActivityAbsence,
     downloadExcel,
 } from 'src/api/activitiesApi';
 
@@ -169,19 +171,32 @@ const useActivities = () => {
     const saveActivityStudent = async (
         studentId: number,
         activityId: number,
-        danceRole: string,
-        price: number
+        danceRole: string
     ) => {
         try {
-            const newListActivityStudent: ActivityStudent[] =
-                await createActivityStudent(
-                    studentId,
-                    activityId,
-                    danceRole,
-                    price
-                );
+            const newActivityStudent: ActivityStudent =
+                await createActivityStudent(studentId, activityId, danceRole);
 
-            return newListActivityStudent;
+            return newActivityStudent;
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    const saveActivityAbsence = async (
+        studentId: number,
+        activityId: number,
+        absenceDate: string
+    ) => {
+        loading.value = true;
+        try {
+            return await createActivityAbsence(
+                studentId,
+                activityId,
+                absenceDate
+            );
         } catch (error) {
             notifyError(error);
         } finally {
@@ -190,7 +205,7 @@ const useActivities = () => {
     };
 
     const removeActivityStudent = async (id: number) => {
-        return new Promise<ActivityStudent[]>((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             $q.dialog({
                 title: t('activity.label.confirmation'),
                 message: t('activity.message.activityDelete'),
@@ -198,16 +213,34 @@ const useActivities = () => {
                 persistent: true,
             }).onOk(async () => {
                 try {
-                    const studentActivitiesList = await deleteActivityStudent(
-                        id
-                    );
+                    await deleteActivityStudent(id);
                     notifySuccess(
                         t('activity.notifications.activityDeleteSuccessfully')
                     );
-                    resolve(studentActivitiesList); // Resuelve la promesa después de que todo esté completo
+                    resolve(); // Resuelve la promesa después de que todo esté completo
                 } catch (error) {
                     notifyError(error);
                     reject(error); // Rechaza la promesa en caso de error
+                }
+            });
+        });
+    };
+
+    const removeActivityAbsence = async (id: number) => {
+        return new Promise<void>(async (resolve, reject) => {
+            $q.dialog({
+                title: t('shared.confirmation'),
+                message: t('activity.removeActivityAbsence'),
+                cancel: true,
+                persistent: true,
+            }).onOk(async () => {
+                try {
+                    await deleteActivityAbsence(id);
+                    notifySuccess(t('activity.absenceDeleteSuccessfully'));
+                    resolve();
+                } catch (error) {
+                    notifyError(error);
+                    reject(error);
                 }
             });
         });
@@ -241,7 +274,9 @@ const useActivities = () => {
         editActivity,
         removeActivity,
         saveActivityStudent,
+        saveActivityAbsence,
         removeActivityStudent,
+        removeActivityAbsence,
         handleFileDownload,
     };
 };

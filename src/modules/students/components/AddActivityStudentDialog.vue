@@ -1,75 +1,54 @@
 <script setup lang="ts">
-import { watch, onMounted, defineProps, ref } from 'vue';
+import { onMounted, defineProps, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+import { DanceRole } from 'src/types/UtilTypes';
+import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useActivities from 'src/modules/activities/composables/useActivities';
-import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 
-interface Props {
-    isOpen: boolean;
-    idStudent: number;
-}
-interface Emits {
-    (e: 'onClose'): void;
-    (e: 'addActivityStudent', activityStudent: ActivityStudent[]): void;
-}
-const props = defineProps<Props>();
-const emits = defineEmits<Emits>();
+const props = withDefaults(
+    defineProps<{
+        idStudent: number;
+    }>(),
+    {}
+);
+
+const emits = defineEmits(['close', 'addActivityStudent']);
+
+const { t } = useI18n();
+const { generateEnumOptions } = useEnumOptions();
 
 const { activities, activityStudent, loadActivities, saveActivityStudent } =
     useActivities();
 
-const isOpenDialog = ref<boolean>(false);
-const idStudentDialog = ref<number>(0);
-
-type Role = {
-    label: string;
-    value: string;
-};
-
-const roles: Role[] = [
-    { label: 'Lider', value: 'leader' },
-    { label: 'Follower', value: 'follower' },
-];
+const danceRoles = generateEnumOptions(DanceRole);
 
 const activityId = ref<number>(0);
 const danceRole = ref<string>('');
-const price = ref<number>(0);
-
-onMounted(() => {
-    loadActivities();
-});
-
-watch(props, () => {
-    isOpenDialog.value = props.isOpen;
-    idStudentDialog.value = props.idStudent;
-});
+const isDialogVisible: Ref<boolean> = ref<boolean>(true);
 
 const addActivityStudent = async () => {
     activityId.value = activityStudent.value.activity.id;
     danceRole.value = activityStudent.value.danceRole;
-    price.value = +activityStudent.value.price;
 
     const newActivityStudent = await saveActivityStudent(
-        idStudentDialog.value,
+        props.idStudent,
         activityId.value,
-        danceRole.value,
-        price.value
+        danceRole.value
     );
     if (newActivityStudent) {
         emits('addActivityStudent', newActivityStudent);
     }
 };
 
-const calculatePrice = () => {
-    activityStudent.value.price = activityStudent.value.activity.price;
-};
+onMounted(() => {
+    loadActivities();
+});
 </script>
 
 <template>
-    <q-dialog v-model="isOpenDialog" @hide="emits('onClose')">
+    <q-dialog v-model="isDialogVisible" @hide="emits('close')">
         <q-card style="width: 50vh">
             <q-card-section>
                 <div class="text-h6">{{ $t('student.addActivity') }}</div>
@@ -83,7 +62,6 @@ const calculatePrice = () => {
                     :label="$t('student.course')"
                     :options="activities"
                     :option-value="'id'"
-                    @update:model-value="calculatePrice"
                 >
                     <template v-slot:selected-item="{ opt }">
                         {{
@@ -117,7 +95,7 @@ const calculatePrice = () => {
 
                 <q-select
                     v-model="activityStudent.danceRole"
-                    :options="roles"
+                    :options="danceRoles"
                     :label="$t('student.role')"
                     emit-value
                 />
@@ -128,15 +106,15 @@ const calculatePrice = () => {
             <q-card-actions align="right">
                 <q-btn
                     flat
-                    :label="$t('student.add')"
+                    :label="$t('shared.add')"
                     color="primary"
                     @click="addActivityStudent()"
                 />
                 <q-btn
                     flat
-                    :label="$t('student.cancel')"
+                    :label="$t('shared.cancel')"
                     color="primary"
-                    @click="emits('onClose')"
+                    @click="emits('close')"
                 />
             </q-card-actions>
         </q-card>

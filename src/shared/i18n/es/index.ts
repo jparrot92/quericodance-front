@@ -5,6 +5,7 @@ export default {
         back: 'Atrás',
         finish: 'Finalizar',
         save: 'Guardar',
+        add: 'Añadir',
         edit: 'Editar',
         delete: 'Eliminar',
         confirmation: 'Confirmación',
@@ -55,7 +56,7 @@ export default {
             inactive: 'Inactivo',
         },
         validations: {
-            required: 'Requerido',
+            required: 'Campo requerido',
         },
         message: {
             logout: '¿Quieres cerrar sesión?',

@@ -5,6 +5,7 @@ import {
 } from 'src/modules/activities/models/activity';
 import { handleError } from './errorApi';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
+import { AbsenceDTO } from 'src/modules/activities/models/absence';
 
 const activitiesEndpoint = '/activities';
 
@@ -90,19 +91,40 @@ export const deleteActivity = async (id: number): Promise<ActivityDTO> => {
 export const createActivityStudent = async (
     studentId: number,
     activityId: number,
-    danceRole: string,
-    price: number
-): Promise<ActivityStudent[]> => {
+    danceRole: string
+): Promise<ActivityStudent> => {
     try {
         const requestData = {
             studentId,
             activityId,
             danceRole,
-            price,
         };
 
-        const { data } = await api.post<ActivityStudent[]>(
+        const { data } = await api.post<ActivityStudent>(
             `${activitiesEndpoint}/student`,
+            requestData
+        );
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const createActivityAbsence = async (
+    studentId: number,
+    activityId: number,
+    absenceDate: string
+): Promise<AbsenceDTO> => {
+    try {
+        const requestData = {
+            studentId,
+            activityId,
+            absenceDate,
+        };
+
+        const { data } = await api.post<AbsenceDTO>(
+            `${activitiesEndpoint}/absences`,
             requestData
         );
 
@@ -114,10 +136,24 @@ export const createActivityStudent = async (
 
 export const deleteActivityStudent = async (
     id: number
-): Promise<ActivityStudent[]> => {
+): Promise<ActivityStudent> => {
     try {
-        const { data } = await api.delete<ActivityStudent[]>(
+        const { data } = await api.delete<ActivityStudent>(
             `${activitiesEndpoint}/student/${id}`
+        );
+
+        return data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const deleteActivityAbsence = async (
+    id: number
+): Promise<AbsenceDTO> => {
+    try {
+        const { data } = await api.delete<AbsenceDTO>(
+            `${activitiesEndpoint}/absences/${id}`
         );
 
         return data;

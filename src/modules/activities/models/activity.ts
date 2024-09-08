@@ -1,5 +1,6 @@
 import { Teacher } from 'src/modules/teachers/models/teacher';
 import { ActivityStudent } from './activityStudent';
+import { AbsenceDTO } from './absence';
 
 export interface ActivityDTO {
     id: number;
@@ -13,6 +14,7 @@ export interface ActivityDTO {
     color: string;
     teachersIds: number[];
     teachers?: Teacher[];
+    absences?: AbsenceDTO[];
 }
 
 export interface ActivityList extends ActivityDTO {

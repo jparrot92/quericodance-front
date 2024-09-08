@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted, onUnmounted } from 'vue';
+import { defineProps, ref, onMounted } from 'vue';
 import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 

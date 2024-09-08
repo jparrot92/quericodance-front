@@ -1,5 +1,7 @@
 export default {
     activity: {
+        removeActivityAbsence: '¿Realmente desea eliminar esta ausencia?',
+        absenceDeleteSuccessfully: 'Ausencia eliminada',
         label: {
             createActivity: 'Crear curso',
             editActivity: 'Editar curso',

@@ -63,5 +63,9 @@ export default {
         bonus: 'Bono',
         sessions: 'Sesiones',
         price: 'Precio',
+        addAbsence: 'Añadir ausencia',
+        dateAbsence: 'Fecha ausencia',
+        showAbsence: 'Ver ausencias',
+        absenceDate: 'Fecha ausencia',
     },
 };
