@@ -54,7 +54,7 @@ const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const danceRoles = generateEnumOptions(DanceRole);
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const studentsFiltered = ref<StudentDTO[]>();
+const studentsFiltered = ref<StudentDTO[]>([]);
 const showProfitability = ref(false);
 
 const idActivity = computed<string>(() => route.params.id?.toString());

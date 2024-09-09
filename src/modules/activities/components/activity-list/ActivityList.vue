@@ -30,7 +30,7 @@ const {
 } = useActivities();
 
 const weekDays = generateEnumOptions(WeekDay);
-const activitiesFiltered = ref<ActivityList[]>();
+const activitiesFiltered = ref<ActivityList[]>([]);
 const showProfitability = ref(false);
 
 const columns: ColumnTable[] = [

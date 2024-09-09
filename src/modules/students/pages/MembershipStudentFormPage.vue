@@ -35,7 +35,7 @@ const showModalMembership = ref(false);
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 
-const membership = ref<MembershipViewDTO>(props.membership);
+const membership = ref<MembershipViewDTO | null>(props.membership);
 
 const updateMembership = async (membershipView: MembershipViewDTO) => {
     membership.value = membershipView;
@@ -44,9 +44,9 @@ const updateMembership = async (membershipView: MembershipViewDTO) => {
 
 const handleDeleteMembership = async () => {
     try {
-        if (membership.value.id) {
+        if (membership.value?.id) {
             await removeMembership(membership.value.id);
-            membership.value = {};
+            membership.value = null;
             emits('delete-membership');
         }
     } catch (error) {
