@@ -63,6 +63,7 @@ export const useAuthStore = defineStore('auth', {
         async refreshInfoStudent() {
             try {
                 if (this.user?.student) {
+                    debugger;
                     const data = await getStudent(this.user.student.id);
 
                     this.user.student = data;

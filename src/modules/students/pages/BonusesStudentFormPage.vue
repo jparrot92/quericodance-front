@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from 'vue';
+import { defineProps, ref, onMounted, computed, onBeforeUnmount } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 import { useAuthStore } from '../../auth/store/auth-store';
@@ -21,13 +23,21 @@ const props = withDefaults(
     }
 );
 
-const { isStudent, isAdmin } = useAuth();
+const { t } = useI18n();
+const router = useRouter();
+const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 
 const { removeBonusStudent } = useBonuses();
 
 const showModalAddActivity = ref(false);
 const bonusesStudentList = ref<BonusStudentDTO[]>(props.bonusesStudent);
+
+const messageAddBonus = computed<string>(() =>
+    isStudent()
+        ? t('student.messageAddBonusStudent')
+        : t('student.messageAddBonus')
+);
 
 const addBonusStudent = (bonusesStudent: BonusStudentDTO[]) => {
     bonusesStudentList.value = bonusesStudent;
@@ -44,9 +54,29 @@ const deleteBonusStudent = async (id: number) => {
     }
 };
 
+const preventNav = async (event: BeforeUnloadEvent) => {
+    await refreshInfoStudent();
+    event.preventDefault();
+    event.returnValue = '';
+};
+
 onMounted(() => {
     if (isStudent()) {
+        window.addEventListener('beforeunload', preventNav);
         bonusesStudentList.value = authStore.user?.student.bonusesStudent || [];
+    }
+});
+
+onBeforeUnmount(() => {
+    if (isStudent()) {
+        window.removeEventListener('beforeunload', preventNav);
+    }
+});
+
+router.beforeEach(async (to, from, next) => {
+    if (isStudent()) {
+        await refreshInfoStudent();
+        next();
     }
 });
 </script>
@@ -109,7 +139,7 @@ onMounted(() => {
 
                 <q-card flat v-else>
                     <q-banner class="bg-info text-white">
-                        {{ $t('student.messageAddBonus') }}
+                        {{ messageAddBonus }}
                     </q-banner>
                 </q-card>
                 <q-btn

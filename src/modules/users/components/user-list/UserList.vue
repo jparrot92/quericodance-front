@@ -13,10 +13,6 @@ const $q = useQuasar();
 
 const { t } = useI18n();
 
-onMounted(() => {
-    loadUsers();
-});
-
 export interface ColumnTable {
     name: string;
     label: string;
@@ -69,6 +65,10 @@ const columnsUser: ColumnTable[] = [
         sortable: false,
     },
 ];
+
+onMounted(() => {
+    loadUsers();
+});
 </script>
 
 <template>

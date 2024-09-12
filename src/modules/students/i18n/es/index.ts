@@ -9,6 +9,7 @@ export default {
         paymentDate: 'Fecha pago',
         notMembership:
             'Este estudiante no tiene una cuota creada. Si desea crear una cuota haga clic en "Crear cuota"',
+        notMembershipStudent: 'No tiene una cuota creada.',
         membershipCreatedSuccessfully: 'Cuota creada correctamente.',
         editMembership: 'Editar cuota',
         courses: 'Cursos',
@@ -22,6 +23,7 @@ export default {
         deleteMembershipSuccessfully: 'Estudiante dado de baja',
         messageNotMembership:
             'Este estudiante no tiene una cuota creada, dirigiese al apartado "Cuota" para crear una cuota al estudiante.',
+        messageNotMembershipStudent: 'No tiene una cuota creada.',
         discountPercentage: 'Descuento',
         discountReason: 'Motivo descuento',
         dueDate: 'Fecha de vencimiento',
@@ -46,11 +48,12 @@ export default {
         active: 'Activo',
         inactivo: 'Inactivo',
         serachPlaceholder:
-            'Introduzca el nombre/apellido o correo electrónico del alumno',
+            'Introduzca el nombre/apellido o correo electrónico del alumno.',
         observations: 'Observaciones',
         send: 'Enviar',
         messageAddCourse:
-            'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante',
+            'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante.',
+        messageAddCourseStudent: 'Sin cursos asignados.',
         paymentMade: 'Paga efectuado',
         cancelPayment: 'Pago cancelado',
         sendMailPaymentPaid:
@@ -58,7 +61,8 @@ export default {
         coursesInterest: 'Cursos de interés',
         bonuses: 'Bonos',
         messageAddBonus:
-            'Este estudiante no tiene bonos, haga clic en "Añadir bono" para asignar un bono al estudiante',
+            'Este estudiante no tiene bonos, haga clic en "Añadir bono" para asignar un bono al estudiante.',
+        messageAddBonusStudent: 'No tiene ningún bono disponible.',
         addBonus: 'Añadir bono',
         bonus: 'Bono',
         sessions: 'Sesiones',

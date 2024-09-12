@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useQuasar } from 'quasar';
 import useAuth from '../composables/useAuth';
@@ -8,6 +8,8 @@ const route = useRoute();
 const { userForm, onSubmit } = useAuth();
 
 const $q = useQuasar();
+
+const isPwd = ref<boolean>(true);
 
 onMounted(() => {
     const activated = route.query.activated;
@@ -37,7 +39,8 @@ onMounted(() => {
                     lazy-rules
                     :rules="[
                         (val) =>
-                            (val && val.length > 0) || $t('auth.emailRequired'),
+                            (val && val.length > 0) ||
+                            $t('shared.validations.required'),
                     ]"
                     type="email"
                 />
@@ -45,13 +48,22 @@ onMounted(() => {
                 <q-input
                     :label="$t('auth.password')"
                     v-model="userForm.password"
+                    :type="isPwd ? 'password' : 'text'"
                     lazy-rules
                     :rules="[
                         (val) =>
                             (val && val.length > 0) ||
-                            $t('auth.passwordRequired'),
+                            $t('shared.validations.required'),
                     ]"
-                />
+                >
+                    <template v-slot:append>
+                        <q-icon
+                            :name="isPwd ? 'visibility_off' : 'visibility'"
+                            class="cursor-pointer"
+                            @click="isPwd = !isPwd"
+                        />
+                    </template>
+                </q-input>
 
                 <div class="full-width q-pt-md">
                     <q-btn

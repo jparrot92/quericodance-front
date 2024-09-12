@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onMounted, defineProps, ref } from 'vue';
+import { onMounted, defineProps, ref, computed, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
@@ -27,7 +28,8 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
-const { isStudent, isAdmin } = useAuth();
+const router = useRouter();
+const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 const { removeActivityStudent, removeActivityAbsence } = useActivities();
 
@@ -41,6 +43,18 @@ const showModalAddActivityAbsence = ref(false);
 const activityAbsence = ref<ActivityDTO>();
 
 const showAbsenceList = ref<{ [key: number]: boolean }>({});
+
+const messageNotMembership = computed<string>(() =>
+    isStudent()
+        ? t('student.messageNotMembershipStudent')
+        : t('student.messageNotMembership')
+);
+
+const messageAddCourse = computed<string>(() =>
+    isStudent()
+        ? t('student.messageAddCourseStudent')
+        : t('student.messageAddCourse')
+);
 
 const toggleAbsenceList = (activityId: number) => {
     showAbsenceList.value[activityId] = !showAbsenceList.value[activityId];
@@ -138,14 +152,34 @@ const handleRemoveActivityAbsence = async (absenceId: number) => {
     }
 };
 
+const preventNav = async (event: BeforeUnloadEvent) => {
+    await refreshInfoStudent();
+    event.preventDefault();
+    event.returnValue = '';
+};
+
 onMounted(() => {
     studentActivitiesList.value = props.activitiesStudent || [];
     if (isStudent()) {
+        window.addEventListener('beforeunload', preventNav);
         hasMembership.value = authStore.user?.student?.membership
             ? true
             : false;
         studentActivitiesList.value =
             authStore.user?.student.activitiesStudent || [];
+    }
+});
+
+onBeforeUnmount(() => {
+    if (isStudent()) {
+        window.removeEventListener('beforeunload', preventNav);
+    }
+});
+
+router.beforeEach(async (to, from, next) => {
+    if (isStudent()) {
+        await refreshInfoStudent();
+        next();
     }
 });
 </script>
@@ -185,7 +219,7 @@ onMounted(() => {
                                 </q-item-label>
                             </q-item-section>
 
-                            <q-item-section top side v-if="isAdmin()">
+                            <q-item-section top side>
                                 <div class="text-grey-8 q-gutter-xs">
                                     <q-btn
                                         class="gt-xs"
@@ -204,7 +238,7 @@ onMounted(() => {
                                             {{ item.activity.absences?.length }}
                                         </q-badge>
                                     </q-btn>
-                                    <menu-list>
+                                    <menu-list v-if="isAdmin()">
                                         <q-item clickable v-close-popup>
                                             <q-item-section
                                                 @click="
@@ -261,7 +295,7 @@ onMounted(() => {
 
                     <q-card flat v-if="studentActivitiesList.length === 0">
                         <q-banner class="bg-info text-white">
-                            {{ $t('student.messageAddCourse') }}
+                            {{ messageAddCourse }}
                         </q-banner>
                     </q-card>
                     <q-btn
@@ -276,7 +310,7 @@ onMounted(() => {
                 <template v-else>
                     <q-card flat>
                         <q-banner class="bg-info text-white">
-                            {{ $t('student.messageNotMembership') }}
+                            {{ messageNotMembership }}
                         </q-banner>
                     </q-card>
                 </template>

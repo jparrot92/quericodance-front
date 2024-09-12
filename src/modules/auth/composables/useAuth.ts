@@ -75,8 +75,8 @@ const useAuth = () => {
         router.push({ name: 'login' });
     };
 
-    const refreshInfoStudent = () => {
-        authStore.refreshInfoStudent();
+    const refreshInfoStudent = async () => {
+        await authStore.refreshInfoStudent();
     };
 
     const roles = computed(() => authStore.user?.roles || []);

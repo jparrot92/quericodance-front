@@ -7,10 +7,6 @@ import useProfile from '../composables/useProfile';
 
 const { user, loadProfile, editProfile } = useProfile();
 
-onMounted(() => {
-    loadProfile();
-});
-
 const updateUserDateOfBirth = (value: string) => {
     user.value.dateOfBirth = value;
 };
@@ -20,6 +16,10 @@ const roles = ['user', 'secretary'];
 const onSubmit = async () => {
     editProfile();
 };
+
+onMounted(() => {
+    loadProfile();
+});
 </script>
 
 <template>
@@ -69,6 +69,11 @@ const onSubmit = async () => {
                 />
 
                 <q-input
+                    :label="$t('user.label.instagram')"
+                    v-model="user.instagram"
+                />
+
+                <q-input
                     :label="$t('user.label.email')"
                     v-model="user.email"
                     :rules="[
@@ -98,7 +103,7 @@ const onSubmit = async () => {
 
                 <q-select
                     :label="$t('user.label.role')"
-                    v-model="user.role"
+                    v-model="user.roles"
                     :options="roles"
                     behavior="menu"
                 />

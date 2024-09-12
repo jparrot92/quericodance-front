@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from 'vue';
+import { defineProps, ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 
@@ -25,6 +26,7 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
+const router = useRouter();
 const { generateEnumOptions } = useEnumOptions();
 const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
@@ -36,6 +38,10 @@ const showModalMembership = ref(false);
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 
 const membership = ref<MembershipViewDTO | null>(props.membership);
+
+const notMembershipText = computed<string>(() =>
+    isStudent() ? t('student.notMembershipStudent') : t('student.notMembership')
+);
 
 const updateMembership = async (membershipView: MembershipViewDTO) => {
     membership.value = membershipView;
@@ -54,11 +60,30 @@ const handleDeleteMembership = async () => {
     }
 };
 
-onMounted(() => {
+const preventNav = async (event: BeforeUnloadEvent) => {
+    await refreshInfoStudent();
+    event.preventDefault();
+    event.returnValue = '';
+};
+
+onMounted(async () => {
     if (isStudent()) {
-        refreshInfoStudent();
+        window.addEventListener('beforeunload', preventNav);
         membership.value = authStore.user?.student
             ?.membership as MembershipViewDTO;
+    }
+});
+
+onBeforeUnmount(() => {
+    if (isStudent()) {
+        window.removeEventListener('beforeunload', preventNav);
+    }
+});
+
+router.beforeEach(async (to, from, next) => {
+    if (isStudent()) {
+        await refreshInfoStudent();
+        next();
     }
 });
 </script>
@@ -129,7 +154,7 @@ onMounted(() => {
 
                 <q-card flat v-else>
                     <q-banner class="bg-info text-white">
-                        {{ $t('student.notMembership') }}
+                        {{ notMembershipText }}
                     </q-banner>
                 </q-card>
                 <q-btn

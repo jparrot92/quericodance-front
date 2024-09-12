@@ -2,9 +2,11 @@ import { api } from 'boot/axios';
 import { User } from 'src/modules/users/models/user';
 import { handleError } from './errorApi';
 
-export const getProfile = async (): Promise<User> => {
+const profileEndpoint = '/profile';
+
+export const getProfile = async (id: number): Promise<User> => {
     try {
-        const { data } = await api.get<User>('/profile');
+        const { data } = await api.get<User>(`${profileEndpoint}/${id}`);
 
         return data;
     } catch (error) {
@@ -12,9 +14,9 @@ export const getProfile = async (): Promise<User> => {
     }
 };
 
-export const updateProfile = async (user: User): Promise<User> => {
+export const updateProfile = async (id: number, user: User): Promise<User> => {
     try {
-        const { data } = await api.put<User>('/profile', user);
+        const { data } = await api.put<User>(`${profileEndpoint}/${id}`, user);
 
         return data;
     } catch (error) {

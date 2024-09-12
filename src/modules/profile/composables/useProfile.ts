@@ -4,9 +4,11 @@ import { useI18n } from 'vue-i18n';
 
 import useNotify from 'src/shared/composables/useNotify';
 
+import { useAuthStore } from 'src/modules/auth/store/auth-store';
+
 import { getProfile, updateProfile } from 'src/api/profileApi';
 
-import { User } from '../models/user';
+import { User } from 'src/modules/users/models/user';
 
 const useUsers = () => {
     const router = useRouter();
@@ -14,6 +16,8 @@ const useUsers = () => {
     const { t } = useI18n();
 
     const { notifySuccess, notifyError } = useNotify();
+
+    const authStore = useAuthStore();
 
     const loading = ref<boolean>(false);
     const users = ref<User[]>([]);
@@ -27,13 +31,18 @@ const useUsers = () => {
         instagram: '',
         email: '',
         password: '',
-        role: '',
+        roles: [],
     });
 
     const loadProfile = async () => {
+        debugger;
+        if (authStore.user?.id === undefined) {
+            notifyError(new Error('User ID is undefined'));
+            return;
+        }
         try {
             loading.value = true;
-            user.value = await getProfile();
+            user.value = await getProfile(authStore.user?.id);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -42,9 +51,13 @@ const useUsers = () => {
     };
 
     const editProfile = async () => {
+        if (authStore.user?.id === undefined) {
+            notifyError(new Error('User ID is undefined'));
+            return;
+        }
         try {
             loading.value = true;
-            user.value = await updateProfile(user.value);
+            user.value = await updateProfile(authStore.user?.id, user.value);
             notifySuccess(t('user.notifications.userUpdateSuccessfully'));
             router.push({ name: 'users-page' });
         } catch (error) {

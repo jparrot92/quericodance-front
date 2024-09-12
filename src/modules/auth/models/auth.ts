@@ -17,5 +17,5 @@ export interface User {
     roles: string[];
     createAt: Date;
     updateAt: Date;
-    student: StudentDTO;
+    student?: StudentDTO;
 }

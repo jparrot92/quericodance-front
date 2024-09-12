@@ -29,14 +29,14 @@ const itemsMenu: ItemMenu[] = [
     },
     {
         title: t('shared.students'),
-        icon: 'person',
+        icon: 'diversity_3',
         link: 'students-list',
         level: 0,
         children: [],
     },
     {
         title: t('shared.services'),
-        icon: 'diversity_3',
+        icon: 'mdi-package-variant-closed',
         level: 0,
         children: [
             {
@@ -48,7 +48,7 @@ const itemsMenu: ItemMenu[] = [
             },
             {
                 title: t('shared.bonuses'),
-                icon: 'school',
+                icon: 'mdi-ticket',
                 link: 'bonuses-list',
                 level: 0.5,
                 children: [],
@@ -71,7 +71,7 @@ const itemsMenu: ItemMenu[] = [
     },
     {
         title: t('shared.teachers'),
-        icon: 'school',
+        icon: 'mdi-teach',
         link: 'teachers-list',
         level: 0,
         children: [],
@@ -95,21 +95,21 @@ const itemsMenuStudent: ItemMenu[] = [
     },
     {
         title: t('student.membership'),
-        icon: 'person',
+        icon: 'mdi-card-account-details',
         link: 'membership',
         level: 0,
         children: [],
     },
     {
         title: t('student.bonuses'),
-        icon: 'person',
+        icon: 'mdi-ticket',
         link: 'bonuses',
         level: 0,
         children: [],
     },
     {
         title: t('student.courses'),
-        icon: 'person',
+        icon: 'mdi-school',
         link: 'courses',
         level: 0,
         children: [],

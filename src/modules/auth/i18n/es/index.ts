@@ -4,8 +4,6 @@ export default {
         password: 'Contraseña',
         login: 'Login',
         forgotPassword: 'Recordar contraseña',
-        emailRequired: 'Correo electrónico obligatorio',
-        passwordRequired: 'Contraseña obligatoria',
         loginSuccessfully: '¡Inició sesión con éxito!',
         register: 'Registro',
         recover: 'Recuperar',
