@@ -63,7 +63,8 @@ const preventNav = async (event: BeforeUnloadEvent) => {
 onMounted(() => {
     if (isStudent()) {
         window.addEventListener('beforeunload', preventNav);
-        bonusesStudentList.value = authStore.user?.student.bonusesStudent || [];
+        bonusesStudentList.value =
+            authStore.user?.student?.bonusesStudent || [];
     }
 });
 
@@ -73,12 +74,12 @@ onBeforeUnmount(() => {
     }
 });
 
-router.beforeEach(async (to, from, next) => {
-    if (isStudent()) {
-        await refreshInfoStudent();
-        next();
-    }
-});
+// router.beforeEach(async (to, from, next) => {
+//     if (isStudent()) {
+//         await refreshInfoStudent();
+//         next();
+//     }
+// });
 </script>
 
 <template>

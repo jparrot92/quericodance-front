@@ -2,7 +2,7 @@
 import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-
+import { ColumnTable } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
 import useUsers from '../../composables/useUsers';
@@ -12,14 +12,6 @@ const { loading, users, loadUsers, removeUser } = useUsers();
 const $q = useQuasar();
 
 const { t } = useI18n();
-
-export interface ColumnTable {
-    name: string;
-    label: string;
-    field: string;
-    align?: 'left' | 'right' | 'center';
-    sortable?: boolean;
-}
 
 const columnsUser: ColumnTable[] = [
     {

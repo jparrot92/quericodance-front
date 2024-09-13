@@ -79,13 +79,6 @@ onBeforeUnmount(() => {
         window.removeEventListener('beforeunload', preventNav);
     }
 });
-
-router.beforeEach(async (to, from, next) => {
-    if (isStudent()) {
-        await refreshInfoStudent();
-        next();
-    }
-});
 </script>
 
 <template>

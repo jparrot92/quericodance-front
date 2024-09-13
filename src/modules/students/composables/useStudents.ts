@@ -25,6 +25,7 @@ import {
 } from 'src/api/membershipsApi';
 
 import { StudentDTO } from '../models/student';
+import { UserViewDTO } from '../models/user';
 
 const useStudents = () => {
     const router = useRouter();
@@ -36,7 +37,7 @@ const useStudents = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const students = ref<StudentDTO[]>([]);
+    const students = ref<UserViewDTO[]>([]);
     const student = ref<StudentDTO>({
         id: 0,
         user: {

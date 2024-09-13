@@ -166,20 +166,13 @@ onMounted(() => {
             ? true
             : false;
         studentActivitiesList.value =
-            authStore.user?.student.activitiesStudent || [];
+            authStore.user?.student?.activitiesStudent || [];
     }
 });
 
 onBeforeUnmount(() => {
     if (isStudent()) {
         window.removeEventListener('beforeunload', preventNav);
-    }
-});
-
-router.beforeEach(async (to, from, next) => {
-    if (isStudent()) {
-        await refreshInfoStudent();
-        next();
     }
 });
 </script>

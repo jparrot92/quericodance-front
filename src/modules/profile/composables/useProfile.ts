@@ -35,7 +35,6 @@ const useUsers = () => {
     });
 
     const loadProfile = async () => {
-        debugger;
         if (authStore.user?.id === undefined) {
             notifyError(new Error('User ID is undefined'));
             return;
