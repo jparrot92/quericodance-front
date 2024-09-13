@@ -1,15 +1,14 @@
 import { api } from 'boot/axios';
 import { StudentDTO } from 'src/modules/students/models/student';
 import { handleError } from './errorApi';
-import { UserViewDTO } from 'src/modules/students/models/user';
 
 export const listStudents = async (
     idActivity: string
-): Promise<UserViewDTO[]> => {
+): Promise<StudentDTO[]> => {
     try {
         const params = idActivity ? { idActivity } : {};
 
-        const { data } = await api.get<UserViewDTO[]>('/students', { params });
+        const { data } = await api.get<StudentDTO[]>('/students', { params });
 
         return data;
     } catch (error) {

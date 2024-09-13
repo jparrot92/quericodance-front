@@ -21,7 +21,7 @@ import MenuList from 'src/shared/components/MenuList.vue';
 import useActivities from 'src/modules/activities/composables/useActivities';
 import useStudents from '../../composables/useStudents';
 
-import { UserViewDTO } from '../../models/user';
+import { StudentDTO } from '../../models/student';
 import { FilterField } from 'src/composables/useFilterTypes';
 
 const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
@@ -54,7 +54,7 @@ const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const danceRoles = generateEnumOptions(DanceRole);
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const studentsFiltered = ref<UserViewDTO[]>([]);
+const studentsFiltered = ref<StudentDTO[]>([]);
 const showProfitability = ref(false);
 
 const idActivity = computed<string>(() => route.params.id?.toString());
@@ -80,49 +80,49 @@ const columnsUser: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.label.photo'),
-        field: 'photo',
+        field: (row: StudentDTO) => row.user.photo,
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('user.label.name'),
-        field: 'name',
+        field: (row: StudentDTO) => row.user.name,
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.label.surnames'),
-        field: 'surnames',
+        field: (row: StudentDTO) => row.user.surnames,
         sortable: true,
     },
     {
         name: 'phone',
         align: 'left',
         label: t('user.label.phone'),
-        field: 'phone',
+        field: (row: StudentDTO) => row.user.phone,
         sortable: true,
     },
     {
         name: 'status',
         align: 'left',
         label: t('student.state'),
-        field: (row: UserViewDTO) => row.student.status,
+        field: (row: StudentDTO) => row.status,
         sortable: true,
     },
     {
         name: 'danceRole',
         align: 'left',
         label: t('student.role'),
-        field: (row: UserViewDTO) => row.student.activitiesStudent[0].danceRole,
+        field: (row: StudentDTO) => row.activitiesStudent[0].danceRole,
         sortable: true,
     },
     {
         name: 'payment',
         align: 'left',
         label: t('student.monthlyPayment'),
-        field: (row: UserViewDTO) => row.student.membership?.payment,
+        field: (row: StudentDTO) => row.membership?.payment,
         format: (val: number) => `${val} €`,
         sortable: true,
     },
@@ -130,7 +130,7 @@ const columnsUser: ColumnTable[] = [
         name: 'paymentStatus',
         align: 'left',
         label: t('student.paymentStatus'),
-        field: (row: UserViewDTO) => row.student.membership?.paymentStatus,
+        field: (row: StudentDTO) => row.membership?.paymentStatus,
         sortable: true,
     },
     {
@@ -144,7 +144,7 @@ const columnsUser: ColumnTable[] = [
         name: 'datePayment',
         align: 'left',
         label: t('student.datePayment'),
-        field: (row: UserViewDTO) => row.student.membership?.paymentDate,
+        field: (row: StudentDTO) => row.membership?.paymentDate,
         sortable: true,
     },
     {
@@ -176,34 +176,34 @@ const filters: Ref<Array<FilterField>> = ref([] as Array<FilterField>);
 
 const filterTable = () => {
     studentsFiltered.value = students.value
-        .filter((user: UserViewDTO) => {
+        .filter((student: StudentDTO) => {
             const studentFullName =
-                user.name.toLowerCase() +
-                user.surnames.toLowerCase() +
-                user.email.toLowerCase();
+                student.user.name.toLowerCase() +
+                student.user.surnames.toLowerCase() +
+                student.user.email.toLowerCase();
 
             return studentFullName.includes(
                 filtersSelected.query.replace(/\s/g, '').toLowerCase()
             );
         })
-        .filter((user: UserViewDTO) => {
+        .filter((student: StudentDTO) => {
             if (filtersSelected.status === null) {
                 return true;
             } else {
-                return user.student.status === filtersSelected.status;
+                return student.status === filtersSelected.status;
             }
         })
-        .filter((user: UserViewDTO) => {
+        .filter((student: StudentDTO) => {
             if (filtersSelected.paymentStatus === null) {
                 return true;
             } else {
                 return (
-                    user.student.membership?.paymentStatus ===
+                    student.membership?.paymentStatus ===
                     filtersSelected.paymentStatus
                 );
             }
         })
-        .filter((user: UserViewDTO) => {
+        .filter((student: StudentDTO) => {
             if (
                 filtersSelected.danceRole === null ||
                 filtersSelected.danceRole === undefined
@@ -211,24 +211,24 @@ const filterTable = () => {
                 return true;
             } else {
                 return (
-                    user.student.activitiesStudent[0].danceRole ===
+                    student.activitiesStudent[0].danceRole ===
                     filtersSelected.danceRole
                 );
             }
         });
 };
 
-const onRowClick = (evt: Event, row: UserViewDTO) => {
+const onRowClick = (evt: Event, row: StudentDTO) => {
     router.push({
         name: 'students-edit',
         params: {
-            id: row.student?.id,
+            id: row.id,
         },
     });
 };
 
 const checkMonthlyPaymentPaid = async (
-    student: UserViewDTO,
+    student: StudentDTO,
     paymentStatus: Option
 ) => {
     try {
@@ -242,7 +242,7 @@ const checkMonthlyPaymentPaid = async (
     }
 };
 
-const handleSendMail = async (student: UserViewDTO) => {
+const handleSendMail = async (student: StudentDTO) => {
     sendMailPaymentPaid(student.id);
 };
 
@@ -266,7 +266,7 @@ const handleRemoveStudent = async (id: number) => {
     try {
         await removeStudent(id);
         const index = studentsFiltered.value?.findIndex(
-            (student: UserViewDTO) => student.id === id
+            (student: StudentDTO) => student.id === id
         );
         if (index !== undefined && index !== -1) {
             studentsFiltered.value?.splice(index, 1);
@@ -316,7 +316,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="row">
+    <div class="row" v-if="$q.platform.is.desktop">
         <q-table
             :rows="studentsFiltered"
             :columns="columnsFiltered"
@@ -506,8 +506,8 @@ onMounted(async () => {
             </template>
             <template v-slot:body-cell-photo="props">
                 <q-td :props="props">
-                    <q-avatar v-if="props.row.photo">
-                        <q-img :ratio="1" :src="props.row.photo" />
+                    <q-avatar v-if="props.row.user.photo">
+                        <q-img :ratio="1" :src="props.row.user.photo" />
                     </q-avatar>
                     <q-avatar
                         v-else
@@ -515,17 +515,6 @@ onMounted(async () => {
                         text-color="white"
                         icon="mdi-image-off"
                     />
-                </q-td>
-            </template>
-            <template v-slot:body-cell-phone="props">
-                <q-td :props="props">
-                    <a
-                        @click.stop
-                        :href="'https://wa.me/' + props.row.phone"
-                        target="_blank"
-                    >
-                        {{ props.row.phone }}
-                    </a>
                 </q-td>
             </template>
             <template v-slot:body-cell-active="props">
@@ -540,13 +529,24 @@ onMounted(async () => {
                     />
                 </q-td>
             </template>
+            <template v-slot:body-cell-phone="props">
+                <q-td :props="props">
+                    <a
+                        @click.stop
+                        :href="'https://wa.me/' + props.row.user.phone"
+                        target="_blank"
+                    >
+                        {{ props.row.user.phone }}
+                    </a>
+                </q-td>
+            </template>
             <template v-slot:body-cell-payment="props">
                 <q-td :props="props">
                     <q-badge
-                        v-if="props.row.student.membership"
+                        v-if="props.row.membership"
                         :color="
                             isPaymentStatusPaid(
-                                props.row.student.membership?.paymentStatus
+                                props.row.membership?.paymentStatus
                             )
                                 ? 'green'
                                 : 'red'
@@ -557,16 +557,16 @@ onMounted(async () => {
             </template>
             <template v-slot:body-cell-paymentStatus="props">
                 <q-td :props="props" @click.stop>
-                    <template v-if="props.row.student.membership">
+                    <template v-if="props.row.membership">
                         <q-select
                             :bg-color="
                                 isPaymentStatusPaid(
-                                    props.row.student.membership.paymentStatus
+                                    props.row.membership.paymentStatus
                                 )
                                     ? 'green'
                                     : 'red'
                             "
-                            v-model="props.row.student.membership.paymentStatus"
+                            v-model="props.row.membership.paymentStatus"
                             rounded
                             outlined
                             dense
@@ -575,7 +575,7 @@ onMounted(async () => {
                             @update:model-value="
                                 checkMonthlyPaymentPaid(
                                     props.row,
-                                    props.row.student.membership.paymentStatus
+                                    props.row.membership.paymentStatus
                                 )
                             "
                         >
@@ -588,12 +588,12 @@ onMounted(async () => {
             </template>
             <template v-slot:body-cell-mail="props">
                 <q-td :props="props" @click.stop>
-                    <template v-if="props.row.student.membership">
+                    <template v-if="props.row.membership">
                         <q-btn
                             v-if="
-                                props.row.student.membership?.paymentStatus &&
+                                props.row.membership?.paymentStatus &&
                                 isPaymentStatusPaid(
-                                    props.row.student.membership.paymentStatus
+                                    props.row.membership.paymentStatus
                                 )
                             "
                             color="primary"
@@ -607,14 +607,12 @@ onMounted(async () => {
             </template>
             <template v-slot:body-cell-datePayment="props">
                 <q-td :props="props">
-                    <template v-if="props.row.student.membership">
+                    <template v-if="props.row.membership">
                         {{
                             isPaymentStatusPaid(
-                                props.row.student.membership?.paymentStatus
+                                props.row.membership?.paymentStatus
                             )
-                                ? format(
-                                      props.row.student.membership.datePayment
-                                  )
+                                ? format(props.row.membership.datePayment)
                                 : '-'
                         }}
                     </template>
@@ -646,5 +644,225 @@ onMounted(async () => {
                 </q-td>
             </template>
         </q-table>
+    </div>
+    <div class="row" v-if="$q.platform.is.mobile">
+        <q-table
+            :rows="studentsFiltered"
+            :columns="columnsFiltered"
+            row-key="id"
+            class="col-12 my-sticky-last-column-table"
+            :loading="loading"
+            @row-click="onRowClick"
+            :no-data-label="$t('shared.noData')"
+            :rows-per-page-label="$t('shared.recordsPerPage')"
+        >
+            <template v-slot:top>
+                <div class="col-12 justify-between">
+                    <div class="row justify-between">
+                        <div class="col-12">
+                            <pd-filter
+                                v-model="filtersSelected"
+                                :filters="filters"
+                            ></pd-filter>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12" v-if="idActivity">
+                    <div class="row">
+                        <div class="col-4">
+                            <q-chip color="blue" text-color="white">
+                                {{ $t('activity.label.numberLeaders') }} :
+                                {{ activityCounters.numberLeaders }}
+                            </q-chip>
+                        </div>
+                        <div class="col-4">
+                            <q-chip
+                                class="col-4"
+                                color="pink"
+                                text-color="white"
+                            >
+                                {{ $t('activity.label.numberFollowers') }} :
+                                {{ activityCounters.numberFollowers }}
+                            </q-chip>
+                        </div>
+                        <template v-if="showProfitability">
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
+                                    text-color="white"
+                                >
+                                    {{ $t('activity.label.costEffectiveness') }}
+                                    :
+                                    {{
+                                        activityCounters.costEffectiveness +
+                                        ' €'
+                                    }}
+                                </q-chip>
+                            </div>
+                            <div class="col-4">
+                                <q-chip
+                                    class="col-4"
+                                    color="green"
+                                    text-color="white"
+                                >
+                                    {{ $t('activity.label.totalPaid') }}
+                                    :
+                                    {{ activityCounters.totalPaid + ' €' }}
+                                </q-chip>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:body-cell-photo="props">
+                <q-td :props="props">
+                    <q-avatar v-if="props.row.user.photo">
+                        <q-img :ratio="1" :src="props.row.user.photo" />
+                    </q-avatar>
+                    <q-avatar
+                        v-else
+                        color="grey"
+                        text-color="white"
+                        icon="mdi-image-off"
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-active="props">
+                <q-td :props="props">
+                    <q-badge
+                        :color="props.row.active ? 'green' : 'red'"
+                        :label="
+                            props.row.active
+                                ? $t('student.active')
+                                : $t('student.inactivo')
+                        "
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-phone="props">
+                <q-td :props="props">
+                    <a
+                        @click.stop
+                        :href="'https://wa.me/' + props.row.user.phone"
+                        target="_blank"
+                    >
+                        {{ props.row.user.phone }}
+                    </a>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-payment="props">
+                <q-td :props="props">
+                    <q-badge
+                        v-if="props.row.membership"
+                        :color="
+                            isPaymentStatusPaid(
+                                props.row.membership?.paymentStatus
+                            )
+                                ? 'green'
+                                : 'red'
+                        "
+                        :label="props.value"
+                    />
+                </q-td>
+            </template>
+            <template v-slot:body-cell-paymentStatus="props">
+                <q-td :props="props" @click.stop>
+                    <template v-if="props.row.membership">
+                        <q-select
+                            :bg-color="
+                                isPaymentStatusPaid(
+                                    props.row.membership.paymentStatus
+                                )
+                                    ? 'green'
+                                    : 'red'
+                            "
+                            v-model="props.row.membership.paymentStatus"
+                            rounded
+                            outlined
+                            dense
+                            options-dense
+                            :options="paymentStatuses"
+                            @update:model-value="
+                                checkMonthlyPaymentPaid(
+                                    props.row,
+                                    props.row.membership.paymentStatus
+                                )
+                            "
+                        >
+                            <template v-slot:selected-item="{ opt }">
+                                {{ t('shared.enum.' + (opt.value || opt)) }}
+                            </template>
+                        </q-select>
+                    </template>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-mail="props">
+                <q-td :props="props" @click.stop>
+                    <template v-if="props.row.membership">
+                        <q-btn
+                            v-if="
+                                props.row.membership?.paymentStatus &&
+                                isPaymentStatusPaid(
+                                    props.row.membership.paymentStatus
+                                )
+                            "
+                            color="primary"
+                            rounded
+                            size="md"
+                            :label="$t('student.send')"
+                            @click="handleSendMail(props.row)"
+                        />
+                    </template>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-datePayment="props">
+                <q-td :props="props">
+                    <template v-if="props.row.membership">
+                        {{
+                            isPaymentStatusPaid(
+                                props.row.membership?.paymentStatus
+                            )
+                                ? format(props.row.membership.datePayment)
+                                : '-'
+                        }}
+                    </template>
+                </q-td>
+            </template>
+            <template v-slot:body-cell-actions="props">
+                <q-td :props="props">
+                    <menu-list @click.stop>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="
+                                    $router.push({
+                                        name: 'students-edit',
+                                        params: { id: props.row.id },
+                                    })
+                                "
+                            >
+                                {{ $t('user.label.edit') }}
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
+                                @click="handleRemoveStudent(props.row.id)"
+                            >
+                                {{ $t('user.label.delete') }}
+                            </q-item-section>
+                        </q-item>
+                    </menu-list>
+                </q-td>
+            </template>
+        </q-table>
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+            <q-btn
+                fab
+                icon="mdi-plus"
+                color="primary"
+                :to="{ name: 'students-add' }"
+            />
+        </q-page-sticky>
     </div>
 </template>
