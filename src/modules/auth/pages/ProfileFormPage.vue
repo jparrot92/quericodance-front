@@ -7,12 +7,6 @@ import useProfile from '../composables/useProfile';
 
 const { user, loadProfile, editProfile } = useProfile();
 
-const updateUserDateOfBirth = (value: string) => {
-    user.value.dateOfBirth = value;
-};
-
-const roles = ['user', 'secretary'];
-
 const onSubmit = async () => {
     editProfile();
 };
@@ -93,13 +87,6 @@ onMounted(() => {
                                       $t('shared.validations.required'),
                               ]
                     "
-                />
-
-                <q-select
-                    :label="$t('user.role')"
-                    v-model="user.roles"
-                    :options="roles"
-                    behavior="menu"
                 />
 
                 <q-btn

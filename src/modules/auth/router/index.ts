@@ -40,6 +40,16 @@ const authRoutes: RouteRecordRaw = {
                 title: 'auth.forgotPassword',
             },
         },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: () =>
+                import('src/modules/auth/pages/ProfileFormPage.vue'),
+            meta: {
+                toolbar: 'DetailToolbar',
+                title: 'shared.profile',
+            },
+        },
     ],
 };
 

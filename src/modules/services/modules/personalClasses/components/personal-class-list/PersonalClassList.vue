@@ -113,14 +113,14 @@ const columnsPersonalClass: ColumnTable[] = [
                                     })
                                 "
                             >
-                                {{ $t('user.edit') }}
+                                {{ $t('shared.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="removePersonalClass(props.row.id)"
                             >
-                                {{ $t('user.delete') }}
+                                {{ $t('shared.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>

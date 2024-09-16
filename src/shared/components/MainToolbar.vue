@@ -51,7 +51,7 @@ const handleLogout = async () => {
                         v-close-popup
                         @click="
                             $router.push({
-                                name: 'profile-form-page',
+                                name: 'profile',
                             })
                         "
                     >

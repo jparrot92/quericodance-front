@@ -37,7 +37,7 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('user.name'),
+        label: t('shared.name'),
         field: (row: Teacher) => row.user.name,
         sortable: true,
     },
@@ -116,14 +116,14 @@ const columnsUser: ColumnTable[] = [
                                     })
                                 "
                             >
-                                {{ $t('user.edit') }}
+                                {{ $t('shared.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="removeTeacher(props.row.id)"
                             >
-                                {{ $t('user.delete') }}
+                                {{ $t('shared.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>
