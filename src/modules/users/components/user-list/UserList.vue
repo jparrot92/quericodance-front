@@ -24,7 +24,7 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('user.name'),
+        label: t('shared.name'),
         field: 'name',
         sortable: true,
     },

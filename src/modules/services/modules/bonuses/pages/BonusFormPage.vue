@@ -32,7 +32,10 @@ onMounted(() => {
                 class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
                 @submit.prevent="onSubmit"
             >
-                <q-input :label="$t('bonus.name') + '*'" v-model="bonus.name" />
+                <q-input
+                    :label="$t('shared.name') + '*'"
+                    v-model="bonus.name"
+                />
 
                 <q-input
                     type="number"
@@ -47,7 +50,7 @@ onMounted(() => {
                 />
 
                 <pd-editor
-                    :label="$t('bonus.description') + '*'"
+                    :label="$t('shared.description') + '*'"
                     v-model="bonus.description"
                 />
 

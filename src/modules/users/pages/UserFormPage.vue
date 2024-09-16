@@ -71,7 +71,7 @@ const onSubmit = async () => {
                 </div>
 
                 <q-input
-                    :label="$t('user.name') + '*'"
+                    :label="$t('shared.name') + '*'"
                     v-model="user.name"
                     :rules="[
                         (val: string) =>
@@ -167,7 +167,7 @@ const onSubmit = async () => {
                 </q-select>
 
                 <q-btn
-                    :label="$t('user.save')"
+                    :label="$t('shared.save')"
                     color="primary"
                     class="full-width"
                     rounded

@@ -34,7 +34,7 @@ onMounted(() => {
                 </div>
 
                 <q-input
-                    :label="$t('user.name')"
+                    :label="$t('shared.name')"
                     v-model="user.name"
                     :rules="[
                         (val: string) =>

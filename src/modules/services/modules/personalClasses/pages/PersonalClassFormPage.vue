@@ -40,7 +40,7 @@ onMounted(() => {
                 @submit.prevent="onSubmit"
             >
                 <q-input
-                    :label="$t('personalClass.name') + '*'"
+                    :label="$t('shared.name') + '*'"
                     v-model="personalClass.name"
                 />
 
@@ -57,7 +57,7 @@ onMounted(() => {
                 />
 
                 <pd-editor
-                    :label="$t('personalClass.description') + '*'"
+                    :label="$t('shared.description') + '*'"
                     v-model="personalClass.description"
                 />
 

@@ -47,7 +47,7 @@ onMounted(() => {
                 @submit.prevent="onSubmit"
             >
                 <q-input
-                    :label="$t('activity.name')"
+                    :label="$t('shared.name')"
                     v-model="activity.name"
                     :rules="[
                         (val: string) =>
@@ -222,7 +222,7 @@ onMounted(() => {
                 </q-select>
 
                 <q-btn
-                    :label="$t('activity.save')"
+                    :label="$t('shared.save')"
                     color="primary"
                     class="full-width"
                     rounded

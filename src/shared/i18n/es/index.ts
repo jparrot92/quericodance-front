@@ -33,6 +33,8 @@ export default {
         resetPayments: 'Reiniciar cobros',
         search: 'Buscar',
         excel: 'Excel',
+        name: 'Nombre',
+        description: 'Descripción',
         enum: {
             payed: 'Pagado',
             pending: 'Pendiente',

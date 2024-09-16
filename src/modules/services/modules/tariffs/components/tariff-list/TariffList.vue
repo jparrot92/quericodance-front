@@ -23,7 +23,7 @@ const columnsTariff: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('tariff.name'),
+        label: t('shared.name'),
         field: 'name',
         sortable: true,
     },

@@ -41,8 +41,6 @@ export default {
         pending: 'Pendiente',
         addActivity: 'Añadir curso',
         addStudent: 'Añadir estudiante',
-        add: 'Añadir',
-        cancel: 'Cancelar',
         changePrice: 'Modificar precio',
         datePayment: 'Fecha pago',
         active: 'Activo',
@@ -50,7 +48,6 @@ export default {
         serachPlaceholder:
             'Introduzca el nombre/apellido o correo electrónico del alumno.',
         observations: 'Observaciones',
-        send: 'Enviar',
         messageAddCourse:
             'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante.',
         messageAddCourseStudent: 'Sin cursos asignados.',

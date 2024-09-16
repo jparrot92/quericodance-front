@@ -5,8 +5,6 @@ export default {
         sessions: 'Sesiones',
         intensity: 'Intensidad',
         editTariff: 'Editar tarifa',
-        name: 'Nombre',
-        description: 'Descripción',
         createdSuccessfully: 'Tarifa creada correctamente',
         updatedSuccessfully: 'Tarifa modificada correctamente',
         deleteSuccessfully: 'Tarifa eliminada correctamente',

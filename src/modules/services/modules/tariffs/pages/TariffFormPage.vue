@@ -41,7 +41,7 @@ onMounted(() => {
                 @submit.prevent="onSubmit"
             >
                 <q-input
-                    :label="$t('tariff.name') + '*'"
+                    :label="$t('shared.name') + '*'"
                     v-model="tariff.name"
                 />
 
@@ -64,7 +64,7 @@ onMounted(() => {
                 />
 
                 <pd-editor
-                    :label="$t('tariff.description') + '*'"
+                    :label="$t('shared.description') + '*'"
                     v-model="tariff.description"
                 />
 

@@ -23,7 +23,7 @@ const columnsPass: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('bonus.name'),
+        label: t('shared.name'),
         field: 'name',
         sortable: false,
     },

@@ -77,7 +77,7 @@ onMounted(() => {
                 </div>
 
                 <q-input
-                    :label="$t('user.name') + '*'"
+                    :label="$t('shared.name') + '*'"
                     v-model="studentForm.user.name"
                     :rules="[
                         (val: string) =>
@@ -179,7 +179,7 @@ onMounted(() => {
                 </q-select>
 
                 <q-btn
-                    :label="$t('user.save')"
+                    :label="$t('shared.save')"
                     color="primary"
                     class="full-width"
                     rounded

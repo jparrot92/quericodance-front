@@ -3,7 +3,6 @@ export default {
         createUser: 'Crear usuario',
         editUser: 'Editar usuario',
         users: 'Usuarios',
-        name: 'Nombre',
         surnames: 'Apellidos',
         dateOfBirth: 'Fecha de nacimiento',
         phone: 'WhatsApp/Teléfono',
@@ -19,13 +18,9 @@ export default {
         secretary: 'Secretario',
         teacher: 'Profesor',
         student: 'Estudiante',
-        notifications: {
-            userCreateSuccessfully: 'Usuario creado con éxito',
-            userUpdateSuccessfully: 'Usuario modificada con éxito',
-            userDeleteSuccessfully: 'Usuario eliminado',
-        },
-        message: {
-            userDelete: '¿Realmente desea eliminar este usuario?',
-        },
+        messageUserCreateSuccessfully: 'Usuario creado con éxito',
+        messageUserUpdateSuccessfully: 'Usuario modificada con éxito',
+        messageUserDeleteSuccessfully: 'Usuario eliminado',
+        messageUserDelete: '¿Realmente desea eliminar este usuario?',
     },
 };

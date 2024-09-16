@@ -45,12 +45,12 @@ const onSubmit = async () => {
                 </div>
 
                 <q-input
-                    :label="$t('user.name') + '*'"
+                    :label="$t('shared.name') + '*'"
                     v-model="teacher.user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.nameRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
@@ -60,7 +60,7 @@ const onSubmit = async () => {
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.surnamesRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
@@ -86,7 +86,7 @@ const onSubmit = async () => {
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.emailRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
@@ -103,13 +103,13 @@ const onSubmit = async () => {
                             : [
                                   (val) =>
                                       (val && val.length > 0) ||
-                                      $t('user.validations.passwordRequired'),
+                                      $t('shared.validations.required'),
                               ]
                     "
                 />
 
                 <q-btn
-                    :label="$t('user.save')"
+                    :label="$t('shared.save')"
                     color="primary"
                     class="full-width"
                     rounded
