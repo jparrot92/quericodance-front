@@ -8,6 +8,7 @@ export default {
         add: 'Añadir',
         edit: 'Editar',
         delete: 'Eliminar',
+        send: 'Enviar',
         confirmation: 'Confirmación',
         profile: 'Perfil',
         logout: 'Cerrar sesión',

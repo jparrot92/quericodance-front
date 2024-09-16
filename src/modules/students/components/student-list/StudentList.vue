@@ -597,7 +597,7 @@ onMounted(async () => {
                             color="primary"
                             rounded
                             size="md"
-                            :label="$t('student.send')"
+                            :label="$t('shared.send')"
                             @click="handleSendMail(props.row)"
                         />
                     </template>
@@ -809,7 +809,7 @@ onMounted(async () => {
                             color="primary"
                             rounded
                             size="md"
-                            :label="$t('student.send')"
+                            :label="$t('shared.send')"
                             @click="handleSendMail(props.row)"
                         />
                     </template>
