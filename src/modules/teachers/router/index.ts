@@ -23,7 +23,7 @@ const teachersRoutes: RouteRecordRaw = {
                 import('src/modules/teachers/pages/TeacherFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'teacher.label.createTeacher',
+                title: 'teacher.createTeacher',
             },
         },
         {
@@ -33,7 +33,7 @@ const teachersRoutes: RouteRecordRaw = {
                 import('src/modules/teachers/pages/TeacherFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'teacher.label.editTeacher',
+                title: 'teacher.editTeacher',
             },
             props: (route) => {
                 return {

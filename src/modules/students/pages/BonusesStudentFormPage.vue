@@ -122,9 +122,7 @@ onBeforeUnmount(() => {
                                                     deleteBonusStudent(item.id)
                                                 "
                                             >
-                                                {{
-                                                    $t('activity.label.delete')
-                                                }}
+                                                {{ $t('activity.delete') }}
                                             </q-item-section>
                                         </q-item>
                                     </menu-list>

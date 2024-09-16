@@ -96,7 +96,7 @@ const useTeachers = () => {
 
     const removeTeacher = async (id: string) => {
         $q.dialog({
-            title: t('teacher.label.confirmation'),
+            title: t('teacher.confirmation'),
             message: t('teacher.message.teacherDelete'),
             cancel: true,
             persistent: true,

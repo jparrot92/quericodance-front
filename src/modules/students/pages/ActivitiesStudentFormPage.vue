@@ -192,7 +192,7 @@ onBeforeUnmount(() => {
                             <q-item-section top>
                                 <q-item-label lines="1">
                                     <span class="text-weight-medium">
-                                        {{ $t('activity.label.activity') }}
+                                        {{ $t('activity.activity') }}
                                         {{ item.activity.name }}
                                         {{ item.activity.level }}
                                     </span>
@@ -244,7 +244,7 @@ onBeforeUnmount(() => {
                                                     })
                                                 "
                                             >
-                                                {{ $t('activity.label.see') }}
+                                                {{ $t('activity.see') }}
                                             </q-item-section>
                                         </q-item>
                                         <q-item clickable v-close-popup>
@@ -266,9 +266,7 @@ onBeforeUnmount(() => {
                                                     )
                                                 "
                                             >
-                                                {{
-                                                    $t('activity.label.delete')
-                                                }}
+                                                {{ $t('activity.delete') }}
                                             </q-item-section>
                                         </q-item>
                                     </menu-list>

@@ -17,35 +17,35 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
-        label: t('user.label.photo'),
+        label: t('user.photo'),
         field: 'photo',
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
-        label: t('user.label.name'),
+        label: t('user.name'),
         field: 'name',
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
-        label: t('user.label.surnames'),
+        label: t('user.surnames'),
         field: 'surnames',
         sortable: true,
     },
     {
         name: 'email',
         align: 'left',
-        label: t('user.label.email'),
+        label: t('user.email'),
         field: 'email',
         sortable: true,
     },
     {
         name: 'roles',
         align: 'left',
-        label: t('user.label.permissions'),
+        label: t('user.permissions'),
         field: 'roles',
         sortable: true,
     },
@@ -78,7 +78,7 @@ onMounted(() => {
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    :label="$t('user.label.createUser')"
+                    :label="$t('user.createUser')"
                     color="primary"
                     icon="mdi-plus"
                     dense
@@ -121,12 +121,12 @@ onMounted(() => {
                                     })
                                 "
                             >
-                                {{ $t('user.label.edit') }}
+                                {{ $t('user.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section @click="removeUser(props.row.id)">
-                                {{ $t('user.label.delete') }}
+                                {{ $t('user.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>

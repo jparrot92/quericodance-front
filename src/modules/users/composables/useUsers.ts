@@ -93,7 +93,7 @@ const useUsers = () => {
 
     const removeUser = async (id: string) => {
         $q.dialog({
-            title: t('user.label.confirmation'),
+            title: t('user.confirmation'),
             message: t('user.message.userDelete'),
             cancel: true,
             persistent: true,

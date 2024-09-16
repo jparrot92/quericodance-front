@@ -79,28 +79,28 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
-        label: t('user.label.photo'),
+        label: t('user.photo'),
         field: (row: StudentDTO) => row.user.photo,
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
-        label: t('user.label.name'),
+        label: t('user.name'),
         field: (row: StudentDTO) => row.user.name,
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
-        label: t('user.label.surnames'),
+        label: t('user.surnames'),
         field: (row: StudentDTO) => row.user.surnames,
         sortable: true,
     },
     {
         name: 'phone',
         align: 'left',
-        label: t('user.label.phone'),
+        label: t('user.phone'),
         field: (row: StudentDTO) => row.user.phone,
         sortable: true,
     },
@@ -342,9 +342,7 @@ onMounted(async () => {
                             <div class="col-2 flex justify-end">
                                 <q-toggle
                                     class="h-2rem"
-                                    :label="
-                                        $t('activity.label.showProfitability')
-                                    "
+                                    :label="$t('activity.showProfitability')"
                                     v-model="showProfitability"
                                 ></q-toggle>
                             </div>
@@ -460,7 +458,7 @@ onMounted(async () => {
                     <div class="row">
                         <div class="col-4">
                             <q-chip color="blue" text-color="white">
-                                {{ $t('activity.label.numberLeaders') }} :
+                                {{ $t('activity.numberLeaders') }} :
                                 {{ activityCounters.numberLeaders }}
                             </q-chip>
                         </div>
@@ -470,7 +468,7 @@ onMounted(async () => {
                                 color="pink"
                                 text-color="white"
                             >
-                                {{ $t('activity.label.numberFollowers') }} :
+                                {{ $t('activity.numberFollowers') }} :
                                 {{ activityCounters.numberFollowers }}
                             </q-chip>
                         </div>
@@ -481,7 +479,7 @@ onMounted(async () => {
                                     color="green"
                                     text-color="white"
                                 >
-                                    {{ $t('activity.label.costEffectiveness') }}
+                                    {{ $t('activity.costEffectiveness') }}
                                     :
                                     {{
                                         activityCounters.costEffectiveness +
@@ -495,7 +493,7 @@ onMounted(async () => {
                                     color="green"
                                     text-color="white"
                                 >
-                                    {{ $t('activity.label.totalPaid') }}
+                                    {{ $t('activity.totalPaid') }}
                                     :
                                     {{ activityCounters.totalPaid + ' €' }}
                                 </q-chip>
@@ -630,14 +628,14 @@ onMounted(async () => {
                                     })
                                 "
                             >
-                                {{ $t('user.label.edit') }}
+                                {{ $t('user.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="handleRemoveStudent(props.row.id)"
                             >
-                                {{ $t('user.label.delete') }}
+                                {{ $t('user.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>
@@ -672,7 +670,7 @@ onMounted(async () => {
                     <div class="row">
                         <div class="col-4">
                             <q-chip color="blue" text-color="white">
-                                {{ $t('activity.label.numberLeaders') }} :
+                                {{ $t('activity.numberLeaders') }} :
                                 {{ activityCounters.numberLeaders }}
                             </q-chip>
                         </div>
@@ -682,7 +680,7 @@ onMounted(async () => {
                                 color="pink"
                                 text-color="white"
                             >
-                                {{ $t('activity.label.numberFollowers') }} :
+                                {{ $t('activity.numberFollowers') }} :
                                 {{ activityCounters.numberFollowers }}
                             </q-chip>
                         </div>
@@ -693,7 +691,7 @@ onMounted(async () => {
                                     color="green"
                                     text-color="white"
                                 >
-                                    {{ $t('activity.label.costEffectiveness') }}
+                                    {{ $t('activity.costEffectiveness') }}
                                     :
                                     {{
                                         activityCounters.costEffectiveness +
@@ -707,7 +705,7 @@ onMounted(async () => {
                                     color="green"
                                     text-color="white"
                                 >
-                                    {{ $t('activity.label.totalPaid') }}
+                                    {{ $t('activity.totalPaid') }}
                                     :
                                     {{ activityCounters.totalPaid + ' €' }}
                                 </q-chip>
@@ -842,14 +840,14 @@ onMounted(async () => {
                                     })
                                 "
                             >
-                                {{ $t('user.label.edit') }}
+                                {{ $t('user.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="handleRemoveStudent(props.row.id)"
                             >
-                                {{ $t('user.label.delete') }}
+                                {{ $t('user.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>

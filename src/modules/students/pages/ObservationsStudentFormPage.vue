@@ -49,7 +49,7 @@ const onSubmit = async () => {
                 <pd-editor v-model="studentForm.observations" />
 
                 <q-btn
-                    :label="$t('user.label.save')"
+                    :label="$t('user.save')"
                     color="primary"
                     class="full-width"
                     rounded

@@ -108,7 +108,7 @@ const useStudents = () => {
     const removeStudent = async (id: number) => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
-                title: t('user.label.confirmation'),
+                title: t('user.confirmation'),
                 message: t('user.message.userDelete'),
                 cancel: true,
                 persistent: true,

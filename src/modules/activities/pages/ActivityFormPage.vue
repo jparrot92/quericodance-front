@@ -47,28 +47,25 @@ onMounted(() => {
                 @submit.prevent="onSubmit"
             >
                 <q-input
-                    :label="$t('activity.label.name')"
+                    :label="$t('activity.name')"
                     v-model="activity.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('activity.validation.nameRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <q-input
                     type="number"
-                    :label="$t('activity.label.level')"
+                    :label="$t('activity.level')"
                     v-model.number="activity.level"
                     :rules="[
                         (val) =>
                             (val !== null &&
                                 val !== undefined &&
                                 val.toString().trim() !== '') ||
-                            $t('activity.validation.levelRequired'),
-                        (val) =>
-                            /^[0-9]+$/.test(val) ||
-                            $t('activity.validation.levelNumeric'),
+                            $t('shared.validations.required'),
                     ]"
                 />
 
@@ -81,14 +78,14 @@ onMounted(() => {
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('activity.validation.dayRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <div class="row">
                     <q-input
                         class="col-md-6 col-sm-6 col-xs-6 q-pr-md q-pr-sm"
-                        :label="$t('activity.label.startHour')"
+                        :label="$t('activity.startHour')"
                         v-model="activity.startHour"
                         mask="time"
                         :rules="['time']"
@@ -119,7 +116,7 @@ onMounted(() => {
 
                     <q-input
                         class="col-md-6 col-sm-6 col-xs-6 q-pl-md q-pl-sm"
-                        :label="$t('activity.label.endHour')"
+                        :label="$t('activity.endHour')"
                         v-model="activity.endHour"
                         mask="time"
                         :rules="['time']"
@@ -150,26 +147,26 @@ onMounted(() => {
                 </div>
 
                 <q-input
-                    :label="$t('activity.label.numberPlaces')"
+                    :label="$t('activity.numberPlaces')"
                     v-model.number="activity.numberPlaces"
                     :rules="[
                         (val) =>
                             (val !== null &&
                                 val !== undefined &&
                                 val.toString().trim() !== '') ||
-                            $t('activity.validation.priceRequired'),
+                            $t('shared.validations.required'),
                     ]"
                 />
 
                 <div class="row">
                     <q-input
-                        :label="$t('activity.label.color')"
+                        :label="$t('activity.color')"
                         v-model="activity.color"
                         class="col-md-11 col-sm-11 col-xs-10"
                         :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('activity.validation.colorRequired')
+                            $t('shared.validations.required')
                         ]"
                     >
                         <template v-slot:append>
@@ -194,7 +191,7 @@ onMounted(() => {
                             self="center right"
                             :offset="[10, 10]"
                         >
-                            {{ $t('activity.label.infoColor') }}
+                            {{ $t('activity.infoColor') }}
                         </q-tooltip>
                     </q-btn>
                 </div>
@@ -203,7 +200,7 @@ onMounted(() => {
                     v-model="activity.teachersIds"
                     multiple
                     :options="teachers"
-                    :label="$t('activity.label.teachers')"
+                    :label="$t('activity.teachers')"
                     emit-value
                     map-options
                     :option-value="'id'"
@@ -225,7 +222,7 @@ onMounted(() => {
                 </q-select>
 
                 <q-btn
-                    :label="$t('activity.label.save')"
+                    :label="$t('activity.save')"
                     color="primary"
                     class="full-width"
                     rounded

@@ -37,21 +37,21 @@ const columns: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('activity.label.name'),
+        label: t('activity.name'),
         field: 'name',
         sortable: true,
     },
     {
         name: 'level',
         align: 'left',
-        label: t('activity.label.level'),
+        label: t('activity.level'),
         field: 'level',
         sortable: true,
     },
     {
         name: 'day',
         align: 'left',
-        label: t('activity.label.day'),
+        label: t('activity.day'),
         field: (row) => t('shared.enum.' + row.day),
         sortable: true,
         sort: (a: string, b: string, rowA: ActivityList, rowB: ActivityList) =>
@@ -60,7 +60,7 @@ const columns: ColumnTable[] = [
     {
         name: 'startHour',
         align: 'left',
-        label: t('activity.label.startHour'),
+        label: t('activity.startHour'),
         field: 'startHour',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -68,7 +68,7 @@ const columns: ColumnTable[] = [
     {
         name: 'endHour',
         align: 'left',
-        label: t('activity.label.endHour'),
+        label: t('activity.endHour'),
         field: 'endHour',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -76,7 +76,7 @@ const columns: ColumnTable[] = [
     {
         name: 'numberPlaces',
         align: 'left',
-        label: t('activity.label.numberPlaces'),
+        label: t('activity.numberPlaces'),
         field: 'numberPlaces',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -84,7 +84,7 @@ const columns: ColumnTable[] = [
     {
         name: 'numberStudents',
         align: 'left',
-        label: t('activity.label.numberStudents'),
+        label: t('activity.numberStudents'),
         field: 'numberStudents',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -92,7 +92,7 @@ const columns: ColumnTable[] = [
     {
         name: 'numberLeaders',
         align: 'left',
-        label: t('activity.label.numberLeaders'),
+        label: t('activity.numberLeaders'),
         field: 'numberLeaders',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -100,7 +100,7 @@ const columns: ColumnTable[] = [
     {
         name: 'numberFollowers',
         align: 'left',
-        label: t('activity.label.numberFollowers'),
+        label: t('activity.numberFollowers'),
         field: 'numberFollowers',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -108,7 +108,7 @@ const columns: ColumnTable[] = [
     {
         name: 'costEffectiveness',
         align: 'left',
-        label: t('activity.label.costEffectiveness'),
+        label: t('activity.costEffectiveness'),
         field: 'costEffectiveness',
         format: (val: number) => `${val} €`,
         sortable: true,
@@ -116,7 +116,7 @@ const columns: ColumnTable[] = [
     {
         name: 'totalPaid',
         align: 'left',
-        label: t('activity.label.totalPaid'),
+        label: t('activity.totalPaid'),
         field: 'totalPaid',
         format: (val: number) => `${val} €`,
         sortable: true,
@@ -147,7 +147,7 @@ loadFiltersFromLocalStorage(filtersSelected);
 const filters: Ref<Array<FilterField>> = ref([
     {
         field: 'weekDay',
-        label: t('activity.label.day'),
+        label: t('activity.day'),
         options: weekDays,
     },
 ] as Array<FilterField>);
@@ -215,7 +215,7 @@ const orderByDay = (a: ActivityList, b: ActivityList) => {
 };
 
 const onRowClick = (evt: Event, row: ActivityList) => {
-    let title = `${t('activity.label.activity')} ${row.name} ${row.level} - ${t(
+    let title = `${t('activity.activity')} ${row.name} ${row.level} - ${t(
         'shared.enum.' + row.day
     )} ${row.startHour}`;
 
@@ -280,14 +280,12 @@ onMounted(async () => {
                             <pd-filter
                                 v-model="filtersSelected"
                                 :filters="filters"
-                                :placeholder="
-                                    $t('activity.label.serachPlaceholder')
-                                "
+                                :placeholder="$t('activity.serachPlaceholder')"
                             ></pd-filter>
                         </div>
                         <div class="col-2 flex justify-end">
                             <q-toggle
-                                :label="$t('activity.label.showProfitability')"
+                                :label="$t('activity.showProfitability')"
                                 class="h-2rem"
                                 v-model="showProfitability"
                             ></q-toggle>
@@ -306,7 +304,7 @@ onMounted(async () => {
                         <div class="col-2 flex justify-end">
                             <q-btn
                                 v-if="$q.platform.is.desktop"
-                                :label="$t('activity.label.createActivity')"
+                                :label="$t('activity.createActivity')"
                                 color="primary"
                                 icon="mdi-plus"
                                 dense
@@ -363,7 +361,7 @@ onMounted(async () => {
                                     })
                                 "
                             >
-                                {{ $t('activity.label.see') }}
+                                {{ $t('activity.see') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
@@ -377,14 +375,14 @@ onMounted(async () => {
                                     })
                                 "
                             >
-                                {{ $t('activity.label.edit') }}
+                                {{ $t('activity.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="handleRemoveActivity(props.row.id)"
                             >
-                                {{ $t('activity.label.delete') }}
+                                {{ $t('activity.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>

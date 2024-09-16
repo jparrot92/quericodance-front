@@ -34,60 +34,54 @@ onMounted(() => {
                 </div>
 
                 <q-input
-                    :label="$t('user.label.name')"
+                    :label="$t('user.name')"
                     v-model="user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.nameRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('user.label.surnames')"
+                    :label="$t('user.surnames')"
                     v-model="user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.surnamesRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <pd-date
-                    :label="$t('user.label.dateOfBirth')"
+                    :label="$t('user.dateOfBirth')"
                     v-model="user.dateOfBirth"
                 />
 
-                <q-input
-                    :label="$t('user.label.phone')"
+                <pd-phone-input
+                    :label="$t('user.phone') + '*'"
                     v-model="user.phone"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.phoneRequired')
-                    ]"
+                    :required="true"
                 />
 
                 <q-input
-                    :label="$t('user.label.instagram')"
+                    :label="$t('user.instagram')"
                     v-model="user.instagram"
                 />
 
                 <q-input
-                    :label="$t('user.label.email')"
+                    :label="$t('user.email')"
                     v-model="user.email"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.emailRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <q-input
                     :label="
-                        true
-                            ? $t('user.label.changePassword')
-                            : $t('user.label.password')
+                        true ? $t('user.changePassword') : $t('user.password')
                     "
                     v-model="user.password"
                     :rules="
@@ -96,20 +90,20 @@ onMounted(() => {
                             : [
                                   (val) =>
                                       (val && val.length > 0) ||
-                                      $t('user.validations.passwordRequired'),
+                                      $t('shared.validations.required'),
                               ]
                     "
                 />
 
                 <q-select
-                    :label="$t('user.label.role')"
+                    :label="$t('user.role')"
                     v-model="user.roles"
                     :options="roles"
                     behavior="menu"
                 />
 
                 <q-btn
-                    :label="$t('user.label.save')"
+                    :label="$t('shared.save')"
                     color="primary"
                     class="full-width"
                     rounded

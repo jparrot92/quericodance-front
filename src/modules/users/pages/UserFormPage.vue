@@ -25,23 +25,23 @@ onMounted(() => {
 
 const roles = [
     {
-        label: t('user.label.admin'),
+        label: t('user.admin'),
         value: 'admin',
     },
     {
-        label: t('user.label.manager'),
+        label: t('user.manager'),
         value: 'manager',
     },
     {
-        label: t('user.label.secretary'),
+        label: t('user.secretary'),
         value: 'secretary',
     },
     {
-        label: t('user.label.teacher'),
+        label: t('user.teacher'),
         value: 'teacher',
     },
     {
-        label: t('user.label.student'),
+        label: t('user.student'),
         value: 'student',
     },
 ];
@@ -71,60 +71,56 @@ const onSubmit = async () => {
                 </div>
 
                 <q-input
-                    :label="$t('user.label.name') + '*'"
+                    :label="$t('user.name') + '*'"
                     v-model="user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.nameRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <q-input
-                    :label="$t('user.label.surnames') + '*'"
+                    :label="$t('user.surnames') + '*'"
                     v-model="user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.surnamesRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <pd-date
-                    :label="$t('user.label.dateOfBirth') + '*'"
+                    :label="$t('user.dateOfBirth') + '*'"
                     v-model="user.dateOfBirth"
                 />
 
-                <q-input
-                    :label="$t('user.label.phone') + '*'"
+                <pd-phone-input
+                    :label="$t('user.phone') + '*'"
                     v-model="user.phone"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.phoneRequired')
-                    ]"
+                    :required="true"
                 />
 
                 <q-input
-                    :label="$t('user.label.instagram')"
+                    :label="$t('user.instagram')"
                     v-model="user.instagram"
                 />
 
                 <q-input
-                    :label="$t('user.label.email') + '*'"
+                    :label="$t('user.email') + '*'"
                     v-model="user.email"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.emailRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
                 <q-input
                     :label="
                         isUpdate
-                            ? $t('user.label.changePassword')
-                            : $t('user.label.password') + '*'
+                            ? $t('user.changePassword')
+                            : $t('user.password') + '*'
                     "
                     v-model="user.password"
                     :rules="
@@ -133,7 +129,7 @@ const onSubmit = async () => {
                             : [
                                   (val) =>
                                       (val && val.length > 0) ||
-                                      $t('user.validations.passwordRequired'),
+                                      $t('shared.validations.required'),
                               ]
                     "
                 />
@@ -141,7 +137,7 @@ const onSubmit = async () => {
                 <q-select
                     v-model="user.roles"
                     :options="roles"
-                    :label="$t('user.label.permissions')"
+                    :label="$t('user.permissions')"
                     multiple
                     emit-value
                     map-options
@@ -171,7 +167,7 @@ const onSubmit = async () => {
                 </q-select>
 
                 <q-btn
-                    :label="$t('user.label.save')"
+                    :label="$t('user.save')"
                     color="primary"
                     class="full-width"
                     rounded

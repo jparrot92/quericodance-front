@@ -24,7 +24,7 @@ const activitiesRoutes: RouteRecordRaw = {
                 import('src/modules/activities/pages/ActivityFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'activity.label.createActivity',
+                title: 'activity.createActivity',
             },
         },
         {
@@ -39,7 +39,7 @@ const activitiesRoutes: RouteRecordRaw = {
             },
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'activity.label.editActivity',
+                title: 'activity.editActivity',
             },
         },
         {

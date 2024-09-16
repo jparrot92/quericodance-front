@@ -21,7 +21,7 @@ const usersRoutes: RouteRecordRaw = {
             component: () => import('src/modules/users/pages/UserFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'user.label.createUser',
+                title: 'user.createUser',
             },
         },
         {
@@ -30,7 +30,7 @@ const usersRoutes: RouteRecordRaw = {
             component: () => import('src/modules/users/pages/UserFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'user.label.editUser',
+                title: 'user.editUser',
             },
             props: (route) => {
                 return {

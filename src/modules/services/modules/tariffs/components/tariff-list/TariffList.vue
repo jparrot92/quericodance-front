@@ -116,12 +116,12 @@ const columnsTariff: ColumnTable[] = [
                                     })
                                 "
                             >
-                                {{ $t('user.label.edit') }}
+                                {{ $t('user.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section @click="removeTariff(props.row.id)">
-                                {{ $t('user.label.delete') }}
+                                {{ $t('user.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>

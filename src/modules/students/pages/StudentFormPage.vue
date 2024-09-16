@@ -77,7 +77,7 @@ onMounted(() => {
                 </div>
 
                 <q-input
-                    :label="$t('user.label.name') + '*'"
+                    :label="$t('user.name') + '*'"
                     v-model="studentForm.user.name"
                     :rules="[
                         (val: string) =>
@@ -87,7 +87,7 @@ onMounted(() => {
                 />
 
                 <q-input
-                    :label="$t('user.label.surnames') + '*'"
+                    :label="$t('user.surnames') + '*'"
                     v-model="studentForm.user.surnames"
                     :rules="[
                         (val: string) =>
@@ -97,27 +97,23 @@ onMounted(() => {
                 />
 
                 <pd-date
-                    :label="$t('user.label.dateOfBirth') + '*'"
+                    :label="$t('user.dateOfBirth') + '*'"
                     v-model="studentForm.user.dateOfBirth"
                 />
 
                 <pd-phone-input
-                    :label="$t('user.label.phone') + '*'"
+                    :label="$t('user.phone') + '*'"
                     v-model="studentForm.user.phone"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.phoneRequired')
-                    ]"
+                    :required="true"
                 />
 
                 <q-input
-                    :label="$t('user.label.instagram')"
+                    :label="$t('user.instagram')"
                     v-model="studentForm.user.instagram"
                 />
 
                 <q-input
-                    :label="$t('user.label.email') + '*'"
+                    :label="$t('user.email') + '*'"
                     v-model="studentForm.user.email"
                     :rules="[
                         (val: string) =>
@@ -129,8 +125,8 @@ onMounted(() => {
                 <q-input
                     :label="
                         student.id
-                            ? $t('user.label.changePassword')
-                            : $t('user.label.password') + '*'
+                            ? $t('user.changePassword')
+                            : $t('user.password') + '*'
                     "
                     v-model="studentForm.user.password"
                     :rules="
@@ -183,7 +179,7 @@ onMounted(() => {
                 </q-select>
 
                 <q-btn
-                    :label="$t('user.label.save')"
+                    :label="$t('user.save')"
                     color="primary"
                     class="full-width"
                     rounded

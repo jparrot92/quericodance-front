@@ -9,8 +9,11 @@ const props = withDefaults(
     defineProps<{
         modelValue?: any;
         label?: string;
+        required: boolean;
     }>(),
-    {}
+    {
+        required: false,
+    }
 );
 
 const emit = defineEmits(['update:modelValue']);
@@ -96,7 +99,7 @@ watch([country, phoneNumber], updateModelValue);
             label="Codigo pais:"
             virtual-scroll-slice-size="9999"
             hide-dropdown-icon
-            :use-input="country === null"
+            use-input
             @filter="filterFn"
         >
             <template v-slot:option="scope">
@@ -140,8 +143,15 @@ watch([country, phoneNumber], updateModelValue);
             :label="props.label"
             v-model="phoneNumber"
             :rules="[
-                (val: string) => val.length > 0 || 'Phone number is required',
-                (val: string) => validatePhoneNumber(val) || 'Invalid phone number'
+                (val: string) => {
+                if (props.required && val.length === 0) {
+                    return $t('shared.validations.required');
+                }
+                if (val.length > 0 && !validatePhoneNumber(val)) {
+                    return $t('shared.validations.formatPhoneNumber');
+                }
+                return true;
+                }
             ]"
         />
     </div>

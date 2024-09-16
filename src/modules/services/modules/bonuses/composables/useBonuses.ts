@@ -121,7 +121,7 @@ const useBonuses = () => {
     const removeBonusStudent = async (id: number) => {
         return new Promise<BonusStudentDTO[]>((resolve, reject) => {
             $q.dialog({
-                title: t('activity.label.confirmation'),
+                title: t('activity.confirmation'),
                 message: t('activity.message.activityDelete'),
                 cancel: true,
                 persistent: true,

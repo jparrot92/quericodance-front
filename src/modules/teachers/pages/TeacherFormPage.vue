@@ -45,7 +45,7 @@ const onSubmit = async () => {
                 </div>
 
                 <q-input
-                    :label="$t('user.label.name') + '*'"
+                    :label="$t('user.name') + '*'"
                     v-model="teacher.user.name"
                     :rules="[
                         (val: string) =>
@@ -55,7 +55,7 @@ const onSubmit = async () => {
                 />
 
                 <q-input
-                    :label="$t('user.label.surnames') + '*'"
+                    :label="$t('user.surnames') + '*'"
                     v-model="teacher.user.surnames"
                     :rules="[
                         (val: string) =>
@@ -65,27 +65,23 @@ const onSubmit = async () => {
                 />
 
                 <pd-date
-                    :label="$t('user.label.dateOfBirth') + '*'"
+                    :label="$t('user.dateOfBirth') + '*'"
                     v-model="teacher.user.dateOfBirth"
                 />
 
-                <q-input
-                    :label="$t('user.label.phone') + '*'"
+                <pd-phone-input
+                    :label="$t('user.phone') + '*'"
                     v-model="teacher.user.phone"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('user.validations.phoneRequired')
-                    ]"
+                    :required="true"
                 />
 
                 <q-input
-                    :label="$t('user.label.instagram')"
+                    :label="$t('user.instagram')"
                     v-model="teacher.user.instagram"
                 />
 
                 <q-input
-                    :label="$t('user.label.email') + '*'"
+                    :label="$t('user.email') + '*'"
                     v-model="teacher.user.email"
                     :rules="[
                         (val: string) =>
@@ -97,8 +93,8 @@ const onSubmit = async () => {
                 <q-input
                     :label="
                         idTeacher
-                            ? $t('user.label.changePassword')
-                            : $t('user.label.password') + '*'
+                            ? $t('user.changePassword')
+                            : $t('user.password') + '*'
                     "
                     v-model="teacher.user.password"
                     :rules="
@@ -113,7 +109,7 @@ const onSubmit = async () => {
                 />
 
                 <q-btn
-                    :label="$t('user.label.save')"
+                    :label="$t('user.save')"
                     color="primary"
                     class="full-width"
                     rounded

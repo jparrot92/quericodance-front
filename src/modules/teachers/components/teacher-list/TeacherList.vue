@@ -30,28 +30,28 @@ const columnsUser: ColumnTable[] = [
     {
         name: 'photo',
         align: 'left',
-        label: t('user.label.photo'),
+        label: t('user.photo'),
         field: (row: Teacher) => row.user.photo,
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
-        label: t('user.label.name'),
+        label: t('user.name'),
         field: (row: Teacher) => row.user.name,
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
-        label: t('user.label.surnames'),
+        label: t('user.surnames'),
         field: (row: Teacher) => row.user.surnames,
         sortable: true,
     },
     {
         name: 'email',
         align: 'left',
-        label: t('user.label.email'),
+        label: t('user.email'),
         field: (row: Teacher) => row.user.email,
         sortable: true,
     },
@@ -80,7 +80,7 @@ const columnsUser: ColumnTable[] = [
                 <q-space />
                 <q-btn
                     v-if="$q.platform.is.desktop"
-                    :label="$t('teacher.label.createTeacher')"
+                    :label="$t('teacher.createTeacher')"
                     color="primary"
                     icon="mdi-plus"
                     dense
@@ -116,14 +116,14 @@ const columnsUser: ColumnTable[] = [
                                     })
                                 "
                             >
-                                {{ $t('user.label.edit') }}
+                                {{ $t('user.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="removeTeacher(props.row.id)"
                             >
-                                {{ $t('user.label.delete') }}
+                                {{ $t('user.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>

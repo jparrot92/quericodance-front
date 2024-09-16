@@ -1,10 +1,8 @@
 export default {
     teacher: {
-        label: {
-            createTeacher: 'Crear profesor',
-            editTeacher: 'Editar profesor',
-            teachers: 'Profesores',
-        },
+        createTeacher: 'Crear profesor',
+        editTeacher: 'Editar profesor',
+        teachers: 'Profesores',
         notifications: {
             teacherCreateSuccessfully: 'Profesor creado con éxito',
             teacherUpdateSuccessfully: 'Profesor modificada con éxito',
