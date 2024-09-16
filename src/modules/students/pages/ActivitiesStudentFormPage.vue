@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, defineProps, ref, computed, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
 
 import MenuList from 'src/shared/components/MenuList.vue';
 
@@ -28,7 +27,6 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
-const router = useRouter();
 const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 const { removeActivityStudent, removeActivityAbsence } = useActivities();

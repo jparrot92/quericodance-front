@@ -118,9 +118,7 @@ const useActivities = () => {
         try {
             loading.value = true;
             activity.value = await createActivity(activity.value);
-            notifySuccess(
-                t('activity.notifications.activityCreateSuccessfully')
-            );
+            notifySuccess(t('messageActivityCreateSuccessfully'));
             router.replace({
                 name: 'activities-edit',
                 params: { id: activity.value.id },
@@ -136,9 +134,7 @@ const useActivities = () => {
         try {
             loading.value = true;
             activity.value = await updateActivity(id, activity.value);
-            notifySuccess(
-                t('activity.notifications.activityUpdateSuccessfully')
-            );
+            notifySuccess(t('activity.messageActivityUpdateSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -150,14 +146,14 @@ const useActivities = () => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
                 title: t('activity.confirmation'),
-                message: t('activity.message.activityDelete'),
+                message: t('activity.messageActivityDelete'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 try {
                     await deleteActivity(id);
                     notifySuccess(
-                        t('activity.notifications.activityDeleteSuccessfully')
+                        t('activity.messageActivityDeleteSuccessfully')
                     );
                     resolve();
                 } catch (error) {
@@ -214,9 +210,7 @@ const useActivities = () => {
             }).onOk(async () => {
                 try {
                     await deleteActivityStudent(id);
-                    notifySuccess(
-                        t('activity.notifications.activityDeleteSuccessfully')
-                    );
+                    notifySuccess(t('activity.messageActivityDelete'));
                     resolve(); // Resuelve la promesa después de que todo esté completo
                 } catch (error) {
                     notifyError(error);

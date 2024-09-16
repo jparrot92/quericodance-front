@@ -129,7 +129,7 @@ const useBonuses = () => {
                 try {
                     const studentActivitiesList = await deleteBonusStudent(id);
                     notifySuccess(
-                        t('activity.notifications.activityDeleteSuccessfully')
+                        t('activity.messageActivityDeleteSuccessfully')
                     );
                     resolve(studentActivitiesList); // Resuelve la promesa después de que todo esté completo
                 } catch (error) {

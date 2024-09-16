@@ -31,13 +31,9 @@ export default {
         serachPlaceholder: 'Introduzca el nombre y/o nivel del curso',
         showProfitability: 'Mostrar Rentabilidad',
         totalPaid: 'Total pagado',
-        notifications: {
-            activityCreateSuccessfully: 'Curso creado con éxito',
-            activityUpdateSuccessfully: 'Curso modificada con éxito',
-            activityDeleteSuccessfully: 'Curso eliminado',
-        },
-        message: {
-            activityDelete: '¿Realmente desea eliminar este curso?',
-        },
+        messageActivityCreateSuccessfully: 'Curso creado con éxito',
+        messageActivityUpdateSuccessfully: 'Curso modificada con éxito',
+        messageActivityDeleteSuccessfully: 'Curso eliminado',
+        messageActivityDelete: '¿Realmente desea eliminar este curso?',
     },
 };

@@ -38,7 +38,6 @@ const useTeachers = () => {
             instagram: '',
             email: '',
             password: '',
-            active: false,
             roles: [],
         },
     });
@@ -70,7 +69,7 @@ const useTeachers = () => {
         try {
             loading.value = true;
             teacher.value = await createTeacher(teacher.value);
-            notifySuccess(t('teacher.notifications.teacherCreateSuccessfully'));
+            notifySuccess(t('teacher.messageTeacherCreateSuccessfully'));
             router.replace({
                 name: 'teachers-edit',
                 params: { id: teacher.value.id },
@@ -86,7 +85,7 @@ const useTeachers = () => {
         try {
             loading.value = true;
             teacher.value = await updateTeacher(id, teacher.value);
-            notifySuccess(t('teacher.notifications.teacherUpdateSuccessfully'));
+            notifySuccess(t('teacher.messageTeacherUpdateSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -103,9 +102,7 @@ const useTeachers = () => {
         }).onOk(async () => {
             try {
                 await deleteTeacher(id);
-                notifySuccess(
-                    t('teacher.notifications.teacherDeleteSuccessfully')
-                );
+                notifySuccess(t('teacher.messageTeacherDeleteSuccessfully'));
                 await loadTeachers();
             } catch (error) {
                 notifyError(error);
