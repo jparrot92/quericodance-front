@@ -11,7 +11,7 @@ import useTariffs from 'src/modules/services/modules/tariffs/composables/useTari
 const props = withDefaults(
     defineProps<{
         idStudent: number;
-        membershipStudent: MembershipViewDTO;
+        membershipStudent: MembershipViewDTO | null;
     }>(),
     {}
 );

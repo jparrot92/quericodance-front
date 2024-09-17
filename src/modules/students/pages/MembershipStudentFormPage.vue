@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { defineProps, ref, onMounted, onBeforeUnmount, computed } from 'vue';
-import { useRouter } from 'vue-router';
 import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 
@@ -18,7 +17,7 @@ const emits = defineEmits(['update-membership', 'delete-membership']);
 const props = withDefaults(
     defineProps<{
         idStudent: number;
-        membership?: MembershipViewDTO;
+        membership?: MembershipViewDTO | null;
     }>(),
     {
         membership: () => ({}),
@@ -26,7 +25,6 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
-const router = useRouter();
 const { generateEnumOptions } = useEnumOptions();
 const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();

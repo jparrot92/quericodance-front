@@ -73,7 +73,7 @@ onMounted(async () => {
             <q-tab-panel name="membership">
                 <membership-student-form-page
                     :id-student="student.id"
-                    :membership="student.membership"
+                    :membership="student.membership || null"
                     @update-membership="updateMembership"
                     @delete-membership="deleteMembership"
                 />
