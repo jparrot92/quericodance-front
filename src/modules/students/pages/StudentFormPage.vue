@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, onMounted } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
@@ -7,7 +7,10 @@ import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue
 import useActivities from 'src/modules/activities/composables/useActivities';
 import useStudents from '../composables/useStudents';
 import { StudentDTO } from '../models/student';
-import { ActivityDTO } from 'src/modules/activities/models/activity';
+import {
+    ActivityDTO,
+    ActivityList,
+} from 'src/modules/activities/models/activity';
 
 const { activities, loadActivities } = useActivities();
 const { student: studentForm, saveStudent, editStudent } = useStudents();
@@ -39,6 +42,8 @@ const { t } = useI18n();
 
 studentForm.value = props.student;
 
+const activitiesFiltered = ref<ActivityList[]>([]);
+
 const removeCoursesInterest = (idActivity: number) => {
     const index = studentForm.value.interestedActivities?.findIndex(
         (student: ActivityDTO) => student.id === idActivity
@@ -56,8 +61,35 @@ const onSubmit = () => {
     }
 };
 
-onMounted(() => {
-    loadActivities();
+const filterFn = (val: string, update: (fn: () => void) => void) => {
+    setTimeout(() => {
+        update(() => {
+            if (val === '') {
+                activitiesFiltered.value = activities.value;
+            } else {
+                const needle = val
+                    .toLowerCase()
+                    .replace(/\s/g, '')
+                    .toLowerCase();
+                activitiesFiltered.value = activities.value.filter(
+                    (activity: ActivityList) => {
+                        const activityFullName =
+                            activity.name.toLowerCase() +
+                            activity.level +
+                            t('shared.enum.' + activity.day).toLowerCase() +
+                            activity.startHour;
+
+                        return activityFullName.includes(needle);
+                    }
+                );
+            }
+        });
+    }, 500);
+};
+
+onMounted(async () => {
+    await loadActivities();
+    activitiesFiltered.value = activities.value;
 });
 </script>
 
@@ -82,7 +114,7 @@ onMounted(() => {
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.nameRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
@@ -92,7 +124,7 @@ onMounted(() => {
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.surnamesRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
@@ -118,7 +150,7 @@ onMounted(() => {
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
-                            $t('user.validations.emailRequired')
+                            $t('shared.validations.required')
                     ]"
                 />
 
@@ -135,7 +167,7 @@ onMounted(() => {
                             : [
                                   (val: string | any[]) =>
                                       (val && val.length > 0) ||
-                                      $t('user.validations.passwordRequired')
+                                      $t('shared.validations.required')
                               ]
                     "
                 />
@@ -143,8 +175,11 @@ onMounted(() => {
                 <q-select
                     v-model="studentForm.interestedActivities"
                     multiple
-                    :options="activities"
+                    :options="activitiesFiltered"
                     :label="$t('student.coursesInterest')"
+                    use-chips
+                    use-input
+                    @filter="filterFn"
                 >
                     <template v-slot:option="{ itemProps, opt }">
                         <q-item v-bind="itemProps">

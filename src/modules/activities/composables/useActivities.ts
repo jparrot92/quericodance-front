@@ -145,7 +145,7 @@ const useActivities = () => {
     const removeActivity = async (id: number) => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
-                title: t('activity.confirmation'),
+                title: t('shared.confirmation'),
                 message: t('activity.messageActivityDelete'),
                 cancel: true,
                 persistent: true,
@@ -203,8 +203,8 @@ const useActivities = () => {
     const removeActivityStudent = async (id: number) => {
         return new Promise<void>((resolve, reject) => {
             $q.dialog({
-                title: t('activity.confirmation'),
-                message: t('activity.message.activityDelete'),
+                title: t('shared.confirmation'),
+                message: t('activity.messageActivityDelete'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {

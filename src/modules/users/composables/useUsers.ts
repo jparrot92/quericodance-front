@@ -67,7 +67,7 @@ const useUsers = () => {
         try {
             loading.value = true;
             const userData = await createUser(user.value);
-            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
+            notifySuccess(t('user.messageUserUpdateSuccessfully'));
             router.replace({
                 name: 'users-edit',
                 params: { id: userData.id },
@@ -83,7 +83,7 @@ const useUsers = () => {
         try {
             loading.value = true;
             user.value = await updateUser(id, user.value);
-            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
+            notifySuccess(t('user.messageUserUpdateSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -93,14 +93,14 @@ const useUsers = () => {
 
     const removeUser = async (id: string) => {
         $q.dialog({
-            title: t('user.confirmation'),
-            message: t('user.message.userDelete'),
+            title: t('shared.confirmation'),
+            message: t('user.messageUserDelete'),
             cancel: true,
             persistent: true,
         }).onOk(async () => {
             try {
                 await deleteUser(id);
-                notifySuccess(t('user.notifications.userDeleteSuccessfully'));
+                notifySuccess(t('user.messageUserDeleteSuccessfully'));
                 await loadUsers();
             } catch (error) {
                 notifyError(error);

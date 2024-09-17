@@ -8,7 +8,9 @@ const loadFiltersFromLocalStorage = (filtersSelected: object) => {
         if (JSON.parse(savedFilters).id !== filtersSelected.id) {
             sessionStorage.removeItem('filtersSelected');
         } else {
-            Object.assign(filtersSelected, JSON.parse(savedFilters));
+            if (!filtersSelected.child) {
+                Object.assign(filtersSelected, JSON.parse(savedFilters));
+            }
         }
     }
 };

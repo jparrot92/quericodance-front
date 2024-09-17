@@ -42,7 +42,11 @@ const countNonNullValues = (): number => {
     // Excluir el campo 'query' del conteo
     return Object.keys(model.value)
         .filter(
-            (key) => key !== 'id' && key !== 'query' && key !== 'pagination'
+            (key) =>
+                key !== 'id' &&
+                key !== 'child' &&
+                key !== 'query' &&
+                key !== 'pagination'
         )
         .map((key) => model.value[key])
         .filter((value) => value !== null).length;

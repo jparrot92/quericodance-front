@@ -6,6 +6,7 @@ import { DanceRole } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useActivities from 'src/modules/activities/composables/useActivities';
+import { ActivityList } from 'src/modules/activities/models/activity';
 
 const props = withDefaults(
     defineProps<{
@@ -27,6 +28,7 @@ const danceRoles = generateEnumOptions(DanceRole);
 const activityId = ref<number>(0);
 const danceRole = ref<string>('');
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
+const activitiesFiltered = ref<ActivityList[]>([]);
 
 const addActivityStudent = async () => {
     activityId.value = activityStudent.value.activity.id;
@@ -42,8 +44,35 @@ const addActivityStudent = async () => {
     }
 };
 
+const filterFn = (val: string, update: (fn: () => void) => void) => {
+    setTimeout(() => {
+        update(() => {
+            if (val === '') {
+                activitiesFiltered.value = activities.value;
+            } else {
+                const needle = val
+                    .toLowerCase()
+                    .replace(/\s/g, '')
+                    .toLowerCase();
+                activitiesFiltered.value = activities.value.filter(
+                    (activity: ActivityList) => {
+                        const activityFullName =
+                            activity.name.toLowerCase() +
+                            activity.level +
+                            t('shared.enum.' + activity.day).toLowerCase() +
+                            activity.startHour;
+
+                        return activityFullName.includes(needle);
+                    }
+                );
+            }
+        });
+    }, 500);
+};
+
 onMounted(() => {
     loadActivities();
+    activitiesFiltered.value = activities.value;
 });
 </script>
 
@@ -60,8 +89,10 @@ onMounted(() => {
                 <q-select
                     v-model="activityStudent.activity"
                     :label="$t('student.course')"
-                    :options="activities"
+                    :options="activitiesFiltered"
                     :option-value="'id'"
+                    use-input
+                    @filter="filterFn"
                 >
                     <template v-slot:selected-item="{ opt }">
                         {{

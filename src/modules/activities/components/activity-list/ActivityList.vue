@@ -37,7 +37,7 @@ const columns: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
-        label: t('activity.name'),
+        label: t('shared.name'),
         field: 'name',
         sortable: true,
     },
@@ -361,7 +361,7 @@ onMounted(async () => {
                                     })
                                 "
                             >
-                                {{ $t('activity.see') }}
+                                {{ $t('shared.see') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
@@ -375,14 +375,14 @@ onMounted(async () => {
                                     })
                                 "
                             >
-                                {{ $t('activity.edit') }}
+                                {{ $t('shared.edit') }}
                             </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="handleRemoveActivity(props.row.id)"
                             >
-                                {{ $t('activity.delete') }}
+                                {{ $t('shared.delete') }}
                             </q-item-section>
                         </q-item>
                     </menu-list>

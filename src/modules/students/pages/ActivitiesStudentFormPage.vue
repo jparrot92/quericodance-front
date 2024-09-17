@@ -264,7 +264,7 @@ onBeforeUnmount(() => {
                                                     )
                                                 "
                                             >
-                                                {{ $t('activity.delete') }}
+                                                {{ $t('shared.delete') }}
                                             </q-item-section>
                                         </q-item>
                                     </menu-list>

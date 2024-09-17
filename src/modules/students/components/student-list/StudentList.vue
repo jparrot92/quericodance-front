@@ -24,6 +24,9 @@ import useStudents from '../../composables/useStudents';
 import { StudentDTO } from '../../models/student';
 import { FilterField } from 'src/composables/useFilterTypes';
 
+import AddActivityAbsenceDialog from 'src/modules/students/components/AddActivityAbsenceDialog.vue';
+import { ActivityDTO } from 'src/modules/activities/models/activity';
+
 const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
     useLocalStorageFilters();
 const { generateEnumOptions } = useEnumOptions();
@@ -55,7 +58,10 @@ const danceRoles = generateEnumOptions(DanceRole);
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const studentsFiltered = ref<StudentDTO[]>([]);
-const showProfitability = ref(false);
+const showProfitability = ref<boolean>(false);
+const showModalAddActivityAbsence = ref<boolean>(false);
+const activityAbsence = ref<ActivityDTO>();
+const idStudentSelected = ref<number>(0);
 
 const idActivity = computed<string>(() => route.params.id?.toString());
 
@@ -158,6 +164,7 @@ const columnsUser: ColumnTable[] = [
 
 const filtersSelected = reactive({
     id: idActivity.value ? 'activity' : 'student',
+    child: idActivity.value ? true : false,
     query: '',
     status: null,
     paymentStatus: null,
@@ -166,7 +173,7 @@ const filtersSelected = reactive({
         sortBy: 'desc',
         descending: false,
         page: 1,
-        rowsPerPage: 10,
+        rowsPerPage: idActivity.value ? 0 : 10,
     },
 });
 
@@ -262,6 +269,12 @@ const chooseFile = () => {
     }
 };
 
+const handleAddAbsence = async (row: StudentDTO) => {
+    idStudentSelected.value = row.id;
+    showModalAddActivityAbsence.value = true;
+    activityAbsence.value = row.activitiesStudent[0].activity;
+};
+
 const handleRemoveStudent = async (id: number) => {
     try {
         await removeStudent(id);
@@ -280,7 +293,9 @@ watch(
     filtersSelected,
     () => {
         filterTable();
-        saveFiltersToLocalStorage(filtersSelected);
+        if (!idActivity.value) {
+            saveFiltersToLocalStorage(filtersSelected);
+        }
     },
     { deep: true }
 );
@@ -619,6 +634,13 @@ onMounted(async () => {
             <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
                     <menu-list @click.stop>
+                        <q-item clickable v-close-popup v-if="idActivity">
+                            <q-item-section
+                                @click="handleAddAbsence(props.row)"
+                            >
+                                {{ $t('student.addAbsence') }}
+                            </q-item-section>
+                        </q-item>
                         <q-item clickable v-close-popup>
                             <q-item-section
                                 @click="
@@ -833,6 +855,13 @@ onMounted(async () => {
                     <menu-list @click.stop>
                         <q-item clickable v-close-popup>
                             <q-item-section
+                                @click="handleAddAbsence(props.row.id)"
+                            >
+                                {{ $t('student.addAbsence') }}
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                            <q-item-section
                                 @click="
                                     $router.push({
                                         name: 'students-edit',
@@ -863,4 +892,10 @@ onMounted(async () => {
             />
         </q-page-sticky>
     </div>
+    <AddActivityAbsenceDialog
+        v-if="showModalAddActivityAbsence"
+        :id-student="idStudentSelected"
+        :activity-absence="activityAbsence"
+        @close="showModalAddActivityAbsence = false"
+    />
 </template>

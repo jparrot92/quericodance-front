@@ -15,7 +15,6 @@ export default {
         courses: 'Cursos',
         summary: 'Resumen',
         role: 'Rol',
-        addCourse: 'Añadir curso',
         status: 'Estado',
         deleteMembership: 'Eliminar cuota',
         msgDeleteMembership:

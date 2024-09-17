@@ -9,6 +9,7 @@ export default {
         edit: 'Editar',
         delete: 'Eliminar',
         send: 'Enviar',
+        see: 'Ver',
         confirmation: 'Confirmación',
         profile: 'Perfil',
         logout: 'Cerrar sesión',
