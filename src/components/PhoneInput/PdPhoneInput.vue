@@ -195,3 +195,12 @@ watch([country, phoneNumber], updateModelValue);
         />
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import 'src/css/flags.css';
+.sticky-input {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+</style>
