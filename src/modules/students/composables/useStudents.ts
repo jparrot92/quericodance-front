@@ -81,7 +81,7 @@ const useStudents = () => {
         try {
             loading.value = true;
             student.value = await createStudent(data);
-            notifySuccess(t('user.notifications.userCreateSuccessfully'));
+            notifySuccess(t('user.messageUserCreateSuccessfully'));
             router.replace({
                 name: 'students-edit',
                 params: { id: student.value.id },
@@ -97,7 +97,7 @@ const useStudents = () => {
         try {
             loading.value = true;
             student.value = await updateStudent(id, student.value);
-            notifySuccess(t('user.notifications.userUpdateSuccessfully'));
+            notifySuccess(t('user.messageUserUpdateSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -109,15 +109,13 @@ const useStudents = () => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
                 title: t('user.confirmation'),
-                message: t('user.message.userDelete'),
+                message: t('user.messageUserDelete'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 try {
                     await deleteStudent(id);
-                    notifySuccess(
-                        t('user.notifications.userDeleteSuccessfully')
-                    );
+                    notifySuccess(t('user.messageUserDeleteSuccessfully'));
                     resolve();
                 } catch (error) {
                     notifyError(error);

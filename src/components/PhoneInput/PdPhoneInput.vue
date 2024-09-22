@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Ref, onMounted, watch } from 'vue';
-import { computed, defineProps, ref } from 'vue';
+import { Ref, onMounted, watch, defineProps, ref, nextTick } from 'vue';
+import { QSelect, QInput } from 'quasar';
+
 import { countryInformation } from './types/data';
 import { Country } from './types/types';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
@@ -31,7 +32,9 @@ const country = ref<Country | null>({
     emojiU: 'U+1F1EA U+1F1F8',
 });
 
+const search = ref<QInput>();
 const countryOptions: Ref<Country[]> = ref([]);
+const searchText: Ref<string> = ref('');
 const phoneNumber: Ref<string> = ref('');
 
 const validatePhoneNumber = (number: string) => {
@@ -52,23 +55,27 @@ const updateModelValue = () => {
     }
 };
 
-const filterFn = (val: string, update: (fn: () => void) => void) => {
-    if (val === '') {
-        update(() => {
-            countryOptions.value = [...countryInformation];
-        });
+const performSearch = () => {
+    const needle = searchText.value.toLowerCase();
+
+    if (needle === '') {
+        countryOptions.value = [...countryInformation];
         return;
     }
 
-    update(() => {
-        const needle = val.toLowerCase();
-        countryOptions.value = countryInformation.filter(
-            (country: Country) =>
-                country.name.toLowerCase().includes(needle) ||
-                country.native?.toLowerCase().includes(needle) ||
-                country.dialCode.includes(val)
-        );
-    });
+    countryOptions.value = countryInformation.filter(
+        (country: Country) =>
+            country.name.toLowerCase().includes(needle) ||
+            country.native?.toLowerCase().includes(needle) ||
+            country.dialCode.includes(needle)
+    );
+};
+
+const onShow = async () => {
+    searchText.value = '';
+    performSearch();
+    await nextTick();
+    search.value?.focus();
 };
 
 onMounted(() => {
@@ -96,16 +103,19 @@ watch([country, phoneNumber], updateModelValue);
             class="col-4"
             v-model="country"
             :options="countryOptions"
-            label="Codigo pais:"
+            :label="$t('shared.prefix')"
             virtual-scroll-slice-size="9999"
-            hide-dropdown-icon
-            use-input
-            @filter="filterFn"
+            @popup-show="onShow"
         >
             <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps">
                     <q-item-section avatar>
-                        <span class="flag-emoji">{{ scope.opt.emoji }}</span>
+                        <span
+                            :class="[
+                                'v3q_tel__flag',
+                                scope.opt.iso2.toLowerCase(),
+                            ]"
+                        ></span>
                     </q-item-section>
                     <q-item-section>
                         <q-item-label>{{ scope.opt.dialCode }}</q-item-label>
@@ -123,19 +133,48 @@ watch([country, phoneNumber], updateModelValue);
                     style="min-height: unset"
                 >
                     <q-item-section avatar>
-                        <span class="flag-emoji">{{ scope.opt.emoji }}</span>
+                        <span
+                            :class="[
+                                'v3q_tel__flag',
+                                scope.opt.iso2.toLowerCase(),
+                            ]"
+                        ></span>
                     </q-item-section>
                     <q-item-section>
                         <q-item-label>{{ scope.opt.dialCode }}</q-item-label>
                     </q-item-section>
                 </q-item>
             </template>
-            <template v-if="country" v-slot:append>
-                <q-icon
-                    name="cancel"
-                    @click.stop.prevent="country = null"
-                    class="cursor-pointer"
-                />
+            <template v-slot:before-options>
+                <q-input
+                    class="sticky-input z-top q-pa-sm bg-white"
+                    ref="search"
+                    :label="$t('shared.search')"
+                    v-model="searchText"
+                    @update:model-value="performSearch"
+                    dense
+                    outlined
+                >
+                    <template v-slot:prepend>
+                        <q-icon name="search" />
+                    </template>
+                </q-input>
+            </template>
+            <template v-slot:no-option>
+                <q-input
+                    class="sticky-input z-top q-pa-sm bg-white"
+                    ref="search"
+                    :label="$t('shared.search')"
+                    v-model="searchText"
+                    @update:model-value="performSearch"
+                    dense
+                    outlined
+                >
+                    <template v-slot:prepend>
+                        <q-icon name="search" />
+                    </template>
+                </q-input>
+                <div class="q-pa-sm">{{ $t('shared.noResults') }}</div>
             </template>
         </q-select>
         <q-input
@@ -156,12 +195,3 @@ watch([country, phoneNumber], updateModelValue);
         />
     </div>
 </template>
-
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
-
-.flag-emoji {
-    font-family: 'Noto Color Emoji', sans-serif;
-    font-size: 1.5em;
-}
-</style>

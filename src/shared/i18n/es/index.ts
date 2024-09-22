@@ -22,6 +22,7 @@ export default {
         users: 'Usuarios',
         loading: 'Cargando...',
         noData: 'Datos no disponibles',
+        noResults: 'Sin resultados',
         recordsPerPage: 'Registros por página',
         day: 'Dia',
         bonuses: 'Bonos',
@@ -37,6 +38,7 @@ export default {
         excel: 'Excel',
         name: 'Nombre',
         description: 'Descripción',
+        prefix: 'Prefijo',
         enum: {
             payed: 'Pagado',
             pending: 'Pendiente',
@@ -61,6 +63,8 @@ export default {
         },
         validations: {
             required: 'Campo requerido',
+            formatPhoneNumber:
+                'El número de teléfono está incompleto o es incorrecto',
         },
         message: {
             logout: '¿Quieres cerrar sesión?',
