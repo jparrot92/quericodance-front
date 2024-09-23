@@ -69,13 +69,13 @@ onMounted(() => {
             <q-card-actions align="right">
                 <q-btn
                     flat
-                    :label="$t('student.add')"
+                    :label="$t('shared.add')"
                     color="primary"
                     @click="addBonusStudent()"
                 />
                 <q-btn
                     flat
-                    :label="$t('student.cancel')"
+                    :label="$t('shared.cancel')"
                     color="primary"
                     @click="emits('close')"
                 />

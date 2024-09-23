@@ -15,6 +15,9 @@ import {
 const { activities, loadActivities } = useActivities();
 const { student: studentForm, saveStudent, editStudent } = useStudents();
 
+const valid = ref<boolean | string>(false);
+const phone = ref('');
+
 const props = withDefaults(
     defineProps<{
         student?: StudentDTO;

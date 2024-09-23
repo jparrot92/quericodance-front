@@ -3,14 +3,17 @@ import { defineProps, ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 
-import { PaymentsStatus } from 'src/types/UtilTypes';
+import { PaymentsStatus, Option } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
 
 import useMemberships from 'src/modules/students/composables/useMemberships';
+import useStudents from 'src/modules/students/composables/useStudents';
+
 import MembershipDialog from '../components/MembershipDialog.vue';
 import { MembershipViewDTO } from '../models/membership';
+import { StudentDTO } from '../models/student';
 
 const emits = defineEmits(['update-membership', 'delete-membership']);
 
@@ -30,12 +33,18 @@ const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 
 const { removeMembership } = useMemberships();
+const {
+    markPaymentPaid,
+    cancelPaymentPaid,
+    isPaymentStatusPaid,
+    sendMailPaymentPaid,
+} = useStudents();
 
 const showModalMembership = ref(false);
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 
-const membership = ref<MembershipViewDTO | null>(props.membership);
+const membership = ref<MembershipViewDTO | null>(props.membership || null);
 
 const notMembershipText = computed<string>(() =>
     isStudent() ? t('student.notMembershipStudent') : t('student.notMembership')
@@ -56,6 +65,25 @@ const handleDeleteMembership = async () => {
     } catch (error) {
         console.error(error);
     }
+};
+
+const checkMonthlyPaymentPaid = async (paymentStatus: Option) => {
+    try {
+        let student: StudentDTO;
+        if (paymentStatus.value === PaymentsStatus.PAYED) {
+            student = await markPaymentPaid(props.idStudent);
+        } else {
+            student = await cancelPaymentPaid(props.idStudent);
+        }
+        membership.value = student.membership ?? null;
+        emits('update-membership', membership.value);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const handleSendMail = async () => {
+    sendMailPaymentPaid(props.idStudent);
 };
 
 const preventNav = async (event: BeforeUnloadEvent) => {
@@ -84,20 +112,26 @@ onBeforeUnmount(() => {
         <div class="row justify-center">
             <div class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
                 <q-card v-if="membership" flat>
-                    <pd-field
-                        :label="$t('student.tariff')"
-                        :value="
-                            membership.tariff?.name +
-                            ' - ' +
-                            membership.tariff?.price +
-                            '€'
-                        "
-                    />
+                    <div class="row">
+                        <pd-field
+                            class="col-6 q-pr-md q-pr-sm"
+                            :label="$t('student.tariff')"
+                            :value="
+                                membership.tariff?.name +
+                                ' - ' +
+                                membership.tariff?.price +
+                                '€'
+                            "
+                        />
 
-                    <pd-field
-                        :label="$t('student.paymentFrequency')"
-                        :value="t('shared.enum.' + membership.paymentFrequency)"
-                    />
+                        <pd-field
+                            class="col-6 q-pl-md q-pl-sm"
+                            :label="$t('student.paymentFrequency')"
+                            :value="
+                                t('shared.enum.' + membership.paymentFrequency)
+                            "
+                        />
+                    </div>
 
                     <div class="row">
                         <pd-field
@@ -116,12 +150,6 @@ onBeforeUnmount(() => {
                     <pd-field
                         :label="$t('student.payment')"
                         :value="membership.payment + ' €'"
-                    />
-
-                    <pd-select
-                        v-model="membership.paymentStatus"
-                        :label="$t('student.paymentStatus')"
-                        :options="paymentStatuses"
                     />
 
                     <pd-field
@@ -148,6 +176,43 @@ onBeforeUnmount(() => {
                         {{ notMembershipText }}
                     </q-banner>
                 </q-card>
+
+                <q-select
+                    v-if="membership?.paymentStatus"
+                    :label="$t('student.paymentStatus')"
+                    :bg-color="
+                        isPaymentStatusPaid(membership?.paymentStatus)
+                            ? 'green'
+                            : 'red'
+                    "
+                    v-model="membership.paymentStatus"
+                    rounded
+                    outlined
+                    dense
+                    options-dense
+                    :options="paymentStatuses"
+                    :disable="!isAdmin()"
+                    @update:model-value="(newValue) => {
+                        checkMonthlyPaymentPaid(newValue as Option);
+                    }"
+                >
+                    <template v-slot:selected-item="{ opt }">
+                        {{ t('shared.enum.' + (opt.value || opt)) }}
+                    </template>
+                </q-select>
+
+                <q-btn
+                    v-if="
+                        membership?.paymentStatus &&
+                        isPaymentStatusPaid(membership.paymentStatus) &&
+                        isAdmin()
+                    "
+                    color="primary"
+                    class="full-width"
+                    rounded
+                    :label="$t('shared.send')"
+                    @click="handleSendMail"
+                />
                 <q-btn
                     v-if="isAdmin()"
                     :label="

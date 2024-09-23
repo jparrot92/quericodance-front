@@ -126,11 +126,24 @@ const useStudents = () => {
     };
 
     const markPaymentPaid = async (id: number) => {
-        return new Promise<void>(async (resolve, reject) => {
+        return new Promise<StudentDTO>(async (resolve, reject) => {
             try {
-                await markPayment(id);
+                const student: StudentDTO = await markPayment(id);
                 notifySuccess(t('student.paymentMade'));
-                resolve();
+                resolve(student);
+            } catch (error) {
+                notifyError(error);
+                reject(error);
+            }
+        });
+    };
+
+    const cancelPaymentPaid = async (id: number) => {
+        return new Promise<StudentDTO>(async (resolve, reject) => {
+            try {
+                const student: StudentDTO = await cancelPayment(id);
+                notifySuccess(t('student.cancelPayment'));
+                resolve(student);
             } catch (error) {
                 notifyError(error);
                 reject(error);
@@ -143,19 +156,6 @@ const useStudents = () => {
             try {
                 await sendMailPayment(id);
                 notifySuccess(t('student.sendMailPaymentPaid'));
-                resolve();
-            } catch (error) {
-                notifyError(error);
-                reject(error);
-            }
-        });
-    };
-
-    const cancelPaymentPaid = async (id: number) => {
-        return new Promise<void>(async (resolve, reject) => {
-            try {
-                await cancelPayment(id);
-                notifySuccess(t('student.cancelPayment'));
                 resolve();
             } catch (error) {
                 notifyError(error);

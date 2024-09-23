@@ -128,6 +128,7 @@ onMounted(async () => {
                         v-model="membership.paymentFrequency"
                         :label="$t('student.paymentFrequency')"
                         :options="paymentFrequency"
+                        :dense="false"
                     />
 
                     <div class="row">
