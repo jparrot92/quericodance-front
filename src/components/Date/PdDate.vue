@@ -1,40 +1,46 @@
 <script setup lang="ts">
-import { computed, defineProps } from 'vue';
+import { computed, defineProps, Ref, ref } from 'vue';
+import useDates from 'src/composables/useDates';
 
 const props = withDefaults(
     defineProps<{
         modelValue?: any;
         label?: string;
+        isPeriod: boolean;
     }>(),
-    {}
+    {
+        isPeriod: false,
+    }
 );
 
 const emit = defineEmits(['update:modelValue']);
 
+const { convertDateToDDMMYYYY } = useDates();
+
+const dateRef: Ref<any> = ref(null);
+const currentView: Ref<string> = ref('Years');
+
+function onUpdateMv2(): void {
+    currentView.value = currentView.value === 'Months' ? 'Years' : 'Months';
+    if (dateRef.value) {
+        dateRef.value.setView(currentView.value);
+    }
+}
+
 const model = computed({
-    get: () => props.modelValue,
+    get: () =>
+        props.isPeriod
+            ? props.modelValue
+            : convertDateToDDMMYYYY(props.modelValue),
     set: (value: string) => {
-        emit('update:modelValue', convertISODate(value));
+        // Convierte la fecha en el formato que necesitas (puedes ajustarlo si quieres almacenar otro formato)
+        const isoDate = new Date(
+            value.split('/').reverse().join('-') + 'T00:00:00Z'
+        ).toISOString();
+
+        emit('update:modelValue', props.isPeriod ? value : isoDate);
     },
 });
-
-const convertISODate = (date: string) => {
-    const isoDate = new Date(date);
-    const year = isoDate.getFullYear();
-    const month = isoDate.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que debemos sumar 1
-    const day = isoDate.getDate();
-    const hour = isoDate.getHours();
-    const minute = isoDate.getMinutes();
-    const second = isoDate.getSeconds();
-
-    const isoString = `${year}-${month.toString().padStart(2, '0')}-${day
-        .toString()
-        .padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute
-        .toString()
-        .padStart(2, '0')}:${second.toString().padStart(2, '0')}.000Z`;
-
-    return isoString;
-};
 
 const locale = {
     /* starting with Sunday */
@@ -51,26 +57,64 @@ const locale = {
 </script>
 
 <template>
-    <q-input :label="props.label" v-model="model" mask="date">
-        <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                >
-                    <q-date v-model="model" :locale="locale">
-                        <div class="row items-center justify-end">
-                            <q-btn
-                                v-close-popup
-                                label="Close"
-                                color="primary"
-                                flat
-                            />
-                        </div>
-                    </q-date>
-                </q-popup-proxy>
-            </q-icon>
-        </template>
-    </q-input>
+    <template v-if="isPeriod">
+        <q-input :label="props.label" v-model="model" mask="##/####">
+            <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                        cover
+                        transition-show="scale"
+                        transition-hide="scale"
+                    >
+                        <q-date
+                            ref="dateRef"
+                            v-model="model"
+                            default-view="Months"
+                            emit-immediately
+                            @update:model-value="onUpdateMv2"
+                            minimal
+                            mask="MM/YYYY"
+                        >
+                            <div class="row items-center justify-end">
+                                <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                />
+                            </div>
+                        </q-date>
+                    </q-popup-proxy>
+                </q-icon>
+            </template>
+        </q-input>
+    </template>
+    <template v-else>
+        <q-input :label="props.label" v-model="model" mask="##/##/####">
+            <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                        cover
+                        transition-show="scale"
+                        transition-hide="scale"
+                    >
+                        <q-date
+                            v-model="model"
+                            :locale="locale"
+                            mask="DD/MM/YYYY"
+                        >
+                            <div class="row items-center justify-end">
+                                <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                />
+                            </div>
+                        </q-date>
+                    </q-popup-proxy>
+                </q-icon>
+            </template>
+        </q-input>
+    </template>
 </template>

@@ -70,6 +70,13 @@ const itemsMenu: ItemMenu[] = [
         children: [],
     },
     {
+        title: t('shared.finances'),
+        icon: 'mdi-finance',
+        link: 'finances-list',
+        level: 0,
+        children: [],
+    },
+    {
         title: t('shared.teachers'),
         icon: 'mdi-teach',
         link: 'teachers-list',

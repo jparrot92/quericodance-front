@@ -5,6 +5,7 @@ import teachersI18n from 'src/modules/teachers/i18n/es';
 import studentsI18n from 'src/modules/students/i18n/es';
 import activitiesI18n from 'src/modules/activities/i18n/es';
 import servicesI18n from 'src/modules/services/i18n/es';
+import financeI18n from 'src/modules/finance/i18n/es';
 
 export default {
     ...sharedI18n,
@@ -14,4 +15,5 @@ export default {
     ...studentsI18n,
     ...activitiesI18n,
     ...servicesI18n,
+    ...financeI18n,
 };

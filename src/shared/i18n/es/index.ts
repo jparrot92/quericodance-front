@@ -20,6 +20,7 @@ export default {
         services: 'Servicios',
         tariffs: 'Tarifas',
         users: 'Usuarios',
+        finances: 'Finanzas',
         loading: 'Cargando...',
         noData: 'Datos no disponibles',
         noResults: 'Sin resultados',
@@ -60,6 +61,9 @@ export default {
             new: 'Nuevo',
             active: 'Activo',
             inactive: 'Inactivo',
+            membership: 'Cuota',
+            bonus: 'Bono',
+            other: 'Otro',
         },
         validations: {
             required: 'Campo requerido',

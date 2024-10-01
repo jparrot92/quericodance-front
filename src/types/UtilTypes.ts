@@ -53,3 +53,9 @@ export enum PaymentFrequency {
     MONTHLY = 'monthly',
     TRIMESTRAL = 'trimestral',
 }
+
+export enum PaymentType {
+    MEMBERSHIP = 'membership',
+    BONUS = 'bonus',
+    OTHER = 'other',
+}

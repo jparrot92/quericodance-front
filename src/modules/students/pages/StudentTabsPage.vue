@@ -57,10 +57,10 @@ onMounted(async () => {
             align="justify"
         >
             <q-tab name="student-data" :label="$t('student.studentData')" />
-            <q-tab name="membership" :label="$t('student.membership')" />
-            <q-tab name="bonuses" :label="$t('student.bonuses')" />
             <q-tab name="courses" :label="$t('student.courses')" />
             <q-tab name="observations" :label="$t('student.observations')" />
+            <q-tab name="membership" :label="$t('student.membership')" />
+            <q-tab name="bonuses" :label="$t('student.bonuses')" />
         </q-tabs>
 
         <q-separator />
@@ -68,6 +68,19 @@ onMounted(async () => {
         <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="student-data">
                 <student-form-page :student="student" />
+            </q-tab-panel>
+
+            <q-tab-panel name="courses">
+                <activities-student-form-page
+                    :id-student="student.id"
+                    :has-membership="!!student.membership"
+                    :activitiesStudent="student.activitiesStudent"
+                    @update-activities-student="updateActivitiesStudent"
+                />
+            </q-tab-panel>
+
+            <q-tab-panel name="observations">
+                <observations-student-form-page :student="student" />
             </q-tab-panel>
 
             <q-tab-panel name="membership">
@@ -85,19 +98,6 @@ onMounted(async () => {
                     :bonuses-student="student.bonusesStudent"
                     @update-bonuses-student="updateBonusesStudent"
                 />
-            </q-tab-panel>
-
-            <q-tab-panel name="courses">
-                <activities-student-form-page
-                    :id-student="student.id"
-                    :has-membership="!!student.membership"
-                    :activitiesStudent="student.activitiesStudent"
-                    @update-activities-student="updateActivitiesStudent"
-                />
-            </q-tab-panel>
-
-            <q-tab-panel name="observations">
-                <observations-student-form-page :student="student" />
             </q-tab-panel>
         </q-tab-panels>
     </q-card>
