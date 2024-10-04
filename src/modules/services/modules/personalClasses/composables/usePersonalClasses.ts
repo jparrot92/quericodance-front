@@ -2,7 +2,6 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
 
 import useNotify from 'src/shared/composables/useNotify';
 

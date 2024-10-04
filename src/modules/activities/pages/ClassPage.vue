@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue';
-
-const ActivityList = defineAsyncComponent(
-    () =>
-        import(
-            'src/modules/activities/components/activity-list/ActivityList.vue'
-        )
-);
+import { ActivityType } from 'src/types/UtilTypes';
+import ActivityList from '../components/activity-list/ActivityList.vue';
 </script>
 
 <template>
     <q-page padding>
-        <ActivityList />
+        <activity-list :activity-type="ActivityType.CLASS" />
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-btn
                 v-if="$q.platform.is.mobile"

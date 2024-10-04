@@ -9,9 +9,15 @@ import { AbsenceDTO } from 'src/modules/activities/models/absence';
 
 const activitiesEndpoint = '/activities';
 
-export const listActivities = async (): Promise<ActivityDTO[]> => {
+export const listActivities = async (type?: string): Promise<ActivityDTO[]> => {
     try {
-        const { data } = await api.get<ActivityDTO[]>(activitiesEndpoint);
+        // Construir los parámetros de consulta si 'type' está presente
+        const params = type ? { params: { type } } : {};
+
+        const { data } = await api.get<ActivityDTO[]>(
+            activitiesEndpoint,
+            params
+        );
 
         return data;
     } catch (error) {

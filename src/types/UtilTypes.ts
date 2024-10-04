@@ -59,3 +59,8 @@ export enum PaymentType {
     BONUS = 'bonus',
     OTHER = 'other',
 }
+
+export enum ActivityType {
+    CLASS = 'class',
+    EVENT = 'event',
+}

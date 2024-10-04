@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { computed, defineProps, Ref, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import useDates from 'src/composables/useDates';
 
 const props = withDefaults(
     defineProps<{
-        modelValue?: any;
-        label?: string;
-        isPeriod: boolean;
+        modelValue: any;
+        label: string;
+        required?: boolean;
+        isPeriod?: boolean;
     }>(),
     {
+        required: false,
         isPeriod: false,
     }
 );
 
 const emit = defineEmits(['update:modelValue']);
+
+const { t } = useI18n();
 
 const { convertDateToDDMMYYYY } = useDates();
 
@@ -54,11 +59,30 @@ const locale = {
     format24h: true,
     pluralDay: 'dias',
 };
+
+function validateDate(value: string): boolean | string {
+    if ((props.required && value === '') || value === 'NaN/NaN/NaN') {
+        return t('shared.validations.required');
+    }
+    return true;
+}
 </script>
 
 <template>
     <template v-if="isPeriod">
-        <q-input :label="props.label" v-model="model" mask="##/####">
+        <q-input
+            :label="props.label"
+            v-model="model"
+            mask="##/####"
+            :rules="[
+                (val: string) => {
+                if (props.required && val.length === 0) {
+                    return $t('shared.validations.required');
+                }
+                return true;
+                }
+            ]"
+        >
             <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                     <q-popup-proxy
@@ -90,7 +114,12 @@ const locale = {
         </q-input>
     </template>
     <template v-else>
-        <q-input :label="props.label" v-model="model" mask="##/##/####">
+        <q-input
+            :label="props.label"
+            v-model="model"
+            :mask="'##/##/####'"
+            :rules="[validateDate]"
+        >
             <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                     <q-popup-proxy

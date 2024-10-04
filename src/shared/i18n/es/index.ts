@@ -15,6 +15,7 @@ export default {
         logout: 'Cerrar sesión',
         calendar: 'Calendario',
         activities: 'Cursos',
+        events: 'Eventos',
         teachers: 'Professores',
         students: 'Estudiantes',
         services: 'Servicios',

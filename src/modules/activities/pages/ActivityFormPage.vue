@@ -2,13 +2,22 @@
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { WeekDay } from 'src/types/UtilTypes';
+import { ActivityType, WeekDay } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useTeachers from 'src/modules/teachers/composables/useTeachers';
 import useActivities from '../composables/useActivities';
 
 const route = useRoute();
+
+const props = withDefaults(
+    defineProps<{
+        activityType?: ActivityType;
+    }>(),
+    {
+        activityType: ActivityType.CLASS,
+    }
+);
 
 const idActivity = computed<string>(() => route.params.id?.toString());
 
@@ -33,6 +42,7 @@ const removeTeacherActivity = async () => {
 
 onMounted(() => {
     loadTeachers();
+    activity.value.type = props.activityType;
     if (idActivity.value) {
         loadActivity(idActivity.value);
     }
@@ -56,31 +66,40 @@ onMounted(() => {
                     ]"
                 />
 
-                <q-input
-                    type="number"
-                    :label="$t('activity.level')"
-                    v-model.number="activity.level"
-                    :rules="[
-                        (val) =>
-                            (val !== null &&
-                                val !== undefined &&
-                                val.toString().trim() !== '') ||
-                            $t('shared.validations.required'),
-                    ]"
-                />
+                <template v-if="activity.type === ActivityType.CLASS">
+                    <q-input
+                        type="number"
+                        :label="$t('activity.level')"
+                        v-model.number="activity.level"
+                        :rules="[
+                            (val) =>
+                                (val !== null &&
+                                    val !== undefined &&
+                                    val.toString().trim() !== '') ||
+                                $t('shared.validations.required'),
+                        ]"
+                    />
 
-                <pd-select
-                    :dense="false"
-                    :options-dense="false"
-                    v-model="activity.day"
-                    :label="$t('shared.day') + '*'"
-                    :options="weekDays"
-                    :rules="[
-                        (val: string) =>
-                            (val && val.length > 0) ||
-                            $t('shared.validations.required')
-                    ]"
-                />
+                    <pd-select
+                        :dense="false"
+                        :options-dense="false"
+                        v-model="activity.day"
+                        :label="$t('shared.day') + '*'"
+                        :options="weekDays"
+                        :rules="[
+                            (val: string) =>
+                                (val && val.length > 0) ||
+                                $t('shared.validations.required')
+                        ]"
+                    />
+                </template>
+                <template v-else-if="activity.type === ActivityType.EVENT">
+                    <pd-date
+                        :label="$t('activity.dateEvent')"
+                        v-model="activity.dateEvent"
+                        required
+                    />
+                </template>
 
                 <div class="row">
                     <q-input
@@ -158,43 +177,48 @@ onMounted(() => {
                     ]"
                 />
 
-                <div class="row">
-                    <q-input
-                        :label="$t('activity.color')"
-                        v-model="activity.color"
-                        class="col-md-11 col-sm-11 col-xs-10"
-                        :rules="[
+                <q-input
+                    :label="$t('activity.color')"
+                    v-model="activity.color"
+                    class="col-md-11 col-sm-11 col-xs-10"
+                    :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
                             $t('shared.validations.required')
                         ]"
-                    >
-                        <template v-slot:append>
-                            <q-icon name="colorize" class="cursor-pointer">
-                                <q-popup-proxy
-                                    cover
-                                    transition-show="scale"
-                                    transition-hide="scale"
-                                >
-                                    <q-color v-model="activity.color" />
-                                </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                    </q-input>
-
-                    <q-btn
-                        :style="{ 'background-color': activity.color }"
-                        class="col-md-1 col-sm-1 col-xs-2"
-                    >
-                        <q-tooltip
-                            anchor="center left"
-                            self="center right"
-                            :offset="[10, 10]"
-                        >
-                            {{ $t('activity.infoColor') }}
-                        </q-tooltip>
-                    </q-btn>
-                </div>
+                >
+                    <template v-slot:before>
+                        <q-icon name="info">
+                            <q-tooltip
+                                anchor="center left"
+                                self="center left"
+                                :offset="[10, 10]"
+                            >
+                                {{ $t('activity.infoColor') }}
+                            </q-tooltip>
+                        </q-icon>
+                    </template>
+                    <template v-slot:append>
+                        <q-icon name="colorize" class="cursor-pointer">
+                            <q-popup-proxy
+                                cover
+                                transition-show="scale"
+                                transition-hide="scale"
+                            >
+                                <q-color v-model="activity.color" />
+                            </q-popup-proxy>
+                        </q-icon>
+                        <div
+                            name="event"
+                            style="
+                                width: 50px;
+                                height: 50px;
+                                border: 1px solid black;
+                            "
+                            :style="{ 'background-color': activity.color }"
+                        ></div>
+                    </template>
+                </q-input>
 
                 <q-select
                     v-model="activity.teachersIds"

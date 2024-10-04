@@ -5,13 +5,20 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
-import { ColumnTable, WeekDay } from 'src/types/UtilTypes';
+import { ActivityType, ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
 import { ActivityDTO, ActivityList } from '../../models/activity';
 import useActivities from '../../composables/useActivities';
 import { FilterField } from 'src/composables/useFilterTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
+
+const props = withDefaults(
+    defineProps<{
+        activityType: string;
+    }>(),
+    {}
+);
 
 const $q = useQuasar();
 const { t } = useI18n();
@@ -41,22 +48,38 @@ const columns: ColumnTable[] = [
         field: 'name',
         sortable: true,
     },
-    {
-        name: 'level',
-        align: 'left',
-        label: t('activity.level'),
-        field: 'level',
-        sortable: true,
-    },
-    {
-        name: 'day',
-        align: 'left',
-        label: t('activity.day'),
-        field: (row) => t('shared.enum.' + row.day),
-        sortable: true,
-        sort: (a: string, b: string, rowA: ActivityList, rowB: ActivityList) =>
-            orderByDay(rowA, rowB),
-    },
+    ...(props.activityType === 'event'
+        ? [
+              {
+                  name: 'dateEvent',
+                  align: 'left',
+                  label: t('activity.dateEvent'),
+                  field: 'dateEvent',
+                  sortable: true,
+              } as ColumnTable,
+          ]
+        : [
+              {
+                  name: 'level',
+                  align: 'left',
+                  label: t('activity.level'),
+                  field: 'level',
+                  sortable: true,
+              } as ColumnTable,
+              {
+                  name: 'day',
+                  align: 'left',
+                  label: t('activity.day'),
+                  field: (row) => t('shared.enum.' + row.day),
+                  sortable: true,
+                  sort: (
+                      a: string,
+                      b: string,
+                      rowA: ActivityList,
+                      rowB: ActivityList
+                  ) => orderByDay(rowA, rowB),
+              } as ColumnTable,
+          ]),
     {
         name: 'startHour',
         align: 'left',
@@ -183,7 +206,18 @@ const filteredColumns = computed(() => {
     }
 });
 
-function getWeekNumber(day: string): number {
+const labelBtnCreateActivity = computed((): string => {
+    switch (props.activityType) {
+        case ActivityType.CLASS:
+            return 'activity.createclass';
+        case ActivityType.EVENT:
+            return 'activity.createevent';
+        default:
+            return 'activity.createclass';
+    }
+});
+
+function getWeekNumber(day: WeekDay): number {
     switch (day) {
         case WeekDay.SUNDAY:
             return 0;
@@ -254,7 +288,7 @@ watch(
 );
 
 onMounted(async () => {
-    await loadActivities();
+    await loadActivities(props.activityType);
     activitiesFiltered.value = activities.value;
     filterTable();
 });
@@ -304,7 +338,7 @@ onMounted(async () => {
                         <div class="col-2 flex justify-end">
                             <q-btn
                                 v-if="$q.platform.is.desktop"
-                                :label="$t('activity.createActivity')"
+                                :label="$t(labelBtnCreateActivity)"
                                 color="primary"
                                 icon="mdi-plus"
                                 dense
@@ -312,6 +346,9 @@ onMounted(async () => {
                                 @click="
                                     $router.push({
                                         name: 'activities-add',
+                                        params: {
+                                            activityType: activityType,
+                                        },
                                     })
                                 "
                             />

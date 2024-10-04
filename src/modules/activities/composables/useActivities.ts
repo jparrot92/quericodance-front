@@ -25,6 +25,7 @@ import {
     ActivityList,
 } from '../models/activity';
 import { ActivityStudent } from '../models/activityStudent';
+import { ActivityType } from 'src/types/UtilTypes';
 
 const useActivities = () => {
     const router = useRouter();
@@ -39,11 +40,13 @@ const useActivities = () => {
     const activities = ref<ActivityList[]>([]);
     const activity = ref<ActivityDTO>({
         id: 0,
+        type: ActivityType.CLASS,
         name: '',
         level: null,
-        day: '',
+        day: null,
         startHour: '',
         endHour: '',
+        dateEvent: '',
         numberPlaces: null,
         price: null,
         color: '',
@@ -54,16 +57,7 @@ const useActivities = () => {
         danceRole: '',
         price: 0,
         activity: {
-            id: 0,
-            name: '',
-            level: 0,
-            day: '',
-            startHour: '',
-            endHour: '',
-            numberPlaces: 0,
-            price: 0,
-            color: '',
-            teachersIds: [],
+            ...activity.value,
         },
     });
 
@@ -75,11 +69,11 @@ const useActivities = () => {
         costEffectiveness: '0',
     });
 
-    const loadActivities = async () => {
+    const loadActivities = async (type?: string) => {
         try {
             activities.value = [];
             loading.value = true;
-            activities.value = await listActivities();
+            activities.value = await listActivities(type);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -118,7 +112,7 @@ const useActivities = () => {
         try {
             loading.value = true;
             activity.value = await createActivity(activity.value);
-            notifySuccess(t('messageActivityCreateSuccessfully'));
+            notifySuccess(t('activity.messageActivityCreateSuccessfully'));
             router.replace({
                 name: 'activities-edit',
                 params: { id: activity.value.id },
