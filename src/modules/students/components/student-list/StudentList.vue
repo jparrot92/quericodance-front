@@ -333,6 +333,7 @@ onMounted(async () => {
 <template>
     <div class="row" v-if="$q.platform.is.desktop">
         <q-table
+            :grid="$q.screen.xs"
             :rows="studentsFiltered"
             :columns="columnsFiltered"
             row-key="id"

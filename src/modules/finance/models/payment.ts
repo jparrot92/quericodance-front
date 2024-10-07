@@ -4,8 +4,13 @@ export interface PaymentDTO {
     id: number;
     periodCode: string;
     paymentType: string;
-    student: StudentDTO;
+    student?: StudentDTO;
     amount: number;
     status: string;
     paymentDate: string | null;
+}
+
+export interface TotalAmountsDTO {
+    pendingTotal: number;
+    payedTotal: number;
 }

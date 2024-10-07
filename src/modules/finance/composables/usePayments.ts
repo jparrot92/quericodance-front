@@ -4,9 +4,9 @@ import useNotify from 'src/shared/composables/useNotify';
 
 import useDates from 'src/composables/useDates';
 
-import { listPayments } from 'src/api/paymentsApi';
+import { getTotalAmounts, listPayments } from 'src/api/paymentsApi';
 
-import { PaymentDTO } from '../models/payment';
+import { PaymentDTO, TotalAmountsDTO } from '../models/payment';
 
 const usePayments = () => {
     const { notifyError } = useNotify();
@@ -15,6 +15,7 @@ const usePayments = () => {
 
     const loading = ref<boolean>(false);
     const payments = ref<PaymentDTO[]>([]);
+    const totals = ref<TotalAmountsDTO | null>(null);
 
     const loadPayments = async (period: string) => {
         try {
@@ -29,10 +30,27 @@ const usePayments = () => {
         }
     };
 
+    const loadTotalAmounts = async (period: string) => {
+        try {
+            totals.value = null;
+            loading.value = true;
+
+            const periodCode = convertToYearMonth(period);
+
+            totals.value = await getTotalAmounts(periodCode);
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
     return {
         loading,
         payments,
+        totals,
         loadPayments,
+        loadTotalAmounts,
     };
 };
 

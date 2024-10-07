@@ -5,5 +5,6 @@ export default {
         amount: 'Preció',
         status: 'Estado',
         paymentDate: 'Fecha',
+        studentRemoved: 'Pago estudiante eliminado del sistema',
     },
 };
