@@ -32,7 +32,7 @@ onMounted(() => {
         <div class="col q-pa-xs">
             <q-card flat bordered>
                 <q-card-section class="text-h6 text-center bg-red text-white">
-                    Total Pendiente
+                    {{ $t('finance.pendingTotal') }}
                 </q-card-section>
                 <q-separator />
                 <q-card-section class="flex flex-center">
@@ -43,7 +43,7 @@ onMounted(() => {
         <div class="col q-pa-xs">
             <q-card flat bordered>
                 <q-card-section class="text-h6 text-center bg-green text-white">
-                    Total Pagado
+                    {{ $t('finance.payedTotal') }}
                 </q-card-section>
                 <q-separator />
                 <q-card-section class="flex flex-center">
