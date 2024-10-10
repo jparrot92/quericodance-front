@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+
 import { format } from '@formkit/tempo';
 
 import { Status, Option, PaymentsStatus } from 'src/types/UtilTypes';
@@ -7,7 +10,6 @@ import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useStudents from '../../composables/useStudents';
 import { StudentDTO } from '../../models/student';
-import { ref } from 'vue';
 
 const props = withDefaults(
     defineProps<{
@@ -23,6 +25,7 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
+const router = useRouter();
 const { generateEnumOptions } = useEnumOptions();
 
 const { isPaymentStatusPaid } = useStudents();
@@ -30,11 +33,20 @@ const { isPaymentStatusPaid } = useStudents();
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 
 const student = ref<StudentDTO>(props.studentItem);
+
+const handleItemClick = async (id: number) => {
+    router.push({
+        name: 'students-edit',
+        params: {
+            id,
+        },
+    });
+};
 </script>
 
 <template>
     <div padding class="full-width">
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="handleItemClick(student.id)">
             <q-item-section avatar top>
                 <q-avatar v-if="student.user.photo">
                     <img :src="student.user.photo" />
@@ -97,7 +109,7 @@ const student = ref<StudentDTO>(props.studentItem);
                 </q-item-label>
                 <q-item-label caption lines="3">
                     <div class="row items-center no-wrap">
-                        <div class="col-6 q-pr-xs">
+                        <div class="col-6 q-pr-xs" @click.stop>
                             <q-select
                                 v-if="student.membership"
                                 :bg-color="
@@ -125,7 +137,7 @@ const student = ref<StudentDTO>(props.studentItem);
                                 </template>
                             </q-select>
                         </div>
-                        <div class="col-6 q-pl-xs">
+                        <div class="col-6 q-pl-xs" @click.stop>
                             <q-btn
                                 v-if="
                                     student.membership?.paymentStatus &&
@@ -146,7 +158,14 @@ const student = ref<StudentDTO>(props.studentItem);
             </q-item-section>
 
             <q-item-section side top>
-                <q-btn size="12px" flat dense round icon="more_vert" />
+                <q-btn
+                    @click.stop
+                    size="12px"
+                    flat
+                    dense
+                    round
+                    icon="more_vert"
+                />
             </q-item-section>
         </q-item>
         <q-separator inset="item" />

@@ -487,6 +487,7 @@ onMounted(async () => {
         </template>
         <template v-slot:item="props">
             <student-item
+                :key="props.row.id"
                 :student-item="props.row"
                 :get-status-color="getStatusColor"
                 :check-monthly-payment-paid="checkMonthlyPaymentPaid"
