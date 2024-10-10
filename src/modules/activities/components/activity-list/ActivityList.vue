@@ -320,7 +320,7 @@ onMounted(async () => {
                         <div class="col-2 flex justify-end">
                             <q-toggle
                                 :label="$t('activity.showProfitability')"
-                                class="h-2rem"
+                                class="h-2-5rem"
                                 v-model="showProfitability"
                             ></q-toggle>
                         </div>
@@ -331,7 +331,7 @@ onMounted(async () => {
                                 color="green"
                                 icon="mdi-download"
                                 dense
-                                class="h-2rem"
+                                class="h-2-5rem"
                                 @click="handleFileDownload"
                             />
                         </div>
@@ -342,7 +342,7 @@ onMounted(async () => {
                                 color="primary"
                                 icon="mdi-plus"
                                 dense
-                                class="h-2rem"
+                                class="h-2-5rem"
                                 @click="
                                     $router.push({
                                         name: 'activities-add',

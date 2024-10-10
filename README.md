@@ -41,3 +41,9 @@ quasar build
 ### Customize the configuration
 
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+
+### Start the app (android or iOS) in development mode (hot-code reloading, error reporting, etc.)
+
+```bash
+quasar dev -m capacitor -T [android|ios]
+```
