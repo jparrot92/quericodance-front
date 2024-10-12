@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, Ref, watch, reactive } from 'vue';
+import {
+    ref,
+    onMounted,
+    computed,
+    Ref,
+    watch,
+    reactive,
+    ComputedRef,
+} from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -7,6 +15,7 @@ import { format } from '@formkit/tempo';
 import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 
 import {
+    Action,
     ColumnTable,
     DanceRole,
     Option,
@@ -61,6 +70,28 @@ const showProfitability = ref<boolean>(false);
 const showModalAddActivityAbsence = ref<boolean>(false);
 const activityAbsence = ref<ActivityDTO>();
 const idStudentSelected = ref<number>(0);
+
+const actions: ComputedRef<Action<StudentDTO>[]> = computed(() => {
+    return [
+        {
+            label: t('student.addAbsence'),
+            action: (row: StudentDTO) => handleAddAbsence(row),
+            condition: () => !!props.idActivity,
+        },
+        {
+            label: t('shared.edit'),
+            action: (row: StudentDTO) => {
+                router.push({ name: 'students-edit', params: { id: row.id } });
+            },
+            condition: () => true,
+        },
+        {
+            label: t('shared.delete'),
+            action: (row: StudentDTO) => handleRemoveStudent(row.id),
+            condition: () => true,
+        },
+    ];
+});
 
 const columnsFiltered = computed(() => {
     if (!props.idActivity) {
@@ -458,28 +489,16 @@ onMounted(async () => {
         <template v-slot:body-cell-actions="props">
             <q-td :props="props">
                 <menu-list @click.stop>
-                    <q-item clickable v-close-popup v-if="idActivity">
-                        <q-item-section @click="handleAddAbsence(props.row)">
-                            {{ $t('student.addAbsence') }}
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup>
-                        <q-item-section
-                            @click="
-                                $router.push({
-                                    name: 'students-edit',
-                                    params: { id: props.row.id },
-                                })
-                            "
-                        >
-                            {{ $t('shared.edit') }}
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup>
-                        <q-item-section
-                            @click="handleRemoveStudent(props.row.id)"
-                        >
-                            {{ $t('shared.delete') }}
+                    <q-item
+                        v-for="(action, index) in actions.filter((action) =>
+                            action.condition(props.row)
+                        )"
+                        :key="index"
+                        clickable
+                        v-close-popup
+                    >
+                        <q-item-section @click="action.action(props.row)">
+                            {{ action.label }}
                         </q-item-section>
                     </q-item>
                 </menu-list>
@@ -492,7 +511,24 @@ onMounted(async () => {
                 :get-status-color="getStatusColor"
                 :check-monthly-payment-paid="checkMonthlyPaymentPaid"
                 :handle-send-mail="handleSendMail"
-            ></student-item>
+            >
+                <template v-slot:menu>
+                    <menu-list @click.stop>
+                        <q-item
+                            v-for="(action, index) in actions.filter((action) =>
+                                action.condition(props.row)
+                            )"
+                            :key="index"
+                            clickable
+                            v-close-popup
+                        >
+                            <q-item-section @click="action.action(props.row)">
+                                {{ action.label }}
+                            </q-item-section>
+                        </q-item>
+                    </menu-list>
+                </template>
+            </student-item>
         </template>
     </q-table>
     <AddActivityAbsenceDialog

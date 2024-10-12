@@ -13,6 +13,14 @@ export interface ColumnTable {
     headerStyle?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface Action<T = any> {
+    // T es un tipo genérico que puede ser cualquier cosa
+    label: string;
+    action: (row: T) => void; // Acción que toma un parámetro de tipo T
+    condition: (row?: T) => boolean; // Condición que toma un parámetro de tipo T
+}
+
 export interface Option {
     label: string;
     value: string;

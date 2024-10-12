@@ -158,14 +158,7 @@ const handleItemClick = async (id: number) => {
             </q-item-section>
 
             <q-item-section side top>
-                <q-btn
-                    @click.stop
-                    size="12px"
-                    flat
-                    dense
-                    round
-                    icon="more_vert"
-                />
+                <slot name="menu"> </slot>
             </q-item-section>
         </q-item>
         <q-separator inset="item" />
