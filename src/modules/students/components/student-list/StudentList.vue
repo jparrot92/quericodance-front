@@ -24,7 +24,6 @@ import {
 } from 'src/types/UtilTypes';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
-import MenuList from 'src/shared/components/MenuList.vue';
 import { FilterField } from 'src/composables/useFilterTypes';
 
 import useStudents from '../../composables/useStudents';
@@ -488,7 +487,7 @@ onMounted(async () => {
         </template>
         <template v-slot:body-cell-actions="props">
             <q-td :props="props">
-                <menu-list @click.stop>
+                <pd-menu-list>
                     <q-item
                         v-for="(action, index) in actions.filter((action) =>
                             action.condition(props.row)
@@ -501,7 +500,7 @@ onMounted(async () => {
                             {{ action.label }}
                         </q-item-section>
                     </q-item>
-                </menu-list>
+                </pd-menu-list>
             </q-td>
         </template>
         <template v-slot:item="props">
@@ -513,7 +512,7 @@ onMounted(async () => {
                 :handle-send-mail="handleSendMail"
             >
                 <template v-slot:menu>
-                    <menu-list @click.stop>
+                    <pd-menu-list>
                         <q-item
                             v-for="(action, index) in actions.filter((action) =>
                                 action.condition(props.row)
@@ -526,7 +525,7 @@ onMounted(async () => {
                                 {{ action.label }}
                             </q-item-section>
                         </q-item>
-                    </menu-list>
+                    </pd-menu-list>
                 </template>
             </student-item>
         </template>
