@@ -18,7 +18,7 @@ export interface Action<T = any> {
     // T es un tipo genérico que puede ser cualquier cosa
     label: string;
     action: (row: T) => void; // Acción que toma un parámetro de tipo T
-    condition: (row?: T) => boolean; // Condición que toma un parámetro de tipo T
+    show: (row?: T) => boolean; // Condición que toma un parámetro de tipo T
 }
 
 export interface Option {

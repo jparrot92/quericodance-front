@@ -75,19 +75,19 @@ const actions: ComputedRef<Action<StudentDTO>[]> = computed(() => {
         {
             label: t('student.addAbsence'),
             action: (row: StudentDTO) => handleAddAbsence(row),
-            condition: () => !!props.idActivity,
+            show: () => !!props.idActivity,
         },
         {
             label: t('shared.edit'),
             action: (row: StudentDTO) => {
                 router.push({ name: 'students-edit', params: { id: row.id } });
             },
-            condition: () => true,
+            show: () => true,
         },
         {
             label: t('shared.delete'),
             action: (row: StudentDTO) => handleRemoveStudent(row.id),
-            condition: () => true,
+            show: () => true,
         },
     ];
 });
@@ -487,20 +487,7 @@ onMounted(async () => {
         </template>
         <template v-slot:body-cell-actions="props">
             <q-td :props="props">
-                <pd-menu-list>
-                    <q-item
-                        v-for="(action, index) in actions.filter((action) =>
-                            action.condition(props.row)
-                        )"
-                        :key="index"
-                        clickable
-                        v-close-popup
-                    >
-                        <q-item-section @click="action.action(props.row)">
-                            {{ action.label }}
-                        </q-item-section>
-                    </q-item>
-                </pd-menu-list>
+                <pd-menu-list :actions="actions" :row="props.row" />
             </q-td>
         </template>
         <template v-slot:item="props">
@@ -512,20 +499,7 @@ onMounted(async () => {
                 :handle-send-mail="handleSendMail"
             >
                 <template v-slot:menu>
-                    <pd-menu-list>
-                        <q-item
-                            v-for="(action, index) in actions.filter((action) =>
-                                action.condition(props.row)
-                            )"
-                            :key="index"
-                            clickable
-                            v-close-popup
-                        >
-                            <q-item-section @click="action.action(props.row)">
-                                {{ action.label }}
-                            </q-item-section>
-                        </q-item>
-                    </pd-menu-list>
+                    <pd-menu-list :actions="actions" :row="props.row" />
                 </template>
             </student-item>
         </template>
