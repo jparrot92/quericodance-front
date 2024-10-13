@@ -92,15 +92,13 @@ const handleItemClick = async (id: number) => {
                         :label="student.membership.payment"
                     />
 
-                    {{ t('el') }}
-
                     <template v-if="student.membership">
                         {{
                             isPaymentStatusPaid(
                                 student.membership?.paymentStatus
-                            )
+                            ) && student.membership?.paymentDate
                                 ? format(
-                                      student.membership.datePayment,
+                                      student.membership?.paymentDate,
                                       'short'
                                   )
                                 : '-'
@@ -114,7 +112,7 @@ const handleItemClick = async (id: number) => {
                                 v-if="student.membership"
                                 :bg-color="
                                     isPaymentStatusPaid(
-                                        student.membership.paymentStatus || ''
+                                        student.membership.paymentStatus
                                     )
                                         ? 'green'
                                         : 'red'
@@ -126,10 +124,7 @@ const handleItemClick = async (id: number) => {
                                 options-dense
                                 :options="paymentStatuses"
                                 @update:model-value="
-                                    checkMonthlyPaymentPaid(
-                                        student,
-                                        student.membership.paymentStatus
-                                    )
+                                    checkMonthlyPaymentPaid(student, $event)
                                 "
                             >
                                 <template v-slot:selected-item="{ opt }">
@@ -140,9 +135,8 @@ const handleItemClick = async (id: number) => {
                         <div class="col-6 q-pl-xs" @click.stop>
                             <q-btn
                                 v-if="
-                                    student.membership?.paymentStatus &&
                                     isPaymentStatusPaid(
-                                        student.membership.paymentStatus
+                                        student.membership?.paymentStatus
                                     )
                                 "
                                 color="primary"

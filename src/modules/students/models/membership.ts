@@ -1,4 +1,5 @@
 import { Tariff } from 'src/modules/services/modules/tariffs/models/tariff';
+import { PaymentFrequency, PaymentsStatus } from 'src/types/UtilTypes';
 
 export interface MembershipDTO {
     id: number;
@@ -10,14 +11,14 @@ export interface MembershipDTO {
 }
 
 export interface MembershipViewDTO {
-    id?: number;
-    payment?: number;
+    id: number;
+    payment: number;
     paymentDate?: Date;
-    paymentFrequency?: string;
-    paymentStatus?: string;
-    tariff?: Tariff;
+    paymentFrequency: PaymentFrequency;
+    paymentStatus: PaymentsStatus;
+    tariff: Tariff;
     discountPercentage?: number;
     discountReason?: string;
-    dueDate?: Date;
-    updateAt?: Date;
+    dueDate: Date;
+    updateAt: Date;
 }

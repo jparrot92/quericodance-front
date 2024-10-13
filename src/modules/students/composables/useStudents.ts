@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { PaymentsStatus, Option } from 'src/types/UtilTypes';
+import { PaymentsStatus, Option, Status } from 'src/types/UtilTypes';
 
 import useNotify from 'src/shared/composables/useNotify';
 
@@ -51,7 +51,7 @@ const useStudents = () => {
             password: '',
             roles: [],
         },
-        status: '',
+        status: Status.NEW,
     });
 
     const loadStudents = async (idActivity: string) => {
@@ -182,16 +182,19 @@ const useStudents = () => {
         });
     };
 
-    const isPaymentStatusPaid = (status: Option | string): boolean => {
+    const isPaymentStatusPaid = (
+        status: Option | string | undefined
+    ): boolean => {
+        if (!status) {
+            return false; // O cualquier valor por defecto que prefieras
+        }
+
         if (typeof status === 'string') {
             return status === PaymentsStatus.PAYED;
         }
 
         // Si status es un objeto Option, obtenemos su valor
-        const value = status.value;
-
-        // Comparamos el valor con el estado de pago esperado
-        return value === PaymentsStatus.PAYED;
+        return status.value === PaymentsStatus.PAYED;
     };
 
     const handleFileUpload = async (event: Event) => {

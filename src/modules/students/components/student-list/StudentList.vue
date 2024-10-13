@@ -460,7 +460,6 @@ onMounted(async () => {
                 <template v-if="props.row.membership">
                     <q-btn
                         v-if="
-                            props.row.membership?.paymentStatus &&
                             isPaymentStatusPaid(
                                 props.row.membership.paymentStatus
                             )
