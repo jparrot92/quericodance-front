@@ -54,6 +54,8 @@ const {
     sendMailPaymentPaid,
     cancelPaymentPaid,
     isPaymentStatusPaid,
+    getStatusColor,
+    getPaymentsStatusColor,
 } = useStudents();
 
 const $q = useQuasar();
@@ -300,15 +302,6 @@ const handleRemoveStudent = async (id: number) => {
     }
 };
 
-const getStatusColor = (status: Status): string => {
-    const statusColorMap: Record<Status, string> = {
-        [Status.NEW]: 'blue',
-        [Status.ACTIVE]: 'green',
-        [Status.INACTIVE]: 'red',
-    };
-    return statusColorMap[status] || 'grey';
-};
-
 watch(
     filtersSelected,
     () => {
@@ -429,11 +422,9 @@ onMounted(async () => {
                 <template v-if="props.row.membership">
                     <q-select
                         :bg-color="
-                            isPaymentStatusPaid(
+                            getPaymentsStatusColor(
                                 props.row.membership.paymentStatus
                             )
-                                ? 'green'
-                                : 'red'
                         "
                         v-model="props.row.membership.paymentStatus"
                         rounded
@@ -442,10 +433,7 @@ onMounted(async () => {
                         options-dense
                         :options="paymentStatuses"
                         @update:model-value="
-                            checkMonthlyPaymentPaid(
-                                props.row,
-                                props.row.membership.paymentStatus
-                            )
+                            checkMonthlyPaymentPaid(props.row, $event)
                         "
                     >
                         <template v-slot:selected-item="{ opt }">
@@ -493,7 +481,6 @@ onMounted(async () => {
             <student-item
                 :key="props.row.id"
                 :student-item="props.row"
-                :get-status-color="getStatusColor"
                 :check-monthly-payment-paid="checkMonthlyPaymentPaid"
                 :handle-send-mail="handleSendMail"
             >

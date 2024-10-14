@@ -251,6 +251,28 @@ const useStudents = () => {
         }
     };
 
+    const getStatusColor = (status: Status): string => {
+        const statusColorMap: Record<Status, string> = {
+            [Status.NEW]: 'blue',
+            [Status.ACTIVE]: 'green',
+            [Status.INACTIVE]: 'red',
+        };
+        return statusColorMap[status] || 'grey';
+    };
+
+    const getPaymentsStatusColor = (
+        status: PaymentsStatus | { value: PaymentsStatus }
+    ): string => {
+        const statusValue = typeof status === 'string' ? status : status.value;
+
+        const statusColorMap: Record<PaymentsStatus, string> = {
+            [PaymentsStatus.PAYED]: 'green',
+            [PaymentsStatus.PENDING]: 'red',
+        };
+
+        return statusColorMap[statusValue] || 'grey';
+    };
+
     return {
         // Properties
         loading,
@@ -269,6 +291,8 @@ const useStudents = () => {
         handleFileUpload,
         handleFileDownload,
         handleFileDownloadTemplate,
+        getStatusColor,
+        getPaymentsStatusColor,
     };
 };
 

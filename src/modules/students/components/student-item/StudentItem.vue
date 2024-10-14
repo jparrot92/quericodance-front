@@ -14,7 +14,6 @@ import { StudentDTO } from '../../models/student';
 const props = withDefaults(
     defineProps<{
         studentItem: StudentDTO;
-        getStatusColor: (status: Status) => string;
         checkMonthlyPaymentPaid: (
             student: StudentDTO,
             paymentStatus: Option
@@ -28,7 +27,8 @@ const { t } = useI18n();
 const router = useRouter();
 const { generateEnumOptions } = useEnumOptions();
 
-const { isPaymentStatusPaid } = useStudents();
+const { isPaymentStatusPaid, getStatusColor, getPaymentsStatusColor } =
+    useStudents();
 
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 
@@ -61,13 +61,18 @@ const handleItemClick = async (id: number) => {
 
             <q-item-section>
                 <q-item-label lines="1">
-                    {{ student.user.name }}
-                    {{ student.user.surnames }}
-
-                    <q-badge
-                        :color="getStatusColor(student.status)"
-                        :label="$t('shared.enum.' + student.status)"
-                    />
+                    <div class="row">
+                        <div class="col-10 ellipsis q-pr-xs">
+                            {{ student.user.name }}
+                            {{ student.user.surnames }}
+                        </div>
+                        <div class="col-2 flex justify-end">
+                            <q-badge
+                                :color="getStatusColor(student.status)"
+                                :label="$t('shared.enum.' + student.status)"
+                            />
+                        </div>
+                    </div>
                 </q-item-label>
                 <q-item-label lines="1">
                     <a
@@ -79,15 +84,30 @@ const handleItemClick = async (id: number) => {
                     </a>
                 </q-item-label>
                 <q-item-label lines="2">
-                    {{ t('pago') }}
+                    <span
+                        v-if="
+                            student.membership?.paymentStatus ===
+                            PaymentsStatus.PAYED
+                        "
+                    >
+                        {{ t('student.payment') }}
+                    </span>
+                    <span
+                        v-else-if="
+                            student.membership?.paymentStatus ===
+                            PaymentsStatus.PENDING
+                        "
+                    >
+                        {{ t('student.owe') }}
+                    </span>
+
                     <q-badge
+                        class="q-mx-xs"
                         v-if="student.membership"
                         :color="
-                            isPaymentStatusPaid(
+                            getPaymentsStatusColor(
                                 student.membership?.paymentStatus
                             )
-                                ? 'green'
-                                : 'red'
                         "
                         :label="student.membership.payment"
                     />
@@ -101,7 +121,7 @@ const handleItemClick = async (id: number) => {
                                       student.membership?.paymentDate,
                                       'short'
                                   )
-                                : '-'
+                                : ''
                         }}
                     </template>
                 </q-item-label>

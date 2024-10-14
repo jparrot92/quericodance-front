@@ -67,5 +67,6 @@ export default {
         dateAbsence: 'Fecha ausencia',
         showAbsence: 'Ver ausencias',
         absenceDate: 'Fecha ausencia',
+        owe: 'Debe',
     },
 };
