@@ -45,7 +45,7 @@ export const updateTeacher = async (
     }
 };
 
-export const deleteTeacher = async (id: string): Promise<Teacher> => {
+export const deleteTeacher = async (id: number): Promise<Teacher> => {
     try {
         const { data } = await api.delete<Teacher>(`/teachers/${id}`);
 

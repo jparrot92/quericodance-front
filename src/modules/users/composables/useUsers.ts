@@ -36,7 +36,6 @@ const useUsers = () => {
         instagram: '',
         email: '',
         password: '',
-        active: false,
         roles: [],
     });
 
@@ -91,7 +90,7 @@ const useUsers = () => {
         }
     };
 
-    const removeUser = async (id: string) => {
+    const removeUser = async (id: number) => {
         $q.dialog({
             title: t('shared.confirmation'),
             message: t('user.messageUserDelete'),

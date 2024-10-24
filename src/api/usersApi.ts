@@ -63,7 +63,7 @@ export const uploadPhoto = async (id: number, file: File): Promise<string> => {
     }
 };
 
-export const deleteUser = async (id: string): Promise<User> => {
+export const deleteUser = async (id: number): Promise<User> => {
     try {
         const { data } = await api.delete<User>(`/users/${id}`);
 

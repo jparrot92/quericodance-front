@@ -1,22 +1,9 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue';
-
-const TeacherList = defineAsyncComponent(
-    () => import('src/modules/teachers/components/teacher-list/TeacherList.vue')
-);
+import TeacherList from '../components/teacher-list/TeacherList.vue';
 </script>
 
 <template>
     <q-page padding>
-        <TeacherList />
-        <q-page-sticky position="bottom-right" :offset="[18, 18]">
-            <q-btn
-                v-if="$q.platform.is.mobile"
-                fab
-                icon="mdi-plus"
-                color="primary"
-                :to="{ name: 'teachers-add' }"
-            />
-        </q-page-sticky>
+        <teacher-list />
     </q-page>
 </template>
