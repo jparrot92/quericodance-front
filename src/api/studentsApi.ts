@@ -3,7 +3,7 @@ import { StudentDTO } from 'src/modules/students/models/student';
 import { handleError } from './errorApi';
 
 export const listStudents = async (
-    idActivity: string
+    idActivity: number | string
 ): Promise<StudentDTO[]> => {
     try {
         const params = idActivity ? { idActivity } : {};

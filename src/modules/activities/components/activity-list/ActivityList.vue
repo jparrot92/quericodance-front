@@ -1,17 +1,32 @@
 <script setup lang="ts">
-import { Ref, computed, onMounted, reactive, ref, watch } from 'vue';
+import {
+    ComputedRef,
+    Ref,
+    computed,
+    onMounted,
+    reactive,
+    ref,
+    watch,
+} from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
-import { ActivityType, ColumnTable, WeekDay } from 'src/types/UtilTypes';
+import {
+    Action,
+    ActivityType,
+    ColumnTable,
+    WeekDay,
+} from 'src/types/UtilTypes';
 import MenuList from 'src/shared/components/MenuList.vue';
 
 import { ActivityDTO, ActivityList } from '../../models/activity';
 import useActivities from '../../composables/useActivities';
 import { FilterField } from 'src/composables/useFilterTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
+
+import ActivityItem from '../activity-item/ActivityItem.vue';
 
 const props = withDefaults(
     defineProps<{
@@ -39,6 +54,36 @@ const {
 const weekDays = generateEnumOptions(WeekDay);
 const activitiesFiltered = ref<ActivityList[]>([]);
 const showProfitability = ref(false);
+
+const actions: ComputedRef<Action<ActivityList>[]> = computed(() => {
+    return [
+        {
+            label: t('shared.see'),
+            action: (row: ActivityList) => {
+                router.push({
+                    name: 'activities-list-students',
+                    params: { id: row.id },
+                });
+            },
+            show: () => true,
+        },
+        {
+            label: t('shared.edit'),
+            action: (row: ActivityList) => {
+                router.push({
+                    name: 'activities-edit',
+                    params: { id: row.id },
+                });
+            },
+            show: () => true,
+        },
+        {
+            label: t('shared.delete'),
+            action: (row: ActivityList) => handleRemoveActivity(row.id),
+            show: () => true,
+        },
+    ];
+});
 
 const columns: ColumnTable[] = [
     {
@@ -239,8 +284,8 @@ function getWeekNumber(day: WeekDay): number {
 }
 
 const orderByDay = (a: ActivityList, b: ActivityList) => {
-    const dayA = getWeekNumber(a.day);
-    const dayB = getWeekNumber(b.day);
+    const dayA = a.day ? getWeekNumber(a.day) : -1;
+    const dayB = b.day ? getWeekNumber(b.day) : -1;
 
     // Cambiar el orden de retorno para ordenar de mayor a menor
     if (dayA > dayB) return -1;
@@ -295,136 +340,155 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="row">
-        <q-table
-            :rows="activitiesFiltered"
-            :columns="filteredColumns"
-            row-key="id"
-            class="col-12 my-sticky-last-column-table"
-            :loading="loading"
-            @row-click="onRowClick"
-            :no-data-label="$t('shared.noData')"
-            :rows-per-page-label="$t('shared.recordsPerPage')"
-            v-model:pagination="filtersSelected.pagination"
-        >
-            <template v-slot:top>
-                <div class="col-12 justify-between">
-                    <div class="row justify-between">
-                        <div class="col-6">
-                            <pd-filter
-                                v-model="filtersSelected"
-                                :filters="filters"
-                                :placeholder="$t('activity.serachPlaceholder')"
-                            ></pd-filter>
-                        </div>
-                        <div class="col-2 flex justify-end">
-                            <q-toggle
-                                :label="$t('activity.showProfitability')"
-                                class="h-2-5rem"
-                                v-model="showProfitability"
-                            ></q-toggle>
-                        </div>
-                        <div class="col-2 flex justify-end">
-                            <q-btn
-                                v-if="$q.platform.is.desktop"
-                                :label="$t('shared.downloadExcel')"
-                                color="green"
-                                icon="mdi-download"
-                                dense
-                                class="h-2-5rem"
-                                @click="handleFileDownload"
-                            />
-                        </div>
-                        <div class="col-2 flex justify-end">
-                            <q-btn
-                                v-if="$q.platform.is.desktop"
-                                :label="$t(labelBtnCreateActivity)"
-                                color="primary"
-                                icon="mdi-plus"
-                                dense
-                                class="h-2-5rem"
-                                @click="
-                                    $router.push({
-                                        name: 'activities-add',
-                                        params: {
-                                            activityType: activityType,
-                                        },
-                                    })
-                                "
-                            />
-                        </div>
+    <q-table
+        :grid="$q.screen.xs"
+        :rows="activitiesFiltered"
+        :columns="filteredColumns"
+        row-key="id"
+        class="col-12 my-sticky-last-column-table"
+        :loading="loading"
+        @row-click="onRowClick"
+        :no-data-label="$t('shared.noData')"
+        :rows-per-page-label="$t('shared.recordsPerPage')"
+        v-model:pagination="filtersSelected.pagination"
+    >
+        <template v-slot:top>
+            <div class="col-12 justify-between">
+                <div class="row justify-between">
+                    <div class="col-sm-6 col-xs-12">
+                        <pd-filter
+                            v-model="filtersSelected"
+                            :filters="filters"
+                            :placeholder="$t('activity.serachPlaceholder')"
+                        ></pd-filter>
+                    </div>
+                    <div class="col-sm-2 col-xs-12 flex justify-end">
+                        <q-toggle
+                            :label="$t('activity.showProfitability')"
+                            class="h-2-5rem"
+                            v-model="showProfitability"
+                        ></q-toggle>
+                    </div>
+                    <div class="col-sm-2 flex justify-end" v-if="!$q.screen.xs">
+                        <q-btn
+                            :label="$t('shared.downloadExcel')"
+                            color="green"
+                            icon="mdi-download"
+                            dense
+                            class="h-2-5rem"
+                            @click="handleFileDownload"
+                        />
+                    </div>
+                    <div class="col-sm-2 flex justify-end" v-if="!$q.screen.xs">
+                        <q-btn
+                            :label="$t(labelBtnCreateActivity)"
+                            color="primary"
+                            icon="mdi-plus"
+                            dense
+                            class="h-2-5rem"
+                            @click="
+                                $router.push({
+                                    name: 'activities-add',
+                                    params: {
+                                        activityType: activityType,
+                                    },
+                                })
+                            "
+                        />
                     </div>
                 </div>
+            </div>
+        </template>
+        <template v-slot:body-cell-numberLeaders="props">
+            <q-td :props="props">
+                <div>
+                    <q-badge color="blue" :label="props.value" />
+                </div>
+            </q-td>
+        </template>
+        <template v-slot:body-cell-numberFollowers="props">
+            <q-td :props="props">
+                <div>
+                    <q-badge color="pink" :label="props.value" />
+                </div>
+            </q-td>
+        </template>
+        <template v-slot:body-cell-costEffectiveness="props">
+            <q-td :props="props">
+                <div>
+                    <q-badge color="green" :label="props.value" />
+                </div>
+            </q-td>
+        </template>
+        <template v-slot:body-cell-totalPaid="props">
+            <q-td :props="props">
+                <div>
+                    <q-badge color="green" :label="props.value" />
+                </div>
+            </q-td>
+        </template>
+        <template v-slot:body-cell-actions="props">
+            <q-td :props="props">
+                <pd-menu-list :actions="actions" :row="props.row" />
+            </q-td>
+        </template>
+        <template v-slot:item="props">
+            <activity-item
+                :key="props.row.id"
+                :activity-item="props.row"
+                :show-profitability="showProfitability"
+            >
+                <template v-slot:menu>
+                    <pd-menu-list :actions="actions" :row="props.row" />
+                </template>
+            </activity-item>
+        </template>
+    </q-table>
+    <q-page-sticky
+        v-if="$q.screen.xs"
+        position="bottom-right"
+        :offset="[18, 18]"
+        class="z-top"
+    >
+        <q-fab color="primary" direction="up" vertical-actions-align="right">
+            <template v-slot:icon="{ opened }">
+                <q-icon
+                    :class="{
+                        'example-fab-animate--hover': opened !== true,
+                    }"
+                    name="keyboard_arrow_up"
+                />
             </template>
-            <template v-slot:body-cell-numberLeaders="props">
-                <q-td :props="props">
-                    <div>
-                        <q-badge color="blue" :label="props.value" />
-                    </div>
-                </q-td>
+
+            <template v-slot:active-icon="{ opened }">
+                <q-icon
+                    :class="{ 'example-fab-animate': opened === true }"
+                    name="close"
+                />
             </template>
-            <template v-slot:body-cell-numberFollowers="props">
-                <q-td :props="props">
-                    <div>
-                        <q-badge color="pink" :label="props.value" />
-                    </div>
-                </q-td>
-            </template>
-            <template v-slot:body-cell-costEffectiveness="props">
-                <q-td :props="props">
-                    <div>
-                        <q-badge color="green" :label="props.value" />
-                    </div>
-                </q-td>
-            </template>
-            <template v-slot:body-cell-totalPaid="props">
-                <q-td :props="props">
-                    <div>
-                        <q-badge color="green" :label="props.value" />
-                    </div>
-                </q-td>
-            </template>
-            <template v-slot:body-cell-actions="props">
-                <q-td :props="props">
-                    <menu-list @click.stop>
-                        <q-item clickable v-close-popup>
-                            <q-item-section
-                                @click="
-                                    $router.push({
-                                        name: 'activities-list-students',
-                                        params: {
-                                            id: props.row.id,
-                                        },
-                                    })
-                                "
-                            >
-                                {{ $t('shared.see') }}
-                            </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup>
-                            <q-item-section
-                                @click="
-                                    $router.push({
-                                        name: 'activities-edit',
-                                        params: {
-                                            id: props.row.id,
-                                        },
-                                    })
-                                "
-                            >
-                                {{ $t('shared.edit') }}
-                            </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup>
-                            <q-item-section
-                                @click="handleRemoveActivity(props.row.id)"
-                            >
-                                {{ $t('shared.delete') }}
-                            </q-item-section>
-                        </q-item>
-                    </menu-list>
-                </q-td>
-            </template>
-        </q-table>
-    </div>
+
+            <q-fab-action
+                label-position="left"
+                color="primary"
+                @click="
+                    $router.push({
+                        name: 'activities-add',
+                        params: {
+                            activityType: activityType,
+                        },
+                    })
+                "
+                icon="mdi-plus"
+                :label="$t(labelBtnCreateActivity)"
+            />
+
+            <q-fab-action
+                label-position="left"
+                color="green"
+                @click="handleFileDownload"
+                icon="mdi-download"
+                :label="$t('shared.downloadExcel')"
+            />
+        </q-fab>
+    </q-page-sticky>
 </template>

@@ -25,7 +25,7 @@ const fileInput = ref<HTMLInputElement | null>(null);
 const handleResetPayments = async () => {
     try {
         await resetPayments();
-        await loadStudents(idActivity.value);
+        await loadStudents('');
         studentsFiltered.value = students.value;
     } catch (error) {
         console.error(error);
@@ -40,62 +40,78 @@ const chooseFile = () => {
 </script>
 <template>
     <template v-if="$q.screen.xs">
-        <q-page-sticky
-            v-if="$q.screen.xs"
-            position="bottom-right"
-            :offset="[18, 18]"
-            class="z-top"
-        >
-            <q-fab
-                color="primary"
-                direction="up"
-                vertical-actions-align="right"
-            >
-                <template v-slot:icon="{ opened }">
-                    <q-icon
-                        :class="{
-                            'example-fab-animate--hover': opened !== true,
-                        }"
-                        name="keyboard_arrow_up"
-                    />
-                </template>
-
-                <template v-slot:active-icon="{ opened }">
-                    <q-icon
-                        :class="{ 'example-fab-animate': opened === true }"
-                        name="close"
-                    />
-                </template>
-
-                <q-fab-action
-                    label-position="left"
+        <template v-if="props.idActivity">
+            <q-page-sticky position="bottom-right" :offset="[18, 18]">
+                <q-btn
+                    fab
+                    icon="mdi-plus"
                     color="primary"
                     @click="
                         $router.push({
                             name: 'students-add',
                         })
                     "
-                    icon="mdi-plus"
-                    :label="$t('student.createStudent')"
                 />
+            </q-page-sticky>
+        </template>
+        <template v-else>
+            <q-page-sticky
+                v-if="$q.screen.xs"
+                position="bottom-right"
+                :offset="[18, 18]"
+                class="z-top"
+            >
+                <q-fab
+                    color="primary"
+                    direction="up"
+                    vertical-actions-align="right"
+                >
+                    <template v-slot:icon="{ opened }">
+                        <q-icon
+                            :class="{
+                                'example-fab-animate--hover': opened !== true,
+                            }"
+                            name="keyboard_arrow_up"
+                        />
+                    </template>
 
-                <q-fab-action
-                    label-position="left"
-                    color="green"
-                    @click="onClick"
-                    icon="file_present"
-                    :label="$t('shared.excel')"
-                />
+                    <template v-slot:active-icon="{ opened }">
+                        <q-icon
+                            :class="{ 'example-fab-animate': opened === true }"
+                            name="close"
+                        />
+                    </template>
 
-                <q-fab-action
-                    label-position="left"
-                    color="green"
-                    @click="handleResetPayments"
-                    icon="mdi-restart"
-                    :label="$t('shared.resetPayments')"
-                />
-            </q-fab>
-        </q-page-sticky>
+                    <q-fab-action
+                        label-position="left"
+                        color="primary"
+                        @click="
+                            $router.push({
+                                name: 'students-add',
+                            })
+                        "
+                        icon="mdi-plus"
+                        :label="$t('student.createStudent')"
+                    />
+
+                    <q-fab-action
+                        label-position="left"
+                        color="green"
+                        @click="onClick"
+                        icon="file_present"
+                        :label="$t('shared.excel')"
+                    />
+
+                    <q-fab-action
+                        label-position="left"
+                        color="green"
+                        @click="handleResetPayments"
+                        icon="mdi-restart"
+                        :label="$t('shared.resetPayments')"
+                    />
+                </q-fab>
+            </q-page-sticky>
+        </template>
     </template>
     <template v-else>
         <template v-if="props.idActivity">

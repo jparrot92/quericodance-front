@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 
 import { format } from '@formkit/tempo';
 
-import { Status, Option, PaymentsStatus } from 'src/types/UtilTypes';
+import { Option, PaymentsStatus } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useStudents from '../../composables/useStudents';

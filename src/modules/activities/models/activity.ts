@@ -8,10 +8,10 @@ export interface ActivityDTO {
     type: ActivityType;
     name: string;
     level: number | null;
-    day: WeekDay | null;
+    day?: WeekDay | null;
     startHour: string;
     endHour: string;
-    dateEvent: string;
+    dateEvent?: string;
     numberPlaces: number | null;
     price: number | null;
     color: string;
