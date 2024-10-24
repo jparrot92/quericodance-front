@@ -8,6 +8,7 @@ import { Action, ColumnTable } from 'src/types/UtilTypes';
 
 import useTariffs from '../../composables/useTariffs';
 import { Tariff } from '../../models/tariff';
+import TariffItem from '../tariff-item/TariffItem.vue';
 
 const { loading, tariffs, loadTariffs, removeTariff } = useTariffs();
 
@@ -89,10 +90,9 @@ onMounted(() => {
         :no-data-label="$t('shared.noData')"
         :rows-per-page-label="$t('shared.recordsPerPage')"
     >
-        <template v-slot:top>
+        <template v-slot:top v-if="!$q.screen.xs">
             <q-space />
             <q-btn
-                v-if="!$q.screen.xs"
                 :label="$t('tariff.createTariff')"
                 color="primary"
                 icon="mdi-plus"
@@ -108,6 +108,13 @@ onMounted(() => {
             <q-td :props="props">
                 <pd-menu-list :actions="actions" :row="props.row" />
             </q-td>
+        </template>
+        <template v-slot:item="props">
+            <tariff-item :key="props.row.id" :tariff-item="props.row">
+                <template v-slot:menu>
+                    <pd-menu-list :actions="actions" :row="props.row" />
+                </template>
+            </tariff-item>
         </template>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">

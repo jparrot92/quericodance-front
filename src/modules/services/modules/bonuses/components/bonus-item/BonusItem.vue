@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import { Tariff } from '../../models/tariff';
+import { Bonus } from '../../models/bonus';
 
 const props = withDefaults(
     defineProps<{
-        tariffItem: Tariff;
+        bonusItem: Bonus;
     }>(),
     {}
 );
 
 const router = useRouter();
 
-const handleItemClick = (tariff: Tariff) => {
+const handleItemClick = (bonus: Bonus) => {
     router.push({
-        name: 'tariffs-edit',
+        name: 'bonuses-edit',
         params: {
-            id: tariff.id,
+            id: bonus.id,
         },
     });
 };
@@ -24,10 +24,10 @@ const handleItemClick = (tariff: Tariff) => {
 
 <template>
     <div padding class="full-width">
-        <q-item clickable v-ripple @click="handleItemClick(props.tariffItem)">
+        <q-item clickable v-ripple @click="handleItemClick(props.bonusItem)">
             <q-item-section>
                 <q-item-label lines="1">
-                    {{ props.tariffItem.name }}
+                    {{ props.bonusItem.name }}
                 </q-item-label>
             </q-item-section>
             <q-item-section side top>

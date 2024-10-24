@@ -8,6 +8,7 @@ import { Action, ColumnTable } from 'src/types/UtilTypes';
 
 import useBonuses from '../../composables/useBonuses';
 import { Bonus } from '../../models/bonus';
+import BonusItem from '../bonus-item/BonusItem.vue';
 
 const { loading, bonuses, loadBonuses, removeBonus } = useBonuses();
 
@@ -82,10 +83,9 @@ onMounted(() => {
         :no-data-label="$t('shared.noData')"
         :rows-per-page-label="$t('shared.recordsPerPage')"
     >
-        <template v-slot:top>
+        <template v-slot:top v-if="!$q.screen.xs">
             <q-space />
             <q-btn
-                v-if="!$q.screen.xs"
                 :label="$t('bonus.createBonus')"
                 color="primary"
                 icon="mdi-plus"
@@ -103,6 +103,13 @@ onMounted(() => {
                     <pd-menu-list :actions="actions" :row="props.row" />
                 </menu-list>
             </q-td>
+        </template>
+        <template v-slot:item="props">
+            <bonus-item :key="props.row.id" :bonus-item="props.row">
+                <template v-slot:menu>
+                    <pd-menu-list :actions="actions" :row="props.row" />
+                </template>
+            </bonus-item>
         </template>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
