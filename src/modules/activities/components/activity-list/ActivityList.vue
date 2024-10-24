@@ -19,7 +19,6 @@ import {
     ColumnTable,
     WeekDay,
 } from 'src/types/UtilTypes';
-import MenuList from 'src/shared/components/MenuList.vue';
 
 import { ActivityDTO, ActivityList } from '../../models/activity';
 import useActivities from '../../composables/useActivities';

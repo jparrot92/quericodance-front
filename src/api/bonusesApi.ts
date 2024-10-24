@@ -48,7 +48,7 @@ export const updateBonus = async (id: string, bonus: Bonus): Promise<Bonus> => {
     }
 };
 
-export const deleteBonus = async (id: string): Promise<Bonus> => {
+export const deleteBonus = async (id: number): Promise<Bonus> => {
     try {
         const { data } = await api.delete<Bonus>(`${bonusesEndpoint}/${id}`);
 

@@ -88,7 +88,7 @@ const useTariffs = () => {
         }
     };
 
-    const removeTariff = async (id: string) => {
+    const removeTariff = async (id: number) => {
         $q.dialog({
             title: t('shared.confirmation'),
             message: t('tariff.delete'),

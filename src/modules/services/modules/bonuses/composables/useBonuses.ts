@@ -88,7 +88,7 @@ const useBonuses = () => {
         }
     };
 
-    const removeBonus = async (id: string) => {
+    const removeBonus = async (id: number) => {
         $q.dialog({
             title: t('shared.confirmation'),
             message: t('bonus.delete'),

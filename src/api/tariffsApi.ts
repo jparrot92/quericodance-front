@@ -50,7 +50,7 @@ export const updateTariff = async (
     }
 };
 
-export const deleteTariff = async (id: string): Promise<Tariff> => {
+export const deleteTariff = async (id: number): Promise<Tariff> => {
     try {
         const { data } = await api.delete<Tariff>(`${tariffsEndpoint}/${id}`);
 
