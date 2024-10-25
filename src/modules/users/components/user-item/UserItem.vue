@@ -25,15 +25,37 @@ const handleItemClick = (user: User) => {
 <template>
     <div padding class="full-width">
         <q-item clickable v-ripple @click="handleItemClick(props.userItem)">
+            <q-item-section avatar top>
+                <q-avatar v-if="props.userItem.photo">
+                    <img :src="props.userItem.photo" />
+                </q-avatar>
+                <q-avatar
+                    v-else
+                    color="grey"
+                    text-color="white"
+                    icon="mdi-image-off"
+                />
+            </q-item-section>
             <q-item-section>
                 <q-item-label lines="1">
-                    {{ props.userItem.name }}
+                    {{ props.userItem.name }} {{ props.userItem.surnames }}
+                </q-item-label>
+                <q-item-label lines="1">
+                    {{ props.userItem.email }}
+                </q-item-label>
+                <q-item-label lines="2">
+                    <div
+                        v-for="(role, index) in props.userItem.roles"
+                        :key="index"
+                    >
+                        <q-badge color="blue" :label="role" />
+                    </div>
                 </q-item-label>
             </q-item-section>
             <q-item-section side top>
                 <slot name="menu"> </slot>
             </q-item-section>
         </q-item>
-        <q-separator />
+        <q-separator inset="item" />
     </div>
 </template>

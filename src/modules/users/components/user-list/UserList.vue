@@ -126,7 +126,7 @@ onMounted(() => {
         <template v-slot:body-cell-roles="props">
             <q-td :props="props">
                 <div v-for="(role, index) in props.value" :key="index">
-                    <q-badge color="green" :label="role" />
+                    <q-badge color="blue" :label="role" />
                 </div>
             </q-td>
         </template>
