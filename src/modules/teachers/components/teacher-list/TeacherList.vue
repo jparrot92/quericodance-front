@@ -7,6 +7,7 @@ import { Action, ColumnTable } from 'src/types/UtilTypes';
 
 import { Teacher } from '../../models/teacher';
 import useTeachers from '../../composables/useTeachers';
+import TeacherItem from '../teacher-item/TeacherItem.vue';
 
 const $q = useQuasar();
 const { t } = useI18n();
@@ -121,6 +122,13 @@ onMounted(() => {
                     <pd-menu-list :actions="actions" :row="props.row" />
                 </menu-list>
             </q-td>
+        </template>
+        <template v-slot:item="props">
+            <teacher-item :key="props.row.id" :teacher-item="props.row">
+                <template v-slot:menu>
+                    <pd-menu-list :actions="actions" :row="props.row" />
+                </template>
+            </teacher-item>
         </template>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">

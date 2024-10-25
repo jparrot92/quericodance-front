@@ -7,6 +7,7 @@ import { Action, ColumnTable } from 'src/types/UtilTypes';
 
 import useUsers from '../../composables/useUsers';
 import { User } from '../../models/user';
+import UserItem from '../user-item/UserItem.vue';
 
 const $q = useQuasar();
 const { t } = useI18n();
@@ -135,6 +136,13 @@ onMounted(() => {
                     <pd-menu-list :actions="actions" :row="props.row" />
                 </menu-list>
             </q-td>
+        </template>
+        <template v-slot:item="props">
+            <user-item :key="props.row.id" :user-item="props.row">
+                <template v-slot:menu>
+                    <pd-menu-list :actions="actions" :row="props.row" />
+                </template>
+            </user-item>
         </template>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">

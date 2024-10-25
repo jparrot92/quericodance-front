@@ -5,8 +5,10 @@ import { format } from '@formkit/tempo';
 import { ColumnTable } from 'src/types/UtilTypes';
 
 import usePayments from '../../composables/usePayments';
-import { PaymentDTO } from '../../models/payment';
 import useStudents from 'src/modules/students/composables/useStudents';
+
+import { PaymentDTO } from '../../models/payment';
+import PaymentItem from '../payment-item/PaymentItem.vue';
 
 const props = withDefaults(
     defineProps<{
@@ -167,6 +169,9 @@ onMounted(() => {
                     {{ format(props.row.paymentDate) }}
                 </template>
             </q-td>
+        </template>
+        <template v-slot:item="props">
+            <payment-item :key="props.row.id" :payment-item="props.row" />
         </template>
     </q-table>
 </template>
