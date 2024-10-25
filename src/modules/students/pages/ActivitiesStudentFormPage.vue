@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { onMounted, defineProps, ref, computed, onBeforeUnmount } from 'vue';
+import {
+    onMounted,
+    defineProps,
+    ref,
+    computed,
+    onBeforeUnmount,
+    ComputedRef,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import MenuList from 'src/shared/components/MenuList.vue';
+import { useRouter } from 'vue-router';
+import { Action } from 'src/types/UtilTypes';
 
 import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
@@ -27,9 +34,38 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
+const router = useRouter();
+
 const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 const { removeActivityStudent, removeActivityAbsence } = useActivities();
+
+const actions: ComputedRef<Action<ActivityStudent>[]> = computed(() => {
+    return [
+        {
+            label: t('activity.see'),
+            action: (row: ActivityStudent) => {
+                router.push({
+                    name: 'activities-list-students',
+                    params: {
+                        id: row.activity.id,
+                    },
+                });
+            },
+            show: () => true,
+        },
+        {
+            label: t('student.addAbsence'),
+            action: (row: ActivityStudent) => showActivityAbsence(row.activity),
+            show: () => true,
+        },
+        {
+            label: t('shared.delete'),
+            action: (row: ActivityStudent) => deleteActivityStudent(row.id),
+            show: () => true,
+        },
+    ];
+});
 
 const hasMembership = ref<boolean>(props.hasMembership);
 const studentActivitiesList = ref<ActivityStudent[]>(
@@ -229,45 +265,11 @@ onBeforeUnmount(() => {
                                             {{ item.activity.absences?.length }}
                                         </q-badge>
                                     </q-btn>
-                                    <menu-list v-if="isAdmin()">
-                                        <q-item clickable v-close-popup>
-                                            <q-item-section
-                                                @click="
-                                                    $router.push({
-                                                        name: 'activities-list-students',
-                                                        params: {
-                                                            id: item.activity
-                                                                .id,
-                                                        },
-                                                    })
-                                                "
-                                            >
-                                                {{ $t('activity.see') }}
-                                            </q-item-section>
-                                        </q-item>
-                                        <q-item clickable v-close-popup>
-                                            <q-item-section
-                                                @click="
-                                                    showActivityAbsence(
-                                                        item.activity
-                                                    )
-                                                "
-                                            >
-                                                {{ $t('student.addAbsence') }}
-                                            </q-item-section>
-                                        </q-item>
-                                        <q-item clickable v-close-popup>
-                                            <q-item-section
-                                                @click="
-                                                    deleteActivityStudent(
-                                                        item.id
-                                                    )
-                                                "
-                                            >
-                                                {{ $t('shared.delete') }}
-                                            </q-item-section>
-                                        </q-item>
-                                    </menu-list>
+                                    <pd-menu-list
+                                        v-if="isAdmin()"
+                                        :actions="actions"
+                                        :row="item"
+                                    />
                                 </div>
                             </q-item-section>
                         </q-item>
