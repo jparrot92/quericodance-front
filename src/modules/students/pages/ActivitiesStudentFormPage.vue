@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import {
-    onMounted,
-    defineProps,
-    ref,
-    computed,
-    onBeforeUnmount,
-    ComputedRef,
-} from 'vue';
+import { onMounted, defineProps, ref, computed, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
-import { Action } from 'src/types/UtilTypes';
 
 import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
@@ -20,7 +11,8 @@ import useActivities from 'src/modules/activities/composables/useActivities';
 import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
 import AddActivityStudentDialog from '../components/AddActivityStudentDialog.vue';
 import AddActivityAbsenceDialog from '../components/AddActivityAbsenceDialog.vue';
-import AbsenceList from '../components/absence-list/AbsenceList.vue';
+
+import ActivitiesStudentList from '../components/activities-student-list/ActivitiesStudentList.vue';
 
 const emits = defineEmits(['update-activities-student']);
 
@@ -34,38 +26,10 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
-const router = useRouter();
 
 const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 const { removeActivityStudent, removeActivityAbsence } = useActivities();
-
-const actions: ComputedRef<Action<ActivityStudent>[]> = computed(() => {
-    return [
-        {
-            label: t('activity.see'),
-            action: (row: ActivityStudent) => {
-                router.push({
-                    name: 'activities-list-students',
-                    params: {
-                        id: row.activity.id,
-                    },
-                });
-            },
-            show: () => true,
-        },
-        {
-            label: t('student.addAbsence'),
-            action: (row: ActivityStudent) => showActivityAbsence(row.activity),
-            show: () => true,
-        },
-        {
-            label: t('shared.delete'),
-            action: (row: ActivityStudent) => deleteActivityStudent(row.id),
-            show: () => true,
-        },
-    ];
-});
 
 const hasMembership = ref<boolean>(props.hasMembership);
 const studentActivitiesList = ref<ActivityStudent[]>(
@@ -76,23 +40,11 @@ const showModalAddActivity = ref(false);
 const showModalAddActivityAbsence = ref(false);
 const activityAbsence = ref<ActivityDTO>();
 
-const showAbsenceList = ref<{ [key: number]: boolean }>({});
-
 const messageNotMembership = computed<string>(() =>
     isStudent()
         ? t('student.messageNotMembershipStudent')
         : t('student.messageNotMembership')
 );
-
-const messageAddCourse = computed<string>(() =>
-    isStudent()
-        ? t('student.messageAddCourseStudent')
-        : t('student.messageAddCourse')
-);
-
-const toggleAbsenceList = (activityId: number) => {
-    showAbsenceList.value[activityId] = !showAbsenceList.value[activityId];
-};
 
 const addActivityStudent = (newActivityStudent: ActivityStudent) => {
     studentActivitiesList.value = [
@@ -216,87 +168,29 @@ onBeforeUnmount(() => {
         <div class="row justify-center">
             <div class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md">
                 <template v-if="hasMembership">
-                    <q-list
-                        v-for="item in studentActivitiesList"
-                        :key="item.id"
-                        bordered
-                        class="rounded-borders"
-                    >
-                        <q-item>
-                            <q-item-section top>
-                                <q-item-label lines="1">
-                                    <span class="text-weight-medium">
-                                        {{ $t('activity.activity') }}
-                                        {{ item.activity.name }}
-                                        {{ item.activity.level }}
-                                    </span>
-                                    <span class="text-grey-8">
-                                        -
-                                        {{
-                                            t(
-                                                'shared.enum.' +
-                                                    item.activity.day
-                                            )
-                                        }}
-                                        {{ item.activity.startHour }}
-                                    </span>
-                                </q-item-label>
-                                <q-item-label caption lines="1">
-                                    {{ item.danceRole }}
-                                </q-item-label>
-                            </q-item-section>
-
-                            <q-item-section top side>
-                                <div class="text-grey-8 q-gutter-xs">
-                                    <q-btn
-                                        class="gt-xs"
-                                        size="12px"
-                                        flat
-                                        @click="
-                                            toggleAbsenceList(item.activity.id)
-                                        "
-                                        :label="$t('student.showAbsence')"
-                                    >
-                                        <q-badge
-                                            v-if="item.activity.absences"
-                                            color="red"
-                                            floating
-                                        >
-                                            {{ item.activity.absences?.length }}
-                                        </q-badge>
-                                    </q-btn>
-                                    <pd-menu-list
-                                        v-if="isAdmin()"
-                                        :actions="actions"
-                                        :row="item"
-                                    />
-                                </div>
-                            </q-item-section>
-                        </q-item>
-
-                        <!-- Mostrar/ocultar la lista de ausencias basado en el estado -->
-                        <absence-list
-                            v-if="showAbsenceList[item.activity.id]"
-                            :absences="item.activity.absences"
-                            @delete-activities-absence="
-                                handleRemoveActivityAbsence
-                            "
-                        />
-                    </q-list>
-
-                    <q-card flat v-if="studentActivitiesList.length === 0">
-                        <q-banner class="bg-info text-white">
-                            {{ messageAddCourse }}
-                        </q-banner>
-                    </q-card>
+                    <activities-student-list
+                        :activities-student="studentActivitiesList"
+                        @add-absence="showActivityAbsence"
+                        @delete-activity="deleteActivityStudent"
+                        @delete-absence="handleRemoveActivityAbsence"
+                    />
                     <q-btn
-                        v-if="isAdmin()"
+                        v-if="!$q.screen.xs && isAdmin()"
                         :label="$t('student.addActivity')"
                         color="primary"
                         class="full-width"
                         rounded
                         @click="showModalAddActivity = true"
                     />
+                    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+                        <q-btn
+                            v-if="$q.screen.xs && isAdmin()"
+                            fab
+                            icon="mdi-plus"
+                            color="primary"
+                            @click="showModalAddActivity = true"
+                        />
+                    </q-page-sticky>
                 </template>
                 <template v-else>
                     <q-card flat>
