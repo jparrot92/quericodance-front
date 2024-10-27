@@ -68,56 +68,58 @@ const handleRemoveActivityAbsence = async (absenceId: number) => {
 };
 </script>
 <template>
-    <q-list v-for="item in props.activitiesStudent" :key="item.id" bordered>
-        <q-item>
-            <q-item-section top>
-                <q-item-label lines="1">
-                    <span class="text-weight-medium">
-                        {{ $t('activity.activity') }}
-                        {{ item.activity.name }}
-                        {{ item.activity.level }}
-                    </span>
-                    <span class="text-grey-8">
-                        -
-                        {{ $t('shared.enum.' + item.activity.day) }}
-                        {{ item.activity.startHour }}
-                    </span>
-                </q-item-label>
-                <q-item-label caption lines="1">
-                    {{ item.danceRole }}
-                </q-item-label>
-            </q-item-section>
+    <q-list :bordered="!$q.screen.xs">
+        <template v-for="item in props.activitiesStudent" :key="item.id">
+            <q-item clickable v-ripple>
+                <q-item-section top>
+                    <q-item-label lines="1">
+                        <span class="text-weight-medium">
+                            {{ $t('activity.activity') }}
+                            {{ item.activity.name }}
+                            {{ item.activity.level }}
+                        </span>
+                        <span class="text-grey-8">
+                            -
+                            {{ $t('shared.enum.' + item.activity.day) }}
+                            {{ item.activity.startHour }}
+                        </span>
+                    </q-item-label>
+                    <q-item-label caption lines="1">
+                        {{ item.danceRole }}
+                    </q-item-label>
+                </q-item-section>
 
-            <q-item-section top side>
-                <div class="text-grey-8 q-gutter-xs">
-                    <q-btn
-                        class="gt-xs"
-                        size="12px"
-                        flat
-                        @click="toggleAbsenceList(item.activity.id)"
-                        :label="$t('student.showAbsence')"
-                    >
-                        <q-badge
-                            v-if="item.activity.absences"
-                            color="red"
-                            floating
+                <q-item-section top side>
+                    <div class="text-grey-8 q-gutter-xs">
+                        <q-btn
+                            size="12px"
+                            flat
+                            @click="toggleAbsenceList(item.activity.id)"
+                            :label="$t('student.showAbsence')"
                         >
-                            {{ item.activity.absences?.length }}
-                        </q-badge>
-                    </q-btn>
-                    <pd-menu-list
-                        v-if="isAdmin()"
-                        :actions="actions"
-                        :row="item"
-                    />
-                </div>
-            </q-item-section>
-        </q-item>
-        <absence-list
-            v-if="showAbsenceList[item.activity.id]"
-            :absences="item.activity.absences"
-            @delete-activities-absence="handleRemoveActivityAbsence"
-        />
+                            <q-badge
+                                v-if="item.activity.absences"
+                                color="red"
+                                floating
+                            >
+                                {{ item.activity.absences?.length }}
+                            </q-badge>
+                        </q-btn>
+                        <pd-menu-list
+                            v-if="isAdmin()"
+                            :actions="actions"
+                            :row="item"
+                        />
+                    </div>
+                </q-item-section>
+            </q-item>
+            <q-separator />
+            <absence-list
+                v-if="showAbsenceList[item.activity.id]"
+                :absences="item.activity.absences"
+                @delete-activities-absence="handleRemoveActivityAbsence"
+            />
+        </template>
     </q-list>
     <q-card flat v-if="props.activitiesStudent?.length === 0">
         <q-banner class="bg-info text-white">

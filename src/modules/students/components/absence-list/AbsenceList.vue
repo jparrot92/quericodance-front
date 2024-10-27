@@ -20,35 +20,35 @@ const { isAdmin } = useAuth();
 </script>
 
 <template>
-    <q-list
-        v-for="absence in props.absences"
-        :key="absence.id"
-        bordered
-        class="rounded-borders"
-    >
-        <q-item>
-            <q-item-section top>
-                <q-item-label caption lines="1">
-                    {{ t('student.absenceDate') }}
-                </q-item-label>
-                <q-item-label lines="1">
-                    {{ format(absence.absenceDate) }}
-                </q-item-label>
-            </q-item-section>
+    <q-list bordered>
+        <template v-for="absence in props.absences" :key="absence.id">
+            <q-item>
+                <q-item-section top>
+                    <q-item-label caption lines="1" class="q-pl-lg">
+                        {{ t('student.absenceDate') }}
+                    </q-item-label>
+                    <q-item-label lines="1" class="q-pl-lg">
+                        {{ format(absence.absenceDate) }}
+                    </q-item-label>
+                </q-item-section>
 
-            <q-item-section top side>
-                <div v-if="isAdmin()" class="text-grey-8 q-gutter-xs">
-                    <q-btn
-                        class="gt-xs"
-                        size="12px"
-                        flat
-                        dense
-                        round
-                        icon="delete"
-                        @click="emits('deleteActivitiesAbsence', absence.id)"
-                    />
-                </div>
-            </q-item-section>
-        </q-item>
+                <q-item-section top side>
+                    <div v-if="isAdmin()" class="text-grey-8 q-gutter-xs">
+                        <q-btn
+                            class="gt-xs"
+                            size="12px"
+                            flat
+                            dense
+                            round
+                            icon="delete"
+                            @click="
+                                emits('deleteActivitiesAbsence', absence.id)
+                            "
+                        />
+                    </div>
+                </q-item-section>
+            </q-item>
+            <q-separator />
+        </template>
     </q-list>
 </template>

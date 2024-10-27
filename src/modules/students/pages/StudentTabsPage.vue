@@ -102,3 +102,8 @@ onMounted(async () => {
         </q-tab-panels>
     </q-card>
 </template>
+<style scoped>
+.q-tab-panel {
+    padding: 0px;
+}
+</style>
