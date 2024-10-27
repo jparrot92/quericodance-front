@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { login } from 'src/api/authApi';
 import { getStudent } from 'src/api/studentsApi';
 
-import { Auth, User } from '../models/auth';
+import { Auth, User } from '../../../interfaces/auth/auth';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({

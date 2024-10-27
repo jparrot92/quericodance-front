@@ -3,6 +3,10 @@ import { Ref, ref } from 'vue';
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
+import { MembershipViewDTO } from 'src/interfaces/student/membership';
+import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
+import { BonusStudentDTO } from 'src/interfaces/student/bonusStudent';
+
 import useStudents from '../composables/useStudents';
 
 import StudentFormPage from './StudentFormPage.vue';
@@ -10,9 +14,6 @@ import MembershipStudentFormPage from './MembershipStudentFormPage.vue';
 import BonusesStudentFormPage from './BonusesStudentFormPage.vue';
 import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
 import ObservationsStudentFormPage from './ObservationsStudentFormPage.vue';
-import { MembershipViewDTO } from '../models/membership';
-import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
-import { BonusStudentDTO } from '../models/bonusStudent';
 
 const route = useRoute();
 
@@ -28,8 +29,9 @@ const isModalVisible: Ref<boolean> = ref(false);
 const updateMembership = async (membershipView: MembershipViewDTO) =>
     (student.value.membership = membershipView);
 
-const updateActivitiesStudent = async (activitiesStudent: ActivityStudent[]) =>
-    (student.value.activitiesStudent = activitiesStudent);
+const updateActivitiesStudent = async (
+    activitiesStudent: ActivityStudentDTO[]
+) => (student.value.activitiesStudent = activitiesStudent);
 
 const updateBonusesStudent = async (bonuses: BonusStudentDTO[]) =>
     (student.value.bonusesStudent = bonuses);

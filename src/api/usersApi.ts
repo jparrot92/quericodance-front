@@ -1,10 +1,10 @@
 import { api } from 'boot/axios';
-import { User } from 'src/modules/users/models/user';
+import { UserDTO } from 'src/interfaces/user/user';
 import { handleError } from './errorApi';
 
-export const listUsers = async (): Promise<User[]> => {
+export const listUsers = async (): Promise<UserDTO[]> => {
     try {
-        const { data } = await api.get<User[]>('/users');
+        const { data } = await api.get<UserDTO[]>('/users');
 
         return data;
     } catch (error) {
@@ -12,9 +12,9 @@ export const listUsers = async (): Promise<User[]> => {
     }
 };
 
-export const getUser = async (id: string): Promise<User> => {
+export const getUser = async (id: string): Promise<UserDTO> => {
     try {
-        const { data } = await api.get<User>(`/users/${id}`);
+        const { data } = await api.get<UserDTO>(`/users/${id}`);
 
         return data;
     } catch (error) {
@@ -22,9 +22,9 @@ export const getUser = async (id: string): Promise<User> => {
     }
 };
 
-export const createUser = async (user: User): Promise<User> => {
+export const createUser = async (user: UserDTO): Promise<UserDTO> => {
     try {
-        const { data } = await api.post<User>('/users', user);
+        const { data } = await api.post<UserDTO>('/users', user);
 
         return data;
     } catch (error) {
@@ -32,9 +32,12 @@ export const createUser = async (user: User): Promise<User> => {
     }
 };
 
-export const updateUser = async (id: string, user: User): Promise<User> => {
+export const updateUser = async (
+    id: string,
+    user: UserDTO
+): Promise<UserDTO> => {
     try {
-        const { data } = await api.put<User>(`/users/${id}`, user);
+        const { data } = await api.put<UserDTO>(`/users/${id}`, user);
 
         return data;
     } catch (error) {
@@ -63,9 +66,9 @@ export const uploadPhoto = async (id: number, file: File): Promise<string> => {
     }
 };
 
-export const deleteUser = async (id: number): Promise<User> => {
+export const deleteUser = async (id: number): Promise<UserDTO> => {
     try {
-        const { data } = await api.delete<User>(`/users/${id}`);
+        const { data } = await api.delete<UserDTO>(`/users/${id}`);
 
         return data;
     } catch (error) {
@@ -73,9 +76,11 @@ export const deleteUser = async (id: number): Promise<User> => {
     }
 };
 
-export const deletePhoto = async (id: number): Promise<User> => {
+export const deletePhoto = async (id: number): Promise<UserDTO> => {
     try {
-        const { data } = await api.delete<User>(`/users/${id}/profile-picture`);
+        const { data } = await api.delete<UserDTO>(
+            `/users/${id}/profile-picture`
+        );
 
         return data;
     } catch (error) {

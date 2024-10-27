@@ -1,4 +1,4 @@
-export interface Bonus {
+export interface PersonalClassDTO {
     id: number;
     name: string;
     sessions: number | null;

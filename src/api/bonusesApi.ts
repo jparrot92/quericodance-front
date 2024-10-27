@@ -1,13 +1,13 @@
 import { api } from 'boot/axios';
-import { Bonus } from 'src/modules/services/modules/bonuses/models/bonus';
+import { BonusDTO } from 'src/interfaces/bonus/bonus';
 import { handleError } from './errorApi';
-import { BonusStudentDTO } from 'src/modules/students/models/bonusStudent';
+import { BonusStudentDTO } from 'src/interfaces/student/bonusStudent';
 
 const bonusesEndpoint = '/bonuses';
 
-export const listBonuses = async (): Promise<Bonus[]> => {
+export const listBonuses = async (): Promise<BonusDTO[]> => {
     try {
-        const { data } = await api.get<Bonus[]>(bonusesEndpoint);
+        const { data } = await api.get<BonusDTO[]>(bonusesEndpoint);
 
         return data;
     } catch (error) {
@@ -15,9 +15,9 @@ export const listBonuses = async (): Promise<Bonus[]> => {
     }
 };
 
-export const getBonus = async (id: string): Promise<Bonus> => {
+export const getBonus = async (id: string): Promise<BonusDTO> => {
     try {
-        const { data } = await api.get<Bonus>(`${bonusesEndpoint}/${id}`);
+        const { data } = await api.get<BonusDTO>(`${bonusesEndpoint}/${id}`);
 
         return data;
     } catch (error) {
@@ -25,9 +25,9 @@ export const getBonus = async (id: string): Promise<Bonus> => {
     }
 };
 
-export const createBonus = async (bonus: Bonus): Promise<Bonus> => {
+export const createBonus = async (bonus: BonusDTO): Promise<BonusDTO> => {
     try {
-        const { data } = await api.post<Bonus>(bonusesEndpoint, bonus);
+        const { data } = await api.post<BonusDTO>(bonusesEndpoint, bonus);
 
         return data;
     } catch (error) {
@@ -35,9 +35,12 @@ export const createBonus = async (bonus: Bonus): Promise<Bonus> => {
     }
 };
 
-export const updateBonus = async (id: string, bonus: Bonus): Promise<Bonus> => {
+export const updateBonus = async (
+    id: string,
+    bonus: BonusDTO
+): Promise<BonusDTO> => {
     try {
-        const { data } = await api.put<Bonus>(
+        const { data } = await api.put<BonusDTO>(
             `${bonusesEndpoint}/${id}`,
             bonus
         );
@@ -48,9 +51,9 @@ export const updateBonus = async (id: string, bonus: Bonus): Promise<Bonus> => {
     }
 };
 
-export const deleteBonus = async (id: number): Promise<Bonus> => {
+export const deleteBonus = async (id: number): Promise<BonusDTO> => {
     try {
-        const { data } = await api.delete<Bonus>(`${bonusesEndpoint}/${id}`);
+        const { data } = await api.delete<BonusDTO>(`${bonusesEndpoint}/${id}`);
 
         return data;
     } catch (error) {

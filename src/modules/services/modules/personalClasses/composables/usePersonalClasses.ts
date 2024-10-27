@@ -3,8 +3,6 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listPersonalClasses,
     getPersonalClass,
@@ -13,7 +11,9 @@ import {
     deletePersonalClass,
 } from 'src/api/personalClassesApi';
 
-import { PersonalClass } from '../models/personalClass';
+import { PersonalClassDTO } from 'src/interfaces/personalClasses/personalClass';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const usePersonalClasses = () => {
     const router = useRouter();
@@ -25,8 +25,8 @@ const usePersonalClasses = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const personalClasses = ref<PersonalClass[]>([]);
-    const personalClass = ref<PersonalClass>({
+    const personalClasses = ref<PersonalClassDTO[]>([]);
+    const personalClass = ref<PersonalClassDTO>({
         id: 0,
         name: '',
         sessions: null,

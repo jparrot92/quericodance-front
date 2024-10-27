@@ -2,13 +2,15 @@
 import { onMounted, defineProps, ref, computed, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { ActivityDTO } from 'src/interfaces/activity/activity';
+import { AbsenceDTO } from 'src/interfaces/activity/absence';
+import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
+
 import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
 
-import { ActivityDTO } from 'src/modules/activities/models/activity';
-import { AbsenceDTO } from 'src/modules/activities/models/absence';
 import useActivities from 'src/modules/activities/composables/useActivities';
-import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
+
 import AddActivityStudentDialog from '../components/AddActivityStudentDialog.vue';
 import AddActivityAbsenceDialog from '../components/AddActivityAbsenceDialog.vue';
 
@@ -20,7 +22,7 @@ const props = withDefaults(
     defineProps<{
         idStudent: number;
         hasMembership: boolean;
-        activitiesStudent?: ActivityStudent[];
+        activitiesStudent?: ActivityStudentDTO[];
     }>(),
     {}
 );
@@ -32,7 +34,7 @@ const authStore = useAuthStore();
 const { removeActivityStudent, removeActivityAbsence } = useActivities();
 
 const hasMembership = ref<boolean>(props.hasMembership);
-const studentActivitiesList = ref<ActivityStudent[]>(
+const studentActivitiesList = ref<ActivityStudentDTO[]>(
     props.activitiesStudent || []
 );
 
@@ -46,7 +48,7 @@ const messageNotMembership = computed<string>(() =>
         : t('student.messageNotMembership')
 );
 
-const addActivityStudent = (newActivityStudent: ActivityStudent) => {
+const addActivityStudent = (newActivityStudent: ActivityStudentDTO) => {
     studentActivitiesList.value = [
         ...studentActivitiesList.value,
         newActivityStudent,

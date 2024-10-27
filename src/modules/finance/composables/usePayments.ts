@@ -1,12 +1,12 @@
 import { ref } from 'vue';
 
+import { getTotalAmounts, listPayments } from 'src/api/paymentsApi';
+
+import { PaymentDTO, TotalAmountsDTO } from 'src/interfaces/finance/payment';
+
 import useNotify from 'src/shared/composables/useNotify';
 
 import useDates from 'src/composables/useDates';
-
-import { getTotalAmounts, listPayments } from 'src/api/paymentsApi';
-
-import { PaymentDTO, TotalAmountsDTO } from '../models/payment';
 
 const usePayments = () => {
     const { notifyError } = useNotify();

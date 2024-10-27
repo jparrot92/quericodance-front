@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 
+import { Status } from 'src/types/UtilTypes';
+
+import { StudentDTO } from 'src/interfaces/student/student';
+
 import useStudents from '../composables/useStudents';
-import { StudentDTO } from '../models/student';
 
 const { student: studentForm, editStudent } = useStudents();
 
@@ -25,7 +28,7 @@ const props = withDefaults(
                 password: '',
                 roles: [],
             },
-            status: '',
+            status: Status.NEW,
         }),
     }
 );

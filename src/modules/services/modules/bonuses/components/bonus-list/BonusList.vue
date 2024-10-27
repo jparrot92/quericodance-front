@@ -6,8 +6,10 @@ import { useRouter } from 'vue-router';
 
 import { Action, ColumnTable } from 'src/types/UtilTypes';
 
+import { BonusDTO } from 'src/interfaces/bonus/bonus';
+
 import useBonuses from '../../composables/useBonuses';
-import { Bonus } from '../../models/bonus';
+
 import BonusItem from '../bonus-item/BonusItem.vue';
 
 const { loading, bonuses, loadBonuses, removeBonus } = useBonuses();
@@ -16,11 +18,11 @@ const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
 
-const actions: ComputedRef<Action<Bonus>[]> = computed(() => {
+const actions: ComputedRef<Action<BonusDTO>[]> = computed(() => {
     return [
         {
             label: t('shared.edit'),
-            action: (row: Bonus) => {
+            action: (row: BonusDTO) => {
                 router.push({
                     name: 'bonuses-edit',
                     params: { id: row.id },
@@ -30,7 +32,7 @@ const actions: ComputedRef<Action<Bonus>[]> = computed(() => {
         },
         {
             label: t('shared.delete'),
-            action: (row: Bonus) => removeBonus(row.id),
+            action: (row: BonusDTO) => removeBonus(row.id),
             show: () => true,
         },
     ];

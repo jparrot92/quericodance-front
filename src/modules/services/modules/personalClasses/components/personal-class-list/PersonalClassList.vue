@@ -5,20 +5,13 @@ import { useI18n } from 'vue-i18n';
 
 import { ColumnTable } from 'src/types/UtilTypes';
 
-import MenuList from 'src/shared/components/MenuList.vue';
-
 import usePersonalClasses from '../../composables/usePersonalClasses';
 
-const { loading, personalClasses, loadPersonalClasses, removePersonalClass } =
-    usePersonalClasses();
+const { loading, personalClasses, loadPersonalClasses } = usePersonalClasses();
 
 const $q = useQuasar();
 
 const { t } = useI18n();
-
-onMounted(() => {
-    loadPersonalClasses();
-});
 
 const columnsPersonalClass: ColumnTable[] = [
     {
@@ -50,6 +43,10 @@ const columnsPersonalClass: ColumnTable[] = [
         sortable: false,
     },
 ];
+
+onMounted(() => {
+    loadPersonalClasses();
+});
 </script>
 
 <template>
@@ -102,29 +99,7 @@ const columnsPersonalClass: ColumnTable[] = [
                 </q-td>
             </template>
             <template v-slot:body-cell-actions="props">
-                <q-td :props="props">
-                    <menu-list>
-                        <q-item clickable v-close-popup>
-                            <q-item-section
-                                @click="
-                                    $router.push({
-                                        name: 'personalClasses-edit',
-                                        params: { id: props.row.id },
-                                    })
-                                "
-                            >
-                                {{ $t('shared.edit') }}
-                            </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup>
-                            <q-item-section
-                                @click="removePersonalClass(props.row.id)"
-                            >
-                                {{ $t('shared.delete') }}
-                            </q-item-section>
-                        </q-item>
-                    </menu-list>
-                </q-td>
+                <q-td :props="props"> </q-td>
             </template>
         </q-table>
     </div>

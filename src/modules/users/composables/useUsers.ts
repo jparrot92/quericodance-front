@@ -3,8 +3,6 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listUsers,
     getUser,
@@ -13,7 +11,9 @@ import {
     deleteUser,
 } from 'src/api/usersApi';
 
-import { User } from '../models/user';
+import { UserDTO } from 'src/interfaces/user/user';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const useUsers = () => {
     const router = useRouter();
@@ -25,8 +25,8 @@ const useUsers = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const users = ref<User[]>([]);
-    const user = ref<User>({
+    const users = ref<UserDTO[]>([]);
+    const user = ref<UserDTO>({
         id: 0,
         name: '',
         surnames: '',

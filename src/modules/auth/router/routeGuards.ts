@@ -1,7 +1,7 @@
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
 import { useAuthStore } from '../store/auth-store';
 import useAuth from 'src/modules/auth/composables/useAuth';
-import { Role } from '../models/roles';
+import { Role } from '../../../interfaces/auth/roles';
 
 export const requireAuth = (
     to: RouteLocationNormalized,

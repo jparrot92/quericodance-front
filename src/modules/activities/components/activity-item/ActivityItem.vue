@@ -2,11 +2,11 @@
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import { ActivityList } from '../../models/activity';
+import { ActivityListViewDTO } from 'src/interfaces/activity/activity';
 
 const props = withDefaults(
     defineProps<{
-        activityItem: ActivityList;
+        activityItem: ActivityListViewDTO;
         showProfitability: boolean;
     }>(),
     {}
@@ -15,7 +15,7 @@ const props = withDefaults(
 const { t } = useI18n();
 const router = useRouter();
 
-const handleItemClick = (activity: ActivityList) => {
+const handleItemClick = (activity: ActivityListViewDTO) => {
     let title = `${t('activity.activity')} ${activity.name} ${
         activity.level
     } - ${t('shared.enum.' + activity.day)} ${activity.startHour}`;

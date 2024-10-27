@@ -1,11 +1,12 @@
 import { api } from 'boot/axios';
+import { handleError } from './errorApi';
+
 import {
     ActivityDTO,
-    ActivityCounters,
-} from 'src/modules/activities/models/activity';
-import { handleError } from './errorApi';
-import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
-import { AbsenceDTO } from 'src/modules/activities/models/absence';
+    ActivityCountersDTO,
+} from 'src/interfaces/activity/activity';
+import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
+import { AbsenceDTO } from 'src/interfaces/activity/absence';
 
 const activitiesEndpoint = '/activities';
 
@@ -27,9 +28,9 @@ export const listActivities = async (type?: string): Promise<ActivityDTO[]> => {
 
 export const getCountersActivity = async (
     id: number
-): Promise<ActivityCounters> => {
+): Promise<ActivityCountersDTO> => {
     try {
-        const { data } = await api.get<ActivityCounters>(
+        const { data } = await api.get<ActivityCountersDTO>(
             `${activitiesEndpoint}/${id}/counters`
         );
 
@@ -98,7 +99,7 @@ export const createActivityStudent = async (
     studentId: number,
     activityId: number,
     danceRole: string
-): Promise<ActivityStudent> => {
+): Promise<ActivityStudentDTO> => {
     try {
         const requestData = {
             studentId,
@@ -106,7 +107,7 @@ export const createActivityStudent = async (
             danceRole,
         };
 
-        const { data } = await api.post<ActivityStudent>(
+        const { data } = await api.post<ActivityStudentDTO>(
             `${activitiesEndpoint}/student`,
             requestData
         );
@@ -142,9 +143,9 @@ export const createActivityAbsence = async (
 
 export const deleteActivityStudent = async (
     id: number
-): Promise<ActivityStudent> => {
+): Promise<ActivityStudentDTO> => {
     try {
-        const { data } = await api.delete<ActivityStudent>(
+        const { data } = await api.delete<ActivityStudentDTO>(
             `${activitiesEndpoint}/student/${id}`
         );
 

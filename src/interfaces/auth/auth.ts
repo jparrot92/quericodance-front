@@ -1,17 +1,17 @@
-import { StudentDTO } from 'src/modules/students/models/student';
+import { StudentDTO } from 'src/interfaces/student/student';
 
-export interface Auth {
+export interface AuthDTO {
     email: string;
     password: string;
 }
 
-export interface Login {
+export interface LoginDTO {
     token: string;
-    user: User;
+    user: UserDTO;
     expiresIn: string;
 }
 
-export interface User {
+export interface UserDTO {
     id: number;
     email: string;
     roles: string[];

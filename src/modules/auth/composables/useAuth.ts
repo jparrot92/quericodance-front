@@ -3,15 +3,15 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
 
-import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
-
 import { requestResetPassword, updatePassword } from 'src/api/authApi';
 
+import { AuthDTO } from 'src/interfaces/auth/auth';
+import { Role } from 'src/interfaces/auth/roles';
+
+import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 import useNotify from 'src/shared/composables/useNotify';
 
 import { useAuthStore } from '../store/auth-store';
-import { Auth } from '../models/auth';
-import { Role } from '../models/roles';
 
 const useAuth = () => {
     const router = useRouter();
@@ -26,7 +26,7 @@ const useAuth = () => {
 
     const authStore = useAuthStore();
 
-    const userForm = ref<Auth>({
+    const userForm = ref<AuthDTO>({
         email: '',
         password: '',
     });

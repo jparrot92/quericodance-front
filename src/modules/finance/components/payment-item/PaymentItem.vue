@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { format } from '@formkit/tempo';
 
-import useStudents from 'src/modules/students/composables/useStudents';
+import { PaymentDTO } from 'src/interfaces/finance/payment';
 
-import { PaymentDTO } from '../../models/payment';
+import useStudents from 'src/modules/students/composables/useStudents';
 
 const props = withDefaults(
     defineProps<{

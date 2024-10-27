@@ -3,8 +3,6 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listActivities,
     getCountersActivity,
@@ -21,11 +19,14 @@ import {
 
 import {
     ActivityDTO,
-    ActivityCounters,
-    ActivityList,
-} from '../models/activity';
-import { ActivityStudent } from '../models/activityStudent';
+    ActivityCountersDTO,
+    ActivityListViewDTO,
+} from 'src/interfaces/activity/activity';
+import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
+
 import { ActivityType } from 'src/types/UtilTypes';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const useActivities = () => {
     const router = useRouter();
@@ -37,7 +38,7 @@ const useActivities = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const activities = ref<ActivityList[]>([]);
+    const activities = ref<ActivityListViewDTO[]>([]);
     const activity = ref<ActivityDTO>({
         id: 0,
         type: ActivityType.CLASS,
@@ -52,7 +53,7 @@ const useActivities = () => {
         color: '',
         teachersIds: [],
     });
-    const activityStudent = ref<ActivityStudent>({
+    const activityStudent = ref<ActivityStudentDTO>({
         id: 0,
         danceRole: '',
         price: 0,
@@ -61,7 +62,7 @@ const useActivities = () => {
         },
     });
 
-    const activityCounters = ref<ActivityCounters>({
+    const activityCounters = ref<ActivityCountersDTO>({
         numberStudents: '0',
         numberLeaders: '0',
         numberFollowers: '0',
@@ -164,7 +165,7 @@ const useActivities = () => {
         danceRole: string
     ) => {
         try {
-            const newActivityStudent: ActivityStudent =
+            const newActivityStudent: ActivityStudentDTO =
                 await createActivityStudent(studentId, activityId, danceRole);
 
             return newActivityStudent;

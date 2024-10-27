@@ -176,3 +176,4 @@ onMounted(async () => {
         </q-card>
     </q-dialog>
 </template>
+src/interfaces/tariff/tariff

@@ -1,5 +1,5 @@
-import { Teacher } from 'src/modules/teachers/models/teacher';
-import { ActivityStudent } from './activityStudent';
+import { TeacherDTO } from 'src/interfaces/teacher/teacher';
+import { ActivityStudentDTO } from './activityStudent';
 import { AbsenceDTO } from './absence';
 import { ActivityType, WeekDay } from 'src/types/UtilTypes';
 
@@ -16,12 +16,12 @@ export interface ActivityDTO {
     price: number | null;
     color: string;
     teachersIds: number[];
-    teachers?: Teacher[];
+    teachers?: TeacherDTO[];
     absences?: AbsenceDTO[];
 }
 
-export interface ActivityList extends ActivityDTO {
-    activitiesStudent?: ActivityStudent[];
+export interface ActivityListViewDTO extends ActivityDTO {
+    activitiesStudent?: ActivityStudentDTO[];
     numberStudents?: string;
     numberLeaders?: string;
     numberFollowers?: string;
@@ -29,7 +29,7 @@ export interface ActivityList extends ActivityDTO {
     totalPaid?: string;
 }
 
-export interface ActivityCounters {
+export interface ActivityCountersDTO {
     numberStudents: string;
     numberLeaders: string;
     numberFollowers: string;

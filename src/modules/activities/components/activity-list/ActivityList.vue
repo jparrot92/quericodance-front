@@ -12,7 +12,11 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
+import {
+    ActivityDTO,
+    ActivityListViewDTO,
+} from 'src/interfaces/activity/activity';
+
 import {
     Action,
     ActivityType,
@@ -20,10 +24,12 @@ import {
     WeekDay,
 } from 'src/types/UtilTypes';
 
-import { ActivityDTO, ActivityList } from '../../models/activity';
-import useActivities from '../../composables/useActivities';
 import { FilterField } from 'src/composables/useFilterTypes';
+import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
+
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
+
+import useActivities from '../../composables/useActivities';
 
 import ActivityItem from '../activity-item/ActivityItem.vue';
 
@@ -51,14 +57,14 @@ const {
 } = useActivities();
 
 const weekDays = generateEnumOptions(WeekDay);
-const activitiesFiltered = ref<ActivityList[]>([]);
+const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
 const showProfitability = ref(false);
 
-const actions: ComputedRef<Action<ActivityList>[]> = computed(() => {
+const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
     return [
         {
             label: t('shared.see'),
-            action: (row: ActivityList) => {
+            action: (row: ActivityListViewDTO) => {
                 router.push({
                     name: 'activities-list-students',
                     params: { id: row.id },
@@ -68,7 +74,7 @@ const actions: ComputedRef<Action<ActivityList>[]> = computed(() => {
         },
         {
             label: t('shared.edit'),
-            action: (row: ActivityList) => {
+            action: (row: ActivityListViewDTO) => {
                 router.push({
                     name: 'activities-edit',
                     params: { id: row.id },
@@ -78,7 +84,7 @@ const actions: ComputedRef<Action<ActivityList>[]> = computed(() => {
         },
         {
             label: t('shared.delete'),
-            action: (row: ActivityList) => handleRemoveActivity(row.id),
+            action: (row: ActivityListViewDTO) => handleRemoveActivity(row.id),
             show: () => true,
         },
     ];
@@ -119,8 +125,8 @@ const columns: ColumnTable[] = [
                   sort: (
                       a: string,
                       b: string,
-                      rowA: ActivityList,
-                      rowB: ActivityList
+                      rowA: ActivityListViewDTO,
+                      rowB: ActivityListViewDTO
                   ) => orderByDay(rowA, rowB),
               } as ColumnTable,
           ]),
@@ -221,7 +227,7 @@ const filters: Ref<Array<FilterField>> = ref([
 
 const filterTable = () => {
     activitiesFiltered.value = activities.value
-        .filter((activity: ActivityList) => {
+        .filter((activity: ActivityListViewDTO) => {
             const activityFullName =
                 activity.name.toLowerCase() + activity.level;
 
@@ -229,7 +235,7 @@ const filterTable = () => {
                 filtersSelected.query.replace(/\s/g, '').toLowerCase()
             );
         })
-        .filter((activity: ActivityList) => {
+        .filter((activity: ActivityListViewDTO) => {
             if (filtersSelected.weekDay === null) {
                 return true;
             } else {
@@ -282,7 +288,7 @@ function getWeekNumber(day: WeekDay): number {
     }
 }
 
-const orderByDay = (a: ActivityList, b: ActivityList) => {
+const orderByDay = (a: ActivityListViewDTO, b: ActivityListViewDTO) => {
     const dayA = a.day ? getWeekNumber(a.day) : -1;
     const dayB = b.day ? getWeekNumber(b.day) : -1;
 
@@ -292,7 +298,7 @@ const orderByDay = (a: ActivityList, b: ActivityList) => {
     return 0;
 };
 
-const onRowClick = (evt: Event, row: ActivityList) => {
+const onRowClick = (evt: Event, row: ActivityListViewDTO) => {
     let title = `${t('activity.activity')} ${row.name} ${row.level} - ${t(
         'shared.enum.' + row.day
     )} ${row.startHour}`;

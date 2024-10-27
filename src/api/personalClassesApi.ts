@@ -1,12 +1,12 @@
 import { api } from 'boot/axios';
-import { PersonalClass } from 'src/modules/services/modules/personalClasses/models/personalClass';
+import { PersonalClassDTO } from 'src/interfaces/personalClasses/personalClass';
 import { handleError } from './errorApi';
 
 const personalClassesEndpoint = '/personal-classes';
 
-export const listPersonalClasses = async (): Promise<PersonalClass[]> => {
+export const listPersonalClasses = async (): Promise<PersonalClassDTO[]> => {
     try {
-        const { data } = await api.get<PersonalClass[]>(
+        const { data } = await api.get<PersonalClassDTO[]>(
             personalClassesEndpoint
         );
 
@@ -16,9 +16,11 @@ export const listPersonalClasses = async (): Promise<PersonalClass[]> => {
     }
 };
 
-export const getPersonalClass = async (id: string): Promise<PersonalClass> => {
+export const getPersonalClass = async (
+    id: string
+): Promise<PersonalClassDTO> => {
     try {
-        const { data } = await api.get<PersonalClass>(
+        const { data } = await api.get<PersonalClassDTO>(
             `${personalClassesEndpoint}/${id}`
         );
 
@@ -29,10 +31,10 @@ export const getPersonalClass = async (id: string): Promise<PersonalClass> => {
 };
 
 export const createPersonalClass = async (
-    personalClass: PersonalClass
-): Promise<PersonalClass> => {
+    personalClass: PersonalClassDTO
+): Promise<PersonalClassDTO> => {
     try {
-        const { data } = await api.post<PersonalClass>(
+        const { data } = await api.post<PersonalClassDTO>(
             personalClassesEndpoint,
             personalClass
         );
@@ -45,10 +47,10 @@ export const createPersonalClass = async (
 
 export const updatePersonalClass = async (
     id: string,
-    personalClass: PersonalClass
-): Promise<PersonalClass> => {
+    personalClass: PersonalClassDTO
+): Promise<PersonalClassDTO> => {
     try {
-        const { data } = await api.put<PersonalClass>(
+        const { data } = await api.put<PersonalClassDTO>(
             `${personalClassesEndpoint}/${id}`,
             personalClass
         );
@@ -61,9 +63,9 @@ export const updatePersonalClass = async (
 
 export const deletePersonalClass = async (
     id: string
-): Promise<PersonalClass> => {
+): Promise<PersonalClassDTO> => {
     try {
-        const { data } = await api.delete<PersonalClass>(
+        const { data } = await api.delete<PersonalClassDTO>(
             `${personalClassesEndpoint}/${id}`
         );
 

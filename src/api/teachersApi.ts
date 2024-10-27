@@ -1,10 +1,10 @@
 import { api } from 'boot/axios';
-import { Teacher } from 'src/modules/teachers/models/teacher';
+import { TeacherDTO } from 'src/interfaces/teacher/teacher';
 import { handleError } from './errorApi';
 
-export const listTeachers = async (): Promise<Teacher[]> => {
+export const listTeachers = async (): Promise<TeacherDTO[]> => {
     try {
-        const { data } = await api.get<Teacher[]>('/teachers');
+        const { data } = await api.get<TeacherDTO[]>('/teachers');
 
         return data;
     } catch (error) {
@@ -12,9 +12,9 @@ export const listTeachers = async (): Promise<Teacher[]> => {
     }
 };
 
-export const getTeacher = async (id: string): Promise<Teacher> => {
+export const getTeacher = async (id: string): Promise<TeacherDTO> => {
     try {
-        const { data } = await api.get<Teacher>(`/teachers/${id}`);
+        const { data } = await api.get<TeacherDTO>(`/teachers/${id}`);
 
         return data;
     } catch (error) {
@@ -22,9 +22,9 @@ export const getTeacher = async (id: string): Promise<Teacher> => {
     }
 };
 
-export const createTeacher = async (user: Teacher): Promise<Teacher> => {
+export const createTeacher = async (user: TeacherDTO): Promise<TeacherDTO> => {
     try {
-        const { data } = await api.post<Teacher>('/teachers', user);
+        const { data } = await api.post<TeacherDTO>('/teachers', user);
 
         return data;
     } catch (error) {
@@ -34,10 +34,10 @@ export const createTeacher = async (user: Teacher): Promise<Teacher> => {
 
 export const updateTeacher = async (
     id: string,
-    user: Teacher
-): Promise<Teacher> => {
+    user: TeacherDTO
+): Promise<TeacherDTO> => {
     try {
-        const { data } = await api.put<Teacher>(`/teachers/${id}`, user);
+        const { data } = await api.put<TeacherDTO>(`/teachers/${id}`, user);
 
         return data;
     } catch (error) {
@@ -45,9 +45,9 @@ export const updateTeacher = async (
     }
 };
 
-export const deleteTeacher = async (id: number): Promise<Teacher> => {
+export const deleteTeacher = async (id: number): Promise<TeacherDTO> => {
     try {
-        const { data } = await api.delete<Teacher>(`/teachers/${id}`);
+        const { data } = await api.delete<TeacherDTO>(`/teachers/${id}`);
 
         return data;
     } catch (error) {

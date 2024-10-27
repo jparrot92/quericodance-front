@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import { Bonus } from '../../models/bonus';
+import { BonusDTO } from 'src/interfaces/bonus/bonus';
 
 const props = withDefaults(
     defineProps<{
-        bonusItem: Bonus;
+        bonusItem: BonusDTO;
     }>(),
     {}
 );
 
 const router = useRouter();
 
-const handleItemClick = (bonus: Bonus) => {
+const handleItemClick = (bonus: BonusDTO) => {
     router.push({
         name: 'bonuses-edit',
         params: {

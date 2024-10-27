@@ -2,15 +2,18 @@
 import { defineProps, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { Status } from 'src/types/UtilTypes';
+
+import { StudentDTO } from 'src/interfaces/student/student';
+import {
+    ActivityDTO,
+    ActivityListViewDTO,
+} from 'src/interfaces/activity/activity';
+
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 
 import useActivities from 'src/modules/activities/composables/useActivities';
 import useStudents from '../composables/useStudents';
-import { StudentDTO } from '../models/student';
-import {
-    ActivityDTO,
-    ActivityList,
-} from 'src/modules/activities/models/activity';
 
 const { activities, loadActivities } = useActivities();
 const { student: studentForm, saveStudent, editStudent } = useStudents();
@@ -34,6 +37,7 @@ const props = withDefaults(
                 password: '',
                 roles: [],
             },
+            status: Status.NEW,
         }),
     }
 );
@@ -42,7 +46,7 @@ const { t } = useI18n();
 
 studentForm.value = props.student;
 
-const activitiesFiltered = ref<ActivityList[]>([]);
+const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
 
 const removeCoursesInterest = (idActivity: number) => {
     const index = studentForm.value.interestedActivities?.findIndex(
@@ -72,7 +76,7 @@ const filterFn = (val: string, update: (fn: () => void) => void) => {
                     .replace(/\s/g, '')
                     .toLowerCase();
                 activitiesFiltered.value = activities.value.filter(
-                    (activity: ActivityList) => {
+                    (activity: ActivityListViewDTO) => {
                         const activityFullName =
                             activity.name.toLowerCase() +
                             activity.level +

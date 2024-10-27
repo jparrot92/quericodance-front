@@ -5,7 +5,8 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { Action, ColumnTable } from 'src/types/UtilTypes';
 
-import { Teacher } from '../../models/teacher';
+import { TeacherDTO } from 'src/interfaces/teacher/teacher';
+
 import useTeachers from '../../composables/useTeachers';
 import TeacherItem from '../teacher-item/TeacherItem.vue';
 
@@ -15,11 +16,11 @@ const router = useRouter();
 
 const { loading, teachers, loadTeachers, removeTeacher } = useTeachers();
 
-const actions: ComputedRef<Action<Teacher>[]> = computed(() => {
+const actions: ComputedRef<Action<TeacherDTO>[]> = computed(() => {
     return [
         {
             label: t('shared.edit'),
-            action: (row: Teacher) => {
+            action: (row: TeacherDTO) => {
                 router.push({
                     name: 'teachers-edit',
                     params: { id: row.id },
@@ -29,7 +30,7 @@ const actions: ComputedRef<Action<Teacher>[]> = computed(() => {
         },
         {
             label: t('shared.delete'),
-            action: (row: Teacher) => removeTeacher(row.id),
+            action: (row: TeacherDTO) => removeTeacher(row.id),
             show: () => true,
         },
     ];
@@ -40,28 +41,28 @@ const columnsUser: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.photo'),
-        field: (row: Teacher) => row.user.photo,
+        field: (row: TeacherDTO) => row.user.photo,
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('shared.name'),
-        field: (row: Teacher) => row.user.name,
+        field: (row: TeacherDTO) => row.user.name,
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.surnames'),
-        field: (row: Teacher) => row.user.surnames,
+        field: (row: TeacherDTO) => row.user.surnames,
         sortable: true,
     },
     {
         name: 'email',
         align: 'left',
         label: t('user.email'),
-        field: (row: Teacher) => row.user.email,
+        field: (row: TeacherDTO) => row.user.email,
         sortable: true,
     },
     {

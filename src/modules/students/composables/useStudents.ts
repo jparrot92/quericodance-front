@@ -4,8 +4,6 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { PaymentsStatus, Option, Status } from 'src/types/UtilTypes';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listStudents,
     getStudent,
@@ -24,7 +22,9 @@ import {
     resetPaymentsStatus,
 } from 'src/api/membershipsApi';
 
-import { StudentDTO } from '../models/student';
+import { StudentDTO } from 'src/interfaces/student/student';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const useStudents = () => {
     const router = useRouter();

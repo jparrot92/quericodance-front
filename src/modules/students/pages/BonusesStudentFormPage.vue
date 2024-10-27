@@ -8,15 +8,16 @@ import {
     ComputedRef,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
+
+import { Action } from 'src/types/UtilTypes';
+
+import { BonusStudentDTO } from 'src/interfaces/student/bonusStudent';
 
 import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
 
 import AddBonusStudentDialog from '../components/AddBonusStudentDialog.vue';
-import { BonusStudentDTO } from '../models/bonusStudent';
 import useBonuses from 'src/modules/services/modules/bonuses/composables/useBonuses';
-import { Action } from 'src/types/UtilTypes';
 
 const emits = defineEmits(['update-bonuses-student']);
 
@@ -31,7 +32,6 @@ const props = withDefaults(
 );
 
 const { t } = useI18n();
-const router = useRouter();
 const { isStudent, isAdmin, refreshInfoStudent } = useAuth();
 const authStore = useAuthStore();
 

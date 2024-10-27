@@ -2,9 +2,9 @@
 import { useI18n } from 'vue-i18n';
 import { format } from '@formkit/tempo';
 
-import useAuth from 'src/modules/auth/composables/useAuth';
+import { AbsenceDTO } from 'src/interfaces/activity/absence';
 
-import { AbsenceDTO } from 'src/modules/activities/models/absence';
+import useAuth from 'src/modules/auth/composables/useAuth';
 
 const emits = defineEmits(['deleteActivitiesAbsence']);
 

@@ -4,10 +4,11 @@ import { useI18n } from 'vue-i18n';
 import { format } from '@formkit/tempo';
 import { ColumnTable } from 'src/types/UtilTypes';
 
+import { PaymentDTO } from 'src/interfaces/finance/payment';
+
 import usePayments from '../../composables/usePayments';
 import useStudents from 'src/modules/students/composables/useStudents';
 
-import { PaymentDTO } from '../../models/payment';
 import PaymentItem from '../payment-item/PaymentItem.vue';
 
 const props = withDefaults(

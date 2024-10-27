@@ -1,13 +1,13 @@
 import { api } from 'boot/axios';
-import { Login } from 'src/modules/auth/models/auth';
+import { LoginDTO } from 'src/interfaces/auth/auth';
 import { handleError } from './errorApi';
 
 export const login = async (
     email: string,
     password: string
-): Promise<Login> => {
+): Promise<LoginDTO> => {
     try {
-        const { data } = await api.post<Login>('/auth/login', {
+        const { data } = await api.post<LoginDTO>('/auth/login', {
             email,
             password,
         });
@@ -18,9 +18,11 @@ export const login = async (
     }
 };
 
-export const requestResetPassword = async (email: string): Promise<Login> => {
+export const requestResetPassword = async (
+    email: string
+): Promise<LoginDTO> => {
     try {
-        const { data } = await api.patch<Login>(
+        const { data } = await api.patch<LoginDTO>(
             '/auth/request-reset-password',
             {
                 email,
@@ -36,9 +38,9 @@ export const requestResetPassword = async (email: string): Promise<Login> => {
 export const updatePassword = async (
     resetPasswordToken: string,
     password: string
-): Promise<Login> => {
+): Promise<LoginDTO> => {
     try {
-        const { data } = await api.patch<Login>('/auth/reset-password', {
+        const { data } = await api.patch<LoginDTO>('/auth/reset-password', {
             resetPasswordToken,
             password,
         });

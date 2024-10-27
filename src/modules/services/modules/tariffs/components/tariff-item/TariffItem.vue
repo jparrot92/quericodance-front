@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import { Tariff } from '../../models/tariff';
+import { TariffDTO } from 'src/interfaces/tariff/tariff';
 
 const props = withDefaults(
     defineProps<{
-        tariffItem: Tariff;
+        tariffItem: TariffDTO;
     }>(),
     {}
 );
 
 const router = useRouter();
 
-const handleItemClick = (tariff: Tariff) => {
+const handleItemClick = (tariff: TariffDTO) => {
     router.push({
         name: 'tariffs-edit',
         params: {

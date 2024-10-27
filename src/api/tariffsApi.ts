@@ -1,12 +1,12 @@
 import { api } from 'boot/axios';
-import { Tariff } from 'src/modules/services/modules/tariffs/models/tariff';
+import { TariffDTO } from 'src/interfaces/tariff/tariff';
 import { handleError } from './errorApi';
 
 const tariffsEndpoint = '/tariffs';
 
-export const listTariffs = async (): Promise<Tariff[]> => {
+export const listTariffs = async (): Promise<TariffDTO[]> => {
     try {
-        const { data } = await api.get<Tariff[]>(tariffsEndpoint);
+        const { data } = await api.get<TariffDTO[]>(tariffsEndpoint);
 
         return data;
     } catch (error) {
@@ -14,9 +14,9 @@ export const listTariffs = async (): Promise<Tariff[]> => {
     }
 };
 
-export const getTariff = async (id: string): Promise<Tariff> => {
+export const getTariff = async (id: string): Promise<TariffDTO> => {
     try {
-        const { data } = await api.get<Tariff>(`${tariffsEndpoint}/${id}`);
+        const { data } = await api.get<TariffDTO>(`${tariffsEndpoint}/${id}`);
 
         return data;
     } catch (error) {
@@ -24,9 +24,9 @@ export const getTariff = async (id: string): Promise<Tariff> => {
     }
 };
 
-export const createTariff = async (tariff: Tariff): Promise<Tariff> => {
+export const createTariff = async (tariff: TariffDTO): Promise<TariffDTO> => {
     try {
-        const { data } = await api.post<Tariff>(tariffsEndpoint, tariff);
+        const { data } = await api.post<TariffDTO>(tariffsEndpoint, tariff);
 
         return data;
     } catch (error) {
@@ -36,10 +36,10 @@ export const createTariff = async (tariff: Tariff): Promise<Tariff> => {
 
 export const updateTariff = async (
     id: string,
-    tariff: Tariff
-): Promise<Tariff> => {
+    tariff: TariffDTO
+): Promise<TariffDTO> => {
     try {
-        const { data } = await api.put<Tariff>(
+        const { data } = await api.put<TariffDTO>(
             `${tariffsEndpoint}/${id}`,
             tariff
         );
@@ -50,9 +50,11 @@ export const updateTariff = async (
     }
 };
 
-export const deleteTariff = async (id: number): Promise<Tariff> => {
+export const deleteTariff = async (id: number): Promise<TariffDTO> => {
     try {
-        const { data } = await api.delete<Tariff>(`${tariffsEndpoint}/${id}`);
+        const { data } = await api.delete<TariffDTO>(
+            `${tariffsEndpoint}/${id}`
+        );
 
         return data;
     } catch (error) {

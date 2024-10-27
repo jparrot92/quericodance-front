@@ -3,8 +3,8 @@ import { handleError } from './errorApi';
 import {
     MembershipDTO,
     MembershipViewDTO,
-} from 'src/modules/students/models/membership';
-import { StudentDTO } from 'src/modules/students/models/student';
+} from 'src/interfaces/student/membership';
+import { StudentDTO } from 'src/interfaces/student/student';
 
 const membershipsEndpoint = '/memberships';
 

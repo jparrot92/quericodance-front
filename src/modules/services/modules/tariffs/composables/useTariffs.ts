@@ -4,8 +4,6 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { SessionFrequency, PaymentFrequency } from 'src/types/UtilTypes';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listTariffs,
     getTariff,
@@ -14,7 +12,9 @@ import {
     deleteTariff,
 } from 'src/api/tariffsApi';
 
-import { Tariff } from '../models/tariff';
+import { TariffDTO } from 'src/interfaces/tariff/tariff';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const useTariffs = () => {
     const router = useRouter();
@@ -26,8 +26,8 @@ const useTariffs = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const tariffs = ref<Tariff[]>([]);
-    const tariff = ref<Tariff>({
+    const tariffs = ref<TariffDTO[]>([]);
+    const tariff = ref<TariffDTO>({
         id: 0,
         name: '',
         sessions: null,

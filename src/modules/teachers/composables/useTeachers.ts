@@ -3,8 +3,6 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listTeachers,
     getTeacher,
@@ -13,7 +11,9 @@ import {
     deleteTeacher,
 } from 'src/api/teachersApi';
 
-import { Teacher } from '../models/teacher';
+import { TeacherDTO } from 'src/interfaces/teacher/teacher';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const useTeachers = () => {
     const router = useRouter();
@@ -25,8 +25,8 @@ const useTeachers = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const teachers = ref<Teacher[]>([]);
-    const teacher = ref<Teacher>({
+    const teachers = ref<TeacherDTO[]>([]);
+    const teacher = ref<TeacherDTO>({
         id: 0,
         user: {
             id: 0,

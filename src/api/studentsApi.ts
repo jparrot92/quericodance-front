@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { StudentDTO } from 'src/modules/students/models/student';
+import { StudentDTO } from 'src/interfaces/student/student';
 import { handleError } from './errorApi';
 
 export const listStudents = async (

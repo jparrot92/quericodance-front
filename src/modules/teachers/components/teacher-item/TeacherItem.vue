@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import { Teacher } from '../../models/teacher';
+import { TeacherDTO } from 'src/interfaces/teacher/teacher';
 
 const props = withDefaults(
     defineProps<{
-        teacherItem: Teacher;
+        teacherItem: TeacherDTO;
     }>(),
     {}
 );
 
 const router = useRouter();
 
-const handleItemClick = (teacher: Teacher) => {
+const handleItemClick = (teacher: TeacherDTO) => {
     router.push({
         name: 'teachers-edit',
         params: {

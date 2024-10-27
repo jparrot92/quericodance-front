@@ -1,7 +1,7 @@
-import { StudentDTO } from 'src/modules/students/models/student';
+import { StudentDTO } from 'src/interfaces/student/student';
 import { ActivityDTO } from './activity';
 
-export interface ActivityStudent {
+export interface ActivityStudentDTO {
     id: number;
     danceRole: string;
     price: number;

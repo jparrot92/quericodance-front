@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import { User } from '../../models/user';
+import { UserDTO } from 'src/interfaces/user/user';
 
 const props = withDefaults(
     defineProps<{
-        userItem: User;
+        userItem: UserDTO;
     }>(),
     {}
 );
 
 const router = useRouter();
 
-const handleItemClick = (user: User) => {
+const handleItemClick = (user: UserDTO) => {
     router.push({
         name: 'users-edit',
         params: {

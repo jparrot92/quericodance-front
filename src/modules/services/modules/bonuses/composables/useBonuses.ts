@@ -3,8 +3,6 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listBonuses,
     getBonus,
@@ -15,8 +13,10 @@ import {
     deleteBonusStudent,
 } from 'src/api/bonusesApi';
 
-import { Bonus } from '../models/bonus';
-import { BonusStudentDTO } from 'src/modules/students/models/bonusStudent';
+import { BonusDTO } from 'src/interfaces/bonus/bonus';
+import { BonusStudentDTO } from 'src/interfaces/student/bonusStudent';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const useBonuses = () => {
     const router = useRouter();
@@ -28,8 +28,8 @@ const useBonuses = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const bonuses = ref<Bonus[]>([]);
-    const bonus = ref<Bonus>({
+    const bonuses = ref<BonusDTO[]>([]);
+    const bonus = ref<BonusDTO>({
         id: 0,
         name: '',
         sessions: null,

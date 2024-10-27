@@ -4,9 +4,10 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import { Action } from 'src/types/UtilTypes';
-import useAuth from 'src/modules/auth/composables/useAuth';
 
-import { ActivityStudent } from 'src/modules/activities/models/activityStudent';
+import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
+
+import useAuth from 'src/modules/auth/composables/useAuth';
 
 import AbsenceList from '../absence-list/AbsenceList.vue';
 
@@ -14,7 +15,7 @@ const emits = defineEmits(['add-absence', 'delete-activity', 'delete-absence']);
 
 const props = withDefaults(
     defineProps<{
-        activitiesStudent?: ActivityStudent[];
+        activitiesStudent?: ActivityStudentDTO[];
     }>(),
     {}
 );
@@ -23,11 +24,11 @@ const { t } = useI18n();
 const router = useRouter();
 const { isStudent, isAdmin } = useAuth();
 
-const actions: ComputedRef<Action<ActivityStudent>[]> = computed(() => {
+const actions: ComputedRef<Action<ActivityStudentDTO>[]> = computed(() => {
     return [
         {
             label: t('activity.see'),
-            action: (row: ActivityStudent) => {
+            action: (row: ActivityStudentDTO) => {
                 router.push({
                     name: 'activities-list-students',
                     params: {
@@ -39,13 +40,14 @@ const actions: ComputedRef<Action<ActivityStudent>[]> = computed(() => {
         },
         {
             label: t('student.addAbsence'),
-            action: (row: ActivityStudent) =>
+            action: (row: ActivityStudentDTO) =>
                 emits('add-absence', row.activity),
             show: () => true,
         },
         {
             label: t('shared.delete'),
-            action: (row: ActivityStudent) => emits('delete-activity', row.id),
+            action: (row: ActivityStudentDTO) =>
+                emits('delete-activity', row.id),
             show: () => true,
         },
     ];

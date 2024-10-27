@@ -5,8 +5,10 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { Action, ColumnTable } from 'src/types/UtilTypes';
 
+import { UserDTO } from 'src/interfaces/user/user';
+
 import useUsers from '../../composables/useUsers';
-import { User } from '../../models/user';
+
 import UserItem from '../user-item/UserItem.vue';
 
 const $q = useQuasar();
@@ -15,11 +17,11 @@ const router = useRouter();
 
 const { loading, users, loadUsers, removeUser } = useUsers();
 
-const actions: ComputedRef<Action<User>[]> = computed(() => {
+const actions: ComputedRef<Action<UserDTO>[]> = computed(() => {
     return [
         {
             label: t('shared.edit'),
-            action: (row: User) => {
+            action: (row: UserDTO) => {
                 router.push({
                     name: 'users-edit',
                     params: { id: row.id },
@@ -29,7 +31,7 @@ const actions: ComputedRef<Action<User>[]> = computed(() => {
         },
         {
             label: t('shared.delete'),
-            action: (row: User) => removeUser(row.id),
+            action: (row: UserDTO) => removeUser(row.id),
             show: () => true,
         },
     ];

@@ -1,4 +1,4 @@
-import { StudentDTO } from 'src/modules/students/models/student';
+import { StudentDTO } from 'src/interfaces/student/student';
 
 export interface PaymentDTO {
     id: number;

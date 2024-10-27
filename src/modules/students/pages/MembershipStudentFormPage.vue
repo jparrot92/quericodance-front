@@ -4,6 +4,10 @@ import { format } from '@formkit/tempo';
 import { useI18n } from 'vue-i18n';
 
 import { PaymentsStatus, Option } from 'src/types/UtilTypes';
+
+import { MembershipViewDTO } from 'src/interfaces/student/membership';
+import { StudentDTO } from 'src/interfaces/student/student';
+
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
@@ -12,8 +16,6 @@ import useMemberships from 'src/modules/students/composables/useMemberships';
 import useStudents from 'src/modules/students/composables/useStudents';
 
 import MembershipDialog from '../components/MembershipDialog.vue';
-import { MembershipViewDTO } from '../models/membership';
-import { StudentDTO } from '../models/student';
 
 const emits = defineEmits(['update-membership', 'delete-membership']);
 
@@ -23,7 +25,7 @@ const props = withDefaults(
         membership?: MembershipViewDTO | null;
     }>(),
     {
-        membership: () => ({}),
+        membership: null,
     }
 );
 

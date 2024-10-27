@@ -2,8 +2,6 @@ import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import useNotify from 'src/shared/composables/useNotify';
-
 import {
     listMemberships,
     getMembership,
@@ -12,7 +10,12 @@ import {
     deleteMembership,
 } from 'src/api/membershipsApi';
 
-import { MembershipDTO, MembershipViewDTO } from '../models/membership';
+import {
+    MembershipDTO,
+    MembershipViewDTO,
+} from 'src/interfaces/student/membership';
+
+import useNotify from 'src/shared/composables/useNotify';
 
 const useMemberships = () => {
     const $q = useQuasar();

@@ -6,8 +6,10 @@ import { useRouter } from 'vue-router';
 
 import { Action, ColumnTable } from 'src/types/UtilTypes';
 
+import { TariffDTO } from 'src/interfaces/tariff/tariff';
+
 import useTariffs from '../../composables/useTariffs';
-import { Tariff } from '../../models/tariff';
+
 import TariffItem from '../tariff-item/TariffItem.vue';
 
 const { loading, tariffs, loadTariffs, removeTariff } = useTariffs();
@@ -16,11 +18,11 @@ const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
 
-const actions: ComputedRef<Action<Tariff>[]> = computed(() => {
+const actions: ComputedRef<Action<TariffDTO>[]> = computed(() => {
     return [
         {
             label: t('shared.edit'),
-            action: (row: Tariff) => {
+            action: (row: TariffDTO) => {
                 router.push({
                     name: 'tariffs-edit',
                     params: { id: row.id },
@@ -30,7 +32,7 @@ const actions: ComputedRef<Action<Tariff>[]> = computed(() => {
         },
         {
             label: t('shared.delete'),
-            action: (row: Tariff) => removeTariff(row.id),
+            action: (row: TariffDTO) => removeTariff(row.id),
             show: () => true,
         },
     ];
@@ -127,3 +129,4 @@ onMounted(() => {
         />
     </q-page-sticky>
 </template>
+../../../../../../interfaces/tariff/tariff

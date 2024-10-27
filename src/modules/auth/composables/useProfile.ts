@@ -2,13 +2,13 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
+import { getProfile, updateProfile } from 'src/api/profileApi';
+
+import { UserDTO } from 'src/interfaces/user/user';
+
 import useNotify from 'src/shared/composables/useNotify';
 
 import { useAuthStore } from 'src/modules/auth/store/auth-store';
-
-import { getProfile, updateProfile } from 'src/api/profileApi';
-
-import { User } from 'src/modules/users/models/user';
 
 const useUsers = () => {
     const router = useRouter();
@@ -20,8 +20,8 @@ const useUsers = () => {
     const authStore = useAuthStore();
 
     const loading = ref<boolean>(false);
-    const users = ref<User[]>([]);
-    const user = ref<User>({
+    const users = ref<UserDTO[]>([]);
+    const user = ref<UserDTO>({
         id: 0,
         name: '',
         surnames: '',
