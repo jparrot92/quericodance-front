@@ -1,15 +1,22 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted, computed, onBeforeUnmount } from 'vue';
+import {
+    defineProps,
+    ref,
+    onMounted,
+    computed,
+    onBeforeUnmount,
+    ComputedRef,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import MenuList from 'src/shared/components/MenuList.vue';
 import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
 
 import AddBonusStudentDialog from '../components/AddBonusStudentDialog.vue';
 import { BonusStudentDTO } from '../models/bonusStudent';
 import useBonuses from 'src/modules/services/modules/bonuses/composables/useBonuses';
+import { Action } from 'src/types/UtilTypes';
 
 const emits = defineEmits(['update-bonuses-student']);
 
@@ -80,6 +87,16 @@ onBeforeUnmount(() => {
 //         next();
 //     }
 // });
+
+const actions: ComputedRef<Action<BonusStudentDTO>[]> = computed(() => {
+    return [
+        {
+            label: t('shared.delete'),
+            action: (row: BonusStudentDTO) => deleteBonusStudent(row.id),
+            show: () => true,
+        },
+    ];
+});
 </script>
 
 <template>
@@ -114,19 +131,11 @@ onBeforeUnmount(() => {
                             </q-item-section>
 
                             <q-item-section top side v-if="isAdmin()">
-                                <div class="text-grey-8 q-gutter-xs">
-                                    <menu-list>
-                                        <q-item clickable v-close-popup>
-                                            <q-item-section
-                                                @click="
-                                                    deleteBonusStudent(item.id)
-                                                "
-                                            >
-                                                {{ $t('shared.delete') }}
-                                            </q-item-section>
-                                        </q-item>
-                                    </menu-list>
-                                </div>
+                                <pd-menu-list
+                                    v-if="isAdmin()"
+                                    :actions="actions"
+                                    :row="item"
+                                />
                             </q-item-section>
                         </q-item>
                         <q-separator
