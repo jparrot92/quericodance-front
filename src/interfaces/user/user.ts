@@ -3,10 +3,10 @@ export interface UserDTO {
     name: string;
     surnames: string;
     dateOfBirth: string;
-    phone: string;
+    phone?: string;
     photo: string;
     instagram: string;
-    email: string;
+    email?: string;
     password?: string;
     roles: string[];
 }

@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
@@ -53,6 +53,13 @@ const useStudents = () => {
         },
         status: Status.NEW,
     });
+    const uniqueFields = reactive<{
+        phone: string;
+        email: string;
+    }>({
+        phone: '',
+        email: '',
+    });
 
     const loadStudents = async (idActivity: string | number) => {
         try {
@@ -96,6 +103,15 @@ const useStudents = () => {
     const editStudent = async (id: number) => {
         try {
             loading.value = true;
+
+            if (uniqueFields.email === student.value.user?.email) {
+                delete student.value.user.email;
+            }
+
+            if (uniqueFields.phone === student.value.user?.phone) {
+                delete student.value.user.phone;
+            }
+
             student.value = await updateStudent(id, student.value);
             notifySuccess(t('user.messageUserUpdateSuccessfully'));
         } catch (error) {
@@ -278,6 +294,7 @@ const useStudents = () => {
         loading,
         students,
         student,
+        uniqueFields,
         loadStudents,
         loadStudent,
         saveStudent,

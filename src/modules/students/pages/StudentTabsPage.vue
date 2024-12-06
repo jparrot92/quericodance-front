@@ -69,7 +69,7 @@ onMounted(async () => {
 
         <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="student-data">
-                <student-form-page :student="student" />
+                <student-form-page :initial-student="student" />
             </q-tab-panel>
 
             <q-tab-panel name="courses">

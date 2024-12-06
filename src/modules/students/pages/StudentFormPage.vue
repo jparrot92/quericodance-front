@@ -16,14 +16,14 @@ import useActivities from 'src/modules/activities/composables/useActivities';
 import useStudents from '../composables/useStudents';
 
 const { activities, loadActivities } = useActivities();
-const { student: studentForm, saveStudent, editStudent } = useStudents();
+const { student, uniqueFields, saveStudent, editStudent } = useStudents();
 
 const props = withDefaults(
     defineProps<{
-        student?: StudentDTO;
+        initialStudent?: StudentDTO;
     }>(),
     {
-        student: () => ({
+        initialStudent: () => ({
             id: 0,
             user: {
                 id: 0,
@@ -44,24 +44,26 @@ const props = withDefaults(
 
 const { t } = useI18n();
 
-studentForm.value = props.student;
+student.value = props.initialStudent;
+uniqueFields.email = props.initialStudent.user.email ?? '';
+uniqueFields.phone = props.initialStudent.user.phone ?? '';
 
 const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
 
 const removeCoursesInterest = (idActivity: number) => {
-    const index = studentForm.value.interestedActivities?.findIndex(
+    const index = student.value.interestedActivities?.findIndex(
         (student: ActivityDTO) => student.id === idActivity
     );
     if (index !== undefined && index !== -1) {
-        studentForm.value.interestedActivities?.splice(index, 1);
+        student.value.interestedActivities?.splice(index, 1);
     }
 };
 
 const onSubmit = () => {
-    if (props.student.id !== 0) {
-        editStudent(props.student.id);
+    if (props.initialStudent.id !== 0) {
+        editStudent(props.initialStudent.id);
     } else {
-        saveStudent(studentForm.value);
+        saveStudent(student.value);
     }
 };
 
@@ -106,15 +108,15 @@ onMounted(async () => {
             >
                 <div style="text-align: center">
                     <ImageUploaderPreview
-                        v-if="studentForm.user.id"
-                        :id="studentForm.user.id"
-                        :photo="studentForm.user.photo"
+                        v-if="student.user.id"
+                        :id="student.user.id"
+                        :photo="student.user.photo"
                     />
                 </div>
 
                 <q-input
                     :label="$t('shared.name') + '*'"
-                    v-model="studentForm.user.name"
+                    v-model="student.user.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -124,7 +126,7 @@ onMounted(async () => {
 
                 <q-input
                     :label="$t('user.surnames') + '*'"
-                    v-model="studentForm.user.surnames"
+                    v-model="student.user.surnames"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -134,23 +136,23 @@ onMounted(async () => {
 
                 <pd-date
                     :label="$t('user.dateOfBirth') + '*'"
-                    v-model="studentForm.user.dateOfBirth"
+                    v-model="student.user.dateOfBirth"
                 />
 
                 <pd-phone-input
                     :label="$t('user.phone') + '*'"
-                    v-model="studentForm.user.phone"
+                    v-model="student.user.phone"
                     :required="true"
                 />
 
                 <q-input
                     :label="$t('user.instagram')"
-                    v-model="studentForm.user.instagram"
+                    v-model="student.user.instagram"
                 />
 
                 <q-input
                     :label="$t('user.email') + '*'"
-                    v-model="studentForm.user.email"
+                    v-model="student.user.email"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -164,7 +166,7 @@ onMounted(async () => {
                             ? $t('user.changePassword')
                             : $t('user.password') + '*'
                     "
-                    v-model="studentForm.user.password"
+                    v-model="student.user.password"
                     :rules="
                         student.id
                             ? []
@@ -177,7 +179,7 @@ onMounted(async () => {
                 />
 
                 <q-select
-                    v-model="studentForm.interestedActivities"
+                    v-model="student.interestedActivities"
                     multiple
                     :options="activitiesFiltered"
                     :label="$t('student.coursesInterest')"
