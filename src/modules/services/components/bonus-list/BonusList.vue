@@ -5,26 +5,24 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import { Action, ColumnTable } from 'src/types/UtilTypes';
+import { BonusDTO } from 'src/model/bonus.model';
 
-import { TariffDTO } from 'src/interfaces/tariff/tariff';
+import useBonuses from '../../composables/useBonuses';
+import BonusItem from '../bonus-item/BonusItem.vue';
 
-import useTariffs from '../../composables/useTariffs';
-
-import TariffItem from '../tariff-item/TariffItem.vue';
-
-const { loading, tariffs, loadTariffs, removeTariff } = useTariffs();
+const { loading, bonuses, loadBonuses, removeBonus } = useBonuses();
 
 const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
 
-const actions: ComputedRef<Action<TariffDTO>[]> = computed(() => {
+const actions: ComputedRef<Action<BonusDTO>[]> = computed(() => {
     return [
         {
             label: t('shared.edit'),
-            action: (row: TariffDTO) => {
+            action: (row: BonusDTO) => {
                 router.push({
-                    name: 'tariffs-edit',
+                    name: 'bonuses-edit',
                     params: { id: row.id },
                 });
             },
@@ -32,40 +30,33 @@ const actions: ComputedRef<Action<TariffDTO>[]> = computed(() => {
         },
         {
             label: t('shared.delete'),
-            action: (row: TariffDTO) => removeTariff(row.id),
+            action: (row: BonusDTO) => removeBonus(row.id),
             show: () => true,
         },
     ];
 });
 
-const columnsTariff: ColumnTable[] = [
+const columnsBonus: ColumnTable[] = [
     {
         name: 'name',
         align: 'left',
         label: t('shared.name'),
         field: 'name',
-        sortable: true,
+        sortable: false,
     },
     {
         name: 'sessions',
         align: 'left',
-        label: t('tariff.sessions'),
+        label: t('bonus.sessions'),
         field: 'sessions',
-        sortable: true,
-    },
-    {
-        name: 'sessionFrequency',
-        align: 'left',
-        label: t('tariff.sessionFrequency'),
-        field: (row) => t('shared.enum.' + row.sessionFrequency),
         sortable: true,
     },
     {
         name: 'price',
         align: 'left',
-        label: t('tariff.price'),
+        label: t('bonus.price'),
         field: 'price',
-        sortable: true,
+        sortable: false,
     },
     {
         name: 'actions',
@@ -77,15 +68,15 @@ const columnsTariff: ColumnTable[] = [
 ];
 
 onMounted(() => {
-    loadTariffs();
+    loadBonuses();
 });
 </script>
 
 <template>
     <q-table
         :grid="$q.screen.xs"
-        :rows="tariffs"
-        :columns="columnsTariff"
+        :rows="bonuses"
+        :columns="columnsBonus"
         row-key="id"
         class="col-12 my-sticky-last-column-table"
         :loading="loading"
@@ -95,28 +86,30 @@ onMounted(() => {
         <template v-slot:top v-if="!$q.screen.xs">
             <q-space />
             <q-btn
-                :label="$t('tariff.createTariff')"
+                :label="$t('bonus.createBonus')"
                 color="primary"
                 icon="mdi-plus"
                 dense
                 @click="
                     $router.push({
-                        name: 'tariffs-add',
+                        name: 'bonuses-add',
                     })
                 "
             />
         </template>
         <template v-slot:body-cell-actions="props">
             <q-td :props="props">
-                <pd-menu-list :actions="actions" :row="props.row" />
+                <menu-list>
+                    <pd-menu-list :actions="actions" :row="props.row" />
+                </menu-list>
             </q-td>
         </template>
         <template v-slot:item="props">
-            <tariff-item :key="props.row.id" :tariff-item="props.row">
+            <bonus-item :key="props.row.id" :bonus-item="props.row">
                 <template v-slot:menu>
                     <pd-menu-list :actions="actions" :row="props.row" />
                 </template>
-            </tariff-item>
+            </bonus-item>
         </template>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -125,8 +118,7 @@ onMounted(() => {
             fab
             icon="mdi-plus"
             color="primary"
-            :to="{ name: 'tariffs-add' }"
+            :to="{ name: 'bonuses-add' }"
         />
     </q-page-sticky>
 </template>
-../../../../../../interfaces/tariff/tariff

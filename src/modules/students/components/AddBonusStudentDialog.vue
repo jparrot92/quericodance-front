@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, defineProps, ref, Ref } from 'vue';
 
-import useBonuses from 'src/modules/services/modules/bonuses/composables/useBonuses';
+import useBonuses from 'src/modules/services/composables/useBonuses';
 
 const props = withDefaults(
     defineProps<{

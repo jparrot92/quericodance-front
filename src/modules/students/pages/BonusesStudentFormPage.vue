@@ -17,7 +17,7 @@ import { useAuthStore } from '../../auth/store/auth-store';
 import useAuth from '../../auth/composables/useAuth';
 
 import AddBonusStudentDialog from '../components/AddBonusStudentDialog.vue';
-import useBonuses from 'src/modules/services/modules/bonuses/composables/useBonuses';
+import useBonuses from 'src/modules/services/composables/useBonuses';
 
 const emits = defineEmits(['update-bonuses-student']);
 

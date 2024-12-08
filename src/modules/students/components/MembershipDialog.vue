@@ -7,7 +7,7 @@ import { MembershipViewDTO } from 'src/model/finance.model';
 import { TariffDTO } from 'src/model/tariff.model';
 
 import useMemberships from 'src/modules/students/composables/useMemberships';
-import useTariffs from 'src/modules/services/modules/tariffs/composables/useTariffs';
+import useTariffs from 'src/modules/services/composables/useTariffs';
 
 const props = withDefaults(
     defineProps<{
