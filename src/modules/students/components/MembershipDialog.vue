@@ -103,33 +103,36 @@ onMounted(async () => {
 
             <q-card-section style="max-height: 50vh" class="scroll">
                 <q-form>
-                    <q-select
-                        v-model="tariff"
-                        :label="$t('student.tariff')"
-                        :options="tariffs"
-                        :option-value="'id'"
-                        @update:model-value="
-                            tariff && (membership.tariffId = tariff.id)
-                        "
-                    >
-                        <template v-slot:selected-item="{ opt }">
-                            {{ opt.name + ' - ' + opt.price + '€' }}
-                        </template>
-                        <template v-slot:option="{ itemProps, opt }">
-                            <q-item v-bind="itemProps">
-                                <q-item-section>
-                                    {{ opt.name + ' - ' + opt.price + '€' }}
-                                </q-item-section>
-                            </q-item>
-                        </template>
-                    </q-select>
-
-                    <pd-select
-                        v-model="membership.paymentFrequency"
-                        :label="$t('student.paymentFrequency')"
-                        :options="paymentFrequency"
-                        :dense="false"
-                    />
+                    <div class="row">
+                        <q-select
+                            class="col-md-7 col-sm-7 col-xs-7 q-pr-md q-pr-sm"
+                            v-model="tariff"
+                            :label="$t('student.tariff')"
+                            :options="tariffs"
+                            :option-value="'id'"
+                            @update:model-value="
+                                tariff && (membership.tariffId = tariff.id)
+                            "
+                        >
+                            <template v-slot:selected-item="{ opt }">
+                                {{ opt.name + ' - ' + opt.price + '€' }}
+                            </template>
+                            <template v-slot:option="{ itemProps, opt }">
+                                <q-item v-bind="itemProps">
+                                    <q-item-section>
+                                        {{ opt.name + ' - ' + opt.price + '€' }}
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                        </q-select>
+                        <pd-select
+                            class="col-md-5 col-sm-5 col-xs-5 q-pl-md q-pl-sm"
+                            v-model="membership.paymentFrequency"
+                            :label="$t('student.paymentFrequency')"
+                            :options="paymentFrequency"
+                            :dense="false"
+                        />
+                    </div>
 
                     <div class="row">
                         <q-input
