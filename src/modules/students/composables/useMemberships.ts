@@ -10,10 +10,7 @@ import {
     deleteMembership,
 } from 'src/api/membershipsApi';
 
-import {
-    MembershipDTO,
-    MembershipViewDTO,
-} from 'src/interfaces/student/membership';
+import { MembershipDTO, MembershipViewDTO } from 'src/model/finance.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 

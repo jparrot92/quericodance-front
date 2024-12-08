@@ -7,9 +7,9 @@ import { format } from '@formkit/tempo';
 
 import { Option, PaymentsStatus } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
+import { StudentDTO } from 'src/model/student.model';
 
 import useStudents from '../../composables/useStudents';
-import { StudentDTO } from '../../models/student';
 
 const props = withDefaults(
     defineProps<{

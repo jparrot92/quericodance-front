@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-
-import { TeacherDTO } from 'src/interfaces/teacher/teacher';
+import { TeacherDTO } from 'src/model/teacher.model';
 
 const props = withDefaults(
     defineProps<{

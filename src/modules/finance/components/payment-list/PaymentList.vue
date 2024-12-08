@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { format } from '@formkit/tempo';
 import { ColumnTable } from 'src/types/UtilTypes';
 
-import { PaymentDTO } from 'src/interfaces/finance/payment';
+import { PaymentDTO } from 'src/model/finance.model';
 
 import usePayments from '../../composables/usePayments';
 import useStudents from 'src/modules/students/composables/useStudents';

@@ -1,9 +1,8 @@
-import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
-import { UserDTO } from 'src/interfaces/user/user';
-import { MembershipViewDTO } from './membership';
-import { ActivityDTO } from 'src/interfaces/activity/activity';
-import { BonusStudentDTO } from './bonusStudent';
 import { Status } from 'src/types/UtilTypes';
+import { UserDTO } from './user.model';
+import { ActivityDTO, ActivityStudentDTO } from './activity.model';
+import { BonusDTO } from './bonus.model';
+import { MembershipViewDTO } from './finance.model';
 
 export interface StudentDTO {
     id: number;
@@ -14,4 +13,9 @@ export interface StudentDTO {
     bonusesStudent?: BonusStudentDTO[];
     membership?: MembershipViewDTO;
     interestedActivities?: ActivityDTO[];
+}
+
+export interface BonusStudentDTO {
+    id: number;
+    bonus: BonusDTO;
 }

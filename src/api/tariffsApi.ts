@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
-import { TariffDTO } from 'src/interfaces/tariff/tariff';
 import { handleError } from './errorApi';
+import { TariffDTO } from 'src/model/tariff.model';
 
 const tariffsEndpoint = '/tariffs';
 

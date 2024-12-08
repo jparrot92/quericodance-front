@@ -1,7 +1,7 @@
 import { api } from 'boot/axios';
-import { BonusDTO } from 'src/interfaces/bonus/bonus';
 import { handleError } from './errorApi';
-import { BonusStudentDTO } from 'src/interfaces/student/bonusStudent';
+import { BonusDTO } from 'src/model/bonus.model';
+import { BonusStudentDTO } from 'src/model/student.model';
 
 const bonusesEndpoint = '/bonuses';
 

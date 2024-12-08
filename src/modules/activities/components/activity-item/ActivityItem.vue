@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
-import { ActivityListViewDTO } from 'src/interfaces/activity/activity';
+import { ActivityListViewDTO } from 'src/model/activity.model';
 
 const props = withDefaults(
     defineProps<{

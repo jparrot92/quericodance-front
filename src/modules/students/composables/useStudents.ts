@@ -22,7 +22,7 @@ import {
     resetPaymentsStatus,
 } from 'src/api/membershipsApi';
 
-import { StudentDTO } from 'src/interfaces/student/student';
+import { StudentDTO } from 'src/model/student.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 

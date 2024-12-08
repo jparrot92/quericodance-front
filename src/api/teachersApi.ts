@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
-import { TeacherDTO } from 'src/interfaces/teacher/teacher';
 import { handleError } from './errorApi';
+import { TeacherDTO } from 'src/model/teacher.model';
 
 export const listTeachers = async (): Promise<TeacherDTO[]> => {
     try {

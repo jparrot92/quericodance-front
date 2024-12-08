@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
+import { ActivityType } from 'src/types/UtilTypes';
 import {
     listActivities,
     getCountersActivity,
@@ -16,16 +17,12 @@ import {
     deleteActivityAbsence,
     downloadExcel,
 } from 'src/api/activitiesApi';
-
 import {
-    ActivityDTO,
-    ActivityCountersDTO,
     ActivityListViewDTO,
-} from 'src/interfaces/activity/activity';
-import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
-
-import { ActivityType } from 'src/types/UtilTypes';
-
+    ActivityDTO,
+    ActivityStudentDTO,
+    ActivityCountersDTO,
+} from 'src/model/activity.model';
 import useNotify from 'src/shared/composables/useNotify';
 
 const useActivities = () => {

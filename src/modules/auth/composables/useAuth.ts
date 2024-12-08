@@ -5,8 +5,7 @@ import { useQuasar } from 'quasar';
 
 import { requestResetPassword, updatePassword } from 'src/api/authApi';
 
-import { AuthDTO } from 'src/interfaces/auth/auth';
-import { Role } from 'src/interfaces/auth/roles';
+import { AuthDTO, Role } from 'src/model/auth.model';
 
 import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 import useNotify from 'src/shared/composables/useNotify';

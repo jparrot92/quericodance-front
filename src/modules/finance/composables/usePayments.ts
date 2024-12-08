@@ -1,8 +1,7 @@
 import { ref } from 'vue';
 
 import { getTotalAmounts, listPayments } from 'src/api/paymentsApi';
-
-import { PaymentDTO, TotalAmountsDTO } from 'src/interfaces/finance/payment';
+import { PaymentDTO, TotalAmountsDTO } from 'src/model/finance.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 

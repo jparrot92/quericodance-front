@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
-import { LoginDTO } from 'src/interfaces/auth/auth';
 import { handleError } from './errorApi';
+import { LoginDTO } from 'src/model/auth.model';
 
 export const login = async (
     email: string,

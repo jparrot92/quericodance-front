@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { Action, ColumnTable } from 'src/types/UtilTypes';
 
-import { UserDTO } from 'src/interfaces/user/user';
+import { UserDTO } from 'src/model/user.model';
 
 import useUsers from '../../composables/useUsers';
 

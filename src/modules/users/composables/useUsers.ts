@@ -11,7 +11,7 @@ import {
     deleteUser,
 } from 'src/api/usersApi';
 
-import { UserDTO } from 'src/interfaces/user/user';
+import { UserDTO } from 'src/model/user.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 

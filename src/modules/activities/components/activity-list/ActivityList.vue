@@ -13,16 +13,12 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import {
-    ActivityDTO,
-    ActivityListViewDTO,
-} from 'src/interfaces/activity/activity';
-
-import {
     Action,
     ActivityType,
     ColumnTable,
     WeekDay,
 } from 'src/types/UtilTypes';
+import { ActivityListViewDTO, ActivityDTO } from 'src/model/activity.model';
 
 import { FilterField } from 'src/composables/useFilterTypes';
 import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';

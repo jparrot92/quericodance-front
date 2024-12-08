@@ -2,9 +2,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
+import { UserDTO } from 'src/model/user.model';
 import { getProfile, updateProfile } from 'src/api/profileApi';
-
-import { UserDTO } from 'src/interfaces/user/user';
 
 import useNotify from 'src/shared/composables/useNotify';
 

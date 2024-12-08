@@ -1,5 +1,6 @@
-import { TariffDTO } from 'src/interfaces/tariff/tariff';
 import { PaymentFrequency, PaymentsStatus } from 'src/types/UtilTypes';
+import { StudentDTO } from './student.model';
+import { TariffDTO } from './tariff.model';
 
 export interface MembershipDTO {
     id: number;
@@ -21,4 +22,19 @@ export interface MembershipViewDTO {
     discountReason?: string;
     dueDate: Date;
     updateAt: Date;
+}
+
+export interface PaymentDTO {
+    id: number;
+    periodCode: string;
+    paymentType: string;
+    student?: StudentDTO;
+    amount: number;
+    status: string;
+    paymentDate: string | null;
+}
+
+export interface TotalAmountsDTO {
+    pendingTotal: number;
+    payedTotal: number;
 }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-
-import { UserDTO } from 'src/interfaces/user/user';
+import { UserDTO } from 'src/model/user.model';
 
 const props = withDefaults(
     defineProps<{

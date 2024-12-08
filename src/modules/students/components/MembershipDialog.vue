@@ -3,9 +3,10 @@ import { Ref, computed, onMounted, ref } from 'vue';
 import { PaymentFrequency } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
-import { MembershipViewDTO } from '../models/membership';
+import { MembershipViewDTO } from 'src/model/finance.model';
+import { TariffDTO } from 'src/model/tariff.model';
+
 import useMemberships from 'src/modules/students/composables/useMemberships';
-import { Tariff } from 'src/modules/services/modules/tariffs/models/tariff';
 import useTariffs from 'src/modules/services/modules/tariffs/composables/useTariffs';
 
 const props = withDefaults(
@@ -22,7 +23,7 @@ const { generateEnumOptions } = useEnumOptions();
 const { tariffs, loadTariffs } = useTariffs();
 
 const paymentFrequency = generateEnumOptions(PaymentFrequency);
-const tariff = ref<Tariff>();
+const tariff = ref<TariffDTO>();
 
 const { membership, membershipView, saveMembership, editMembership } =
     useMemberships();
@@ -179,4 +180,3 @@ onMounted(async () => {
         </q-card>
     </q-dialog>
 </template>
-src/interfaces/tariff/tariff

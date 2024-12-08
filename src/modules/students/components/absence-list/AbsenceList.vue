@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { format } from '@formkit/tempo';
-
-import { AbsenceDTO } from 'src/interfaces/activity/absence';
+import { AbsenceDTO } from 'src/model/activity.model';
 
 import useAuth from 'src/modules/auth/composables/useAuth';
 

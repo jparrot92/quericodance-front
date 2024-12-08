@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineProps, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { ActivityDTO } from 'src/model/activity.model';
 
-import { ActivityDTO } from 'src/modules/activities/models/activity';
 import useActivities from 'src/modules/activities/composables/useActivities';
 
 const props = withDefaults(

@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
-import { StudentDTO } from 'src/interfaces/student/student';
 import { handleError } from './errorApi';
+import { StudentDTO } from 'src/model/student.model';
 
 export const listStudents = async (
     idActivity: number | string

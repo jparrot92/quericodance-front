@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
-import { UserDTO } from 'src/interfaces/user/user';
 import { handleError } from './errorApi';
+import { UserDTO } from 'src/model/user.model';
 
 const profileEndpoint = '/profile';
 

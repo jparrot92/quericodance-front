@@ -1,7 +1,13 @@
-import { TeacherDTO } from 'src/interfaces/teacher/teacher';
-import { ActivityStudentDTO } from './activityStudent';
-import { AbsenceDTO } from './absence';
 import { ActivityType, WeekDay } from 'src/types/UtilTypes';
+import { StudentDTO } from './student.model';
+import { TeacherDTO } from './teacher.model';
+
+export interface AbsenceDTO {
+    id: number;
+    studentId: number;
+    activityId: number;
+    absenceDate: Date;
+}
 
 export interface ActivityDTO {
     id: number;
@@ -47,4 +53,12 @@ export interface ActivityViewDTO {
     numberPlaces: number | null;
     price: number | null;
     color: string;
+}
+
+export interface ActivityStudentDTO {
+    id: number;
+    danceRole: string;
+    price: number;
+    activity: ActivityDTO;
+    student?: StudentDTO;
 }

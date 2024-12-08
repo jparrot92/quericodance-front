@@ -11,7 +11,7 @@ import {
     deleteTeacher,
 } from 'src/api/teachersApi';
 
-import { TeacherDTO } from 'src/interfaces/teacher/teacher';
+import { TeacherDTO } from 'src/model/teacher.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 

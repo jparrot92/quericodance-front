@@ -1,10 +1,7 @@
 import { api } from 'boot/axios';
 import { handleError } from './errorApi';
-import {
-    MembershipDTO,
-    MembershipViewDTO,
-} from 'src/interfaces/student/membership';
-import { StudentDTO } from 'src/interfaces/student/student';
+import { MembershipDTO, MembershipViewDTO } from 'src/model/finance.model';
+import { StudentDTO } from 'src/model/student.model';
 
 const membershipsEndpoint = '/memberships';
 

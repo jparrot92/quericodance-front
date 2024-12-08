@@ -4,8 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import { Action } from 'src/types/UtilTypes';
-
-import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
+import { ActivityStudentDTO } from 'src/model/activity.model';
 
 import useAuth from 'src/modules/auth/composables/useAuth';
 

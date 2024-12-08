@@ -1,12 +1,11 @@
 import { api } from 'boot/axios';
 import { handleError } from './errorApi';
-
 import {
-    ActivityDTO,
+    AbsenceDTO,
     ActivityCountersDTO,
-} from 'src/interfaces/activity/activity';
-import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
-import { AbsenceDTO } from 'src/interfaces/activity/absence';
+    ActivityDTO,
+    ActivityStudentDTO,
+} from 'src/model/activity.model';
 
 const activitiesEndpoint = '/activities';
 

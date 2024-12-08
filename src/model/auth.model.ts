@@ -1,4 +1,4 @@
-import { StudentDTO } from 'src/interfaces/student/student';
+import { StudentDTO } from './student.model';
 
 export interface AuthDTO {
     email: string;
@@ -18,4 +18,11 @@ export interface UserDTO {
     createAt: Date;
     updateAt: Date;
     student?: StudentDTO;
+}
+
+export enum Role {
+    ADMIN = 'admin',
+    SECRETARY = 'secretary',
+    TEACHER = 'teacher',
+    STUDENT = 'student',
 }

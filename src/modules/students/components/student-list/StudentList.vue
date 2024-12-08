@@ -26,11 +26,11 @@ import {
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import { FilterField } from 'src/composables/useFilterTypes';
 
-import useStudents from '../../composables/useStudents';
-import { StudentDTO } from '../../models/student';
+import { ActivityDTO } from 'src/model/activity.model';
+import { StudentDTO } from 'src/model/student.model';
 
+import useStudents from '../../composables/useStudents';
 import AddActivityAbsenceDialog from 'src/modules/students/components/AddActivityAbsenceDialog.vue';
-import { ActivityDTO } from 'src/modules/activities/models/activity';
 
 import StudentItem from '../student-item/StudentItem.vue';
 import StudentListBtnAcctions from './StudentListBtnAcctions.vue';

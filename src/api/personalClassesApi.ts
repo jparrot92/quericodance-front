@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
-import { PersonalClassDTO } from 'src/interfaces/personalClasses/personalClass';
 import { handleError } from './errorApi';
+import { PersonalClassDTO } from 'src/model/personalClasses.model';
 
 const personalClassesEndpoint = '/personal-classes';
 

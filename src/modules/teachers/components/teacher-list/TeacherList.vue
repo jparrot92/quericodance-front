@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { Action, ColumnTable } from 'src/types/UtilTypes';
 
-import { TeacherDTO } from 'src/interfaces/teacher/teacher';
+import { TeacherDTO } from 'src/model/teacher.model';
 
 import useTeachers from '../../composables/useTeachers';
 import TeacherItem from '../teacher-item/TeacherItem.vue';

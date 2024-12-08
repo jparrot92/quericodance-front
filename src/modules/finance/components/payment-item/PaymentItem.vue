@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { format } from '@formkit/tempo';
-
-import { PaymentDTO } from 'src/interfaces/finance/payment';
-
+import { PaymentDTO } from 'src/model/finance.model';
 import useStudents from 'src/modules/students/composables/useStudents';
 
 const props = withDefaults(

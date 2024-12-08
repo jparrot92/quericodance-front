@@ -2,17 +2,16 @@ import { defineStore } from 'pinia';
 
 import { login } from 'src/api/authApi';
 import { getStudent } from 'src/api/studentsApi';
-
-import { Auth, User } from '../../../interfaces/auth/auth';
+import { AuthDTO, UserDTO } from 'src/model/auth.model';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         token: '',
-        user: null as User | null,
+        user: null as UserDTO | null,
         expiresIn: '',
     }),
     actions: {
-        async login(user: Auth) {
+        async login(user: AuthDTO) {
             const { email, password } = user;
 
             try {

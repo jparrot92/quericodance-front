@@ -1,6 +1,6 @@
 import { api } from 'boot/axios';
-import { PaymentDTO, TotalAmountsDTO } from 'src/interfaces/finance/payment';
 import { handleError } from './errorApi';
+import { PaymentDTO, TotalAmountsDTO } from 'src/model/finance.model';
 
 const paymentsEndpoint = '/payments';
 
