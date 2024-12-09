@@ -1,8 +1,9 @@
 import { RouteRecordRaw } from 'vue-router';
 
-import tariffsRoutes from '../modules/tariffs/router';
-import bonusesRoutes from '../modules/bonuses/router';
-import personalClasses from '../modules/personalClasses/router';
+import tariffsRoutes from './tariffs.router';
+import bonusesRoutes from './bonuses.router';
+import personalClasses from './personalClasses.router';
+
 import { requireAdmin } from 'src/modules/auth/router/routeGuards';
 
 const servicesRoutes: RouteRecordRaw[] = [

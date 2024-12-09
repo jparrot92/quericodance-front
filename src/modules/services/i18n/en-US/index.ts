@@ -1,6 +1,6 @@
-import tariffsI18n from 'src/modules/services/modules/tariffs/i18n/en-US';
-import bonusesI18n from 'src/modules/services/modules/bonuses/i18n/en-US';
-import personalClasses18n from 'src/modules/services/modules/personalClasses/i18n/en-US';
+import tariffsI18n from 'src/modules/services/i18n/en-US/tariffs';
+import bonusesI18n from 'src/modules/services/i18n/en-US/bonuses';
+import personalClasses18n from 'src/modules/services/i18n/en-US/personalClasses';
 
 export default {
     ...tariffsI18n,
