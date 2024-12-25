@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 
 import { getTotalAmounts, listPayments } from 'src/api/paymentsApi';
-import { PaymentDTO, TotalAmountsDTO } from 'src/model/finance.model';
+import { PaymentViewDTO, TotalAmountsDTO } from 'src/model/finance.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 
@@ -13,7 +13,7 @@ const usePayments = () => {
     const { convertToYearMonth } = useDates();
 
     const loading = ref<boolean>(false);
-    const payments = ref<PaymentDTO[]>([]);
+    const payments = ref<PaymentViewDTO[]>([]);
     const totals = ref<TotalAmountsDTO | null>(null);
 
     const loadPayments = async (period: string) => {

@@ -1,6 +1,10 @@
 import { api } from 'boot/axios';
 import { handleError } from './errorApi';
-import { MembershipDTO, MembershipViewDTO } from 'src/model/finance.model';
+import {
+    MembershipDTO,
+    MembershipViewDTO,
+    PaymentDTO,
+} from 'src/model/finance.model';
 import { StudentDTO } from 'src/model/student.model';
 
 const membershipsEndpoint = '/memberships';
@@ -81,10 +85,14 @@ export const resetPaymentsStatus = async (): Promise<string> => {
     }
 };
 
-export const markPayment = async (id: number): Promise<StudentDTO> => {
+export const markPayment = async (
+    id: number,
+    payment: PaymentDTO
+): Promise<StudentDTO> => {
     try {
         const { data } = await api.put<StudentDTO>(
-            `${membershipsEndpoint}/${id}/make-payment`
+            `${membershipsEndpoint}/${id}/make-payment`,
+            payment
         );
 
         return data;

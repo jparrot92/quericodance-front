@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { format } from '@formkit/tempo';
 import { ColumnTable } from 'src/types/UtilTypes';
 
-import { PaymentDTO } from 'src/model/finance.model';
+import { PaymentViewDTO } from 'src/model/finance.model';
 
 import usePayments from '../../composables/usePayments';
 import useStudents from 'src/modules/students/composables/useStudents';
@@ -27,21 +27,21 @@ const columnsPayments: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.photo'),
-        field: (row: PaymentDTO) => row.student?.user.photo,
+        field: (row: PaymentViewDTO) => row.student?.user.photo,
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('shared.name'),
-        field: (row: PaymentDTO) => row.student?.user.name,
+        field: (row: PaymentViewDTO) => row.student?.user.name,
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.surnames'),
-        field: (row: PaymentDTO) => row.student?.user.surnames,
+        field: (row: PaymentViewDTO) => row.student?.user.surnames,
         sortable: true,
     },
     {

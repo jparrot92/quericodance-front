@@ -25,6 +25,7 @@ import {
 import { StudentDTO } from 'src/model/student.model';
 
 import useNotify from 'src/shared/composables/useNotify';
+import { PaymentDTO } from 'src/model/finance.model';
 
 const useStudents = () => {
     const router = useRouter();
@@ -141,10 +142,10 @@ const useStudents = () => {
         });
     };
 
-    const markPaymentPaid = async (id: number) => {
+    const markPaymentPaid = async (id: number, payment: PaymentDTO) => {
         return new Promise<StudentDTO>(async (resolve, reject) => {
             try {
-                const student: StudentDTO = await markPayment(id);
+                const student: StudentDTO = await markPayment(id, payment);
                 notifySuccess(t('student.paymentMade'));
                 resolve(student);
             } catch (error) {

@@ -65,6 +65,9 @@ export default {
             membership: 'Cuota',
             bonus: 'Bono',
             other: 'Otro',
+            cash: 'Efectivo',
+            credit_card: 'Tarjeta de crédito',
+            bank_transfer: 'Transferencia bancaria',
         },
         validations: {
             required: 'Campo requerido',

@@ -31,6 +31,7 @@ import { StudentDTO } from 'src/model/student.model';
 
 import useStudents from '../../composables/useStudents';
 import AddActivityAbsenceDialog from 'src/modules/students/components/AddActivityAbsenceDialog.vue';
+import PayDialog from 'src/modules/students/components/PayDialog.vue';
 
 import StudentItem from '../student-item/StudentItem.vue';
 import StudentListBtnAcctions from './StudentListBtnAcctions.vue';
@@ -69,8 +70,10 @@ const danceRoles = generateEnumOptions(DanceRole);
 const studentsFiltered = ref<StudentDTO[]>([]);
 const showProfitability = ref<boolean>(false);
 const showModalAddActivityAbsence = ref<boolean>(false);
+const showModalPay = ref<boolean>(false);
 const activityAbsence = ref<ActivityDTO>();
 const idStudentSelected = ref<number>(0);
+const studentSelected = ref<StudentDTO>();
 
 const actions: ComputedRef<Action<StudentDTO>[]> = computed(() => {
     return [
@@ -278,6 +281,11 @@ const checkMonthlyPaymentPaid = async (
     }
 };
 
+const pay = async (student: StudentDTO) => {
+    showModalPay.value = true;
+    studentSelected.value = student;
+};
+
 const handleSendMail = async (student: StudentDTO) => {
     sendMailPaymentPaid(student.id);
 };
@@ -420,6 +428,23 @@ onMounted(async () => {
         <template v-slot:body-cell-paymentStatus="props">
             <q-td :props="props" @click.stop>
                 <template v-if="props.row.membership">
+                    <q-btn
+                        :color="
+                            getPaymentsStatusColor(
+                                props.row.membership.paymentStatus
+                            )
+                        "
+                        rounded
+                        size="md"
+                        :label="
+                            $t(
+                                'shared.enum.' +
+                                    props.row.membership.paymentStatus
+                            )
+                        "
+                        @click="pay(props.row)"
+                    />
+
                     <q-select
                         :bg-color="
                             getPaymentsStatusColor(
@@ -491,9 +516,14 @@ onMounted(async () => {
         </template>
     </q-table>
     <AddActivityAbsenceDialog
-        v-if="showModalAddActivityAbsence"
+        v-if="showModalAddActivityAbsence && activityAbsence"
         :id-student="idStudentSelected"
         :activity-absence="activityAbsence"
         @close="showModalAddActivityAbsence = false"
+    />
+    <PayDialog
+        v-if="showModalPay && studentSelected"
+        :student-selected="studentSelected"
+        @close="showModalPay = false"
     />
 </template>
