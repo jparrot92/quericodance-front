@@ -39,11 +39,9 @@ const props = withDefaults(
 const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
-
 const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
     useLocalStorageFilters();
 const { generateEnumOptions } = useEnumOptions();
-
 const {
     loading,
     activities,
@@ -53,38 +51,9 @@ const {
 } = useActivities();
 
 const weekDays = generateEnumOptions(WeekDay);
+
 const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
 const showProfitability = ref(false);
-
-const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
-    return [
-        {
-            label: t('shared.see'),
-            action: (row: ActivityListViewDTO) => {
-                router.push({
-                    name: 'activities-list-students',
-                    params: { id: row.id },
-                });
-            },
-            show: () => true,
-        },
-        {
-            label: t('shared.edit'),
-            action: (row: ActivityListViewDTO) => {
-                router.push({
-                    name: 'activities-edit',
-                    params: { id: row.id },
-                });
-            },
-            show: () => true,
-        },
-        {
-            label: t('shared.delete'),
-            action: (row: ActivityListViewDTO) => handleRemoveActivity(row.id),
-            show: () => true,
-        },
-    ];
-});
 
 const columns: ColumnTable[] = [
     {
@@ -199,6 +168,36 @@ const columns: ColumnTable[] = [
     },
 ];
 
+const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
+    return [
+        {
+            label: t('shared.see'),
+            action: (row: ActivityListViewDTO) => {
+                router.push({
+                    name: 'activities-list-students',
+                    params: { id: row.id },
+                });
+            },
+            show: () => true,
+        },
+        {
+            label: t('shared.edit'),
+            action: (row: ActivityListViewDTO) => {
+                router.push({
+                    name: 'activities-edit',
+                    params: { id: row.id },
+                });
+            },
+            show: () => true,
+        },
+        {
+            label: t('shared.delete'),
+            action: (row: ActivityListViewDTO) => handleRemoveActivity(row.id),
+            show: () => true,
+        },
+    ];
+});
+
 const filtersSelected = reactive({
     id: 'activity',
     query: '',
@@ -211,8 +210,6 @@ const filtersSelected = reactive({
     },
 });
 
-loadFiltersFromLocalStorage(filtersSelected);
-
 const filters: Ref<Array<FilterField>> = ref([
     {
         field: 'weekDay',
@@ -220,25 +217,6 @@ const filters: Ref<Array<FilterField>> = ref([
         options: weekDays,
     },
 ] as Array<FilterField>);
-
-const filterTable = () => {
-    activitiesFiltered.value = activities.value
-        .filter((activity: ActivityListViewDTO) => {
-            const activityFullName =
-                activity.name.toLowerCase() + activity.level;
-
-            return activityFullName.includes(
-                filtersSelected.query.replace(/\s/g, '').toLowerCase()
-            );
-        })
-        .filter((activity: ActivityListViewDTO) => {
-            if (filtersSelected.weekDay === null) {
-                return true;
-            } else {
-                return activity.day === filtersSelected.weekDay;
-            }
-        });
-};
 
 const filteredColumns = computed(() => {
     if (showProfitability.value) {
@@ -263,7 +241,28 @@ const labelBtnCreateActivity = computed((): string => {
     }
 });
 
-function getWeekNumber(day: WeekDay): number {
+loadFiltersFromLocalStorage(filtersSelected);
+
+const filterTable = () => {
+    activitiesFiltered.value = activities.value
+        .filter((activity: ActivityListViewDTO) => {
+            const activityFullName =
+                activity.name.toLowerCase() + activity.level;
+
+            return activityFullName.includes(
+                filtersSelected.query.replace(/\s/g, '').toLowerCase()
+            );
+        })
+        .filter((activity: ActivityListViewDTO) => {
+            if (filtersSelected.weekDay === null) {
+                return true;
+            } else {
+                return activity.day === filtersSelected.weekDay;
+            }
+        });
+};
+
+const getWeekNumber = (day: WeekDay): number => {
     switch (day) {
         case WeekDay.SUNDAY:
             return 0;
@@ -282,7 +281,7 @@ function getWeekNumber(day: WeekDay): number {
         default:
             throw new Error('Invalid day of the week');
     }
-}
+};
 
 const orderByDay = (a: ActivityListViewDTO, b: ActivityListViewDTO) => {
     const dayA = a.day ? getWeekNumber(a.day) : -1;

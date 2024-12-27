@@ -21,14 +21,12 @@ const emits = defineEmits(['close', 'update-membership']);
 
 const { generateEnumOptions } = useEnumOptions();
 const { tariffs, loadTariffs } = useTariffs();
-
 const paymentFrequency = generateEnumOptions(PaymentFrequency);
-const tariff = ref<TariffDTO>();
-
 const { membership, membershipView, saveMembership, editMembership } =
     useMemberships();
 
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
+const tariff = ref<TariffDTO>();
 
 const totalPayment = computed(() => {
     if (!tariff.value || !membership.value) {
@@ -80,7 +78,7 @@ onMounted(async () => {
         };
 
         tariff.value = tariffs.value.find(
-            (tariff) => tariff.id === membership.value.tariffId
+            (tariff: { id: number }) => tariff.id === membership.value.tariffId
         );
     }
 });

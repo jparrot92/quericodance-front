@@ -16,7 +16,6 @@ const props = withDefaults(
 const emits = defineEmits(['close', 'addActivityAbsence']);
 
 const { t } = useI18n();
-
 const { saveActivityAbsence } = useActivities();
 
 const dateAbsence = ref<string>(new Date().toISOString());

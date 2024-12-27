@@ -6,7 +6,7 @@ import { DanceRole } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useActivities from 'src/modules/activities/composables/useActivities';
-import { ActivityList } from 'src/modules/activities/models/activity';
+import { ActivityListViewDTO } from 'src/model/activity.model';
 
 const props = withDefaults(
     defineProps<{
@@ -19,16 +19,14 @@ const emits = defineEmits(['close', 'addActivityStudent']);
 
 const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
-
 const { activities, activityStudent, loadActivities, saveActivityStudent } =
     useActivities();
-
 const danceRoles = generateEnumOptions(DanceRole);
 
 const activityId = ref<number>(0);
 const danceRole = ref<string>('');
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
-const activitiesFiltered = ref<ActivityList[]>([]);
+const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
 
 const addActivityStudent = async () => {
     activityId.value = activityStudent.value.activity.id;
@@ -55,7 +53,7 @@ const filterFn = (val: string, update: (fn: () => void) => void) => {
                     .replace(/\s/g, '')
                     .toLowerCase();
                 activitiesFiltered.value = activities.value.filter(
-                    (activity: ActivityList) => {
+                    (activity: ActivityListViewDTO) => {
                         const activityFullName =
                             activity.name.toLowerCase() +
                             activity.level +

@@ -2,9 +2,7 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
 import { format } from '@formkit/tempo';
-
 import { Option, PaymentsStatus } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import { StudentDTO } from 'src/model/student.model';
@@ -26,7 +24,6 @@ const props = withDefaults(
 const { t } = useI18n();
 const router = useRouter();
 const { generateEnumOptions } = useEnumOptions();
-
 const { isPaymentStatusPaid, getStatusColor, getPaymentsStatusColor } =
     useStudents();
 

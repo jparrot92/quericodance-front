@@ -2,12 +2,9 @@
 import { ComputedRef, computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
 import { Action } from 'src/types/UtilTypes';
 import { ActivityStudentDTO } from 'src/model/activity.model';
-
 import useAuth from 'src/modules/auth/composables/useAuth';
-
 import AbsenceList from '../absence-list/AbsenceList.vue';
 
 const emits = defineEmits(['add-absence', 'delete-activity', 'delete-absence']);
@@ -22,6 +19,8 @@ const props = withDefaults(
 const { t } = useI18n();
 const router = useRouter();
 const { isStudent, isAdmin } = useAuth();
+
+const showAbsenceList = ref<{ [key: number]: boolean }>({});
 
 const actions: ComputedRef<Action<ActivityStudentDTO>[]> = computed(() => {
     return [
@@ -51,8 +50,6 @@ const actions: ComputedRef<Action<ActivityStudentDTO>[]> = computed(() => {
         },
     ];
 });
-
-const showAbsenceList = ref<{ [key: number]: boolean }>({});
 
 const messageAddCourse = computed<string>(() =>
     isStudent()

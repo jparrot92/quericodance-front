@@ -42,6 +42,9 @@ const props = withDefaults(
     {}
 );
 
+const $q = useQuasar();
+const { t } = useI18n();
+const router = useRouter();
 const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
     useLocalStorageFilters();
 const { generateEnumOptions } = useEnumOptions();
@@ -57,11 +60,6 @@ const {
     getStatusColor,
     getPaymentsStatusColor,
 } = useStudents();
-
-const $q = useQuasar();
-const { t } = useI18n();
-const router = useRouter();
-
 const states = generateEnumOptions(Status);
 const paymentStatuses = generateEnumOptions(PaymentsStatus);
 const danceRoles = generateEnumOptions(DanceRole);
@@ -71,44 +69,6 @@ const showProfitability = ref<boolean>(false);
 const showModalAddActivityAbsence = ref<boolean>(false);
 const activityAbsence = ref<ActivityDTO>();
 const idStudentSelected = ref<number>(0);
-
-const actions: ComputedRef<Action<StudentDTO>[]> = computed(() => {
-    return [
-        {
-            label: t('student.addAbsence'),
-            action: (row: StudentDTO) => handleAddAbsence(row),
-            show: () => !!props.idActivity,
-        },
-        {
-            label: t('shared.edit'),
-            action: (row: StudentDTO) => {
-                router.push({ name: 'students-edit', params: { id: row.id } });
-            },
-            show: () => true,
-        },
-        {
-            label: t('shared.delete'),
-            action: (row: StudentDTO) => handleRemoveStudent(row.id),
-            show: () => true,
-        },
-    ];
-});
-
-const columnsFiltered = computed(() => {
-    if (!props.idActivity) {
-        return columnsUser.filter(
-            (column) => column.name !== 'danceRole' && column.name !== 'price'
-        );
-    }
-    if (showProfitability.value) {
-        return columnsUser;
-    } else {
-        return columnsUser.filter(
-            (column) =>
-                column.name !== 'price' && column.name !== 'monthlyPayment'
-        );
-    }
-});
 
 const columnsUser: ColumnTable[] = [
     {
@@ -206,9 +166,47 @@ const filtersSelected = reactive({
     },
 });
 
-loadFiltersFromLocalStorage(filtersSelected);
-
 const filters: Ref<Array<FilterField>> = ref([] as Array<FilterField>);
+
+const actions: ComputedRef<Action<StudentDTO>[]> = computed(() => {
+    return [
+        {
+            label: t('student.addAbsence'),
+            action: (row: StudentDTO) => handleAddAbsence(row),
+            show: () => !!props.idActivity,
+        },
+        {
+            label: t('shared.edit'),
+            action: (row: StudentDTO) => {
+                router.push({ name: 'students-edit', params: { id: row.id } });
+            },
+            show: () => true,
+        },
+        {
+            label: t('shared.delete'),
+            action: (row: StudentDTO) => handleRemoveStudent(row.id),
+            show: () => true,
+        },
+    ];
+});
+
+const columnsFiltered = computed(() => {
+    if (!props.idActivity) {
+        return columnsUser.filter(
+            (column) => column.name !== 'danceRole' && column.name !== 'price'
+        );
+    }
+    if (showProfitability.value) {
+        return columnsUser;
+    } else {
+        return columnsUser.filter(
+            (column) =>
+                column.name !== 'price' && column.name !== 'monthlyPayment'
+        );
+    }
+});
+
+loadFiltersFromLocalStorage(filtersSelected);
 
 const filterTable = () => {
     studentsFiltered.value = students.value
@@ -491,7 +489,7 @@ onMounted(async () => {
         </template>
     </q-table>
     <AddActivityAbsenceDialog
-        v-if="showModalAddActivityAbsence"
+        v-if="showModalAddActivityAbsence && activityAbsence"
         :id-student="idStudentSelected"
         :activity-absence="activityAbsence"
         @close="showModalAddActivityAbsence = false"

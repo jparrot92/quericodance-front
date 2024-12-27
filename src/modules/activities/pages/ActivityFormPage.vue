@@ -8,8 +8,6 @@ import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import useTeachers from 'src/modules/teachers/composables/useTeachers';
 import useActivities from '../composables/useActivities';
 
-const route = useRoute();
-
 const props = withDefaults(
     defineProps<{
         activityType?: ActivityType;
@@ -19,14 +17,13 @@ const props = withDefaults(
     }
 );
 
-const idActivity = computed<string>(() => route.params.id?.toString());
-
+const route = useRoute();
 const { generateEnumOptions } = useEnumOptions();
-
 const { teachers, loadTeachers } = useTeachers();
 const { activity, loadActivity, saveActivity, editActivity } = useActivities();
-
 const weekDays = generateEnumOptions(WeekDay);
+
+const idActivity = computed<string>(() => route.params.id?.toString());
 
 const onSubmit = async () => {
     if (idActivity.value) {
