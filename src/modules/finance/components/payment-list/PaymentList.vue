@@ -52,6 +52,13 @@ const columnsPayments: ColumnTable[] = [
         sortable: true,
     },
     {
+        name: 'paymentMethod',
+        align: 'left',
+        label: t('finance.paymentMethod'),
+        field: 'paymentMethod',
+        sortable: true,
+    },
+    {
         name: 'amount',
         align: 'left',
         label: t('finance.amount'),
@@ -141,6 +148,15 @@ onMounted(() => {
                 <q-badge
                     color="blue"
                     :label="$t('shared.enum.' + props.row.paymentType)"
+                />
+            </q-td>
+        </template>
+        <template v-slot:body-cell-paymentMethod="props">
+            <q-td :props="props">
+                <q-badge
+                    v-if="props.row.paymentMethod"
+                    color="blue"
+                    :label="$t('shared.enum.' + props.row.paymentMethod)"
                 />
             </q-td>
         </template>

@@ -10,6 +10,7 @@ export default {
         delete: 'Eliminar',
         send: 'Enviar',
         see: 'Ver',
+        accept: 'Aceptar',
         confirmation: 'Confirmación',
         profile: 'Perfil',
         logout: 'Cerrar sesión',

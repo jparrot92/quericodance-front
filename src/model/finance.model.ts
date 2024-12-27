@@ -25,13 +25,14 @@ export interface MembershipViewDTO {
 }
 
 export interface PaymentDTO {
-    payType: string;
+    paymentMethod: string;
 }
 
 export interface PaymentViewDTO {
     id: number;
     periodCode: string;
     paymentType: string;
+    paymentMethod: string;
     student?: StudentDTO;
     amount: number;
     status: string;

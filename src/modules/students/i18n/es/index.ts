@@ -68,5 +68,9 @@ export default {
         showAbsence: 'Ver ausencias',
         absenceDate: 'Fecha ausencia',
         owe: 'Debe',
+        confirmPayment: 'Confirmar pago',
+        revokePayment: 'Cancelar pago',
+        paymentType: 'Tipo de pago',
+        messageRevokePayment: '¿Desea cancelar el pago?',
     },
 };

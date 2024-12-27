@@ -51,9 +51,7 @@ const {
     students,
     loadStudents,
     removeStudent,
-    markPaymentPaid,
     sendMailPaymentPaid,
-    cancelPaymentPaid,
     isPaymentStatusPaid,
     getStatusColor,
     getPaymentsStatusColor,
@@ -266,24 +264,18 @@ const onRowClick = (evt: Event, row: StudentDTO) => {
     });
 };
 
-const checkMonthlyPaymentPaid = async (
-    student: StudentDTO,
-    paymentStatus: Option
-) => {
-    try {
-        if (paymentStatus.value === PaymentsStatus.PAYED) {
-            await markPaymentPaid(student.id);
-        } else {
-            await cancelPaymentPaid(student.id);
-        }
-    } catch (error) {
-        student.membership.paymentStatus = PaymentsStatus.PENDING;
-    }
-};
-
 const pay = async (student: StudentDTO) => {
     showModalPay.value = true;
     studentSelected.value = student;
+};
+
+const handleStudentUpdated = (updatedStudent: StudentDTO) => {
+    const index = studentsFiltered.value.findIndex(
+        (s) => s.id === updatedStudent.id
+    );
+    if (index !== -1) {
+        studentsFiltered.value[index] = { ...updatedStudent };
+    }
 };
 
 const handleSendMail = async (student: StudentDTO) => {
@@ -444,27 +436,6 @@ onMounted(async () => {
                         "
                         @click="pay(props.row)"
                     />
-
-                    <q-select
-                        :bg-color="
-                            getPaymentsStatusColor(
-                                props.row.membership.paymentStatus
-                            )
-                        "
-                        v-model="props.row.membership.paymentStatus"
-                        rounded
-                        outlined
-                        dense
-                        options-dense
-                        :options="paymentStatuses"
-                        @update:model-value="
-                            checkMonthlyPaymentPaid(props.row, $event)
-                        "
-                    >
-                        <template v-slot:selected-item="{ opt }">
-                            {{ t('shared.enum.' + (opt.value || opt)) }}
-                        </template>
-                    </q-select>
                 </template>
             </q-td>
         </template>
@@ -525,5 +496,6 @@ onMounted(async () => {
         v-if="showModalPay && studentSelected"
         :student-selected="studentSelected"
         @close="showModalPay = false"
+        @student-updated="handleStudentUpdated"
     />
 </template>

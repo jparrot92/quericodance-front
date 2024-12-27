@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { defineProps, reactive, ref, Ref } from 'vue';
+import { computed, defineProps, reactive, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { PayType } from 'src/types/UtilTypes';
+import { PaymentsStatus, PayType } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import { StudentDTO } from 'src/model/student.model';
 
-import useActivities from 'src/modules/activities/composables/useActivities';
 import useStudents from 'src/modules/students/composables/useStudents';
 import { PaymentDTO } from 'src/model/finance.model';
 
@@ -16,42 +15,48 @@ const props = withDefaults(
     {}
 );
 
-const emits = defineEmits(['close', 'addActivityAbsence']);
+const emits = defineEmits(['close', 'student-updated']);
 
 const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
 
-const { saveActivityAbsence } = useActivities();
-const {
-    loading,
-    students,
-    loadStudents,
-    removeStudent,
-    markPaymentPaid,
-    sendMailPaymentPaid,
-    cancelPaymentPaid,
-    isPaymentStatusPaid,
-    getStatusColor,
-    getPaymentsStatusColor,
-} = useStudents();
+const { markPaymentPaid, cancelPaymentPaid } = useStudents();
 
 const payTypes = generateEnumOptions(PayType);
 
-const dateAbsence = ref<string>(new Date().toISOString());
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
 
 const payment = reactive<PaymentDTO>({
-    payType: PayType.BANK_TRANSFER,
+    paymentMethod: PayType.BANK_TRANSFER,
 });
 
-const addActivityAbsence = async () => {
-    const newActivityAbsence = await markPaymentPaid(
-        props.studentSelected.id,
-        payment
-    );
-    if (newActivityAbsence) {
-        emits('addActivityAbsence', newActivityAbsence);
+const title = computed<string>(() => {
+    if (
+        props.studentSelected.membership?.paymentStatus === PaymentsStatus.PAYED
+    ) {
+        return t('student.revokePayment');
+    } else if (
+        props.studentSelected.membership?.paymentStatus ===
+        PaymentsStatus.PENDING
+    ) {
+        return t('student.confirmPayment');
+    } else {
+        return '';
     }
+});
+
+const handleAccept = async () => {
+    let student: StudentDTO;
+    if (
+        props.studentSelected.membership?.paymentStatus === PaymentsStatus.PAYED
+    ) {
+        student = await cancelPaymentPaid(props.studentSelected.id);
+    } else {
+        student = await markPaymentPaid(props.studentSelected.id, payment);
+    }
+
+    emits('student-updated', student);
+    emits('close');
 };
 </script>
 
@@ -59,24 +64,39 @@ const addActivityAbsence = async () => {
     <q-dialog v-model="isDialogVisible" @hide="emits('close')">
         <q-card style="width: 50vh">
             <q-card-section>
-                <div class="text-h6">{{ $t('student.addAbsence') }}</div>
+                <div class="text-h6">{{ title }}</div>
             </q-card-section>
 
             <q-separator />
 
             <q-card-section style="max-height: 50vh" class="scroll">
-                <pd-select
-                    :dense="false"
-                    :options-dense="false"
-                    v-model="payment.payType"
-                    :label="$t('student.role') + '*'"
-                    :options="payTypes"
-                    :rules="[
+                <template
+                    v-if="
+                        props.studentSelected.membership?.paymentStatus ===
+                        PaymentsStatus.PAYED
+                    "
+                >
+                    {{ $t('student.messageRevokePayment') }}
+                </template>
+                <template
+                    v-else-if="
+                        props.studentSelected.membership?.paymentStatus ===
+                        PaymentsStatus.PENDING
+                    "
+                >
+                    <pd-select
+                        :dense="false"
+                        :options-dense="false"
+                        v-model="payment.paymentMethod"
+                        :label="$t('student.paymentType') + '*'"
+                        :options="payTypes"
+                        :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
                             $t('shared.validations.required')
                     ]"
-                />
+                    />
+                </template>
             </q-card-section>
 
             <q-separator />
@@ -84,9 +104,9 @@ const addActivityAbsence = async () => {
             <q-card-actions align="right">
                 <q-btn
                     flat
-                    :label="$t('shared.add')"
+                    :label="$t('shared.accept')"
                     color="primary"
-                    @click="addActivityAbsence()"
+                    @click="handleAccept"
                 />
                 <q-btn
                     flat
