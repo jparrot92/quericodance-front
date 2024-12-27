@@ -10,6 +10,7 @@ export default {
         delete: 'Eliminar',
         send: 'Enviar',
         see: 'Ver',
+        accept: 'Aceptar',
         confirmation: 'Confirmación',
         profile: 'Perfil',
         logout: 'Cerrar sesión',
@@ -65,6 +66,9 @@ export default {
             membership: 'Cuota',
             bonus: 'Bono',
             other: 'Otro',
+            cash: 'Efectivo',
+            credit_card: 'Tarjeta de crédito',
+            bank_transfer: 'Transferencia bancaria',
         },
         validations: {
             required: 'Campo requerido',

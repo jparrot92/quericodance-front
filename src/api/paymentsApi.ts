@@ -1,14 +1,14 @@
 import { api } from 'boot/axios';
 import { handleError } from './errorApi';
-import { PaymentDTO, TotalAmountsDTO } from 'src/model/finance.model';
+import { PaymentViewDTO, TotalAmountsDTO } from 'src/model/finance.model';
 
 const paymentsEndpoint = '/payments';
 
 export const listPayments = async (
     periodCode: string
-): Promise<PaymentDTO[]> => {
+): Promise<PaymentViewDTO[]> => {
     try {
-        const { data } = await api.get<PaymentDTO[]>(paymentsEndpoint, {
+        const { data } = await api.get<PaymentViewDTO[]>(paymentsEndpoint, {
             params: {
                 periodCode,
             },

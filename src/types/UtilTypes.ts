@@ -72,3 +72,10 @@ export enum ActivityType {
     CLASS = 'class',
     EVENT = 'event',
 }
+
+export enum PayType {
+    CASH = 'cash',
+    CREDIT_CARD = 'credit_card',
+    BANK_TRANSFER = 'bank_transfer',
+    OTHER = 'other',
+}

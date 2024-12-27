@@ -2,6 +2,7 @@ export default {
     finance: {
         period: 'Período',
         paymentType: 'Pagó',
+        paymentMethod: 'Método',
         amount: 'Preció',
         status: 'Estado',
         paymentDate: 'Fecha',

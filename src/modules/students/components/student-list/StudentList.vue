@@ -31,6 +31,7 @@ import { StudentDTO } from 'src/model/student.model';
 
 import useStudents from '../../composables/useStudents';
 import AddActivityAbsenceDialog from 'src/modules/students/components/AddActivityAbsenceDialog.vue';
+import PayDialog from 'src/modules/students/components/PayDialog.vue';
 
 import StudentItem from '../student-item/StudentItem.vue';
 import StudentListBtnAcctions from './StudentListBtnAcctions.vue';
@@ -53,9 +54,7 @@ const {
     students,
     loadStudents,
     removeStudent,
-    markPaymentPaid,
     sendMailPaymentPaid,
-    cancelPaymentPaid,
     isPaymentStatusPaid,
     getStatusColor,
     getPaymentsStatusColor,
@@ -67,8 +66,10 @@ const danceRoles = generateEnumOptions(DanceRole);
 const studentsFiltered = ref<StudentDTO[]>([]);
 const showProfitability = ref<boolean>(false);
 const showModalAddActivityAbsence = ref<boolean>(false);
+const showModalPay = ref<boolean>(false);
 const activityAbsence = ref<ActivityDTO>();
 const idStudentSelected = ref<number>(0);
+const studentSelected = ref<StudentDTO>();
 
 const columnsUser: ColumnTable[] = [
     {
@@ -261,18 +262,17 @@ const onRowClick = (evt: Event, row: StudentDTO) => {
     });
 };
 
-const checkMonthlyPaymentPaid = async (
-    student: StudentDTO,
-    paymentStatus: Option
-) => {
-    try {
-        if (paymentStatus.value === PaymentsStatus.PAYED) {
-            await markPaymentPaid(student.id);
-        } else {
-            await cancelPaymentPaid(student.id);
-        }
-    } catch (error) {
-        student.membership.paymentStatus = PaymentsStatus.PENDING;
+const pay = async (student: StudentDTO) => {
+    showModalPay.value = true;
+    studentSelected.value = student;
+};
+
+const handleStudentUpdated = (updatedStudent: StudentDTO) => {
+    const index = studentsFiltered.value.findIndex(
+        (s) => s.id === updatedStudent.id
+    );
+    if (index !== -1) {
+        studentsFiltered.value[index] = { ...updatedStudent };
     }
 };
 
@@ -418,26 +418,22 @@ onMounted(async () => {
         <template v-slot:body-cell-paymentStatus="props">
             <q-td :props="props" @click.stop>
                 <template v-if="props.row.membership">
-                    <q-select
-                        :bg-color="
+                    <q-btn
+                        :color="
                             getPaymentsStatusColor(
                                 props.row.membership.paymentStatus
                             )
                         "
-                        v-model="props.row.membership.paymentStatus"
                         rounded
-                        outlined
-                        dense
-                        options-dense
-                        :options="paymentStatuses"
-                        @update:model-value="
-                            checkMonthlyPaymentPaid(props.row, $event)
+                        size="md"
+                        :label="
+                            $t(
+                                'shared.enum.' +
+                                    props.row.membership.paymentStatus
+                            )
                         "
-                    >
-                        <template v-slot:selected-item="{ opt }">
-                            {{ t('shared.enum.' + (opt.value || opt)) }}
-                        </template>
-                    </q-select>
+                        @click="pay(props.row)"
+                    />
                 </template>
             </q-td>
         </template>
@@ -493,5 +489,11 @@ onMounted(async () => {
         :id-student="idStudentSelected"
         :activity-absence="activityAbsence"
         @close="showModalAddActivityAbsence = false"
+    />
+    <PayDialog
+        v-if="showModalPay && studentSelected"
+        :student-selected="studentSelected"
+        @close="showModalPay = false"
+        @student-updated="handleStudentUpdated"
     />
 </template>

@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { format } from '@formkit/tempo';
 import { ColumnTable } from 'src/types/UtilTypes';
 
-import { PaymentDTO } from 'src/model/finance.model';
+import { PaymentViewDTO } from 'src/model/finance.model';
 
 import usePayments from '../../composables/usePayments';
 import useStudents from 'src/modules/students/composables/useStudents';
@@ -27,21 +27,21 @@ const columnsPayments: ColumnTable[] = [
         name: 'photo',
         align: 'left',
         label: t('user.photo'),
-        field: (row: PaymentDTO) => row.student?.user.photo,
+        field: (row: PaymentViewDTO) => row.student?.user.photo,
         sortable: false,
     },
     {
         name: 'name',
         align: 'left',
         label: t('shared.name'),
-        field: (row: PaymentDTO) => row.student?.user.name,
+        field: (row: PaymentViewDTO) => row.student?.user.name,
         sortable: true,
     },
     {
         name: 'surnames',
         align: 'left',
         label: t('user.surnames'),
-        field: (row: PaymentDTO) => row.student?.user.surnames,
+        field: (row: PaymentViewDTO) => row.student?.user.surnames,
         sortable: true,
     },
     {
@@ -49,6 +49,13 @@ const columnsPayments: ColumnTable[] = [
         align: 'left',
         label: t('finance.paymentType'),
         field: 'paymentType',
+        sortable: true,
+    },
+    {
+        name: 'paymentMethod',
+        align: 'left',
+        label: t('finance.paymentMethod'),
+        field: 'paymentMethod',
         sortable: true,
     },
     {
@@ -141,6 +148,15 @@ onMounted(() => {
                 <q-badge
                     color="blue"
                     :label="$t('shared.enum.' + props.row.paymentType)"
+                />
+            </q-td>
+        </template>
+        <template v-slot:body-cell-paymentMethod="props">
+            <q-td :props="props">
+                <q-badge
+                    v-if="props.row.paymentMethod"
+                    color="blue"
+                    :label="$t('shared.enum.' + props.row.paymentMethod)"
                 />
             </q-td>
         </template>
