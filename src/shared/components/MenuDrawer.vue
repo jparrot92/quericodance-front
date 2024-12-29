@@ -79,9 +79,30 @@ const itemsMenu: ItemMenu[] = [
     {
         title: t('shared.finances'),
         icon: 'mdi-finance',
-        link: 'finances-list',
         level: 0,
-        children: [],
+        children: [
+            {
+                title: t('shared.summary'),
+                icon: 'ssid_chart',
+                link: 'summary-list',
+                level: 0.5,
+                children: [],
+            },
+            {
+                title: t('shared.expenses'),
+                icon: 'trending_down',
+                link: 'expenses-list',
+                level: 0.5,
+                children: [],
+            },
+            {
+                title: t('shared.payments'),
+                icon: 'trending_up',
+                link: 'payments-list',
+                level: 0.5,
+                children: [],
+            },
+        ],
     },
     {
         title: t('shared.teachers'),

@@ -4,7 +4,7 @@ const ROUTE_NAME = 'users';
 
 const usersRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () => import('src/modules/users/layouts/UserLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,

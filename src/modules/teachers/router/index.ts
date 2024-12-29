@@ -4,7 +4,7 @@ const ROUTE_NAME = 'teachers';
 
 const teachersRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () => import('src/modules/teachers/layouts/TeacherLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,

@@ -5,8 +5,7 @@ const ROUTE_NAME = 'activities';
 
 const activitiesRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () =>
-        import('src/modules/activities/layouts/ActivityLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}/${ActivityType.CLASS}`,

@@ -1,22 +1,22 @@
 import { RouteRecordRaw } from 'vue-router';
 
-const ROUTE_NAME = 'appointments';
+const ROUTE_NAME = 'payments';
 
-const appointmentsRoutes: RouteRecordRaw = {
+const financeRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
     component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,
             name: `${ROUTE_NAME}-list`,
+            component: () =>
+                import('src/modules/finance/pages/PaymentPage.vue'),
             meta: {
                 toolbar: 'MainToolbar',
-                title: 'shared.calendar',
+                title: 'shared.payments',
             },
-            component: () =>
-                import('src/modules/appointments/pages/AppointmentsPage.vue'),
         },
     ],
 };
 
-export default appointmentsRoutes;
+export default financeRoutes;

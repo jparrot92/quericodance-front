@@ -4,7 +4,7 @@ const ROUTE_NAME = 'tariffs';
 
 const tariffsRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () => import('src/modules/services/layouts/TariffLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,

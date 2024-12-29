@@ -28,6 +28,13 @@ const goToLink = (link?: string) => {
 const isItemSelected = (link?: string) => {
     return route.name === link;
 };
+
+const isSubitemSelected = (item: ItemMenu): boolean => {
+    if (isItemSelected(item.link)) {
+        return true;
+    }
+    return item.children.some((child) => isSubitemSelected(child));
+};
 </script>
 
 <template>
@@ -48,7 +55,10 @@ const isItemSelected = (link?: string) => {
         </q-item>
     </template>
     <template v-else>
-        <q-expansion-item :header-inset-level="item.level">
+        <q-expansion-item
+            :header-inset-level="item.level"
+            :default-opened="isSubitemSelected(item)"
+        >
             <template v-slot:header>
                 <q-item-section v-if="item.icon" avatar>
                     <q-icon :name="item.icon" />

@@ -1,22 +1,14 @@
 import { RouteRecordRaw } from 'vue-router';
 
-const ROUTE_NAME = 'finances';
+import payments from './payments.router';
 
-const financeRoutes: RouteRecordRaw = {
-    path: `/${ROUTE_NAME}`,
-    component: () => import('src/modules/finance/layouts/FinanceLayout.vue'),
-    children: [
-        {
-            path: `/${ROUTE_NAME}`,
-            name: `${ROUTE_NAME}-list`,
-            component: () =>
-                import('src/modules/finance/pages/FinancePage.vue'),
-            meta: {
-                toolbar: 'MainToolbar',
-                title: 'shared.finances',
-            },
-        },
-    ],
-};
+import { requireAdmin } from 'src/modules/auth/router/routeGuards';
 
-export default financeRoutes;
+const servicesRoutes: RouteRecordRaw[] = [
+    {
+        beforeEnter: [requireAdmin],
+        ...payments,
+    },
+];
+
+export default servicesRoutes;

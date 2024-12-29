@@ -4,8 +4,7 @@ const ROUTE_NAME = 'personalClasses';
 
 const personalClassesRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () =>
-        import('src/modules/services/layouts/PersonalClassLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,

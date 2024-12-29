@@ -42,6 +42,9 @@ export default {
         name: 'Nombre',
         description: 'Descripción',
         prefix: 'Prefijo',
+        summary: 'Resumen',
+        expenses: 'Gastos',
+        payments: 'Pagos',
         enum: {
             payed: 'Pagado',
             pending: 'Pendiente',

@@ -4,7 +4,7 @@ const ROUTE_NAME = 'auth';
 
 const authRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () => import('src/modules/auth/layouts/AuthLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: `/${ROUTE_NAME}`,
