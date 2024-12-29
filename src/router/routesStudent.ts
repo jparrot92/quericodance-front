@@ -4,7 +4,7 @@ const ROUTE_NAME = 'students';
 
 const routesStudent: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
-    component: () => import('src/modules/students/layouts/StudentLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
         {
             path: '/membership',
