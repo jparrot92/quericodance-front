@@ -84,7 +84,7 @@ const itemsMenu: ItemMenu[] = [
             {
                 title: t('shared.summary'),
                 icon: 'ssid_chart',
-                link: 'summary-list',
+                link: 'summary',
                 level: 0.5,
                 children: [],
             },

@@ -37,7 +37,7 @@ const { isPaymentStatusPaid } = useStudents();
                             <template v-else>
                                 <q-badge
                                     color="grey"
-                                    :label="$t('finance.studentRemoved')"
+                                    :label="$t('payment.studentRemoved')"
                                 />
                             </template>
 

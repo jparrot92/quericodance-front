@@ -12,7 +12,7 @@ import {
     deleteTariff,
 } from 'src/api/tariffsApi';
 
-import { TariffDTO } from 'src/interfaces/tariff/tariff';
+import { TariffDTO } from 'src/model/tariff.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 
