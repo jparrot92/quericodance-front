@@ -15,16 +15,18 @@ const activitiesRoutes: RouteRecordRaw = {
             meta: {
                 toolbar: 'MainToolbar',
                 title: 'shared.activities',
+                activityType: ActivityType.CLASS,
             },
         },
         {
             path: `/${ROUTE_NAME}/${ActivityType.EVENT}`,
             name: `${ROUTE_NAME}-${ActivityType.EVENT}-list`,
             component: () =>
-                import('src/modules/activities/pages/EventPage.vue'),
+                import('src/modules/activities/pages/ClassPage.vue'),
             meta: {
                 toolbar: 'MainToolbar',
                 title: 'shared.events',
+                activityType: ActivityType.EVENT,
             },
         },
         {

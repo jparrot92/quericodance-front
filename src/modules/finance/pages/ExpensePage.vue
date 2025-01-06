@@ -5,11 +5,10 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import { Action, ColumnTable } from 'src/types/UtilTypes';
+
 import { ExpenseDTO } from 'src/model/expense.model';
 
 import useExpenses from '../composables/useExpenses';
-
-import TariffItem from '../components/expense-item/TariffItem.vue';
 
 const { loading, expenses, getExpenses, deleteExpense } = useExpenses();
 

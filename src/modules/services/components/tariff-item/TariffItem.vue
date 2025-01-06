@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import { TariffDTO } from 'src/interfaces/tariff/tariff';
+import { TariffDTO } from 'src/model/tariff.model';
 
 const props = withDefaults(
     defineProps<{
