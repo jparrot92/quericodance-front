@@ -115,96 +115,84 @@ const chooseFile = () => {
     </template>
     <template v-else>
         <template v-if="props.idActivity">
-            <div class="col-2 flex justify-end">
-                <q-btn
-                    :label="$t('student.createStudent')"
-                    color="primary"
-                    icon="mdi-plus"
-                    dense
-                    class="h-2-5rem"
-                    @click="
-                        $router.push({
-                            name: 'students-add',
-                        })
-                    "
-                />
-            </div>
+            <q-space></q-space>
+            <q-btn
+                :label="$t('student.createStudent')"
+                color="primary"
+                icon="mdi-plus"
+                dense
+                @click="
+                    $router.push({
+                        name: 'students-add',
+                    })
+                "
+            />
         </template>
         <template v-else>
-            <div class="col-2 flex justify-end">
-                <q-btn
-                    class="h-2-5rem"
-                    :label="$t('shared.resetPayments')"
-                    color="green"
-                    icon="mdi-restart"
-                    dense
-                    @click="handleResetPayments"
-                />
-            </div>
-            <div class="col-2 flex justify-center">
-                <q-btn-dropdown
-                    :label="$t('shared.excel')"
-                    color="green"
-                    icon="file_present"
-                    dense
-                    class="h-2-5rem"
-                >
-                    <q-list>
-                        <q-item
-                            clickable
-                            v-close-popup
-                            @click="handleFileDownloadTemplate"
-                        >
-                            <q-item-section>
-                                <q-item-label>
-                                    {{ $t('shared.downloadExcelTemplate') }}
-                                </q-item-label>
-                            </q-item-section>
-                        </q-item>
+            <q-space></q-space>
+            <q-btn
+                class="q-mr-sm"
+                :label="$t('shared.resetPayments')"
+                color="green"
+                icon="mdi-restart"
+                dense
+                @click="handleResetPayments"
+            />
+            <q-btn-dropdown
+                class="q-mr-sm"
+                :label="$t('shared.excel')"
+                color="green"
+                icon="file_present"
+                dense
+            >
+                <q-list>
+                    <q-item
+                        clickable
+                        v-close-popup
+                        @click="handleFileDownloadTemplate"
+                    >
+                        <q-item-section>
+                            <q-item-label>
+                                {{ $t('shared.downloadExcelTemplate') }}
+                            </q-item-label>
+                        </q-item-section>
+                    </q-item>
 
-                        <q-item clickable v-close-popup @click="chooseFile">
-                            <q-item-section>
-                                <q-item-label>
-                                    {{ $t('shared.importExcel') }}
-                                </q-item-label>
-                            </q-item-section>
-                        </q-item>
+                    <q-item clickable v-close-popup @click="chooseFile">
+                        <q-item-section>
+                            <q-item-label>
+                                {{ $t('shared.importExcel') }}
+                            </q-item-label>
+                        </q-item-section>
+                    </q-item>
 
-                        <q-item
-                            clickable
-                            v-close-popup
-                            @click="handleFileDownload"
-                        >
-                            <q-item-section>
-                                <q-item-label>
-                                    {{ $t('shared.downloadExcel') }}
-                                </q-item-label>
-                            </q-item-section>
-                        </q-item>
-                    </q-list>
-                </q-btn-dropdown>
-                <input
-                    type="file"
-                    ref="fileInput"
-                    accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    @change="handleFileUpload"
-                    style="display: none"
-                />
-            </div>
-            <div class="col-2 flex justify-end">
-                <q-btn
-                    class="h-2-5rem"
-                    :label="$t('student.createStudent')"
-                    color="primary"
-                    icon="mdi-plus"
-                    dense
-                    @click="
-                        $router.push({
-                            name: 'students-add',
-                        })
-                    "
-                />
-            </div>
+                    <q-item clickable v-close-popup @click="handleFileDownload">
+                        <q-item-section>
+                            <q-item-label>
+                                {{ $t('shared.downloadExcel') }}
+                            </q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-list>
+            </q-btn-dropdown>
+            <input
+                type="file"
+                ref="fileInput"
+                accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                @change="handleFileUpload"
+                style="display: none"
+            />
+            <q-btn
+                :label="$t('student.createStudent')"
+                color="primary"
+                icon="mdi-plus"
+                dense
+                @click="
+                    $router.push({
+                        name: 'students-add',
+                    })
+                "
+            />
         </template>
     </template>
 </template>

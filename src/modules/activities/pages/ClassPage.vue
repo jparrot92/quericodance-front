@@ -20,7 +20,7 @@ import {
 } from 'src/types/UtilTypes';
 import { ActivityListViewDTO, ActivityDTO } from 'src/model/activity.model';
 
-import { FilterField } from 'src/composables/useFilterTypes';
+import { FilterField, FilterFieldType } from 'src/composables/useFilterTypes';
 import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
@@ -214,6 +214,7 @@ const filters: Ref<Array<FilterField>> = ref([
         field: 'weekDay',
         label: t('activity.day'),
         options: weekDays,
+        type: FilterFieldType.SELECT,
     },
 ] as Array<FilterField>);
 

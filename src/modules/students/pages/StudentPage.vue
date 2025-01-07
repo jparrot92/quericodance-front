@@ -23,7 +23,7 @@ import {
 } from 'src/types/UtilTypes';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
-import { FilterField } from 'src/composables/useFilterTypes';
+import { FilterField, FilterFieldType } from 'src/composables/useFilterTypes';
 
 import { ActivityDTO } from 'src/model/activity.model';
 import { StudentDTO } from 'src/model/student.model';
@@ -152,6 +152,7 @@ const filtersSelected = reactive({
     id: idActivity.value ? 'activity' : 'student',
     child: idActivity.value ? true : false,
     query: '',
+    phone: null,
     status: null,
     paymentStatus: null,
     danceRole: null,
@@ -215,6 +216,11 @@ const filterTable = () => {
 
             return studentFullName.includes(
                 filtersSelected.query.replace(/\s/g, '').toLowerCase()
+            );
+        })
+        .filter((student: StudentDTO) => {
+            return student.user.phone.includes(
+                filtersSelected.phone.replace(/\s/g, '').toLowerCase()
             );
         })
         .filter((student: StudentDTO) => {
@@ -310,9 +316,15 @@ watch(
 onMounted(async () => {
     filters.value = [
         {
+            field: 'phone',
+            label: t('user.phone'),
+            type: FilterFieldType.INPUT,
+        },
+        {
             field: 'paymentStatus',
             label: t('student.paymentStatus'),
             options: paymentStatuses,
+            type: FilterFieldType.SELECT,
         },
     ] as Array<FilterField>;
 
@@ -321,12 +333,14 @@ onMounted(async () => {
             field: 'danceRole',
             label: t('student.danceRole'),
             options: danceRoles,
+            type: FilterFieldType.SELECT,
         });
     } else {
         filters.value.push({
             field: 'status',
             label: t('student.status'),
             options: states,
+            type: FilterFieldType.SELECT,
         });
     }
     await loadStudents(idActivity.value);
@@ -351,11 +365,14 @@ onMounted(async () => {
         <template v-slot:top>
             <activity-counters v-if="idActivity" :id-activity="idActivity" />
 
-            <div class="col-12 justify-between">
-                <div class="row justify-between">
+            <div class="col-12">
+                <div class="row q-mb-sm">
+                    <student-list-btn-acctions :id-activity="idActivity" />
+                </div>
+                <div class="row">
                     <div
                         :class="
-                            idActivity ? 'col-12 col-sm-10' : 'col-12 col-sm-6'
+                            idActivity ? 'col-12 col-sm-12' : 'col-12 col-sm-12'
                         "
                     >
                         <pd-filter
@@ -364,7 +381,6 @@ onMounted(async () => {
                             :placeholder="$t('student.serachPlaceholder')"
                         ></pd-filter>
                     </div>
-                    <student-list-btn-acctions :id-activity="idActivity" />
                 </div>
             </div>
         </template>

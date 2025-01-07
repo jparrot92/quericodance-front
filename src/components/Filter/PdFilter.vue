@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { FilterField } from '../../composables/useFilterTypes';
+import { FilterField, FilterFieldType } from 'src/composables/useFilterTypes';
 import { defineProps, withDefaults } from 'vue';
 
 // Definir las propiedades con valores predeterminados
@@ -90,20 +90,38 @@ const search = () => {
                 v-for="f in filters"
                 :key="`input-${f.field}`"
             >
-                <pd-select
-                    class="q-ml-sm"
-                    v-model="model[f.field]"
-                    :label="f.label"
-                    :options="f.options"
-                >
-                    <template v-slot:append>
-                        <q-icon
-                            class="cursor-pointer"
-                            name="clear"
-                            @click.stop.prevent="model[f.field] = null"
-                        />
-                    </template>
-                </pd-select>
+                <template v-if="f.type === FilterFieldType.SELECT">
+                    <pd-select
+                        class="q-ml-sm"
+                        v-model="model[f.field]"
+                        :label="f.label"
+                        :options="f.options"
+                    >
+                        <template v-slot:append>
+                            <q-icon
+                                class="cursor-pointer"
+                                name="clear"
+                                @click.stop.prevent="model[f.field] = null"
+                            />
+                        </template>
+                    </pd-select>
+                </template>
+                <template v-else-if="f.type === FilterFieldType.INPUT">
+                    <q-input
+                        class="q-ml-sm"
+                        :label="f.label"
+                        v-model="model[f.field]"
+                        dense
+                    >
+                        <template v-slot:append>
+                            <q-icon
+                                class="cursor-pointer"
+                                name="clear"
+                                @click.stop.prevent="model[f.field] = null"
+                            />
+                        </template>
+                    </q-input>
+                </template>
             </div>
         </div>
 
