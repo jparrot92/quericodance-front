@@ -44,8 +44,7 @@ export default {
         datePayment: 'Fecha pago',
         active: 'Activo',
         inactivo: 'Inactivo',
-        serachPlaceholder:
-            'Introduzca el nombre/apellido o correo electrónico del alumno.',
+        serachPlaceholder: 'Introduzca el nombre/apellido del alumno.',
         observations: 'Observaciones',
         messageAddCourse:
             'Este estudiante no tiene cursos, haga clic en "Añadir curso" para asignar un curso al estudiante.',
