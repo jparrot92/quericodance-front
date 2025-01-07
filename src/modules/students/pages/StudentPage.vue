@@ -213,9 +213,11 @@ const filterTable = () => {
                 student.user.name.toLowerCase() +
                 student.user.surnames.toLowerCase();
 
-            return studentFullName.includes(
-                filtersSelected.query.replace(/\s/g, '').toLowerCase()
-            );
+            return studentFullName
+                .replace(/\s/g, '')
+                .includes(
+                    filtersSelected.query.replace(/\s/g, '').toLowerCase()
+                );
         })
         .filter((student: StudentDTO) => {
             if (student.user.phone && filtersSelected.phone) {
