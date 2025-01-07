@@ -211,17 +211,18 @@ const filterTable = () => {
         .filter((student: StudentDTO) => {
             const studentFullName =
                 student.user.name.toLowerCase() +
-                student.user.surnames.toLowerCase() +
-                student.user.email.toLowerCase();
+                student.user.surnames.toLowerCase();
 
             return studentFullName.includes(
                 filtersSelected.query.replace(/\s/g, '').toLowerCase()
             );
         })
         .filter((student: StudentDTO) => {
-            return student.user.phone.includes(
-                filtersSelected.phone.replace(/\s/g, '').toLowerCase()
-            );
+            if (student.user.phone && filtersSelected.phone) {
+                return student.user.phone.includes(filtersSelected.phone);
+            } else {
+                return true;
+            }
         })
         .filter((student: StudentDTO) => {
             if (filtersSelected.status === null) {

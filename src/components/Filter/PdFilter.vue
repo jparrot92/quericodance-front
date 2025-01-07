@@ -49,7 +49,7 @@ const countNonNullValues = (): number => {
                 key !== 'pagination'
         )
         .map((key) => model.value[key])
-        .filter((value) => value !== null).length;
+        .filter((value) => value !== null && value !== '').length;
 };
 
 const resetFilters = () => {

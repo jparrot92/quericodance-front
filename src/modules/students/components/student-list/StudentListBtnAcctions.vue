@@ -4,10 +4,10 @@ import useStudents from '../../composables/useStudents';
 
 const props = withDefaults(
     defineProps<{
-        idActivity: string;
+        idActivity: number | null;
     }>(),
     {
-        idActivity: '',
+        idActivity: null,
     }
 );
 
