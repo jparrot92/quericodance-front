@@ -10,14 +10,9 @@ import {
 } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-import {
-    Action,
-    ActivityType,
-    ColumnTable,
-    WeekDay,
-} from 'src/types/UtilTypes';
+import { Action, ColumnTable, WeekDay } from 'src/types/UtilTypes';
 import { ActivityListViewDTO, ActivityDTO } from 'src/model/activity.model';
 
 import { FilterField, FilterFieldType } from 'src/composables/useFilterTypes';
@@ -29,14 +24,9 @@ import useActivities from '../composables/useActivities';
 
 import ActivityItem from '../components/activity-item/ActivityItem.vue';
 
-const activityType = computed(
-    () => router.currentRoute.value.meta.activityType
-);
-
 const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
-const route = useRoute();
 
 const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
     useLocalStorageFilters();
@@ -62,42 +52,30 @@ const columns = computed((): ColumnTable[] => [
         field: 'name',
         sortable: true,
     },
-    ...(activityType.value === 'event'
-        ? [
-              {
-                  name: 'dateEvent',
-                  align: 'left',
-                  label: t('activity.dateEvent'),
-                  field: 'dateEvent',
-                  sortable: true,
-              } as ColumnTable,
-          ]
-        : [
-              {
-                  name: 'level',
-                  align: 'left',
-                  label: t('activity.level'),
-                  field: 'level',
-                  sortable: true,
-              } as ColumnTable,
-              {
-                  name: 'day',
-                  align: 'left',
-                  label: t('activity.day'),
-                  field: (row) => t('shared.enum.' + row.day),
-                  sortable: true,
-                  sort: (
-                      a: string,
-                      b: string,
-                      rowA: ActivityListViewDTO,
-                      rowB: ActivityListViewDTO
-                  ) => orderByDay(rowA, rowB),
-              } as ColumnTable,
-          ]),
+    {
+        name: 'level',
+        align: 'left',
+        label: t('course.level'),
+        field: 'level',
+        sortable: true,
+    },
+    {
+        name: 'day',
+        align: 'left',
+        label: t('course.day'),
+        field: (row) => t('shared.enum.' + row.day),
+        sortable: true,
+        sort: (
+            a: string,
+            b: string,
+            rowA: ActivityListViewDTO,
+            rowB: ActivityListViewDTO
+        ) => orderByDay(rowA, rowB),
+    },
     {
         name: 'startHour',
         align: 'left',
-        label: t('activity.startHour'),
+        label: t('course.startHour'),
         field: 'startHour',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -105,7 +83,7 @@ const columns = computed((): ColumnTable[] => [
     {
         name: 'endHour',
         align: 'left',
-        label: t('activity.endHour'),
+        label: t('course.endHour'),
         field: 'endHour',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -113,7 +91,7 @@ const columns = computed((): ColumnTable[] => [
     {
         name: 'numberPlaces',
         align: 'left',
-        label: t('activity.numberPlaces'),
+        label: t('course.numberPlaces'),
         field: 'numberPlaces',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -121,7 +99,7 @@ const columns = computed((): ColumnTable[] => [
     {
         name: 'numberStudents',
         align: 'left',
-        label: t('activity.numberStudents'),
+        label: t('course.numberStudents'),
         field: 'numberStudents',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -129,7 +107,7 @@ const columns = computed((): ColumnTable[] => [
     {
         name: 'numberLeaders',
         align: 'left',
-        label: t('activity.numberLeaders'),
+        label: t('course.numberLeaders'),
         field: 'numberLeaders',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -137,7 +115,7 @@ const columns = computed((): ColumnTable[] => [
     {
         name: 'numberFollowers',
         align: 'left',
-        label: t('activity.numberFollowers'),
+        label: t('course.numberFollowers'),
         field: 'numberFollowers',
         sortable: true,
         headerStyle: 'white-space: pre;',
@@ -145,7 +123,7 @@ const columns = computed((): ColumnTable[] => [
     {
         name: 'costEffectiveness',
         align: 'left',
-        label: t('activity.costEffectiveness'),
+        label: t('course.costEffectiveness'),
         field: 'costEffectiveness',
         format: (val: number) => `${val} €`,
         sortable: true,
@@ -153,7 +131,7 @@ const columns = computed((): ColumnTable[] => [
     {
         name: 'totalPaid',
         align: 'left',
-        label: t('activity.totalPaid'),
+        label: t('course.totalPaid'),
         field: 'totalPaid',
         format: (val: number) => `${val} €`,
         sortable: true,
@@ -173,7 +151,7 @@ const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
             label: t('shared.see'),
             action: (row: ActivityListViewDTO) => {
                 router.push({
-                    name: 'activities-list-students',
+                    name: 'courses-list-students',
                     params: { id: row.id },
                 });
             },
@@ -183,7 +161,7 @@ const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
             label: t('shared.edit'),
             action: (row: ActivityListViewDTO) => {
                 router.push({
-                    name: 'activities-edit',
+                    name: 'courses-edit',
                     params: { id: row.id },
                 });
             },
@@ -212,7 +190,7 @@ const filtersSelected = reactive({
 const filters: Ref<Array<FilterField>> = ref([
     {
         field: 'weekDay',
-        label: t('activity.day'),
+        label: t('course.day'),
         options: weekDays,
         type: FilterFieldType.SELECT,
     },
@@ -227,17 +205,6 @@ const filteredColumns = computed(() => {
                 column.name !== 'costEffectiveness' &&
                 column.name !== 'totalPaid'
         );
-    }
-});
-
-const labelBtnCreateActivity = computed((): string => {
-    switch (activityType.value) {
-        case ActivityType.CLASS:
-            return 'activity.createclass';
-        case ActivityType.EVENT:
-            return 'activity.createevent';
-        default:
-            return 'activity.createclass';
     }
 });
 
@@ -294,12 +261,12 @@ const orderByDay = (a: ActivityListViewDTO, b: ActivityListViewDTO) => {
 };
 
 const onRowClick = (evt: Event, row: ActivityListViewDTO) => {
-    let title = `${t('activity.activity')} ${row.name} ${row.level} - ${t(
+    let title = `${t('course.course')} ${row.name} ${row.level} - ${t(
         'shared.enum.' + row.day
     )} ${row.startHour}`;
 
     router.push({
-        name: 'activities-list-students',
+        name: 'courses-list-students',
         params: {
             id: row.id,
         },
@@ -324,16 +291,6 @@ const handleRemoveActivity = async (idActivity: number) => {
 };
 
 watch(
-    activityType,
-    async (value) => {
-        await loadActivities(value);
-        activitiesFiltered.value = activities.value;
-        filterTable();
-    },
-    { deep: true }
-);
-
-watch(
     filtersSelected,
     () => {
         filterTable();
@@ -343,7 +300,7 @@ watch(
 );
 
 onMounted(async () => {
-    await loadActivities(activityType.value);
+    await loadActivities();
     activitiesFiltered.value = activities.value;
     filterTable();
 });
@@ -369,12 +326,12 @@ onMounted(async () => {
                         <pd-filter
                             v-model="filtersSelected"
                             :filters="filters"
-                            :placeholder="$t('activity.serachPlaceholder')"
+                            :placeholder="$t('course.serachPlaceholder')"
                         ></pd-filter>
                     </div>
                     <div class="col-sm-2 col-xs-12 flex justify-end">
                         <q-toggle
-                            :label="$t('activity.showProfitability')"
+                            :label="$t('course.showProfitability')"
                             class="h-2-5rem"
                             v-model="showProfitability"
                         ></q-toggle>
@@ -391,17 +348,14 @@ onMounted(async () => {
                     </div>
                     <div class="col-sm-2 flex justify-end" v-if="!$q.screen.xs">
                         <q-btn
-                            :label="$t(labelBtnCreateActivity)"
+                            :label="$t('course.createCourse')"
                             color="primary"
                             icon="mdi-plus"
                             dense
                             class="h-2-5rem"
                             @click="
                                 $router.push({
-                                    name: 'activities-add',
-                                    params: {
-                                        activityType: activityType,
-                                    },
+                                    name: 'courses-add',
                                 })
                             "
                         />
@@ -482,14 +436,11 @@ onMounted(async () => {
                 color="primary"
                 @click="
                     $router.push({
-                        name: 'activities-add',
-                        params: {
-                            activityType: activityType,
-                        },
+                        name: 'courses-add',
                     })
                 "
                 icon="mdi-plus"
-                :label="$t(labelBtnCreateActivity)"
+                :label="$t('course.createCourse')"
             />
 
             <q-fab-action

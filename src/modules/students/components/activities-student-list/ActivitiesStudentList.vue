@@ -25,10 +25,10 @@ const showAbsenceList = ref<{ [key: number]: boolean }>({});
 const actions: ComputedRef<Action<ActivityStudentDTO>[]> = computed(() => {
     return [
         {
-            label: t('activity.see'),
+            label: t('course.see'),
             action: (row: ActivityStudentDTO) => {
                 router.push({
-                    name: 'activities-list-students',
+                    name: 'courses-list-students',
                     params: {
                         id: row.activity.id,
                     },
@@ -72,7 +72,7 @@ const handleRemoveActivityAbsence = async (absenceId: number) => {
                 <q-item-section top>
                     <q-item-label lines="1">
                         <span class="text-weight-medium">
-                            {{ $t('activity.activity') }}
+                            {{ $t('course.activity') }}
                             {{ item.activity.name }}
                             {{ item.activity.level }}
                         </span>

@@ -1,15 +1,12 @@
 export default {
-    activity: {
+    course: {
         removeActivityAbsence: '¿Realmente desea eliminar esta ausencia?',
         absenceDeleteSuccessfully: 'Ausencia eliminada',
-        createclass: 'Crear curso',
-        editActivity: 'Editar curso',
-        createevent: 'Crear evento',
-        activities: 'Cursos',
-        activity: 'Curso',
+        createCourse: 'Crear curso',
+        editCourse: 'Editar curso',
+        course: 'Curso',
         level: 'Nivel',
         day: 'Día',
-        dateEvent: 'Fecha evento',
         startHour: 'Hora de\ninicio',
         endHour: 'Hora de\nfin',
         numberPlaces: 'Número de\nplazas',
@@ -27,9 +24,9 @@ export default {
         serachPlaceholder: 'Introduzca el nombre y/o nivel del curso',
         showProfitability: 'Mostrar Rentabilidad',
         totalPaid: 'Total pagado',
-        messageActivityCreateSuccessfully: 'Curso creado con éxito',
-        messageActivityUpdateSuccessfully: 'Curso modificada con éxito',
-        messageActivityDeleteSuccessfully: 'Curso eliminado',
-        messageActivityDelete: '¿Realmente desea eliminar este curso?',
+        messageCourseCreateSuccessfully: 'Curso creado con éxito',
+        messageCourseUpdateSuccessfully: 'Curso modificada con éxito',
+        messageCourseDeleteSuccessfully: 'Curso eliminado',
+        messageCourseDelete: '¿Realmente desea eliminar este curso?',
     },
 };

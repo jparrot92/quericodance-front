@@ -1,3 +1,5 @@
+import courses from 'src/modules/activities/i18n/es/courses';
+
 export default {
     shared: {
         next: 'Siguiente',
@@ -15,7 +17,7 @@ export default {
         profile: 'Perfil',
         logout: 'Cerrar sesión',
         calendar: 'Calendario',
-        activities: 'Cursos',
+        courses: 'Cursos',
         events: 'Eventos',
         teachers: 'Professores',
         students: 'Estudiantes',

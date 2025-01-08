@@ -1,58 +1,36 @@
 import { RouteRecordRaw } from 'vue-router';
-import { ActivityType } from 'src/types/UtilTypes';
 
-const ROUTE_NAME = 'activities';
+const ROUTE_NAME = 'courses';
 
 const coursesRoutes: RouteRecordRaw = {
     path: `/${ROUTE_NAME}`,
     component: () => import('layouts/MainLayout.vue'),
     children: [
         {
-            path: `/${ROUTE_NAME}/${ActivityType.CLASS}`,
-            name: `${ROUTE_NAME}-${ActivityType.CLASS}-list`,
+            path: `/${ROUTE_NAME}`,
+            name: `${ROUTE_NAME}-list`,
             component: () =>
-                import('src/modules/activities/pages/ClassPage.vue'),
+                import('src/modules/activities/pages/CoursePage.vue'),
             meta: {
                 toolbar: 'MainToolbar',
-                title: 'shared.activities',
-                activityType: ActivityType.CLASS,
+                title: 'shared.courses',
             },
         },
         {
-            path: `/${ROUTE_NAME}/${ActivityType.EVENT}`,
-            name: `${ROUTE_NAME}-${ActivityType.EVENT}-list`,
-            component: () =>
-                import('src/modules/activities/pages/ClassPage.vue'),
-            meta: {
-                toolbar: 'MainToolbar',
-                title: 'shared.events',
-                activityType: ActivityType.EVENT,
-            },
-        },
-        {
-            path: `/${ROUTE_NAME}/add/:activityType`,
+            path: `/${ROUTE_NAME}/add`,
             name: `${ROUTE_NAME}-add`,
             component: () =>
-                import('src/modules/activities/pages/ActivityFormPage.vue'),
-            props: (route) => {
-                return {
-                    activityType: route.params.activityType,
-                };
-            },
+                import('src/modules/activities/pages/CourseFormPage.vue'),
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'activity.createActivity',
-            },
-            beforeEnter: (to, from, next) => {
-                to.meta.title = `activity.create${to.params.activityType}`;
-                next();
+                title: 'course.createCourse',
             },
         },
         {
             path: `/${ROUTE_NAME}/:id`,
             name: `${ROUTE_NAME}-edit`,
             component: () =>
-                import('src/modules/activities/pages/ActivityFormPage.vue'),
+                import('src/modules/activities/pages/CourseFormPage.vue'),
             props: (route) => {
                 return {
                     id: route.params.id,
@@ -60,7 +38,7 @@ const coursesRoutes: RouteRecordRaw = {
             },
             meta: {
                 toolbar: 'DetailToolbar',
-                title: 'activity.editActivity',
+                title: 'course.editCourse',
             },
         },
         {

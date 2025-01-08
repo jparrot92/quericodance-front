@@ -1,4 +1,4 @@
-import { ActivityType, WeekDay } from 'src/types/UtilTypes';
+import { WeekDay } from 'src/types/UtilTypes';
 import { StudentDTO } from './student.model';
 import { TeacherDTO } from './teacher.model';
 
@@ -11,13 +11,11 @@ export interface AbsenceDTO {
 
 export interface ActivityDTO {
     id: number;
-    type: ActivityType;
     name: string;
     level: number | null;
     day?: WeekDay | null;
     startHour: string;
     endHour: string;
-    dateEvent?: string;
     numberPlaces: number | null;
     price: number | null;
     color: string;

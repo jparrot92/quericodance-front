@@ -13,8 +13,8 @@ import {
     deleteBonusStudent,
 } from 'src/api/bonusesApi';
 
-import { BonusDTO } from 'src/interfaces/bonus/bonus';
-import { BonusStudentDTO } from 'src/interfaces/student/bonusStudent';
+import { BonusDTO } from 'src/model/bonus.model';
+import { BonusStudentDTO } from 'src/model/student.model';
 
 import useNotify from 'src/shared/composables/useNotify';
 
@@ -121,16 +121,14 @@ const useBonuses = () => {
     const removeBonusStudent = async (id: number) => {
         return new Promise<BonusStudentDTO[]>((resolve, reject) => {
             $q.dialog({
-                title: t('activity.confirmation'),
-                message: t('activity.message.activityDelete'),
+                title: t('course.confirmation'),
+                message: t('course.message.activityDelete'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 try {
                     const studentActivitiesList = await deleteBonusStudent(id);
-                    notifySuccess(
-                        t('activity.messageActivityDeleteSuccessfully')
-                    );
+                    notifySuccess(t('course.messageCourseDeleteSuccessfully'));
                     resolve(studentActivitiesList); // Resuelve la promesa después de que todo esté completo
                 } catch (error) {
                     notifyError(error);

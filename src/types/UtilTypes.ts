@@ -68,11 +68,6 @@ export enum PaymentType {
     OTHER = 'other',
 }
 
-export enum ActivityType {
-    CLASS = 'class',
-    EVENT = 'event',
-}
-
 export enum PayType {
     CASH = 'cash',
     CREDIT_CARD = 'credit_card',

@@ -63,9 +63,9 @@ const itemsMenu: ItemMenu[] = [
         ],
     },
     {
-        title: t('shared.activities'),
+        title: t('shared.courses'),
         icon: 'school',
-        link: 'activities-class-list',
+        link: 'courses-list',
         level: 0,
         children: [],
     },

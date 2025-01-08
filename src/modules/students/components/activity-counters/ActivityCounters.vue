@@ -22,7 +22,7 @@ onMounted(async () => {
         <div class="row">
             <q-toggle
                 class="h-2-5rem"
-                :label="$t('activity.showProfitability')"
+                :label="$t('course.showProfitability')"
                 v-model="showProfitability"
             ></q-toggle>
         </div>
@@ -33,7 +33,7 @@ onMounted(async () => {
                     <q-card-section
                         class="text-center bg-blue text-white q-pa-none"
                     >
-                        {{ $t('activity.numberLeaders') }}
+                        {{ $t('course.numberLeaders') }}
                     </q-card-section>
                     <q-separator />
                     <q-card-section class="flex flex-center q-pa-none">
@@ -46,7 +46,7 @@ onMounted(async () => {
                     <q-card-section
                         class="text-center bg-pink text-white q-pa-none"
                     >
-                        {{ $t('activity.numberFollowers') }}
+                        {{ $t('course.numberFollowers') }}
                     </q-card-section>
                     <q-separator />
                     <q-card-section class="flex flex-center q-pa-none">
@@ -60,7 +60,7 @@ onMounted(async () => {
                         <q-card-section
                             class="text-center bg-red text-white q-pa-none"
                         >
-                            {{ $t('activity.costEffectiveness') }}
+                            {{ $t('course.costEffectiveness') }}
                         </q-card-section>
                         <q-separator />
                         <q-card-section class="flex flex-center q-pa-none">
@@ -75,7 +75,7 @@ onMounted(async () => {
                         <q-card-section
                             class="text-center bg-green text-white q-pa-none"
                         >
-                            {{ $t('activity.totalPaid') }}
+                            {{ $t('course.totalPaid') }}
                         </q-card-section>
                         <q-separator />
                         <q-card-section class="flex flex-center q-pa-none">

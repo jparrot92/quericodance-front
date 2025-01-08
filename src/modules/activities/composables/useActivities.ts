@@ -3,7 +3,6 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { ActivityType } from 'src/types/UtilTypes';
 import {
     listActivities,
     getCountersActivity,
@@ -38,13 +37,11 @@ const useActivities = () => {
     const activities = ref<ActivityListViewDTO[]>([]);
     const activity = ref<ActivityDTO>({
         id: 0,
-        type: ActivityType.CLASS,
         name: '',
         level: null,
         day: null,
         startHour: '',
         endHour: '',
-        dateEvent: '',
         numberPlaces: null,
         price: null,
         color: '',
@@ -67,11 +64,11 @@ const useActivities = () => {
         costEffectiveness: '0',
     });
 
-    const loadActivities = async (type?: string) => {
+    const loadActivities = async () => {
         try {
             activities.value = [];
             loading.value = true;
-            activities.value = await listActivities(type);
+            activities.value = await listActivities();
         } catch (error) {
             notifyError(error);
         } finally {
@@ -110,9 +107,9 @@ const useActivities = () => {
         try {
             loading.value = true;
             activity.value = await createActivity(activity.value);
-            notifySuccess(t('activity.messageActivityCreateSuccessfully'));
+            notifySuccess(t('course.messageCourseCreateSuccessfully'));
             router.replace({
-                name: 'activities-edit',
+                name: 'courses-edit',
                 params: { id: activity.value.id },
             });
         } catch (error) {
@@ -126,7 +123,7 @@ const useActivities = () => {
         try {
             loading.value = true;
             activity.value = await updateActivity(id, activity.value);
-            notifySuccess(t('activity.messageActivityUpdateSuccessfully'));
+            notifySuccess(t('course.messageCourseUpdateSuccessfully'));
         } catch (error) {
             notifyError(error);
         } finally {
@@ -138,15 +135,13 @@ const useActivities = () => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
                 title: t('shared.confirmation'),
-                message: t('activity.messageActivityDelete'),
+                message: t('course.messageCourseDelete'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 try {
                     await deleteActivity(id);
-                    notifySuccess(
-                        t('activity.messageActivityDeleteSuccessfully')
-                    );
+                    notifySuccess(t('course.messageCourseDeleteSuccessfully'));
                     resolve();
                 } catch (error) {
                     notifyError(error);
@@ -196,13 +191,13 @@ const useActivities = () => {
         return new Promise<void>((resolve, reject) => {
             $q.dialog({
                 title: t('shared.confirmation'),
-                message: t('activity.messageActivityDelete'),
+                message: t('course.messageCourseDelete'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 try {
                     await deleteActivityStudent(id);
-                    notifySuccess(t('activity.messageActivityDelete'));
+                    notifySuccess(t('course.messageCourseDelete'));
                     resolve(); // Resuelve la promesa después de que todo esté completo
                 } catch (error) {
                     notifyError(error);
@@ -216,13 +211,13 @@ const useActivities = () => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
                 title: t('shared.confirmation'),
-                message: t('activity.removeActivityAbsence'),
+                message: t('course.removeActivityAbsence'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 try {
                     await deleteActivityAbsence(id);
-                    notifySuccess(t('activity.absenceDeleteSuccessfully'));
+                    notifySuccess(t('course.absenceDeleteSuccessfully'));
                     resolve();
                 } catch (error) {
                     notifyError(error);

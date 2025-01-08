@@ -9,15 +9,9 @@ import {
 
 const activitiesEndpoint = '/activities';
 
-export const listActivities = async (type?: string): Promise<ActivityDTO[]> => {
+export const listActivities = async (): Promise<ActivityDTO[]> => {
     try {
-        // Construir los parámetros de consulta si 'type' está presente
-        const params = type ? { params: { type } } : {};
-
-        const { data } = await api.get<ActivityDTO[]>(
-            activitiesEndpoint,
-            params
-        );
+        const { data } = await api.get<ActivityDTO[]>(activitiesEndpoint);
 
         return data;
     } catch (error) {

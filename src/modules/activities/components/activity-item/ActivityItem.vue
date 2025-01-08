@@ -15,12 +15,12 @@ const { t } = useI18n();
 const router = useRouter();
 
 const handleItemClick = (activity: ActivityListViewDTO) => {
-    let title = `${t('activity.activity')} ${activity.name} ${
+    let title = `${t('course.activity')} ${activity.name} ${
         activity.level
     } - ${t('shared.enum.' + activity.day)} ${activity.startHour}`;
 
     router.push({
-        name: 'activities-list-students',
+        name: 'courses-list-students',
         params: {
             id: activity.id,
         },
@@ -45,11 +45,11 @@ const handleItemClick = (activity: ActivityListViewDTO) => {
                 <q-item-label lines="2">
                     <div class="flex justify-between">
                         <div>
-                            {{ $t('activity.numberPlaces') }}
+                            {{ $t('course.numberPlaces') }}
                             {{ props.activityItem.numberPlaces }}
                         </div>
                         <div>
-                            {{ $t('activity.numberStudents') }}
+                            {{ $t('course.numberStudents') }}
                             {{ props.activityItem.numberStudents }}
                         </div>
                     </div>
@@ -59,7 +59,7 @@ const handleItemClick = (activity: ActivityListViewDTO) => {
                         <q-badge
                             color="blue"
                             :label="
-                                $t('activity.numberLeaders') +
+                                $t('course.numberLeaders') +
                                 ': ' +
                                 props.activityItem.numberLeaders
                             "
@@ -67,7 +67,7 @@ const handleItemClick = (activity: ActivityListViewDTO) => {
                         <q-badge
                             color="pink"
                             :label="
-                                $t('activity.numberFollowers') +
+                                $t('course.numberFollowers') +
                                 ': ' +
                                 props.activityItem.numberFollowers
                             "
@@ -79,7 +79,7 @@ const handleItemClick = (activity: ActivityListViewDTO) => {
                         <q-badge
                             color="green"
                             :label="
-                                $t('activity.costEffectiveness') +
+                                $t('course.costEffectiveness') +
                                 ': ' +
                                 props.activityItem.costEffectiveness +
                                 ' €'
@@ -88,7 +88,7 @@ const handleItemClick = (activity: ActivityListViewDTO) => {
                         <q-badge
                             color="green"
                             :label="
-                                $t('activity.totalPaid') +
+                                $t('course.totalPaid') +
                                 ': ' +
                                 props.activityItem.totalPaid +
                                 ' €'

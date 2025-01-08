@@ -2,20 +2,11 @@
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { ActivityType, WeekDay } from 'src/types/UtilTypes';
+import { WeekDay } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useTeachers from 'src/modules/teachers/composables/useTeachers';
 import useActivities from '../composables/useActivities';
-
-const props = withDefaults(
-    defineProps<{
-        activityType?: ActivityType;
-    }>(),
-    {
-        activityType: ActivityType.CLASS,
-    }
-);
 
 const route = useRoute();
 const { generateEnumOptions } = useEnumOptions();
@@ -39,7 +30,6 @@ const removeTeacherActivity = async () => {
 
 onMounted(() => {
     loadTeachers();
-    activity.value.type = props.activityType;
     if (idActivity.value) {
         loadActivity(idActivity.value);
     }
@@ -63,45 +53,36 @@ onMounted(() => {
                     ]"
                 />
 
-                <template v-if="activity.type === ActivityType.CLASS">
-                    <q-input
-                        type="number"
-                        :label="$t('activity.level')"
-                        v-model.number="activity.level"
-                        :rules="[
-                            (val) =>
-                                (val !== null &&
-                                    val !== undefined &&
-                                    val.toString().trim() !== '') ||
-                                $t('shared.validations.required'),
-                        ]"
-                    />
+                <q-input
+                    type="number"
+                    :label="$t('course.level')"
+                    v-model.number="activity.level"
+                    :rules="[
+                        (val) =>
+                            (val !== null &&
+                                val !== undefined &&
+                                val.toString().trim() !== '') ||
+                            $t('shared.validations.required'),
+                    ]"
+                />
 
-                    <pd-select
-                        :dense="false"
-                        :options-dense="false"
-                        v-model="activity.day"
-                        :label="$t('shared.day') + '*'"
-                        :options="weekDays"
-                        :rules="[
+                <pd-select
+                    :dense="false"
+                    :options-dense="false"
+                    v-model="activity.day"
+                    :label="$t('shared.day') + '*'"
+                    :options="weekDays"
+                    :rules="[
                             (val: string) =>
                                 (val && val.length > 0) ||
                                 $t('shared.validations.required')
                         ]"
-                    />
-                </template>
-                <template v-else-if="activity.type === ActivityType.EVENT">
-                    <pd-date
-                        :label="$t('activity.dateEvent')"
-                        v-model="activity.dateEvent"
-                        required
-                    />
-                </template>
+                />
 
                 <div class="row">
                     <q-input
                         class="col-md-6 col-sm-6 col-xs-6 q-pr-md q-pr-sm"
-                        :label="$t('activity.startHour')"
+                        :label="$t('course.startHour')"
                         v-model="activity.startHour"
                         mask="time"
                         :rules="['time']"
@@ -132,7 +113,7 @@ onMounted(() => {
 
                     <q-input
                         class="col-md-6 col-sm-6 col-xs-6 q-pl-md q-pl-sm"
-                        :label="$t('activity.endHour')"
+                        :label="$t('course.endHour')"
                         v-model="activity.endHour"
                         mask="time"
                         :rules="['time']"
@@ -163,7 +144,7 @@ onMounted(() => {
                 </div>
 
                 <q-input
-                    :label="$t('activity.numberPlaces')"
+                    :label="$t('course.numberPlaces')"
                     v-model.number="activity.numberPlaces"
                     :rules="[
                         (val) =>
@@ -175,7 +156,7 @@ onMounted(() => {
                 />
 
                 <q-input
-                    :label="$t('activity.color')"
+                    :label="$t('course.color')"
                     v-model="activity.color"
                     class="col-md-11 col-sm-11 col-xs-10"
                     :rules="[
@@ -191,7 +172,7 @@ onMounted(() => {
                                 self="center left"
                                 :offset="[10, 10]"
                             >
-                                {{ $t('activity.infoColor') }}
+                                {{ $t('course.infoColor') }}
                             </q-tooltip>
                         </q-icon>
                     </template>
@@ -221,7 +202,7 @@ onMounted(() => {
                     v-model="activity.teachersIds"
                     multiple
                     :options="teachers"
-                    :label="$t('activity.teachers')"
+                    :label="$t('course.teachers')"
                     emit-value
                     map-options
                     :option-value="'id'"
