@@ -1,35 +1,7 @@
+import coursesI18n from 'src/modules/activities/i18n/es/courses';
+import eventsI18n from 'src/modules/activities/i18n/es/events';
+
 export default {
-    activity: {
-        removeActivityAbsence: '¿Realmente desea eliminar esta ausencia?',
-        absenceDeleteSuccessfully: 'Ausencia eliminada',
-        createclass: 'Crear curso',
-        editActivity: 'Editar curso',
-        createevent: 'Crear evento',
-        activities: 'Cursos',
-        activity: 'Curso',
-        level: 'Nivel',
-        day: 'Día',
-        dateEvent: 'Fecha evento',
-        startHour: 'Hora de\ninicio',
-        endHour: 'Hora de\nfin',
-        numberPlaces: 'Número de\nplazas',
-        numberStudents: 'Número de\nestudiantes',
-        numberLeaders: 'Número de\nlíderes',
-        numberFollowers: 'Número de\nfollowers',
-        costEffectiveness: 'Rentabilidad',
-        price: 'Preció',
-        color: 'Color',
-        infoColor:
-            'Este color será el que aparece en el calendario para identificar la actividad',
-        teachers: 'Profesores',
-        description: 'Descripción',
-        see: 'Ver curso',
-        serachPlaceholder: 'Introduzca el nombre y/o nivel del curso',
-        showProfitability: 'Mostrar Rentabilidad',
-        totalPaid: 'Total pagado',
-        messageActivityCreateSuccessfully: 'Curso creado con éxito',
-        messageActivityUpdateSuccessfully: 'Curso modificada con éxito',
-        messageActivityDeleteSuccessfully: 'Curso eliminado',
-        messageActivityDelete: '¿Realmente desea eliminar este curso?',
-    },
+    ...coursesI18n,
+    ...eventsI18n,
 };

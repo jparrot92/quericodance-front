@@ -21,10 +21,7 @@ const routesAdmin: RouteRecordRaw[] = [
         beforeEnter: [requireAdmin],
         ...usersRoutes,
     },
-    {
-        beforeEnter: [requireAdmin],
-        ...activitiesRoutes,
-    },
+    ...activitiesRoutes,
     ...servicesRoutes,
     ...financeRoutes,
 ];

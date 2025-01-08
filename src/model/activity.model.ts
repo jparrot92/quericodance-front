@@ -62,3 +62,12 @@ export interface ActivityStudentDTO {
     activity: ActivityDTO;
     student?: StudentDTO;
 }
+
+export interface EventDTO {
+    id: number;
+    name: string;
+    dateEvent: Date;
+    startHour: string;
+    endHour: string;
+    color: string;
+}
