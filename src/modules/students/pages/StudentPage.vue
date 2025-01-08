@@ -434,24 +434,20 @@ onMounted(async () => {
         </template>
         <template v-slot:body-cell-paymentStatus="props">
             <q-td :props="props" @click.stop>
-                <template v-if="props.row.membership">
-                    <q-btn
-                        :color="
-                            getPaymentsStatusColor(
-                                props.row.membership.paymentStatus
-                            )
-                        "
-                        rounded
-                        size="md"
-                        :label="
-                            $t(
-                                'shared.enum.' +
-                                    props.row.membership.paymentStatus
-                            )
-                        "
-                        @click="pay(props.row)"
-                    />
-                </template>
+                <q-btn
+                    v-if="props.row.membership"
+                    :color="
+                        getPaymentsStatusColor(
+                            props.row.membership.paymentStatus
+                        )
+                    "
+                    rounded
+                    size="md"
+                    :label="
+                        $t('shared.enum.' + props.row.membership.paymentStatus)
+                    "
+                    @click="pay(props.row)"
+                />
             </q-td>
         </template>
         <template v-slot:body-cell-mail="props">
@@ -492,7 +488,7 @@ onMounted(async () => {
             <student-item
                 :key="props.row.id"
                 :student-item="props.row"
-                :check-monthly-payment-paid="checkMonthlyPaymentPaid"
+                :pay="pay"
                 :handle-send-mail="handleSendMail"
             >
                 <template v-slot:menu>

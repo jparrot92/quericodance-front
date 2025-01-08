@@ -12,10 +12,7 @@ import useStudents from '../../composables/useStudents';
 const props = withDefaults(
     defineProps<{
         studentItem: StudentDTO;
-        checkMonthlyPaymentPaid: (
-            student: StudentDTO,
-            paymentStatus: Option
-        ) => Promise<void>;
+        pay: (student: StudentDTO) => Promise<void>;
         handleSendMail: (student: StudentDTO) => Promise<void>;
     }>(),
     {}
@@ -125,29 +122,23 @@ const handleItemClick = async (id: number) => {
                 <q-item-label caption lines="3">
                     <div class="row items-center no-wrap">
                         <div class="col-6 q-pr-xs" @click.stop>
-                            <q-select
+                            <q-btn
                                 v-if="student.membership"
-                                :bg-color="
-                                    isPaymentStatusPaid(
+                                :color="
+                                    getPaymentsStatusColor(
                                         student.membership.paymentStatus
                                     )
-                                        ? 'green'
-                                        : 'red'
                                 "
-                                v-model="student.membership.paymentStatus"
                                 rounded
-                                outlined
-                                dense
-                                options-dense
-                                :options="paymentStatuses"
-                                @update:model-value="
-                                    checkMonthlyPaymentPaid(student, $event)
+                                size="md"
+                                :label="
+                                    $t(
+                                        'shared.enum.' +
+                                            student.membership.paymentStatus
+                                    )
                                 "
-                            >
-                                <template v-slot:selected-item="{ opt }">
-                                    {{ t('shared.enum.' + (opt.value || opt)) }}
-                                </template>
-                            </q-select>
+                                @click="pay(student)"
+                            />
                         </div>
                         <div class="col-6 q-pl-xs" @click.stop>
                             <q-btn
