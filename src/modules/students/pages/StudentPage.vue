@@ -25,14 +25,14 @@ import {
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 import { FilterField, FilterFieldType } from 'src/composables/useFilterTypes';
 
-import { ActivityDTO } from 'src/model/activity.model';
+import { CourseDTO } from 'src/model/activity.model';
 import { StudentDTO } from 'src/model/student.model';
 
 import useStudents from '../composables/useStudents';
-import AddActivityAbsenceDialog from 'src/modules/students/components/AddActivityAbsenceDialog.vue';
+import AddCourseAbsenceDialog from 'src/modules/students/components/AddCourseAbsenceDialog.vue';
 import PayDialog from 'src/modules/students/components/PayDialog.vue';
 
-import ActivityCounters from '../components/activity-counters/ActivityCounters.vue';
+import CourseCounters from '../components/course-counters/CourseCounters.vue';
 import StudentItem from '../components/student-item/StudentItem.vue';
 import StudentListBtnAcctions from '../components/student-list/StudentListBtnAcctions.vue';
 
@@ -60,12 +60,12 @@ const danceRoles = generateEnumOptions(DanceRole);
 
 const studentsFiltered = ref<StudentDTO[]>([]);
 const showProfitability = ref<boolean>(false);
-const showModalAddActivityAbsence = ref<boolean>(false);
+const showModalAddCourseAbsence = ref<boolean>(false);
 const showModalPay = ref<boolean>(false);
-const activityAbsence = ref<ActivityDTO>();
+const courseAbsence = ref<CourseDTO>();
 const idStudentSelected = ref<number>(0);
 const studentSelected = ref<StudentDTO>();
-const idActivity = computed<number>(() => Number(route.params.id));
+const idCourse = computed<number>(() => Number(route.params.id));
 
 const columnsUser: ColumnTable[] = [
     {
@@ -107,7 +107,7 @@ const columnsUser: ColumnTable[] = [
         name: 'danceRole',
         align: 'left',
         label: t('student.role'),
-        field: (row: StudentDTO) => row.activitiesStudent[0].danceRole,
+        field: (row: StudentDTO) => row.coursesStudent[0].danceRole,
         sortable: true,
     },
     {
@@ -149,8 +149,8 @@ const columnsUser: ColumnTable[] = [
 ];
 
 const filtersSelected = reactive({
-    id: idActivity.value ? 'activity' : 'student',
-    child: idActivity.value ? true : false,
+    id: idCourse.value ? 'course' : 'student',
+    child: idCourse.value ? true : false,
     query: '',
     phone: null,
     status: null,
@@ -160,7 +160,7 @@ const filtersSelected = reactive({
         sortBy: 'desc',
         descending: false,
         page: 1,
-        rowsPerPage: idActivity.value ? 0 : 10,
+        rowsPerPage: idCourse.value ? 0 : 10,
     },
 });
 
@@ -171,7 +171,7 @@ const actions: ComputedRef<Action<StudentDTO>[]> = computed(() => {
         {
             label: t('student.addAbsence'),
             action: (row: StudentDTO) => handleAddAbsence(row),
-            show: () => !!idActivity.value,
+            show: () => !!idCourse.value,
         },
         {
             label: t('shared.edit'),
@@ -189,7 +189,7 @@ const actions: ComputedRef<Action<StudentDTO>[]> = computed(() => {
 });
 
 const columnsFiltered = computed(() => {
-    if (!idActivity.value) {
+    if (!idCourse.value) {
         return columnsUser.filter(
             (column) => column.name !== 'danceRole' && column.name !== 'price'
         );
@@ -251,7 +251,7 @@ const filterTable = () => {
                 return true;
             } else {
                 return (
-                    student.activitiesStudent[0].danceRole ===
+                    student.coursesStudent[0].danceRole ===
                     filtersSelected.danceRole
                 );
             }
@@ -287,8 +287,8 @@ const handleSendMail = async (student: StudentDTO) => {
 
 const handleAddAbsence = async (row: StudentDTO) => {
     idStudentSelected.value = row.id;
-    showModalAddActivityAbsence.value = true;
-    activityAbsence.value = row.activitiesStudent[0].activity;
+    showModalAddCourseAbsence.value = true;
+    courseAbsence.value = row.coursesStudent[0].course;
 };
 
 const handleRemoveStudent = async (id: number) => {
@@ -309,7 +309,7 @@ watch(
     filtersSelected,
     () => {
         filterTable();
-        if (!idActivity.value) {
+        if (!idCourse.value) {
             saveFiltersToLocalStorage(filtersSelected);
         }
     },
@@ -331,7 +331,7 @@ onMounted(async () => {
         },
     ] as Array<FilterField>;
 
-    if (idActivity.value) {
+    if (idCourse.value) {
         filters.value.push({
             field: 'danceRole',
             label: t('student.danceRole'),
@@ -346,7 +346,7 @@ onMounted(async () => {
             type: FilterFieldType.SELECT,
         });
     }
-    await loadStudents(idActivity.value);
+    await loadStudents(idCourse.value);
     studentsFiltered.value = students.value;
     filterTable();
 });
@@ -366,16 +366,16 @@ onMounted(async () => {
         v-model:pagination="filtersSelected.pagination"
     >
         <template v-slot:top>
-            <activity-counters v-if="idActivity" :id-activity="idActivity" />
+            <course-counters v-if="idCourse" :id-course="idCourse" />
 
             <div class="col-12">
                 <div class="row q-mb-sm">
-                    <student-list-btn-acctions :id-activity="idActivity" />
+                    <student-list-btn-acctions :id-course="idCourse" />
                 </div>
                 <div class="row">
                     <div
                         :class="
-                            idActivity ? 'col-12 col-sm-12' : 'col-12 col-sm-12'
+                            idCourse ? 'col-12 col-sm-12' : 'col-12 col-sm-12'
                         "
                     >
                         <pd-filter
@@ -497,11 +497,11 @@ onMounted(async () => {
             </student-item>
         </template>
     </q-table>
-    <AddActivityAbsenceDialog
-        v-if="showModalAddActivityAbsence && activityAbsence"
+    <AddCourseAbsenceDialog
+        v-if="showModalAddCourseAbsence && courseAbsence"
         :id-student="idStudentSelected"
-        :activity-absence="activityAbsence"
-        @close="showModalAddActivityAbsence = false"
+        :course-absence="courseAbsence"
+        @close="showModalAddCourseAbsence = false"
     />
     <PayDialog
         v-if="showModalPay && studentSelected"

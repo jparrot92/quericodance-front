@@ -3,16 +3,16 @@ import { Ref, ref } from 'vue';
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { MembershipViewDTO } from 'src/interfaces/student/membership';
-import { ActivityStudentDTO } from 'src/interfaces/activity/activityStudent';
-import { BonusStudentDTO } from 'src/interfaces/student/bonusStudent';
+import { MembershipViewDTO } from 'src/model/finance.model';
+import { CourseStudentDTO } from 'src/model/activity.model';
+import { BonusStudentDTO } from 'src/model/student.model';
 
 import useStudents from '../composables/useStudents';
 
 import StudentFormPage from './StudentFormPage.vue';
 import MembershipStudentFormPage from './MembershipStudentFormPage.vue';
 import BonusesStudentFormPage from './BonusesStudentFormPage.vue';
-import ActivitiesStudentFormPage from './ActivitiesStudentFormPage.vue';
+import CoursesStudentFormPage from './CoursesStudentFormPage.vue';
 import ObservationsStudentFormPage from './ObservationsStudentFormPage.vue';
 
 const route = useRoute();
@@ -29,16 +29,15 @@ const isModalVisible: Ref<boolean> = ref(false);
 const updateMembership = async (membershipView: MembershipViewDTO) =>
     (student.value.membership = membershipView);
 
-const updateActivitiesStudent = async (
-    activitiesStudent: ActivityStudentDTO[]
-) => (student.value.activitiesStudent = activitiesStudent);
+const updateCoursesStudent = async (coursesStudent: CourseStudentDTO[]) =>
+    (student.value.coursesStudent = coursesStudent);
 
 const updateBonusesStudent = async (bonuses: BonusStudentDTO[]) =>
     (student.value.bonusesStudent = bonuses);
 
 const deleteMembership = async () => {
     student.value.membership = undefined;
-    student.value.activitiesStudent = [];
+    student.value.coursesStudent = [];
 };
 
 onMounted(async () => {
@@ -73,11 +72,11 @@ onMounted(async () => {
             </q-tab-panel>
 
             <q-tab-panel name="courses">
-                <activities-student-form-page
+                <courses-student-form-page
                     :id-student="student.id"
                     :has-membership="!!student.membership"
-                    :activitiesStudent="student.activitiesStudent"
-                    @update-activities-student="updateActivitiesStudent"
+                    :coursesStudent="student.coursesStudent"
+                    @update-courses-student="updateCoursesStudent"
                 />
             </q-tab-panel>
 

@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import useActivities from 'src/modules/activities/composables/useActivities';
+import useCourses from 'src/modules/activities/composables/useCourses';
 
 const props = withDefaults(
     defineProps<{
-        idActivity: number;
+        idCourse: number;
     }>(),
     {}
 );
 
-const { activityCounters, loadCountersActivity } = useActivities();
+const { activityCounters, loadCountersCourse } = useCourses();
 
 const showProfitability = ref<boolean>(false);
 
 onMounted(async () => {
-    await loadCountersActivity(props.idActivity);
+    await loadCountersCourse(props.idCourse);
 });
 </script>
 <template>

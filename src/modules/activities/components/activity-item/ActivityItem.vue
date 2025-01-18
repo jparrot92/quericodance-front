@@ -15,9 +15,9 @@ const { t } = useI18n();
 const router = useRouter();
 
 const handleItemClick = (activity: ActivityListViewDTO) => {
-    let title = `${t('course.activity')} ${activity.name} ${
-        activity.level
-    } - ${t('shared.enum.' + activity.day)} ${activity.startHour}`;
+    let title = `${t('course.course')} ${activity.name} ${activity.level} - ${t(
+        'shared.enum.' + activity.day
+    )} ${activity.startHour}`;
 
     router.push({
         name: 'courses-list-students',

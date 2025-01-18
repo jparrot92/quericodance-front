@@ -2,16 +2,16 @@ import { api } from 'boot/axios';
 import { handleError } from './errorApi';
 import {
     AbsenceDTO,
-    ActivityCountersDTO,
-    ActivityDTO,
-    ActivityStudentDTO,
+    CourseCountersDTO,
+    CourseDTO,
+    CourseStudentDTO,
 } from 'src/model/activity.model';
 
-const activitiesEndpoint = '/activities';
+const coursesEndpoint = '/courses';
 
-export const listActivities = async (): Promise<ActivityDTO[]> => {
+export const listCourses = async (): Promise<CourseDTO[]> => {
     try {
-        const { data } = await api.get<ActivityDTO[]>(activitiesEndpoint);
+        const { data } = await api.get<CourseDTO[]>(coursesEndpoint);
 
         return data;
     } catch (error) {
@@ -19,12 +19,12 @@ export const listActivities = async (): Promise<ActivityDTO[]> => {
     }
 };
 
-export const getCountersActivity = async (
+export const getCountersCourse = async (
     id: number
-): Promise<ActivityCountersDTO> => {
+): Promise<CourseCountersDTO> => {
     try {
-        const { data } = await api.get<ActivityCountersDTO>(
-            `${activitiesEndpoint}/${id}/counters`
+        const { data } = await api.get<CourseCountersDTO>(
+            `${coursesEndpoint}/${id}/counters`
         );
 
         return data;
@@ -33,11 +33,9 @@ export const getCountersActivity = async (
     }
 };
 
-export const getActivity = async (id: string): Promise<ActivityDTO> => {
+export const getCourse = async (id: string): Promise<CourseDTO> => {
     try {
-        const { data } = await api.get<ActivityDTO>(
-            `${activitiesEndpoint}/${id}`
-        );
+        const { data } = await api.get<CourseDTO>(`${coursesEndpoint}/${id}`);
 
         return data;
     } catch (error) {
@@ -45,14 +43,9 @@ export const getActivity = async (id: string): Promise<ActivityDTO> => {
     }
 };
 
-export const createActivity = async (
-    activity: ActivityDTO
-): Promise<ActivityDTO> => {
+export const createCourse = async (course: CourseDTO): Promise<CourseDTO> => {
     try {
-        const { data } = await api.post<ActivityDTO>(
-            activitiesEndpoint,
-            activity
-        );
+        const { data } = await api.post<CourseDTO>(coursesEndpoint, course);
 
         return data;
     } catch (error) {
@@ -60,14 +53,14 @@ export const createActivity = async (
     }
 };
 
-export const updateActivity = async (
+export const updateCourse = async (
     id: string,
-    activity: ActivityDTO
-): Promise<ActivityDTO> => {
+    course: CourseDTO
+): Promise<CourseDTO> => {
     try {
-        const { data } = await api.put<ActivityDTO>(
-            `${activitiesEndpoint}/${id}`,
-            activity
+        const { data } = await api.put<CourseDTO>(
+            `${coursesEndpoint}/${id}`,
+            course
         );
 
         return data;
@@ -76,10 +69,10 @@ export const updateActivity = async (
     }
 };
 
-export const deleteActivity = async (id: number): Promise<ActivityDTO> => {
+export const deleteCourse = async (id: number): Promise<CourseDTO> => {
     try {
-        const { data } = await api.delete<ActivityDTO>(
-            `${activitiesEndpoint}/${id}`
+        const { data } = await api.delete<CourseDTO>(
+            `${coursesEndpoint}/${id}`
         );
 
         return data;
@@ -88,11 +81,11 @@ export const deleteActivity = async (id: number): Promise<ActivityDTO> => {
     }
 };
 
-export const createActivityStudent = async (
+export const createCourseStudent = async (
     studentId: number,
     activityId: number,
     danceRole: string
-): Promise<ActivityStudentDTO> => {
+): Promise<CourseStudentDTO> => {
     try {
         const requestData = {
             studentId,
@@ -100,8 +93,8 @@ export const createActivityStudent = async (
             danceRole,
         };
 
-        const { data } = await api.post<ActivityStudentDTO>(
-            `${activitiesEndpoint}/student`,
+        const { data } = await api.post<CourseStudentDTO>(
+            `${coursesEndpoint}/student`,
             requestData
         );
 
@@ -111,7 +104,7 @@ export const createActivityStudent = async (
     }
 };
 
-export const createActivityAbsence = async (
+export const createCourseAbsence = async (
     studentId: number,
     activityId: number,
     absenceDate: string
@@ -124,7 +117,7 @@ export const createActivityAbsence = async (
         };
 
         const { data } = await api.post<AbsenceDTO>(
-            `${activitiesEndpoint}/absences`,
+            `${coursesEndpoint}/absences`,
             requestData
         );
 
@@ -134,12 +127,12 @@ export const createActivityAbsence = async (
     }
 };
 
-export const deleteActivityStudent = async (
+export const deleteCourseStudent = async (
     id: number
-): Promise<ActivityStudentDTO> => {
+): Promise<CourseStudentDTO> => {
     try {
-        const { data } = await api.delete<ActivityStudentDTO>(
-            `${activitiesEndpoint}/student/${id}`
+        const { data } = await api.delete<CourseStudentDTO>(
+            `${coursesEndpoint}/student/${id}`
         );
 
         return data;
@@ -148,12 +141,10 @@ export const deleteActivityStudent = async (
     }
 };
 
-export const deleteActivityAbsence = async (
-    id: number
-): Promise<AbsenceDTO> => {
+export const deleteCourseAbsence = async (id: number): Promise<AbsenceDTO> => {
     try {
         const { data } = await api.delete<AbsenceDTO>(
-            `${activitiesEndpoint}/absences/${id}`
+            `${coursesEndpoint}/absences/${id}`
         );
 
         return data;
@@ -164,7 +155,7 @@ export const deleteActivityAbsence = async (
 
 export const downloadExcel = async () => {
     try {
-        const response = await api.get(`${activitiesEndpoint}/export`, {
+        const response = await api.get(`${coursesEndpoint}/export`, {
             responseType: 'blob', // importante para manejar blobs
         });
 

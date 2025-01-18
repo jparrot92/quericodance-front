@@ -4,18 +4,15 @@ import { useI18n } from 'vue-i18n';
 
 import { Status } from 'src/types/UtilTypes';
 
-import { StudentDTO } from 'src/interfaces/student/student';
-import {
-    ActivityDTO,
-    ActivityListViewDTO,
-} from 'src/interfaces/activity/activity';
+import { StudentDTO } from 'src/model/student.model';
+import { CourseDTO, CourseListViewDTO } from 'src/model/activity.model';
 
 import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue';
 
-import useActivities from 'src/modules/activities/composables/useActivities';
+import useCourses from 'src/modules/activities/composables/useCourses';
 import useStudents from '../composables/useStudents';
 
-const { activities, loadActivities } = useActivities();
+const { courses, loadCourses } = useCourses();
 const { student, uniqueFields, saveStudent, editStudent } = useStudents();
 
 const props = withDefaults(
@@ -48,11 +45,11 @@ student.value = props.initialStudent;
 uniqueFields.email = props.initialStudent.user.email ?? '';
 uniqueFields.phone = props.initialStudent.user.phone ?? '';
 
-const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
+const coursesFiltered = ref<CourseListViewDTO[]>([]);
 
 const removeCoursesInterest = (idActivity: number) => {
     const index = student.value.interestedActivities?.findIndex(
-        (student: ActivityDTO) => student.id === idActivity
+        (student: CourseDTO) => student.id === idActivity
     );
     if (index !== undefined && index !== -1) {
         student.value.interestedActivities?.splice(index, 1);
@@ -71,19 +68,19 @@ const filterFn = (val: string, update: (fn: () => void) => void) => {
     setTimeout(() => {
         update(() => {
             if (val === '') {
-                activitiesFiltered.value = activities.value;
+                coursesFiltered.value = courses.value;
             } else {
                 const needle = val
                     .toLowerCase()
                     .replace(/\s/g, '')
                     .toLowerCase();
-                activitiesFiltered.value = activities.value.filter(
-                    (activity: ActivityListViewDTO) => {
+                coursesFiltered.value = courses.value.filter(
+                    (course: CourseListViewDTO) => {
                         const activityFullName =
-                            activity.name.toLowerCase() +
-                            activity.level +
-                            t('shared.enum.' + activity.day).toLowerCase() +
-                            activity.startHour;
+                            course.name.toLowerCase() +
+                            course.level +
+                            t('shared.enum.' + course.day).toLowerCase() +
+                            course.startHour;
 
                         return activityFullName.includes(needle);
                     }
@@ -94,8 +91,8 @@ const filterFn = (val: string, update: (fn: () => void) => void) => {
 };
 
 onMounted(async () => {
-    await loadActivities();
-    activitiesFiltered.value = activities.value;
+    await loadCourses();
+    coursesFiltered.value = courses.value;
 });
 </script>
 
@@ -181,7 +178,7 @@ onMounted(async () => {
                 <q-select
                     v-model="student.interestedActivities"
                     multiple
-                    :options="activitiesFiltered"
+                    :options="coursesFiltered"
                     :label="$t('student.coursesInterest')"
                     use-chips
                     use-input

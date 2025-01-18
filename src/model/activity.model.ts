@@ -9,7 +9,7 @@ export interface AbsenceDTO {
     absenceDate: Date;
 }
 
-export interface ActivityDTO {
+export interface CourseDTO {
     id: number;
     name: string;
     level: number | null;
@@ -24,8 +24,8 @@ export interface ActivityDTO {
     absences?: AbsenceDTO[];
 }
 
-export interface ActivityListViewDTO extends ActivityDTO {
-    activitiesStudent?: ActivityStudentDTO[];
+export interface CourseListViewDTO extends CourseDTO {
+    coursesStudent?: CourseStudentDTO[];
     numberStudents?: string;
     numberLeaders?: string;
     numberFollowers?: string;
@@ -33,7 +33,7 @@ export interface ActivityListViewDTO extends ActivityDTO {
     totalPaid?: string;
 }
 
-export interface ActivityCountersDTO {
+export interface CourseCountersDTO {
     numberStudents: string;
     numberLeaders: string;
     numberFollowers: string;
@@ -41,7 +41,7 @@ export interface ActivityCountersDTO {
     costEffectiveness: string;
 }
 
-export interface ActivityViewDTO {
+export interface CourseViewDTO {
     id: number;
     name: string;
     level: number | null;
@@ -53,11 +53,11 @@ export interface ActivityViewDTO {
     color: string;
 }
 
-export interface ActivityStudentDTO {
+export interface CourseStudentDTO {
     id: number;
     danceRole: string;
     price: number;
-    activity: ActivityDTO;
+    course: CourseDTO;
     student?: StudentDTO;
 }
 

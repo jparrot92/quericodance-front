@@ -136,7 +136,7 @@ import '@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarDay.sass';
 
-import { listActivities } from 'src/api/activitiesApi';
+import { listCourses } from 'src/api/coursesApi';
 
 import { defineComponent } from 'vue';
 import NavigationBar from '../components/NavigationBar.vue';
@@ -163,7 +163,7 @@ export default defineComponent({
     },
     methods: {
         async loadEvents() {
-            this.events = await listActivities();
+            this.events = await listCourses();
 
             const currentDate = new Date(); // Puedes pasar la fecha actual como parámetro
             const result = this.generateDateObject(currentDate);

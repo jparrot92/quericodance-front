@@ -6,32 +6,32 @@ import { WeekDay } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
 import useTeachers from 'src/modules/teachers/composables/useTeachers';
-import useActivities from '../composables/useActivities';
+import useCourses from '../composables/useCourses';
 
 const route = useRoute();
 const { generateEnumOptions } = useEnumOptions();
 const { teachers, loadTeachers } = useTeachers();
-const { activity, loadActivity, saveActivity, editActivity } = useActivities();
+const { course, loadCourse, saveCourse, editCourse } = useCourses();
 const weekDays = generateEnumOptions(WeekDay);
 
-const idActivity = computed<string>(() => route.params.id?.toString());
+const idCourse = computed<string>(() => route.params.id?.toString());
 
 const onSubmit = async () => {
-    if (idActivity.value) {
-        editActivity(idActivity.value);
+    if (idCourse.value) {
+        editCourse(idCourse.value);
     } else {
-        saveActivity();
+        saveCourse();
     }
 };
 
-const removeTeacherActivity = async () => {
+const removeTeacherCourse = async () => {
     console.log('Elinar del chip');
 };
 
 onMounted(() => {
     loadTeachers();
-    if (idActivity.value) {
-        loadActivity(idActivity.value);
+    if (idCourse.value) {
+        loadCourse(idCourse.value);
     }
 });
 </script>
@@ -45,7 +45,7 @@ onMounted(() => {
             >
                 <q-input
                     :label="$t('shared.name')"
-                    v-model="activity.name"
+                    v-model="course.name"
                     :rules="[
                         (val: string) =>
                             (val && val.length > 0) ||
@@ -56,7 +56,7 @@ onMounted(() => {
                 <q-input
                     type="number"
                     :label="$t('course.level')"
-                    v-model.number="activity.level"
+                    v-model.number="course.level"
                     :rules="[
                         (val) =>
                             (val !== null &&
@@ -69,7 +69,7 @@ onMounted(() => {
                 <pd-select
                     :dense="false"
                     :options-dense="false"
-                    v-model="activity.day"
+                    v-model="course.day"
                     :label="$t('shared.day') + '*'"
                     :options="weekDays"
                     :rules="[
@@ -83,7 +83,7 @@ onMounted(() => {
                     <q-input
                         class="col-md-6 col-sm-6 col-xs-6 q-pr-md q-pr-sm"
                         :label="$t('course.startHour')"
-                        v-model="activity.startHour"
+                        v-model="course.startHour"
                         mask="time"
                         :rules="['time']"
                     >
@@ -94,7 +94,7 @@ onMounted(() => {
                                     transition-show="scale"
                                     transition-hide="scale"
                                 >
-                                    <q-time v-model="activity.startHour">
+                                    <q-time v-model="course.startHour">
                                         <div
                                             class="row items-center justify-end"
                                         >
@@ -114,7 +114,7 @@ onMounted(() => {
                     <q-input
                         class="col-md-6 col-sm-6 col-xs-6 q-pl-md q-pl-sm"
                         :label="$t('course.endHour')"
-                        v-model="activity.endHour"
+                        v-model="course.endHour"
                         mask="time"
                         :rules="['time']"
                     >
@@ -125,7 +125,7 @@ onMounted(() => {
                                     transition-show="scale"
                                     transition-hide="scale"
                                 >
-                                    <q-time v-model="activity.endHour">
+                                    <q-time v-model="course.endHour">
                                         <div
                                             class="row items-center justify-end"
                                         >
@@ -145,7 +145,7 @@ onMounted(() => {
 
                 <q-input
                     :label="$t('course.numberPlaces')"
-                    v-model.number="activity.numberPlaces"
+                    v-model.number="course.numberPlaces"
                     :rules="[
                         (val) =>
                             (val !== null &&
@@ -157,7 +157,7 @@ onMounted(() => {
 
                 <q-input
                     :label="$t('course.color')"
-                    v-model="activity.color"
+                    v-model="course.color"
                     class="col-md-11 col-sm-11 col-xs-10"
                     :rules="[
                         (val: string) =>
@@ -183,7 +183,7 @@ onMounted(() => {
                                 transition-show="scale"
                                 transition-hide="scale"
                             >
-                                <q-color v-model="activity.color" />
+                                <q-color v-model="course.color" />
                             </q-popup-proxy>
                         </q-icon>
                         <div
@@ -193,13 +193,13 @@ onMounted(() => {
                                 height: 50px;
                                 border: 1px solid black;
                             "
-                            :style="{ 'background-color': activity.color }"
+                            :style="{ 'background-color': course.color }"
                         ></div>
                     </template>
                 </q-input>
 
                 <q-select
-                    v-model="activity.teachersIds"
+                    v-model="course.teachersIds"
                     multiple
                     :options="teachers"
                     :label="$t('course.teachers')"
@@ -211,7 +211,7 @@ onMounted(() => {
                         <q-chip
                             removable
                             :label="opt.user.name"
-                            @remove="removeTeacherActivity"
+                            @remove="removeTeacherCourse"
                         />
                     </template>
                     <template v-slot:option="{ itemProps, opt }">

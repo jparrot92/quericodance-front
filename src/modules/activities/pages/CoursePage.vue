@@ -13,14 +13,14 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import { Action, ColumnTable, WeekDay } from 'src/types/UtilTypes';
-import { ActivityListViewDTO, ActivityDTO } from 'src/model/activity.model';
+import { CourseListViewDTO, CourseDTO } from 'src/model/activity.model';
 
 import { FilterField, FilterFieldType } from 'src/composables/useFilterTypes';
 import useLocalStorageFilters from 'src/composables/useLocalStorageFilters';
 
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
-import useActivities from '../composables/useActivities';
+import useCourses from '../composables/useCourses';
 
 import ActivityItem from '../components/activity-item/ActivityItem.vue';
 
@@ -31,17 +31,12 @@ const router = useRouter();
 const { saveFiltersToLocalStorage, loadFiltersFromLocalStorage } =
     useLocalStorageFilters();
 const { generateEnumOptions } = useEnumOptions();
-const {
-    loading,
-    activities,
-    loadActivities,
-    removeActivity,
-    handleFileDownload,
-} = useActivities();
+const { loading, courses, loadCourses, removeCourse, handleFileDownload } =
+    useCourses();
 
 const weekDays = generateEnumOptions(WeekDay);
 
-const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
+const coursesFiltered = ref<CourseListViewDTO[]>([]);
 const showProfitability = ref(false);
 
 const columns = computed((): ColumnTable[] => [
@@ -68,8 +63,8 @@ const columns = computed((): ColumnTable[] => [
         sort: (
             a: string,
             b: string,
-            rowA: ActivityListViewDTO,
-            rowB: ActivityListViewDTO
+            rowA: CourseListViewDTO,
+            rowB: CourseListViewDTO
         ) => orderByDay(rowA, rowB),
     },
     {
@@ -145,11 +140,11 @@ const columns = computed((): ColumnTable[] => [
     },
 ]);
 
-const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
+const actions: ComputedRef<Action<CourseListViewDTO>[]> = computed(() => {
     return [
         {
             label: t('shared.see'),
-            action: (row: ActivityListViewDTO) => {
+            action: (row: CourseListViewDTO) => {
                 router.push({
                     name: 'courses-list-students',
                     params: { id: row.id },
@@ -159,7 +154,7 @@ const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
         },
         {
             label: t('shared.edit'),
-            action: (row: ActivityListViewDTO) => {
+            action: (row: CourseListViewDTO) => {
                 router.push({
                     name: 'courses-edit',
                     params: { id: row.id },
@@ -169,7 +164,7 @@ const actions: ComputedRef<Action<ActivityListViewDTO>[]> = computed(() => {
         },
         {
             label: t('shared.delete'),
-            action: (row: ActivityListViewDTO) => handleRemoveActivity(row.id),
+            action: (row: CourseListViewDTO) => handleRemoveActivity(row.id),
             show: () => true,
         },
     ];
@@ -211,8 +206,8 @@ const filteredColumns = computed(() => {
 loadFiltersFromLocalStorage(filtersSelected);
 
 const filterTable = () => {
-    activitiesFiltered.value = activities.value
-        .filter((activity: ActivityListViewDTO) => {
+    coursesFiltered.value = courses.value
+        .filter((activity: CourseListViewDTO) => {
             const activityFullName =
                 activity.name.toLowerCase() + activity.level;
 
@@ -220,7 +215,7 @@ const filterTable = () => {
                 filtersSelected.query.replace(/\s/g, '').toLowerCase()
             );
         })
-        .filter((activity: ActivityListViewDTO) => {
+        .filter((activity: CourseListViewDTO) => {
             if (filtersSelected.weekDay === null) {
                 return true;
             } else {
@@ -250,7 +245,7 @@ const getWeekNumber = (day: WeekDay): number => {
     }
 };
 
-const orderByDay = (a: ActivityListViewDTO, b: ActivityListViewDTO) => {
+const orderByDay = (a: CourseListViewDTO, b: CourseListViewDTO) => {
     const dayA = a.day ? getWeekNumber(a.day) : -1;
     const dayB = b.day ? getWeekNumber(b.day) : -1;
 
@@ -260,7 +255,7 @@ const orderByDay = (a: ActivityListViewDTO, b: ActivityListViewDTO) => {
     return 0;
 };
 
-const onRowClick = (evt: Event, row: ActivityListViewDTO) => {
+const onRowClick = (evt: Event, row: CourseListViewDTO) => {
     let title = `${t('course.course')} ${row.name} ${row.level} - ${t(
         'shared.enum.' + row.day
     )} ${row.startHour}`;
@@ -278,12 +273,12 @@ const onRowClick = (evt: Event, row: ActivityListViewDTO) => {
 
 const handleRemoveActivity = async (idActivity: number) => {
     try {
-        await removeActivity(idActivity);
-        const index = activitiesFiltered.value?.findIndex(
-            (activity: ActivityDTO) => activity.id === idActivity
+        await removeCourse(idActivity);
+        const index = coursesFiltered.value?.findIndex(
+            (activity: CourseDTO) => activity.id === idActivity
         );
         if (index !== undefined && index !== -1) {
-            activitiesFiltered.value?.splice(index, 1);
+            coursesFiltered.value?.splice(index, 1);
         }
     } catch (error) {
         console.error(error);
@@ -300,8 +295,8 @@ watch(
 );
 
 onMounted(async () => {
-    await loadActivities();
-    activitiesFiltered.value = activities.value;
+    await loadCourses();
+    coursesFiltered.value = courses.value;
     filterTable();
 });
 </script>
@@ -309,7 +304,7 @@ onMounted(async () => {
 <template>
     <q-table
         :grid="$q.screen.xs"
-        :rows="activitiesFiltered"
+        :rows="coursesFiltered"
         :columns="filteredColumns"
         row-key="id"
         class="col-12 my-sticky-last-column-table"
@@ -453,3 +448,4 @@ onMounted(async () => {
         </q-fab>
     </q-page-sticky>
 </template>
+../composables/useCourses

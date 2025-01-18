@@ -1,34 +1,34 @@
 <script setup lang="ts">
 import { defineProps, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ActivityDTO } from 'src/model/activity.model';
+import { CourseDTO } from 'src/model/activity.model';
 
-import useActivities from 'src/modules/activities/composables/useActivities';
+import useCourses from 'src/modules/activities/composables/useCourses';
 
 const props = withDefaults(
     defineProps<{
         idStudent: number;
-        activityAbsence: ActivityDTO;
+        courseAbsence: CourseDTO;
     }>(),
     {}
 );
 
-const emits = defineEmits(['close', 'addActivityAbsence']);
+const emits = defineEmits(['close', 'addCourseAbsence']);
 
 const { t } = useI18n();
-const { saveActivityAbsence } = useActivities();
+const { saveCourseAbsence } = useCourses();
 
 const dateAbsence = ref<string>(new Date().toISOString());
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
 
-const addActivityAbsence = async () => {
-    const newActivityAbsence = await saveActivityAbsence(
+const addCourseAbsence = async () => {
+    const newCourseAbsence = await saveCourseAbsence(
         props.idStudent,
-        props.activityAbsence.id,
+        props.courseAbsence.id,
         dateAbsence.value
     );
-    if (newActivityAbsence) {
-        emits('addActivityAbsence', newActivityAbsence);
+    if (newCourseAbsence) {
+        emits('addCourseAbsence', newCourseAbsence);
     }
 };
 </script>
@@ -46,13 +46,13 @@ const addActivityAbsence = async () => {
                 <pd-field
                     :label="$t('student.course')"
                     :value="
-                        props.activityAbsence.name +
+                        props.courseAbsence.name +
                         ' ' +
-                        props.activityAbsence.level +
+                        props.courseAbsence.level +
                         ' - ' +
-                        t('shared.enum.' + props.activityAbsence.day) +
+                        t('shared.enum.' + props.courseAbsence.day) +
                         ' ' +
-                        props.activityAbsence.startHour
+                        props.courseAbsence.startHour
                     "
                 />
 
@@ -74,7 +74,7 @@ const addActivityAbsence = async () => {
                     flat
                     :label="$t('shared.add')"
                     color="primary"
-                    @click="addActivityAbsence()"
+                    @click="addCourseAbsence()"
                 />
                 <q-btn
                     flat

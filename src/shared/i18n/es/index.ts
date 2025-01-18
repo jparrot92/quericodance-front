@@ -1,5 +1,3 @@
-import courses from 'src/modules/activities/i18n/es/courses';
-
 export default {
     shared: {
         next: 'Siguiente',

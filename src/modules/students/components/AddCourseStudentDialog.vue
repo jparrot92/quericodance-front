@@ -5,8 +5,8 @@ import { useI18n } from 'vue-i18n';
 import { DanceRole } from 'src/types/UtilTypes';
 import useEnumOptions from 'src/shared/composables/useEnumOptions';
 
-import useActivities from 'src/modules/activities/composables/useActivities';
-import { ActivityListViewDTO } from 'src/model/activity.model';
+import useCourses from 'src/modules/activities/composables/useCourses';
+import { CourseListViewDTO } from 'src/model/activity.model';
 
 const props = withDefaults(
     defineProps<{
@@ -15,30 +15,29 @@ const props = withDefaults(
     {}
 );
 
-const emits = defineEmits(['close', 'addActivityStudent']);
+const emits = defineEmits(['close', 'addCourseStudent']);
 
 const { t } = useI18n();
 const { generateEnumOptions } = useEnumOptions();
-const { activities, activityStudent, loadActivities, saveActivityStudent } =
-    useActivities();
+const { courses, courseStudent, loadCourses, saveCourseStudent } = useCourses();
 const danceRoles = generateEnumOptions(DanceRole);
 
-const activityId = ref<number>(0);
+const courseId = ref<number>(0);
 const danceRole = ref<string>('');
 const isDialogVisible: Ref<boolean> = ref<boolean>(true);
-const activitiesFiltered = ref<ActivityListViewDTO[]>([]);
+const coursesFiltered = ref<CourseListViewDTO[]>([]);
 
-const addActivityStudent = async () => {
-    activityId.value = activityStudent.value.activity.id;
-    danceRole.value = activityStudent.value.danceRole;
+const addCourseStudent = async () => {
+    courseId.value = courseStudent.value.course.id;
+    danceRole.value = courseStudent.value.danceRole;
 
-    const newActivityStudent = await saveActivityStudent(
+    const newActivityStudent = await saveCourseStudent(
         props.idStudent,
-        activityId.value,
+        courseId.value,
         danceRole.value
     );
     if (newActivityStudent) {
-        emits('addActivityStudent', newActivityStudent);
+        emits('addCourseStudent', newActivityStudent);
     }
 };
 
@@ -46,14 +45,14 @@ const filterFn = (val: string, update: (fn: () => void) => void) => {
     setTimeout(() => {
         update(() => {
             if (val === '') {
-                activitiesFiltered.value = activities.value;
+                coursesFiltered.value = courses.value;
             } else {
                 const needle = val
                     .toLowerCase()
                     .replace(/\s/g, '')
                     .toLowerCase();
-                activitiesFiltered.value = activities.value.filter(
-                    (activity: ActivityListViewDTO) => {
+                coursesFiltered.value = courses.value.filter(
+                    (activity: CourseListViewDTO) => {
                         const activityFullName =
                             activity.name.toLowerCase() +
                             activity.level +
@@ -69,8 +68,8 @@ const filterFn = (val: string, update: (fn: () => void) => void) => {
 };
 
 onMounted(() => {
-    loadActivities();
-    activitiesFiltered.value = activities.value;
+    loadCourses();
+    coursesFiltered.value = courses.value;
 });
 </script>
 
@@ -78,23 +77,23 @@ onMounted(() => {
     <q-dialog v-model="isDialogVisible" @hide="emits('close')">
         <q-card style="width: 50vh">
             <q-card-section>
-                <div class="text-h6">{{ $t('student.addActivity') }}</div>
+                <div class="text-h6">{{ $t('student.addCourse') }}</div>
             </q-card-section>
 
             <q-separator />
 
             <q-card-section style="max-height: 50vh" class="scroll">
                 <q-select
-                    v-model="activityStudent.activity"
+                    v-model="courseStudent.course"
                     :label="$t('student.course')"
-                    :options="activitiesFiltered"
+                    :options="coursesFiltered"
                     :option-value="'id'"
                     use-input
                     @filter="filterFn"
                 >
                     <template v-slot:selected-item="{ opt }">
                         {{
-                            activityStudent.activity.id !== 0
+                            courseStudent.course.id !== 0
                                 ? opt.name +
                                   ' ' +
                                   opt.level +
@@ -123,7 +122,7 @@ onMounted(() => {
                 </q-select>
 
                 <q-select
-                    v-model="activityStudent.danceRole"
+                    v-model="courseStudent.danceRole"
                     :options="danceRoles"
                     :label="$t('student.role')"
                     emit-value
@@ -137,7 +136,7 @@ onMounted(() => {
                     flat
                     :label="$t('shared.add')"
                     color="primary"
-                    @click="addActivityStudent()"
+                    @click="addCourseStudent()"
                 />
                 <q-btn
                     flat

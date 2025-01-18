@@ -4,27 +4,27 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 import {
-    listActivities,
-    getCountersActivity,
-    getActivity,
-    createActivity,
-    updateActivity,
-    deleteActivity,
-    createActivityStudent,
-    createActivityAbsence,
-    deleteActivityStudent,
-    deleteActivityAbsence,
+    listCourses,
+    getCountersCourse,
+    getCourse,
+    createCourse,
+    updateCourse,
+    deleteCourse,
+    createCourseStudent,
+    createCourseAbsence,
+    deleteCourseStudent,
+    deleteCourseAbsence,
     downloadExcel,
-} from 'src/api/activitiesApi';
+} from 'src/api/coursesApi';
 import {
-    ActivityListViewDTO,
-    ActivityDTO,
-    ActivityStudentDTO,
-    ActivityCountersDTO,
+    CourseListViewDTO,
+    CourseDTO,
+    CourseStudentDTO,
+    CourseCountersDTO,
 } from 'src/model/activity.model';
 import useNotify from 'src/shared/composables/useNotify';
 
-const useActivities = () => {
+const useCourses = () => {
     const router = useRouter();
 
     const $q = useQuasar();
@@ -34,8 +34,8 @@ const useActivities = () => {
     const { notifySuccess, notifyError } = useNotify();
 
     const loading = ref<boolean>(false);
-    const activities = ref<ActivityListViewDTO[]>([]);
-    const activity = ref<ActivityDTO>({
+    const courses = ref<CourseListViewDTO[]>([]);
+    const course = ref<CourseDTO>({
         id: 0,
         name: '',
         level: null,
@@ -47,16 +47,16 @@ const useActivities = () => {
         color: '',
         teachersIds: [],
     });
-    const activityStudent = ref<ActivityStudentDTO>({
+    const courseStudent = ref<CourseStudentDTO>({
         id: 0,
         danceRole: '',
         price: 0,
-        activity: {
-            ...activity.value,
+        course: {
+            ...course.value,
         },
     });
 
-    const activityCounters = ref<ActivityCountersDTO>({
+    const activityCounters = ref<CourseCountersDTO>({
         numberStudents: '0',
         numberLeaders: '0',
         numberFollowers: '0',
@@ -64,11 +64,11 @@ const useActivities = () => {
         costEffectiveness: '0',
     });
 
-    const loadActivities = async () => {
+    const loadCourses = async () => {
         try {
-            activities.value = [];
+            courses.value = [];
             loading.value = true;
-            activities.value = await listActivities();
+            courses.value = await listCourses();
         } catch (error) {
             notifyError(error);
         } finally {
@@ -76,10 +76,10 @@ const useActivities = () => {
         }
     };
 
-    const loadCountersActivity = async (id: number) => {
+    const loadCountersCourse = async (id: number) => {
         try {
             loading.value = true;
-            activityCounters.value = await getCountersActivity(id);
+            activityCounters.value = await getCountersCourse(id);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -87,14 +87,14 @@ const useActivities = () => {
         }
     };
 
-    const loadActivity = async (id: string) => {
+    const loadCourse = async (id: string) => {
         try {
             loading.value = true;
-            activity.value = await getActivity(id);
+            course.value = await getCourse(id);
 
-            if (activity.value.teachers) {
-                activity.value.teachersIds =
-                    activity.value.teachers.map((teacher) => teacher.id) || [];
+            if (course.value.teachers) {
+                course.value.teachersIds =
+                    course.value.teachers.map((teacher) => teacher.id) || [];
             }
         } catch (error) {
             notifyError(error);
@@ -103,14 +103,14 @@ const useActivities = () => {
         }
     };
 
-    const saveActivity = async () => {
+    const saveCourse = async () => {
         try {
             loading.value = true;
-            activity.value = await createActivity(activity.value);
+            course.value = await createCourse(course.value);
             notifySuccess(t('course.messageCourseCreateSuccessfully'));
             router.replace({
                 name: 'courses-edit',
-                params: { id: activity.value.id },
+                params: { id: course.value.id },
             });
         } catch (error) {
             notifyError(error);
@@ -119,10 +119,10 @@ const useActivities = () => {
         }
     };
 
-    const editActivity = async (id: string) => {
+    const editCourse = async (id: string) => {
         try {
             loading.value = true;
-            activity.value = await updateActivity(id, activity.value);
+            course.value = await updateCourse(id, course.value);
             notifySuccess(t('course.messageCourseUpdateSuccessfully'));
         } catch (error) {
             notifyError(error);
@@ -131,7 +131,7 @@ const useActivities = () => {
         }
     };
 
-    const removeActivity = async (id: number) => {
+    const removeCourse = async (id: number) => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
                 title: t('shared.confirmation'),
@@ -140,7 +140,7 @@ const useActivities = () => {
                 persistent: true,
             }).onOk(async () => {
                 try {
-                    await deleteActivity(id);
+                    await deleteCourse(id);
                     notifySuccess(t('course.messageCourseDeleteSuccessfully'));
                     resolve();
                 } catch (error) {
@@ -151,16 +151,16 @@ const useActivities = () => {
         });
     };
 
-    const saveActivityStudent = async (
+    const saveCourseStudent = async (
         studentId: number,
-        activityId: number,
+        courseId: number,
         danceRole: string
     ) => {
         try {
-            const newActivityStudent: ActivityStudentDTO =
-                await createActivityStudent(studentId, activityId, danceRole);
+            const newCourseStudent: CourseStudentDTO =
+                await createCourseStudent(studentId, courseId, danceRole);
 
-            return newActivityStudent;
+            return newCourseStudent;
         } catch (error) {
             notifyError(error);
         } finally {
@@ -168,18 +168,14 @@ const useActivities = () => {
         }
     };
 
-    const saveActivityAbsence = async (
+    const saveCourseAbsence = async (
         studentId: number,
-        activityId: number,
+        courseId: number,
         absenceDate: string
     ) => {
         loading.value = true;
         try {
-            return await createActivityAbsence(
-                studentId,
-                activityId,
-                absenceDate
-            );
+            return await createCourseAbsence(studentId, courseId, absenceDate);
         } catch (error) {
             notifyError(error);
         } finally {
@@ -187,7 +183,7 @@ const useActivities = () => {
         }
     };
 
-    const removeActivityStudent = async (id: number) => {
+    const removeCourseStudent = async (id: number) => {
         return new Promise<void>((resolve, reject) => {
             $q.dialog({
                 title: t('shared.confirmation'),
@@ -196,8 +192,8 @@ const useActivities = () => {
                 persistent: true,
             }).onOk(async () => {
                 try {
-                    await deleteActivityStudent(id);
-                    notifySuccess(t('course.messageCourseDelete'));
+                    await deleteCourseStudent(id);
+                    notifySuccess(t('course.messageCourseDeleteSuccessfully'));
                     resolve(); // Resuelve la promesa después de que todo esté completo
                 } catch (error) {
                     notifyError(error);
@@ -207,16 +203,16 @@ const useActivities = () => {
         });
     };
 
-    const removeActivityAbsence = async (id: number) => {
+    const removeCourseAbsence = async (id: number) => {
         return new Promise<void>(async (resolve, reject) => {
             $q.dialog({
                 title: t('shared.confirmation'),
-                message: t('course.removeActivityAbsence'),
+                message: t('course.removeCourseAbsence'),
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 try {
-                    await deleteActivityAbsence(id);
+                    await deleteCourseAbsence(id);
                     notifySuccess(t('course.absenceDeleteSuccessfully'));
                     resolve();
                 } catch (error) {
@@ -244,22 +240,22 @@ const useActivities = () => {
     return {
         // Properties
         loading,
-        activities,
-        activity,
-        activityStudent,
+        courses,
+        course,
+        courseStudent,
         activityCounters,
-        loadActivities,
-        loadCountersActivity,
-        loadActivity,
-        saveActivity,
-        editActivity,
-        removeActivity,
-        saveActivityStudent,
-        saveActivityAbsence,
-        removeActivityStudent,
-        removeActivityAbsence,
+        loadCourses,
+        loadCountersCourse,
+        loadCourse,
+        saveCourse,
+        editCourse,
+        removeCourse,
+        saveCourseStudent,
+        saveCourseAbsence,
+        removeCourseStudent,
+        removeCourseAbsence,
         handleFileDownload,
     };
 };
 
-export default useActivities;
+export default useCourses;

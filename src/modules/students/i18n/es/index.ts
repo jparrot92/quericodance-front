@@ -38,7 +38,7 @@ export default {
         monthlyPayment: 'Mensualidad',
         paid: 'Pagado',
         pending: 'Pendiente',
-        addActivity: 'Añadir curso',
+        addCourse: 'Añadir curso',
         addStudent: 'Añadir estudiante',
         changePrice: 'Modificar precio',
         datePayment: 'Fecha pago',

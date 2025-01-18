@@ -1,6 +1,6 @@
 import { Status } from 'src/types/UtilTypes';
 import { UserDTO } from './user.model';
-import { ActivityDTO, ActivityStudentDTO } from './activity.model';
+import { CourseDTO, CourseStudentDTO } from './activity.model';
 import { BonusDTO } from './bonus.model';
 import { MembershipViewDTO } from './finance.model';
 
@@ -9,10 +9,10 @@ export interface StudentDTO {
     user: UserDTO;
     observations?: string;
     status: Status;
-    activitiesStudent?: ActivityStudentDTO[];
+    coursesStudent?: CourseStudentDTO[];
     bonusesStudent?: BonusStudentDTO[];
     membership?: MembershipViewDTO;
-    interestedActivities?: ActivityDTO[];
+    interestedActivities?: CourseDTO[];
 }
 
 export interface BonusStudentDTO {
