@@ -36,9 +36,7 @@ const routesStudent: RouteRecordRaw = {
                 title: 'student.courses',
             },
             component: () =>
-                import(
-                    'src/modules/students/pages/ActivitiesStudentFormPage.vue'
-                ),
+                import('src/modules/students/pages/CoursesStudentFormPage.vue'),
         },
     ],
 };
