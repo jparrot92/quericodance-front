@@ -3,10 +3,10 @@ import { handleError } from './errorApi';
 import { StudentDTO } from 'src/model/student.model';
 
 export const listStudents = async (
-    idActivity: number | string
+    idCourse: number | string
 ): Promise<StudentDTO[]> => {
     try {
-        const params = idActivity ? { idActivity } : {};
+        const params = idCourse ? { idCourse } : {};
 
         const { data } = await api.get<StudentDTO[]>('/students', { params });
 

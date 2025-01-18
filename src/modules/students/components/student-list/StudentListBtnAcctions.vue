@@ -4,10 +4,10 @@ import useStudents from '../../composables/useStudents';
 
 const props = withDefaults(
     defineProps<{
-        idActivity: number | null;
+        idCourse: number | null;
     }>(),
     {
-        idActivity: null,
+        idCourse: null,
     }
 );
 
@@ -40,7 +40,7 @@ const chooseFile = () => {
 </script>
 <template>
     <template v-if="$q.screen.xs">
-        <template v-if="props.idActivity">
+        <template v-if="props.idCourse">
             <q-page-sticky position="bottom-right" :offset="[18, 18]">
                 <q-btn
                     fab
@@ -114,7 +114,7 @@ const chooseFile = () => {
         </template>
     </template>
     <template v-else>
-        <template v-if="props.idActivity">
+        <template v-if="props.idCourse">
             <q-space></q-space>
             <q-btn
                 :label="$t('student.createStudent')"

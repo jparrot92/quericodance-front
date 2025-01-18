@@ -47,9 +47,9 @@ uniqueFields.phone = props.initialStudent.user.phone ?? '';
 
 const coursesFiltered = ref<CourseListViewDTO[]>([]);
 
-const removeCoursesInterest = (idActivity: number) => {
+const removeCoursesInterest = (idCourse: number) => {
     const index = student.value.interestedActivities?.findIndex(
-        (student: CourseDTO) => student.id === idActivity
+        (student: CourseDTO) => student.id === idCourse
     );
     if (index !== undefined && index !== -1) {
         student.value.interestedActivities?.splice(index, 1);

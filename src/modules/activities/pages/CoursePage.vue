@@ -271,11 +271,11 @@ const onRowClick = (evt: Event, row: CourseListViewDTO) => {
     });
 };
 
-const handleRemoveActivity = async (idActivity: number) => {
+const handleRemoveActivity = async (idCourse: number) => {
     try {
-        await removeCourse(idActivity);
+        await removeCourse(idCourse);
         const index = coursesFiltered.value?.findIndex(
-            (activity: CourseDTO) => activity.id === idActivity
+            (activity: CourseDTO) => activity.id === idCourse
         );
         if (index !== undefined && index !== -1) {
             coursesFiltered.value?.splice(index, 1);

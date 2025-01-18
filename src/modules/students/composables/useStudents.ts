@@ -62,11 +62,11 @@ const useStudents = () => {
         email: '',
     });
 
-    const loadStudents = async (idActivity: string | number) => {
+    const loadStudents = async (idCourse: string | number) => {
         try {
             students.value = [];
             loading.value = true;
-            students.value = await listStudents(idActivity);
+            students.value = await listStudents(idCourse);
         } catch (error) {
             notifyError(error);
         } finally {
