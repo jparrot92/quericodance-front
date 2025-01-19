@@ -5,7 +5,7 @@ import { TeacherDTO } from './teacher.model';
 export interface AbsenceDTO {
     id: number;
     studentId: number;
-    activityId: number;
+    courseId: number;
     absenceDate: Date;
 }
 

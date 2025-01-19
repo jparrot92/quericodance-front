@@ -83,13 +83,13 @@ export const deleteCourse = async (id: number): Promise<CourseDTO> => {
 
 export const createCourseStudent = async (
     studentId: number,
-    activityId: number,
+    courseId: number,
     danceRole: string
 ): Promise<CourseStudentDTO> => {
     try {
         const requestData = {
             studentId,
-            activityId,
+            courseId,
             danceRole,
         };
 
@@ -106,13 +106,13 @@ export const createCourseStudent = async (
 
 export const createCourseAbsence = async (
     studentId: number,
-    activityId: number,
+    courseId: number,
     absenceDate: string
 ): Promise<AbsenceDTO> => {
     try {
         const requestData = {
             studentId,
-            activityId,
+            courseId,
             absenceDate,
         };
 
