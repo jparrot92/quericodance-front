@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from 'vue';
+import { defineProps, onMounted, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import useConfig from 'src/composables/useConfig';
 import { Status } from 'src/types/UtilTypes';
 
 import { StudentDTO } from 'src/model/student.model';
@@ -12,6 +13,7 @@ import ImageUploaderPreview from 'src/shared/components/ImageUploaderPreview.vue
 import useCourses from 'src/modules/activities/composables/useCourses';
 import useStudents from '../composables/useStudents';
 
+const { config } = useConfig();
 const { courses, loadCourses } = useCourses();
 const { student, uniqueFields, saveStudent, editStudent } = useStudents();
 
@@ -158,6 +160,7 @@ onMounted(async () => {
                 />
 
                 <q-input
+                    v-if="config.studentAcces"
                     :label="
                         student.id
                             ? $t('user.changePassword')
