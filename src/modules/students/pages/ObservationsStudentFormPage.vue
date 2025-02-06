@@ -3,11 +3,11 @@ import { defineProps } from 'vue';
 
 import { Status } from 'src/types/UtilTypes';
 
-import { StudentDTO } from 'src/interfaces/student/student';
+import { StudentDTO } from 'src/model/student.model';
 
 import useStudents from '../composables/useStudents';
 
-const { student: studentForm, editStudent } = useStudents();
+const { student: studentForm, uniqueFields, editStudent } = useStudents();
 
 const props = withDefaults(
     defineProps<{
@@ -34,6 +34,8 @@ const props = withDefaults(
 );
 
 studentForm.value = props.student;
+uniqueFields.email = props.student.user.email ?? '';
+uniqueFields.phone = props.student.user.phone ?? '';
 
 const onSubmit = async () => {
     if (studentForm.value.id) {
