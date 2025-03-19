@@ -71,7 +71,7 @@ module.exports = configure(function (ctx) {
             // analyze: true,
             env: {
                 API: ctx.dev
-                    ? 'http://localhost:3000/'
+                    ? 'https://quericodance-back-fda9f6af133f.herokuapp.com/'
                     : 'https://quericodance-back-fda9f6af133f.herokuapp.com/',
             },
             // rawDefine: {}
