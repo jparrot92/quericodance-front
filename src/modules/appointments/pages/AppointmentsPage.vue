@@ -1,13 +1,5 @@
-<script setup lang="ts">
-import { defineAsyncComponent } from 'vue';
-
-const WeekCalendar = defineAsyncComponent(
-    () => import('src/modules/appointments/components/WeekCalendar.vue')
-);
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <q-page padding>
-        <WeekCalendar />
-    </q-page>
+    <q-page padding> </q-page>
 </template>
