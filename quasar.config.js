@@ -72,7 +72,7 @@ module.exports = configure(function (ctx) {
             env: {
                 API: ctx.dev
                     ? 'http://localhost:3000/'
-                    : 'https://paaldemy-back-942154096b10.herokuapp.com/',
+                    : 'https://quericodance-back-fda9f6af133f.herokuapp.com/',
             },
             // rawDefine: {}
             // ignorePublicFolder: true,
